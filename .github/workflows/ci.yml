@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate required files
+        run: |
+          test -f index.html
+          test -f styles.css
+
+      - name: Basic HTML checks
+        run: |
+          rg -n "<title>.+</title>" index.html
+          rg -n "meta name=\"description\"" index.html
+          rg -n "mailto:" index.html
+
+      - name: Ensure canonical domain exists
+        run: |
+          test -f CNAME
+          rg -n "^stephenaase.com$" CNAME

@@ -1,0 +1,24 @@
+name: Small release
+description: Plan one tiny production change
+title: "release: "
+labels: ["release"]
+body:
+  - type: textarea
+    attributes:
+      label: Goal
+      description: One tiny user-facing improvement.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Scope
+      description: Keep this <=2 hours and <=100 lines changed.
+    validations:
+      required: true
+  - type: checkboxes
+    attributes:
+      label: Definition of done
+      options:
+        - label: Works on mobile viewport
+        - label: No browser console errors
+        - label: Links/contact path tested
