@@ -468,9 +468,9 @@
     .swatch--warm { background: var(--primitive-warm-100); }
     .swatch--rust { background: var(--primitive-rust-500); }
 
-    /* 06 CTA footer — dark, aspect ~1.76 */
+    /* 06 Footer (Desktop Figma 345:2740) */
     .s-cta {
-      background: var(--primitive-warm-900);
+      background: #1f1d19;
       padding: clamp(72px, 8vw, 96px) clamp(24px, 6vw, 80px);
       text-align: center;
       position: relative;
@@ -484,34 +484,19 @@
       justify-content: center;
     }
     .s-cta__glow {
-      position: absolute;
-      left: 50%; top: 50%;
-      transform: translate(-50%, -50%);
-      width: 600px; height: 300px;
-      background: radial-gradient(ellipse at center, rgba(193,95,60,0.14) 0%, transparent 65%);
-      pointer-events: none;
+      display: none;
     }
     .s-cta__text {
       position: relative;
       font-family: var(--font-family-serif);
-      font-style: italic;
-      font-weight: 400;
-      font-size: 20px;
-      line-height: 1.5;
-      color: rgba(255,255,255,0.72);
-      max-width: 560px;
+      font-style: normal;
+      font-weight: 700;
+      font-size: clamp(30px, 3.2vw, 39.056px);
+      line-height: 50.773px;
+      color: #ffffff;
+      max-width: 1440px;
       margin: 0 auto;
-      letter-spacing: -0.005em;
-    }
-    .s-cta__text a {
-      color: var(--primitive-rust-400);
-      border-bottom: 1px solid rgba(193,95,60,0.4);
-      padding-bottom: 1px;
-      transition: color 200ms var(--easing-default), border-color 200ms var(--easing-default);
-    }
-    .s-cta__text a:hover {
-      color: var(--primitive-rust-300);
-      border-color: var(--primitive-rust-300);
+      letter-spacing: -0.3906px;
     }
 
     /* ---------- Parallax layers ---------- */
@@ -1414,10 +1399,7 @@
 
       <!-- 06 CONTACT / CTA FOOTER -->
       <section id="contact" class="s-cta" data-section="contact" data-screen-label="06 Contact">
-        <div class="s-cta__glow parallax-host" data-parallax="0.2"></div>
-        <p class="s-cta__text">
-          Know about my current status — <a href="mailto:hello@stephenaase.com">open to new opportunities</a>.
-        </p>
+        <p class="s-cta__text">Footer</p>
       </section>
     </div>
   </div>
