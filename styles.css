@@ -1,44 +1,278 @@
 :root {
   color-scheme: light;
-  --bg: #f9fafb;
-  --text: #111827;
-  --muted: #4b5563;
-  --link: #1d4ed8;
+  --bg-page: #faf9f6;
+  --bg-dark: #1f1d19;
+  --bg-accent: #c15f3c;
+  --bg-surface: #ffffff;
+  --text-main: #201e1a;
+  --text-inverse: #ffffff;
+  --border-soft: rgba(20, 16, 10, 0.08);
+  --border-inverse: rgba(255, 255, 255, 0.5);
+  --shadow-card:
+    0 1px 2px rgba(20, 16, 10, 0.04),
+    0 1px 4px rgba(20, 16, 10, 0.03);
 }
 
 * {
   box-sizing: border-box;
 }
 
+html,
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  line-height: 1.6;
-  color: var(--text);
-  background: var(--bg);
+  min-height: 100%;
 }
 
-.container {
-  max-width: 680px;
-  margin: 10vh auto;
-  padding: 0 1rem;
+body {
+  font-family: "Lora", Georgia, serif;
+  background: var(--bg-page);
+  color: var(--text-main);
+  line-height: 1.4;
 }
 
-h1 {
-  line-height: 1.2;
-  margin-bottom: 0.5rem;
+h1,
+h2,
+p {
+  margin: 0;
 }
 
-.lead {
-  color: var(--muted);
-  margin-top: 0;
+.shell {
+  max-width: 1440px;
+  width: min(100%, calc(100% - 2rem));
+  margin-inline: auto;
 }
 
-a {
-  color: var(--link);
+.stack {
+  display: grid;
+  gap: 2rem;
+}
+
+.site-nav {
+  background: var(--bg-page);
+  border-bottom: 1px solid rgba(20, 16, 10, 0.05);
+}
+
+.nav-shell {
+  min-height: 62px;
+  display: flex;
+  align-items: center;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.7;
+  letter-spacing: -0.16px;
+  color: var(--text-main);
+  text-decoration: none;
+}
+
+.brand-mark {
+  width: 22.5px;
+  height: 21.8px;
+  object-fit: contain;
+}
+
+.hero,
+.footer {
+  min-height: 1024px;
+}
+
+.center-content {
+  min-height: inherit;
+  display: grid;
+  place-items: center;
+}
+
+.center-content h1,
+.center-content h2 {
+  color: var(--text-inverse);
+  text-align: center;
+  font-size: 39.056px;
+  font-weight: 700;
+  line-height: 50.773px;
+  letter-spacing: -0.3906px;
+}
+
+.section-light,
+.section-accent,
+.section-white {
+  padding: 100px 0;
+}
+
+.section-light {
+  background: var(--bg-page);
+}
+
+.section-white {
+  background: var(--bg-surface);
+}
+
+.section-dark {
+  background: var(--bg-dark);
+}
+
+.section-accent {
+  background: var(--bg-accent);
+}
+
+.section-light h2,
+.section-white h2,
+.section-accent h2 {
+  font-size: 39.056px;
+  font-weight: 700;
+  line-height: 50.773px;
+  letter-spacing: -0.3906px;
+}
+
+.section-accent h2 {
+  color: var(--text-inverse);
+}
+
+.card,
+.card-soft,
+.card-accent {
+  border-radius: 24px;
+}
+
+.card {
+  background: var(--bg-surface);
+}
+
+.bento-layout {
+  display: grid;
+  gap: 20px;
+}
+
+.bento-row {
+  display: grid;
+  grid-template-columns: 953px 466px;
+  gap: 20px;
+}
+
+.card-main,
+.card-side {
+  height: 913px;
+}
+
+.card-wide {
+  height: 501px;
+}
+
+.about {
+  gap: 75px;
+  min-height: 1478px;
+}
+
+.card-soft {
+  min-height: 14rem;
+  border: 1px solid var(--border-soft);
+  box-shadow: var(--shadow-card);
+  background: var(--bg-page);
+}
+
+.about-block {
+  width: 100%;
+  max-width: 1460px;
+  min-height: 1298px;
+  border-color: rgba(255, 255, 255, 0.06);
 }
 
 a:focus-visible {
   outline: 3px solid #93c5fd;
-  outline-offset: 2px;
+  outline-offset: 3px;
+}
+
+@media (max-width: 1024px) {
+  .hero,
+  .footer {
+    min-height: 42rem;
+  }
+
+  .section-light h2,
+  .section-white h2,
+  .section-accent h2,
+  .center-content h1,
+  .center-content h2 {
+    font-size: 2rem;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+  }
+
+  .section-light,
+  .section-accent,
+  .section-white {
+    padding: 72px 0;
+  }
+
+  .bento-row {
+    grid-template-columns: 1fr;
+  }
+
+  .card-main,
+  .card-side,
+  .card-wide {
+    height: 24rem;
+  }
+
+  .about {
+    min-height: auto;
+    gap: 32px;
+  }
+
+  .about-block {
+    min-height: 42rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .shell {
+    width: min(100%, calc(100% - 1.25rem));
+  }
+
+  .nav-shell {
+    min-height: 56px;
+  }
+
+  .section-light,
+  .section-accent,
+  .section-white {
+    padding: 56px 0;
+  }
+
+  .hero,
+  .footer {
+    min-height: 32rem;
+  }
+
+  .section-light h2,
+  .section-white h2,
+  .section-accent h2,
+  .center-content h1,
+  .center-content h2 {
+    font-size: 1.5rem;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+  }
+
+  .stack {
+    gap: 1.25rem;
+  }
+
+  .card-main,
+  .card-side {
+    height: 14rem;
+  }
+
+  .card-wide {
+    height: 10rem;
+  }
+
+  .about-block {
+    min-height: 20rem;
+    border-radius: 20px;
+  }
 }
