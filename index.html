@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Stephen Aase</title>
+  <script defer data-domain="stephenaase.com" src="https://plausible.io/js/script.js"></script>
   <link rel="stylesheet" href="colors_and_type.css">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -1441,6 +1442,22 @@
     // Password modal — open on bento click, dismiss on X / scrim / Esc
     // ============================================================
     document.addEventListener('DOMContentLoaded', function () {
+      function track(eventName, props) {
+        if (typeof window.plausible === 'function') {
+          window.plausible(eventName, props ? { props } : undefined);
+        }
+      }
+
+      const mobileCta = document.querySelector('.mobile-only-hero__cta');
+      if (mobileCta) {
+        mobileCta.addEventListener('click', () => {
+          track('cta_get_in_touch_click', {
+            location: 'mobile_hero',
+            destination: 'linkedin'
+          });
+        });
+      }
+
       const scrim = document.getElementById('passwordModal');
       if (!scrim) return;
       const dialog = scrim.querySelector('.modal__dialog');
@@ -1454,6 +1471,7 @@
         lastFocused = document.activeElement;
         scrim.hidden = false;
         document.body.classList.add('modal-open');
+        track('password_modal_open');
         // Force reflow so the transition animates from opacity 0 -> 1
         // eslint-disable-next-line no-unused-expressions
         scrim.offsetHeight;
@@ -1502,10 +1520,12 @@
         e.preventDefault();
         const value = (input.value || '').trim();
         if (value === '12345') {
+          track('password_submit', { result: 'success' });
           error.classList.remove('is-visible');
           input.classList.remove('is-error');
           dialog.classList.add('is-unlocked');
         } else {
+          track('password_submit', { result: 'error' });
           input.classList.add('is-error');
           error.classList.add('is-visible');
           input.focus();
