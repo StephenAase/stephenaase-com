@@ -554,6 +554,9 @@
       .stage {
         display: none;
       }
+      #siteGateModal {
+        display: none !important;
+      }
       .mobile-only-hero {
         display: flex;
       }
@@ -855,6 +858,71 @@
     /* Body lock when modal open */
     body.modal-open,
     html:has(body.modal-open) { overflow: hidden; height: 100%; }
+
+    /* Desktop site-gate modal */
+    .site-gate .modal__dialog {
+      width: min(900px, 100%);
+      padding: 56px 56px 48px;
+    }
+    .site-gate .modal__title {
+      font-size: 62px;
+      line-height: 1.05;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .site-gate .modal__subtitle {
+      max-width: 660px;
+      margin: 0 auto 44px;
+      text-align: center;
+      font-size: 42px;
+      line-height: 1.18;
+      letter-spacing: -0.02em;
+      color: rgba(32, 30, 26, 0.7);
+    }
+    .site-gate .modal__label {
+      margin-bottom: 12px;
+    }
+    .site-gate .modal__input {
+      font-size: 18px;
+      padding: 20px 24px;
+    }
+    .site-gate .modal__submit {
+      margin-top: 10px;
+      font-size: 36px;
+      line-height: 1.15;
+      padding: 22px 24px;
+      border-radius: 14px;
+    }
+    .site-gate .modal__divider {
+      margin: 40px 0 24px;
+      font-size: 11px;
+    }
+    .site-gate .modal__contact-text {
+      font-size: 44px;
+      line-height: 1.18;
+      color: rgba(32, 30, 26, 0.7);
+      margin-bottom: 28px;
+    }
+    .site-gate .modal__cta {
+      font-size: 36px;
+      line-height: 1.15;
+      padding: 18px 34px;
+      border-radius: 14px;
+    }
+    @media (max-width: 1279.98px) {
+      .site-gate .modal__title { font-size: 48px; }
+      .site-gate .modal__subtitle { font-size: 32px; }
+      .site-gate .modal__submit { font-size: 28px; }
+      .site-gate .modal__contact-text { font-size: 30px; }
+      .site-gate .modal__cta { font-size: 28px; }
+    }
+    @media (max-width: 1023.98px) {
+      .site-gate .modal__title { font-size: 36px; }
+      .site-gate .modal__subtitle { font-size: 24px; }
+      .site-gate .modal__submit { font-size: 22px; padding: 18px 20px; }
+      .site-gate .modal__contact-text { font-size: 22px; }
+      .site-gate .modal__cta { font-size: 20px; }
+    }
 
     @media (max-width: 540px) {
       .modal__dialog { padding: 48px 28px 36px; border-radius: var(--radius-xl); }
@@ -1448,6 +1516,49 @@
         }
       }
 
+      // Desktop site gate: lock access until password "G00se" is entered
+      const siteGateModal = document.getElementById('siteGateModal');
+      const desktopView = window.matchMedia('(min-width: 768px)').matches;
+      if (siteGateModal && desktopView) {
+        const siteGateInput = siteGateModal.querySelector('#siteGateInput');
+        const siteGateForm = siteGateModal.querySelector('.modal__form');
+        const siteGateError = siteGateModal.querySelector('.modal__error');
+
+        siteGateModal.hidden = false;
+        document.body.classList.add('modal-open');
+        // Force reflow for transition
+        // eslint-disable-next-line no-unused-expressions
+        siteGateModal.offsetHeight;
+        siteGateModal.classList.add('is-open');
+        if (siteGateInput) {
+          siteGateInput.value = 'G00se';
+        }
+        setTimeout(() => siteGateInput && siteGateInput.focus(), 120);
+
+        if (siteGateForm && siteGateInput && siteGateError) {
+          siteGateForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const value = (siteGateInput.value || '').trim();
+            if (value === 'G00se') {
+              track('site_gate_unlock', { result: 'success' });
+              siteGateError.classList.remove('is-visible');
+              siteGateInput.classList.remove('is-error');
+              siteGateModal.classList.remove('is-open');
+              setTimeout(() => {
+                siteGateModal.hidden = true;
+                document.body.classList.remove('modal-open');
+              }, 240);
+            } else {
+              track('site_gate_unlock', { result: 'error' });
+              siteGateInput.classList.add('is-error');
+              siteGateError.classList.add('is-visible');
+              siteGateInput.focus();
+              siteGateInput.select();
+            }
+          });
+        }
+      }
+
       const mobileCta = document.querySelector('.mobile-only-hero__cta');
       if (mobileCta) {
         mobileCta.addEventListener('click', () => {
@@ -1534,6 +1645,46 @@
       });
     });
   </script>
+
+  <!-- ============================================================
+       DESKTOP SITE GATE MODAL
+       Blocks desktop access until password "G00se" is entered.
+  ============================================================ -->
+  <div class="modal-scrim site-gate" id="siteGateModal" role="dialog" aria-modal="true"
+       aria-labelledby="siteGateTitle" aria-describedby="siteGateSubtitle" hidden>
+    <div class="modal__dialog" role="document">
+      <div class="modal__body">
+        <h2 class="modal__title" id="siteGateTitle">Password required</h2>
+        <p class="modal__subtitle" id="siteGateSubtitle">
+          This case study is shared privately with clients and collaborators.
+          Please enter the password you were given to continue.
+        </p>
+
+        <form class="modal__form" novalidate>
+          <label class="modal__label" for="siteGateInput">Password</label>
+          <input class="modal__input" id="siteGateInput" type="password"
+                 autocomplete="current-password"
+                 placeholder="Enter password"
+                 spellcheck="false" />
+          <p class="modal__error" role="alert">That password isn't quite right — try again, or reach out below.</p>
+          <button type="submit" class="modal__submit">Unlock case study</button>
+        </form>
+
+        <div class="modal__divider" role="separator" aria-hidden="true"><span>or</span></div>
+
+        <div class="modal__contact">
+          <p class="modal__contact-text">Don't have the password? I'd be happy to hear from you.</p>
+          <a class="modal__cta" href="mailto:hello@stephenaase.com">
+            Request access
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12h14"/><path d="M13 6l6 6-6 6"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- ============================================================
        PASSWORD MODAL
