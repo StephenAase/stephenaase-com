@@ -8,10 +8,14 @@
   <link rel="stylesheet" href="colors_and_type.css">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --page-max: 1440px;
+      --page-gutter: clamp(24px, 10vw, 144px);
+    }
     html, body {
       background: var(--color-bg-page);
       color: var(--color-text-primary);
-      font-family: var(--font-family-sans);
+      font-family: var(--font-family-serif);
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
     }
@@ -48,19 +52,19 @@
     /* ---------- Header (from Figma Navigation node) ---------- */
     .site-header {
       width: 100%;
-      background: #faf9f6;
+      background: #ffffff;
       border-bottom: 1px solid rgba(20, 16, 10, 0.05);
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 0 clamp(24px, 10vw, 144px);
+      padding: 0 var(--page-gutter);
       min-height: 62px;
       position: relative;
       z-index: 5;
     }
     .site-header__inner {
       width: 100%;
-      max-width: 1440px;
+      max-width: var(--page-max);
       min-height: 29px;
       display: flex;
       align-items: center;
@@ -70,8 +74,8 @@
       align-items: center;
       gap: 8px;
       text-decoration: none;
-      color: #201e1a;
-      font-family: var(--font-family-serif);
+      color: #434d65;
+      font-family: "Roboto Slab", var(--font-family-serif);
       font-weight: 700;
       font-size: 16px;
       line-height: 27.2px;
@@ -85,15 +89,29 @@
       flex-shrink: 0;
     }
 
-    /* ---------- Mobile-only hero (Figma 345:2696) ---------- */
+    /* ---------- Mobile-only hero (Figma 1:929) ---------- */
     .mobile-only-hero {
       display: none;
-      min-height: 100dvh;
-      background: #201e1a;
+      min-height: 785px;
+      background: #232e47;
       color: #efede8;
-      padding: 122px 16px 48px;
+      padding: 122px 0 134px;
       flex-direction: column;
       align-items: center;
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+    .mobile-only-hero::before {
+      content: "";
+      position: absolute;
+      inset: -24px 0 0;
+      background-image: url("https://www.figma.com/api/mcp/asset/df47635e-d647-431d-8b52-03ea9f3a7a05");
+      background-size: cover;
+      background-position: center;
+      opacity: 0.1;
+      pointer-events: none;
+      z-index: -1;
     }
     .mobile-only-hero__symbol {
       width: 73.49px;
@@ -102,7 +120,7 @@
       margin-bottom: 40px;
     }
     .mobile-only-hero__title {
-      font-family: var(--font-family-serif);
+      font-family: "Roboto Slab", var(--font-family-serif);
       font-weight: 500;
       font-size: 40.186px;
       line-height: 43.953px;
@@ -112,25 +130,22 @@
     }
     .mobile-only-hero__subtitle {
       max-width: 320px;
-      font-family: var(--font-family-serif);
+      font-family: "Roboto Slab", var(--font-family-serif);
       font-weight: 500;
       font-size: 20px;
       line-height: 25px;
       text-align: center;
       margin-bottom: 280px;
     }
-    .mobile-only-hero__subtitle em {
-      color: #c15f3c;
-      font-style: italic;
-    }
     .mobile-only-hero__subtitle-line {
       display: block;
-    }
-    .mobile-only-hero__subtitle-line--nowrap {
       white-space: nowrap;
     }
+    .mobile-only-hero__subtitle-accent {
+      color: #f5f386;
+    }
     .mobile-only-hero__cta {
-      width: min(238px, 100%);
+      width: 238px;
       height: 44px;
       margin-top: auto;
       display: inline-flex;
@@ -139,25 +154,22 @@
       gap: 8px;
       padding: 14px 32px;
       border-radius: 8px;
-      background: #c15f3c;
-      color: #fff;
+      background: #f5f386;
+      color: #232e47;
       text-decoration: none;
-      box-shadow:
-        0 1px 1px rgba(193, 95, 60, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      box-shadow: none;
       font-family: var(--font-family-sans);
       font-weight: 500;
       font-size: 16px;
       line-height: 16px;
       letter-spacing: 0.64px;
-      transition: transform 180ms var(--easing-default), background-color 180ms var(--easing-default);
+      transition: background-color 240ms var(--easing-default), opacity 200ms var(--easing-default);
     }
     .mobile-only-hero__cta:hover {
-      background: #a14d2e;
-      transform: translateY(-1px);
+      background: #ecea72;
     }
     .mobile-only-hero__cta:active {
-      transform: translateY(0);
+      opacity: 0.85;
     }
     .mobile-only-hero__cta-arrow {
       font-size: 19px;
@@ -169,101 +181,175 @@
 
     /* 01 Hero — dark block. Aspect ~1.76 (1440×820) */
     .s-hero {
-      background: var(--primitive-warm-800);
-      min-height: clamp(420px, 62vw, 820px);
+      background: #232e47;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      min-height: 920px;
       overflow: hidden;
       width: 100vw;
       margin-left: 50%;
       transform: translateX(-50%);
-      display: flex;
-      align-items: center;
-    }
-    .s-hero__glow {
-      position: absolute; inset: 0;
-      background:
-        radial-gradient(ellipse 600px 400px at 80% 20%, rgba(193,95,60,0.10) 0%, transparent 60%),
-        radial-gradient(ellipse 500px 400px at 20% 90%, rgba(193,95,60,0.06) 0%, transparent 60%);
-      pointer-events: none;
+      position: relative;
+      padding-left: var(--page-gutter);
+      padding-right: var(--page-gutter);
     }
     .s-hero__inner {
-      position: relative;
-      min-height: 100%;
-      flex: 1;
-      width: min(100%, 1440px);
+      width: min(100%, var(--page-max));
       margin: 0 auto;
-      padding: 0 clamp(24px, 6vw, 80px);
-      display: grid;
-      place-items: center;
-      text-align: center;
+      padding: 128px 0 72px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+      color: #fff;
+    }
+    .s-hero__eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+      font-family: var(--font-family-sans);
+      font-size: 10.24px;
+      font-weight: 600;
+      letter-spacing: 0.8192px;
+      text-transform: uppercase;
+      color: #fff;
+    }
+    .s-hero__eyebrow::before {
+      content: "";
+      width: 24px;
+      height: 1px;
+      background: #fff;
+      flex-shrink: 0;
+      opacity: 0.95;
     }
     .s-hero__title {
-      font-family: var(--font-family-serif);
-      font-weight: 700;
-      font-size: clamp(30px, 3.4vw, 39.056px);
-      line-height: 1.3;
-      letter-spacing: -0.3906px;
+      width: min(100%, 990px);
+      margin: 0;
+      font-family: "Roboto Slab", var(--font-family-serif);
+      font-weight: 400;
+      font-size: clamp(50px, 6vw, 96px);
+      line-height: 1.09;
+      letter-spacing: -2.1059px;
       color: #fff;
-      width: 100%;
-      max-width: 980px;
-      margin-inline: auto;
       text-wrap: balance;
     }
     .s-hero__title-accent {
-      color: var(--primitive-rust-500);
+      color: #f5f386;
+    }
+    .s-hero__body {
+      margin-top: 22px;
+      width: min(100%, 577px);
+      font-family: var(--font-family-sans);
+      font-size: clamp(16px, 1.5vw, 20px);
+      line-height: 1.7;
+      color: #fff;
+    }
+    .s-hero__cta {
+      margin-top: 26px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      height: 44px;
+      padding: 14px 32px;
+      border-radius: 8px;
+      background: #f5f386;
+      color: #222a3d;
+      text-decoration: none;
+      box-shadow: none;
+      font-family: var(--font-family-sans);
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 16px;
+      letter-spacing: 0.64px;
+      transition: background-color 240ms var(--easing-default), opacity 200ms var(--easing-default);
+    }
+    .s-hero__cta:hover {
+      background: var(--color-action-primary-hover);
+    }
+    .s-hero__cta:active {
+      opacity: 0.85;
+    }
+    .s-hero__stats {
+      margin-top: 96px;
+      width: min(100%, 760px);
+      padding-top: 40px;
+      border-top: 1px solid rgba(255, 255, 255, 0.07);
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 32px;
+    }
+    .s-hero__stat-value {
+      font-family: "Roboto Slab", var(--font-family-serif);
+      font-weight: 700;
+      font-size: 31.248px;
+      line-height: 31.248px;
+      letter-spacing: -0.3125px;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+    .s-hero__stat-label {
+      font-family: var(--font-family-sans);
+      font-size: 10.24px;
+      line-height: 13.312px;
+      letter-spacing: 0.4096px;
+      color: #fff;
+      opacity: 0.95;
+      max-width: 210px;
     }
 
-    /* 02 Selected Work — bento. Aspect ~1440×2140 */
+    /* 02 Selected Work — Figma node 1:755 */
     .s-work {
-      background: var(--color-bg-page);
-      padding: clamp(56px, 6vw, 72px) clamp(24px, 6vw, 80px) clamp(64px, 7vw, 88px);
+      background: #f6f6f6;
+      width: 100vw;
+      margin-left: 50%;
+      transform: translateX(-50%);
+      padding: 100px var(--page-gutter) 112px;
+    }
+    .s-work > * {
+      max-width: var(--page-max);
+      margin-inline: auto;
     }
     .s-work__label {
-      font-family: var(--font-family-serif);
+      font-family: "Roboto Slab", var(--font-family-serif);
       font-weight: 700;
-      font-size: 20px;
-      letter-spacing: -0.005em;
-      color: var(--color-text-primary);
-      margin-bottom: 32px;
+      font-size: 40px;
+      line-height: 50.773px;
+      letter-spacing: -0.3906px;
+      color: #201e1a;
+      margin-bottom: 48px;
     }
     .s-work__label em { display: none; }
     .bento {
       display: flex;
       flex-direction: column;
-      gap: clamp(12px, 2vw, 20px);
+      gap: 20px;
     }
     .bento__cell {
       position: relative;
-      background: var(--color-bg-surface);
-      border: 1px solid var(--color-border-default);
-      border-radius: var(--radius-xl);
-      box-shadow: var(--elevation-1);
-      transition: var(--transition-elevation);
+      background: #ffffff;
+      border: none;
+      border-radius: 24px;
       overflow: hidden;
-      /* Each cell fills its grid track height — heights are set on the row wrappers below. */
       height: 100%;
     }
     .bento__cell:hover {
-      box-shadow: var(--elevation-2);
-      transform: translateY(-2px);
+      transform: none;
     }
-    /* Row wrappers — these own the height so sibling cards share it exactly. */
     .bento__row {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      column-gap: clamp(12px, 2vw, 20px);
+      column-gap: 20px;
       grid-column: 1 / -1;
     }
-    /* Row 1: big left (2 cols), tall portrait right (1 col). Height matches big card's aspect (~940×912 at 2-col width). */
-    .bento__row--r1 { aspect-ratio: 1440 / 700; }
-    .bento__row--r1 .bento__r1-big   { grid-column: 1 / span 2; }
-    .bento__row--r1 .bento__r1-small { grid-column: 3 / span 1; }
-    /* Row 2: single full-bleed wide card */
-    .bento__row--r2 { height: clamp(260px, 34vw, 500px); }
+    .bento__row--r1 {
+      height: 913px;
+      grid-template-columns: minmax(0, 953fr) minmax(0, 466fr);
+    }
+    .bento__row--r2 { height: 501px; }
     .bento__row--r2 .bento__r2-wide { grid-column: 1 / -1; }
-    /* Row 3: small left (1 col), big right (2 cols). Mirror of row 1. */
-    .bento__row--r3 { aspect-ratio: 1440 / 700; }
-    .bento__row--r3 .bento__r3-small { grid-column: 1 / span 1; }
-    .bento__row--r3 .bento__r3-big   { grid-column: 2 / span 2; }
+    .bento__row--r3 {
+      height: 913px;
+      grid-template-columns: minmax(0, 466fr) minmax(0, 953fr);
+    }
 
     /* Small orange corner tag per wireframe — "open case study" affordance.
        Collapses to a 32×32 rounded square; expands to a pill with label on card hover.
@@ -282,15 +368,13 @@
       background: var(--primitive-rust-500);
       color: #fff;
       border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(193,95,60,0.25);
+      box-shadow: none;
       white-space: nowrap;
       user-select: none;
       /* Right-anchored clip keeps the visible 32x32 region pinned to the right edge;
          --bl variant overrides to anchor left. */
       clip-path: inset(0 0 0 calc(100% - 32px) round 8px);
-      transition:
-        clip-path 340ms cubic-bezier(0.22, 1, 0.36, 1),
-        box-shadow 340ms cubic-bezier(0.22, 1, 0.36, 1);
+      transition: clip-path 280ms var(--easing-default);
       will-change: clip-path;
     }
     /* Icon layer — collapsed default. Sits in the 32px region that's visible by default. */
@@ -340,7 +424,6 @@
     .bento__cell:hover .tag,
     .bento__cell:focus-visible .tag {
       clip-path: inset(0 0 0 0 round 10px);
-      box-shadow: 0 6px 16px rgba(193,95,60,0.32);
     }
     .bento__cell:hover .tag__icon,
     .bento__cell:focus-visible .tag__icon { opacity: 0; }
@@ -356,32 +439,33 @@
 
     /* 03 Methodology — rust band. Aspect ~1440×820 */
     .s-method {
-      background: var(--primitive-rust-500);
-      color: #fff;
-      padding: clamp(56px, 6vw, 72px) clamp(24px, 6vw, 80px);
+      background: #f5f386;
+      color: #434d65;
+      padding: 100px var(--page-gutter);
       position: relative;
-      overflow: hidden;
-      min-height: clamp(420px, 62vw, 820px);
+      min-height: 1024px;
       width: 100vw;
       margin-left: 50%;
       transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+      display: block;
+    }
+    .s-method > * {
+      max-width: var(--page-max);
+      margin-inline: auto;
     }
     .s-method__glow {
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 700px 500px at 90% 110%, rgba(255,255,255,0.08) 0%, transparent 60%);
-      pointer-events: none;
+      display: none;
     }
     .s-method__label {
-      position: relative;
-      font-size: 11px; font-weight: 600;
-      letter-spacing: 0.14em; text-transform: uppercase;
-      color: rgba(255,255,255,0.6);
-      margin-bottom: 16px;
+      font-family: "Roboto Slab", var(--font-family-serif);
+      font-size: 40px;
+      font-weight: 700;
+      line-height: 50.773px;
+      letter-spacing: -0.3906px;
+      color: #434d65;
+      margin: 0;
+      width: min(100%, var(--page-max));
+      margin-inline: auto;
     }
     .s-method__title {
       position: relative;
@@ -400,89 +484,57 @@
       color: rgba(255,255,255,0.72);
     }
     .s-method__footer {
-      position: relative;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      font-size: 12px;
-      color: rgba(255,255,255,0.55);
-      letter-spacing: 0.02em;
+      display: none;
     }
     .s-method__footer span { font-variant-numeric: tabular-nums; }
 
-    /* 04 Toolbox — "Hi, I'm Stephen" section */
+    /* 04 Placeholder section (replaces About + Principles) */
     .s-tools {
-      background: var(--color-bg-surface);
-      padding: clamp(56px, 6vw, 100px) clamp(24px, 6vw, 180px) clamp(72px, 8vw, 154px);
+      background: #859ee5;
+      min-height: 1024px;
+      padding: 100px var(--page-gutter);
       width: 100vw;
       margin-left: 50%;
       transform: translateX(-50%);
+    }
+    .s-tools > * {
+      max-width: var(--page-max);
+      margin-inline: auto;
     }
     .s-tools__label {
       font-family: var(--font-family-serif);
       font-weight: 700;
-      font-size: clamp(30px, 3.2vw, 39.056px);
-      line-height: 1.3;
+      font-size: 39.056px;
+      line-height: 50.773px;
       letter-spacing: -0.3906px;
-      color: var(--color-text-primary);
-      margin-bottom: clamp(36px, 5vw, 75px);
+      color: #ffffff;
+      margin: 0;
+      width: min(100%, var(--page-max));
+      margin-inline: auto;
     }
     .s-tools__card {
-      width: 100%;
-      min-height: clamp(460px, 72vw, 1298px);
-      background: var(--color-bg-surface-subtle);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: var(--radius-xl);
-      box-shadow: 0 1px 2px rgba(20,16,10,0.04), 0 1px 4px rgba(20,16,10,0.03);
+      display: none;
     }
-
-    /* 05 Style — color swatches */
-    .s-style {
-      background: var(--color-bg-surface);
-      padding: clamp(32px, 5vw, 40px) clamp(24px, 6vw, 80px) clamp(72px, 8vw, 96px);
-    }
-    .s-style__label {
-      font-size: 11px; font-weight: 600;
-      letter-spacing: 0.14em; text-transform: uppercase;
-      color: var(--color-text-tertiary);
-      margin-bottom: 24px;
-      display: flex; align-items: center; gap: 8px;
-    }
-    .s-style__label::before {
-      content: '★';
-      font-size: 10px;
-      color: var(--primitive-rust-500);
-      letter-spacing: 0;
-    }
-    .swatches {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      max-width: 760px;
-    }
-    .swatch {
-      aspect-ratio: 1 / 1;
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--color-border-default);
-    }
-    .swatch--dark { background: var(--primitive-warm-800); }
-    .swatch--warm { background: var(--primitive-warm-100); }
-    .swatch--rust { background: var(--primitive-rust-500); }
 
     /* 06 Footer (Desktop Figma 345:2740) */
     .s-cta {
-      background: #1f1d19;
-      padding: clamp(72px, 8vw, 96px) clamp(24px, 6vw, 80px);
+      background: #232e47;
+      padding: 240px var(--page-gutter) 0;
       text-align: center;
       position: relative;
       overflow: hidden;
-      min-height: clamp(420px, 62vw, 820px);
+      min-height: 920px;
       width: 100vw;
       margin-left: 50%;
       transform: translateX(-50%);
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: center;
+    }
+    .s-cta > * {
+      max-width: var(--page-max);
+      margin-inline: auto;
+      width: 100%;
     }
     .s-cta__glow {
       display: none;
@@ -492,7 +544,7 @@
       font-family: var(--font-family-serif);
       font-style: normal;
       font-weight: 700;
-      font-size: clamp(30px, 3.2vw, 39.056px);
+      font-size: 39.056px;
       line-height: 50.773px;
       color: #ffffff;
       max-width: 1440px;
@@ -518,17 +570,24 @@
     @media (max-width: 1439.98px) {
       .stage { max-width: none; }
       .page { max-width: none; box-shadow: none; }
-      .site-header { padding-left: 24px; padding-right: 24px; }
+      :root { --page-gutter: 24px; }
     }
 
     @media (max-width: 1279.98px) {
-      .s-hero__inner, .s-work, .s-method, .s-tools, .s-style, .s-cta { padding-left: 64px; padding-right: 64px; }
-      .site-header { padding-left: 64px; padding-right: 64px; }
+      :root { --page-gutter: 64px; }
     }
 
     @media (max-width: 1023.98px) {
-      .s-hero__inner, .s-work, .s-method, .s-tools, .s-style, .s-cta { padding-left: 48px; padding-right: 48px; }
-      .site-header { padding-left: 48px; padding-right: 48px; }
+      :root { --page-gutter: 48px; }
+      .s-hero {
+        min-height: 820px;
+      }
+      .s-hero__inner {
+        padding-top: 96px;
+      }
+      .s-hero__stats {
+        margin-top: 72px;
+      }
       .s-method__title { font-size: 32px; }
       .bento__row--r1,
       .bento__row--r3 {
@@ -547,6 +606,14 @@
         min-height: clamp(200px, 32vw, 320px);
       }
       .bento__row--r2 { height: clamp(240px, 34vw, 400px); }
+      .s-cta {
+        min-height: 760px;
+        padding-top: 220px;
+      }
+      .s-cta__text {
+        font-size: 32px;
+        line-height: 1.2;
+      }
     }
 
     @media (max-width: 767.98px) {
@@ -560,40 +627,37 @@
       .mobile-only-hero {
         display: flex;
       }
-      .s-hero__inner, .s-work, .s-method, .s-tools, .s-style, .s-cta { padding-left: 32px; padding-right: 32px; }
-      .site-header { padding-left: 32px; padding-right: 32px; }
-      .s-method { padding-top: 56px; padding-bottom: 72px; }
+      :root { --page-gutter: 32px; }
+      .s-method { min-height: 780px; padding-top: 64px; padding-bottom: 64px; }
       .s-cta { padding-top: 80px; padding-bottom: 96px; }
       .bento__row { grid-template-columns: 1fr; aspect-ratio: auto; row-gap: 20px; }
       .bento__row .bento__cell { grid-column: 1 / -1; aspect-ratio: auto; min-height: clamp(220px, 56vw, 320px); }
-      .s-tools__card { min-height: clamp(360px, 68vw, 760px); }
+      .s-tools { min-height: 760px; }
+      .s-tools__label { font-size: 32px; line-height: 1.2; letter-spacing: -0.02em; }
+      .s-cta {
+        min-height: 640px;
+        padding-top: 180px;
+      }
+      .s-cta__text {
+        font-size: 28px;
+        line-height: 1.2;
+      }
     }
 
     @media (max-width: 639.98px) {
-      .s-hero__inner, .s-work, .s-method, .s-tools, .s-style, .s-cta { padding-left: 24px; padding-right: 24px; }
-      .site-header { min-height: 56px; padding-left: 24px; padding-right: 24px; }
+      :root { --page-gutter: 24px; }
+      .site-header { min-height: 56px; }
       .site-header__brand { font-size: 15px; }
       .s-hero__inner { padding-top: 48px; padding-bottom: 48px; }
-      .s-hero__title { font-size: clamp(24px, 7vw, 30px); line-height: 1.35; letter-spacing: -0.02em; }
-      .s-work, .s-tools { padding-top: 56px; padding-bottom: 64px; }
-      .s-tools__label { margin-bottom: 32px; }
-      .s-cta { padding-top: 72px; padding-bottom: 88px; }
-      .swatches { gap: 12px; }
-      .s-method__title { font-size: 24px; }
-      .s-method__footer { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .s-work, .s-tools { padding-top: 56px; padding-bottom: 56px; }
+      .s-tools { min-height: 620px; }
+      .s-tools__label { margin: 0; font-size: 28px; line-height: 1.2; letter-spacing: -0.01em; }
+      .s-cta { min-height: 560px; padding-top: 140px; padding-bottom: 0; }
+      .s-cta__text { font-size: 24px; line-height: 1.2; }
+      .s-method { min-height: 620px; padding-top: 56px; padding-bottom: 56px; }
+      .s-method__label { font-size: 32px; line-height: 1.2; letter-spacing: -0.02em; }
       .s-cta__text { font-size: 17px; }
-      .mobile-only-hero {
-        padding-top: 110px;
-      }
-      .mobile-only-hero__title {
-        font-size: 40px;
-      }
-      .mobile-only-hero__subtitle {
-        margin-bottom: 240px;
-      }
-      .mobile-only-hero__cta {
-        width: min(238px, calc(100% - 32px));
-      }
+      .mobile-only-hero { min-height: 100dvh; }
     }
     /* =============================================================
        PASSWORD MODAL
@@ -610,9 +674,9 @@
       align-items: flex-start;
       justify-content: center;
       padding: 48px 32px;
-      background: rgba(20, 16, 10, 0.72);
-      backdrop-filter: blur(6px) saturate(120%);
-      -webkit-backdrop-filter: blur(6px) saturate(120%);
+      background: rgba(35, 46, 71, 0.7);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       opacity: 0;
       transition:
         opacity 240ms var(--easing-default),
@@ -629,18 +693,19 @@
       position: relative;
       margin: auto;
       width: min(540px, 100%);
-      background: var(--color-bg-surface);
-      border-radius: var(--radius-2xl);
-      box-shadow: var(--elevation-4);
+      background: var(--color-bg-page);
+      border: 1px solid rgba(67, 77, 101, 0.16);
+      border-radius: 6px;
+      box-shadow: none;
       padding: 56px 56px 48px;
-      transform: translateY(16px) scale(0.98);
+      transform: translateY(10px);
       opacity: 0;
       overflow: hidden;
       transition:
-        width 520ms cubic-bezier(0.22, 1, 0.36, 1),
-        min-height 520ms cubic-bezier(0.22, 1, 0.36, 1),
-        padding 520ms cubic-bezier(0.22, 1, 0.36, 1),
-        transform 280ms cubic-bezier(0.22, 1, 0.36, 1),
+        width 320ms var(--easing-default),
+        min-height 320ms var(--easing-default),
+        padding 320ms var(--easing-default),
+        transform 220ms var(--easing-default),
         opacity 240ms var(--easing-default);
     }
     /* Unlocked — expand to the case-study canvas (1024 wide), natural height. */
@@ -674,7 +739,7 @@
     }
     .modal__close:hover,
     .modal__close:focus-visible {
-      background: var(--primitive-warm-100);
+      background: rgba(133, 158, 229, 0.12);
       color: var(--color-text-primary);
       outline: none;
     }
@@ -714,18 +779,18 @@
 
     .modal__title {
       font-family: var(--font-family-serif);
-      font-weight: 700;
-      font-size: 28px;
-      letter-spacing: -0.015em;
-      line-height: 1.15;
-      color: var(--color-text-primary);
-      margin-bottom: 10px;
+      font-weight: 300;
+      font-size: 36px;
+      letter-spacing: -0.01em;
+      line-height: 1;
+      color: #232e47;
+      margin-bottom: 12px;
     }
     .modal__subtitle {
-      font-family: var(--font-family-sans);
-      font-size: 14px;
-      line-height: 1.55;
-      color: var(--color-text-secondary);
+      font-family: var(--font-family-serif);
+      font-size: 16px;
+      line-height: 1.5;
+      color: #434d65;
       max-width: 360px;
       margin: 0 auto 28px;
     }
@@ -740,33 +805,31 @@
     .modal__label {
       font-family: var(--font-family-sans);
       font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.12em;
+      font-weight: 400;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: var(--color-text-tertiary);
+      color: #859ee5;
     }
     .modal__input {
-      font-family: var(--font-family-sans);
-      font-size: 15px;
+      font-family: var(--font-family-serif);
+      font-size: 16px;
       color: var(--color-text-primary);
-      background: var(--color-bg-surface);
-      border: 1px solid var(--color-border-default);
-      border-radius: var(--radius-md);
-      padding: 14px 16px;
+      background: transparent;
+      border: none;
+      border-bottom: 0.83px solid #859ee5;
+      border-radius: 0;
+      padding: 12px 0;
       width: 100%;
       transition:
-        border-color 180ms var(--easing-default),
-        box-shadow 180ms var(--easing-default);
+        border-color 180ms var(--easing-default);
       outline: none;
     }
     .modal__input::placeholder { color: var(--color-text-tertiary); }
     .modal__input:focus {
-      border-color: var(--primitive-rust-500);
-      box-shadow: 0 0 0 3px rgba(193, 95, 60, 0.16);
+      border-color: #232e47;
     }
     .modal__input.is-error {
       border-color: #C03B3B;
-      box-shadow: 0 0 0 3px rgba(192, 59, 59, 0.14);
     }
     .modal__error {
       font-family: var(--font-family-sans);
@@ -781,21 +844,21 @@
     }
     .modal__error.is-visible { opacity: 1; max-height: 40px; }
     .modal__submit {
-      font-family: var(--font-family-sans);
-      font-size: 14px;
-      font-weight: 600;
+      font-family: var(--font-family-serif);
+      font-size: 16px;
+      font-weight: 500;
       letter-spacing: -0.005em;
-      color: #fff;
-      background: var(--primitive-warm-800);
-      border-radius: var(--radius-md);
-      padding: 14px 20px;
+      color: #232e47;
+      background: #f5f386;
+      border-radius: 6px;
+      padding: 14px 24px;
       margin-top: 4px;
       transition:
-        background-color 180ms var(--easing-default),
-        transform 120ms var(--easing-default);
+        background-color 220ms var(--easing-default),
+        opacity 200ms var(--easing-default);
     }
-    .modal__submit:hover { background: var(--primitive-warm-900); }
-    .modal__submit:active { transform: translateY(1px); }
+    .modal__submit:hover { background: #efec68; }
+    .modal__submit:active { opacity: 0.85; }
 
     /* Divider */
     .modal__divider {
@@ -824,35 +887,32 @@
     .modal__contact { text-align: center; }
     .modal__contact-text {
       font-family: var(--font-family-serif);
-      font-style: italic;
+      font-style: normal;
       font-size: 15px;
       line-height: 1.5;
-      color: var(--color-text-secondary);
+      color: #434d65;
       margin-bottom: 16px;
     }
     .modal__cta {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      font-family: var(--font-family-sans);
-      font-size: 14px;
-      font-weight: 600;
+      font-family: var(--font-family-serif);
+      font-size: 16px;
+      font-weight: 500;
       letter-spacing: -0.005em;
-      color: #fff;
-      background: var(--primitive-rust-500);
-      border-radius: var(--radius-md);
-      padding: 12px 22px;
+      color: #f5f386;
+      background: #232e47;
+      border-radius: 6px;
+      padding: 14px 24px;
       transition:
-        background-color 180ms var(--easing-default),
-        transform 120ms var(--easing-default),
-        box-shadow 180ms var(--easing-default);
-      box-shadow: 0 2px 6px rgba(193, 95, 60, 0.25);
+        background-color 220ms var(--easing-default),
+        opacity 200ms var(--easing-default);
     }
     .modal__cta:hover {
-      background: var(--primitive-rust-600, #A94E34);
-      box-shadow: 0 6px 16px rgba(193, 95, 60, 0.32);
+      background: #1a2238;
     }
-    .modal__cta:active { transform: translateY(1px); }
+    .modal__cta:active { opacity: 0.85; }
     .modal__cta svg { width: 14px; height: 14px; }
 
     /* Body lock when modal open */
@@ -861,12 +921,12 @@
 
     /* Desktop site-gate modal */
     .site-gate .modal__dialog {
-      width: min(640px, 100%);
-      padding: 44px 40px 36px;
+      width: min(620px, 100%);
+      padding: 48px 40px 38px;
     }
     .site-gate .modal__title {
-      font-size: 44px;
-      line-height: 1.1;
+      font-size: 42px;
+      line-height: 1;
       margin-bottom: 12px;
       text-align: center;
     }
@@ -874,10 +934,10 @@
       max-width: 520px;
       margin: 0 auto 28px;
       text-align: center;
-      font-size: 18px;
+      font-size: 16px;
       line-height: 1.5;
       letter-spacing: 0;
-      color: rgba(32, 30, 26, 0.7);
+      color: #434d65;
     }
     .site-gate .modal__label {
       margin-bottom: 12px;
@@ -887,35 +947,19 @@
       padding: 16px 18px;
     }
     .site-gate .modal__submit {
-      margin-top: 6px;
-      font-size: 16px;
-      line-height: 1.2;
-      padding: 14px 18px;
-      border-radius: 10px;
+      margin-top: 8px;
     }
-    .site-gate .modal__divider {
-      margin: 28px 0 20px;
-      font-size: 11px;
-    }
-    .site-gate .modal__contact-text {
-      font-size: 15px;
-      line-height: 1.5;
-      color: rgba(32, 30, 26, 0.7);
-      margin-bottom: 16px;
-    }
-    .site-gate .modal__cta {
-      font-size: 15px;
-      line-height: 1.2;
-      padding: 12px 20px;
-      border-radius: 10px;
+    .site-gate .modal__divider,
+    .site-gate .modal__contact {
+      display: none;
     }
     @media (max-width: 1279.98px) {
-      .site-gate .modal__title { font-size: 38px; }
-      .site-gate .modal__subtitle { font-size: 17px; }
+      .site-gate .modal__title { font-size: 36px; }
+      .site-gate .modal__subtitle { font-size: 16px; }
     }
     @media (max-width: 1023.98px) {
       .site-gate .modal__title { font-size: 32px; }
-      .site-gate .modal__subtitle { font-size: 16px; }
+      .site-gate .modal__subtitle { font-size: 15px; }
     }
 
     @media (max-width: 540px) {
@@ -1353,15 +1397,11 @@
 </head>
 <body>
   <section class="mobile-only-hero" aria-label="Mobile introduction">
-    <img class="mobile-only-hero__symbol" src="https://www.figma.com/api/mcp/asset/910bc03a-c2df-453e-bb1a-29e0f2b8fdf5" alt="" />
+    <img class="mobile-only-hero__symbol" src="https://www.figma.com/api/mcp/asset/0de7e147-e4f6-4e94-b08e-57595293bc6f" alt="" />
     <h1 class="mobile-only-hero__title">Stephen Aase</h1>
     <p class="mobile-only-hero__subtitle">
-      <span class="mobile-only-hero__subtitle-line">
-        A craftsman of <em>impactful,</em>
-      </span>
-      <span class="mobile-only-hero__subtitle-line mobile-only-hero__subtitle-line--nowrap">
-        <em>human-centered</em> experiences.
-      </span>
+      <span class="mobile-only-hero__subtitle-line">A craftsman of <span class="mobile-only-hero__subtitle-accent">impactful</span></span>
+      <span class="mobile-only-hero__subtitle-line"><span class="mobile-only-hero__subtitle-accent">human-centered</span> experiences.</span>
     </p>
     <a class="mobile-only-hero__cta" href="https://www.linkedin.com/in/stephenaase/" target="_blank" rel="noopener noreferrer">
       Get in touch
@@ -1372,7 +1412,7 @@
   <header class="site-header">
     <div class="site-header__inner">
       <a class="site-header__brand" href="#hero" aria-label="Stephen Aase home">
-        <img class="site-header__icon" src="https://www.figma.com/api/mcp/asset/13c497be-fdcc-43de-b1e1-9cf6ab5db494" alt="" />
+        <img class="site-header__icon" src="https://www.figma.com/api/mcp/asset/2ab77808-6a0c-4b43-aff2-9ae811328aa5" alt="" />
         <span>Stephen Aase</span>
       </a>
     </div>
@@ -1384,12 +1424,31 @@
     <div class="page">
       <!-- 01 HERO -->
       <section id="hero" class="s-hero" data-section="hero" data-screen-label="01 Hero">
-        <div class="s-hero__glow parallax-host" data-parallax="0.25"></div>
         <div class="s-hero__inner">
-          <h1 class="s-hero__title">
-            Site is under construction.<br>
-            <span class="s-hero__title-accent">Exciting updates coming soon!</span>
-          </h1>
+          <p class="s-hero__eyebrow">Product Design Leadership · AI Pioneer</p>
+          <h1 class="s-hero__title">A craftsman of <span class="s-hero__title-accent">impactful, human-centered</span> experiences.</h1>
+          <p class="s-hero__body">
+            I build the teams, systems, and strategy that turn ambitious products into things millions of people rely on.
+          </p>
+          <a class="s-hero__cta" href="#work">
+            See what i&apos;ve built
+            <span aria-hidden="true">↓</span>
+          </a>
+
+          <div class="s-hero__stats">
+            <div class="s-hero__stat">
+              <p class="s-hero__stat-value">20 years</p>
+              <p class="s-hero__stat-label">obsessed with making experiences useful and beautiful.</p>
+            </div>
+            <div class="s-hero__stat">
+              <p class="s-hero__stat-value">120M+</p>
+              <p class="s-hero__stat-label">weekly customers using products I&apos;ve built with cross-functional teams.</p>
+            </div>
+            <div class="s-hero__stat">
+              <p class="s-hero__stat-value">AI First</p>
+              <p class="s-hero__stat-label">Bringing curiosity, rigor and agility to every team I lead.</p>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -1399,65 +1458,29 @@
         <div class="bento">
           <!-- Row 1: big left, small portrait right -->
           <div class="bento__row bento__row--r1">
-            <div class="bento__cell bento__r1-big">
-              <span class="tag tag--br" aria-hidden="true">
-                <span class="tag__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 21 3 21 3 15"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/></svg></span><svg class="tag__bracket tag__bracket--bl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 21 3 21 3 15"/></svg><span class="tag__label">Open Case Study</span><svg class="tag__bracket tag__bracket--tr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/></svg>
-              </span>
-            </div>
-            <div class="bento__cell bento__r1-small">
-              <span class="tag tag--br" aria-hidden="true">
-                <span class="tag__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 21 3 21 3 15"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/></svg></span><svg class="tag__bracket tag__bracket--bl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 21 3 21 3 15"/></svg><span class="tag__label">Open Case Study</span><svg class="tag__bracket tag__bracket--tr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/></svg>
-              </span>
-            </div>
+            <div class="bento__cell bento__r1-big"></div>
+            <div class="bento__cell bento__r1-small"></div>
           </div>
           <!-- Row 2: single full-width wide card -->
           <div class="bento__row bento__row--r2">
-            <div class="bento__cell bento__r2-wide">
-              <span class="tag tag--br" aria-hidden="true">
-                <span class="tag__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 21 3 21 3 15"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/></svg></span><svg class="tag__bracket tag__bracket--bl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 21 3 21 3 15"/></svg><span class="tag__label">Open Case Study</span><svg class="tag__bracket tag__bracket--tr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/></svg>
-              </span>
-            </div>
+            <div class="bento__cell bento__r2-wide"></div>
           </div>
           <!-- Row 3: small portrait left, big right -->
           <div class="bento__row bento__row--r3">
-            <div class="bento__cell bento__r3-small">
-              <span class="tag tag--br" aria-hidden="true">
-                <span class="tag__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 21 3 21 3 15"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/></svg></span><svg class="tag__bracket tag__bracket--bl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 21 3 21 3 15"/></svg><span class="tag__label">Open Case Study</span><svg class="tag__bracket tag__bracket--tr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/></svg>
-              </span>
-            </div>
-            <div class="bento__cell bento__r3-big">
-              <span class="tag tag--br" aria-hidden="true">
-                <span class="tag__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 21 3 21 3 15"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/></svg></span><svg class="tag__bracket tag__bracket--bl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 21 3 21 3 15"/></svg><span class="tag__label">Open Case Study</span><svg class="tag__bracket tag__bracket--tr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/></svg>
-              </span>
-            </div>
+            <div class="bento__cell bento__r3-small"></div>
+            <div class="bento__cell bento__r3-big"></div>
           </div>
         </div>
       </section>
 
       <!-- 03 METHODOLOGY -->
       <section id="method" class="s-method" data-section="method" data-screen-label="03 AI Leadership">
-        <div class="s-method__glow parallax-host" data-parallax="0.3"></div>
         <div class="s-method__label">AI Leadership</div>
-        <div class="s-method__footer">
-          <span>01 / 04</span>
-          <span>Explore →</span>
-        </div>
       </section>
 
       <!-- 04 TOOLBOX -->
       <section id="tools" class="s-tools" data-section="tools" data-screen-label="04 About">
         <div class="s-tools__label">Hi, I'm Stephen</div>
-        <div class="s-tools__card parallax-host" data-parallax="0.1"></div>
-      </section>
-
-      <!-- 05 STYLE -->
-      <section id="style" class="s-style" data-section="style" data-screen-label="05 Style">
-        <div class="s-style__label">Principles that guide me</div>
-        <div class="swatches">
-          <div class="swatch swatch--dark"></div>
-          <div class="swatch swatch--warm"></div>
-          <div class="swatch swatch--rust"></div>
-        </div>
       </section>
 
       <!-- 06 CONTACT / CTA FOOTER -->
@@ -1657,22 +1680,9 @@
                  autocomplete="current-password"
                  placeholder="Enter password"
                  spellcheck="false" />
-          <p class="modal__error" role="alert">That password isn't quite right — try again, or reach out below.</p>
+          <p class="modal__error" role="alert">That password isn't quite right — try again.</p>
           <button type="submit" class="modal__submit">Enter portfolio</button>
         </form>
-
-        <div class="modal__divider" role="separator" aria-hidden="true"><span>or</span></div>
-
-        <div class="modal__contact">
-          <p class="modal__contact-text">Need access? I'd be happy to share a preview.</p>
-          <a class="modal__cta" href="mailto:hello@stephenaase.com">
-            Request access
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M5 12h14"/><path d="M13 6l6 6-6 6"/>
-            </svg>
-          </a>
-        </div>
       </div>
     </div>
   </div>
