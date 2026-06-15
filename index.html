@@ -258,15 +258,11 @@
     .m2-section__label { font-family: var(--font-family-serif); font-weight: 500; font-size: 14px; letter-spacing: 0.04em; color: #524e47; margin-bottom: 18px; }
 
     /* ---- Testimonials carousel ---- */
-    /* Testimonials: continuous, infinite marquee on mobile */
-    .m2-tmarquee-wrap { overflow: hidden; }
-    .m2-tmarquee { display: flex; width: max-content; will-change: transform; animation: m2-tscroll 48s linear infinite; }
-    .m2-tmarquee:hover, .m2-tmarquee.is-paused { animation-play-state: paused; }
-    @keyframes m2-tscroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    /* Testimonials: manual swipe carousel (same pattern as AI leadership) */
     .m2-tcard {
-      flex: 0 0 auto;
-      width: min(80vw, 330px);
-      margin-right: 16px;
+      scroll-snap-align: start;
+      flex: 0 0 84%;
+      max-width: 340px;
       display: flex; flex-direction: column;
       background: #fff;
       border: 1px solid rgba(0,0,0,0.06);
@@ -1713,17 +1709,16 @@
         --section-gap: clamp(88px, 11vw, 116px);
         --m-content-max: 760px;
       }
-      /* Carousels become static grids; testimonials marquee -> grid (no animation, clones hidden) */
-      #m2-testimonials .m2-tmarquee,
+      /* Carousels become static grids on tablet+ */
+      #m2-testimonials .m2-rail,
       #m2-ai .m2-rail {
         display: grid; gap: 24px; overflow: visible;
         scroll-snap-type: none; max-width: var(--m-content-max); margin-inline: auto;
         padding-inline: var(--gutter);
       }
-      #m2-testimonials .m2-tmarquee { grid-template-columns: repeat(2, 1fr); width: auto; animation: none; transform: none; }
+      #m2-testimonials .m2-rail { grid-template-columns: repeat(2, 1fr); }
       #m2-ai .m2-rail { grid-template-columns: repeat(2, 1fr); }
-      #m2-testimonials .m2-tcard--clone { display: none; }
-      #m2-ai [data-dots], .m2-stats [data-dots] { display: none; }
+      #m2-testimonials [data-dots], #m2-ai [data-dots], .m2-stats [data-dots] { display: none; }
       .m2-tcard, .m2-aicard { flex: none; max-width: none; width: auto; margin-right: 0; }
       .m2-aicard { height: clamp(380px, 46vw, 440px); }
       .m2-section__label { max-width: var(--m-content-max); margin-inline: auto; padding-inline: var(--gutter); }
@@ -1773,7 +1768,7 @@
       .m2-stat { min-height: 132px; padding: 32px; }
 
       /* Testimonials + AI -> 3-up / 4-up */
-      #m2-testimonials .m2-tmarquee { grid-template-columns: repeat(3, 1fr); gap: 28px; }
+      #m2-testimonials .m2-rail { grid-template-columns: repeat(3, 1fr); gap: 28px; }
       #m2-ai .m2-rail { grid-template-columns: repeat(4, 1fr); gap: 20px; }
       .m2-aicard { height: clamp(400px, 30vw, 460px); }
 
@@ -1938,8 +1933,8 @@
           <div class="m2-wrap">
             <p class="m2-section__label">TESTIMONIALS</p>
           </div>
-          <div class="m2-tmarquee-wrap">
-            <div class="m2-tmarquee" data-marquee role="group" aria-roledescription="carousel" aria-label="Testimonials">
+          <div data-carousel>
+            <div class="m2-rail" role="group" aria-roledescription="carousel" aria-label="Testimonials" style="padding-inline: var(--gutter); scroll-padding-inline: var(--gutter);">
               <figure class="m2-tcard">
                 <img class="m2-tcard__mark" src="assets/quote-mark.svg" alt="" aria-hidden="true" />
                 <blockquote class="m2-tcard__quote">Stephen was a joy to work with. He was an amazing blend of "think" and "do." I always knew that I'd get amazingly thoughtful design work from him that was both beautiful and innovative. He self-manages and leads well beyond his years, and I can't wait to see what he's up to in 10 years.</blockquote>
@@ -1974,6 +1969,7 @@
                 </figcaption>
               </figure>
             </div>
+            <div class="m2-dots" data-dots aria-hidden="true"></div>
           </div>
         </section>
 
@@ -2340,28 +2336,6 @@
           }, { root: rail, threshold: 0.6 });
           slides.forEach(function (s) { io.observe(s); });
         });
-
-        // --- Testimonials marquee: clone for a seamless infinite loop; pause on touch ---
-        var marquee = root.querySelector('[data-marquee]');
-        if (marquee) {
-          if (prefersReducedMotion) {
-            marquee.style.animation = 'none';
-          } else {
-            Array.prototype.slice.call(marquee.children).forEach(function (card) {
-              var clone = card.cloneNode(true);
-              clone.setAttribute('aria-hidden', 'true');
-              clone.classList.add('m2-tcard--clone');
-              marquee.appendChild(clone);
-            });
-            var resumeT;
-            ['pointerdown', 'touchstart'].forEach(function (ev) {
-              marquee.addEventListener(ev, function () { marquee.classList.add('is-paused'); clearTimeout(resumeT); }, { passive: true });
-            });
-            ['pointerup', 'pointercancel', 'touchend', 'touchcancel'].forEach(function (ev) {
-              marquee.addEventListener(ev, function () { clearTimeout(resumeT); resumeT = setTimeout(function () { marquee.classList.remove('is-paused'); }, 3000); }, { passive: true });
-            });
-          }
-        }
 
         // --- Nav drawer (focus-trapped) ---
         var nav = document.getElementById('m2Nav');
