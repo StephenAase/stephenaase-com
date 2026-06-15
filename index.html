@@ -99,9 +99,12 @@
        Component styles below are authored mobile-first (base = mobile);
        only the root's VISIBILITY is breakpoint-gated during transition.
     ============================================================= */
-    .m2 { display: none; }            /* shown in the < md query */
+    /* Phase 2: the new DOM is now the site at ALL widths; legacy desktop retired. */
+    .site-header, .stage { display: none !important; }
+    #siteGateModal { display: none !important; }
 
     .m2 {
+      display: block;
       font-family: var(--font-family-sans);
       color: var(--brand-light);
       background: var(--hero-bg);
@@ -1676,6 +1679,124 @@
       .cs__title { font-size: 30px; }
       .cs__stat-value { font-size: 48px; }
     }
+
+    /* =============================================================
+       PORTFOLIO 26.2 — RESPONSIVE LAYERS (Phase 2)
+       Mobile-first base above; min-width layers re-compose the same
+       DOM for tablet + desktop. Carousels -> grids, hero -> editorial,
+       About -> 2-col, hamburger -> inline nav. Rhythm scales up.
+    ============================================================= */
+    .m2-topnav { display: none; }   /* inline nav appears >= lg */
+
+    /* ---------- TABLET (>= 768) ---------- */
+    @media (min-width: 768px) {
+      :root {
+        --gutter: clamp(40px, 6vw, 64px);
+        --section-gap: clamp(88px, 11vw, 116px);
+        --m-content-max: 760px;
+      }
+      /* Carousels become static grids; hide dots + snap */
+      #m2-testimonials .m2-rail,
+      #m2-ai .m2-rail {
+        display: grid; gap: 24px; overflow: visible;
+        scroll-snap-type: none; max-width: var(--m-content-max); margin-inline: auto;
+      }
+      #m2-testimonials .m2-rail { grid-template-columns: repeat(2, 1fr); }
+      #m2-ai .m2-rail { grid-template-columns: repeat(2, 1fr); }
+      #m2-testimonials [data-dots], #m2-ai [data-dots], .m2-stats [data-dots] { display: none; }
+      .m2-tcard, .m2-aicard { flex: none; max-width: none; width: auto; }
+      .m2-aicard { height: clamp(380px, 46vw, 440px); }
+      .m2-section__label { max-width: var(--m-content-max); margin-inline: auto; padding-inline: var(--gutter); }
+
+      /* Hero stats -> 3-up row */
+      .m2-hero .m2-stats .m2-rail { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; overflow: visible; scroll-snap-type: none; }
+      .m2-stat { flex: none; }
+
+      /* Selected work -> 2-up grid */
+      .m2-work-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; align-items: start; }
+
+      /* Buttons that were full-width become content-width where it reads better */
+      .m2-hero__cta, .m2-ai__cta, .m2-footer__cta { width: auto; min-width: 300px; }
+    }
+
+    /* ---------- DESKTOP (>= 1024) ---------- */
+    @media (min-width: 1024px) {
+      :root {
+        --gutter: clamp(64px, 5.5vw, 112px);
+        --section-gap: clamp(128px, 11vw, 184px);
+        --m-content-max: 1180px;
+        --fluid-display: clamp(3.5rem, 1.5rem + 5vw, 5.5rem);   /* hero ~ up to 88px */
+        --fluid-2xl:     clamp(2.25rem, 1.4rem + 2.4vw, 3.25rem);
+        --fluid-lg:      clamp(1.25rem, 1rem + 0.7vw, 1.5rem);
+        --fluid-stat:    clamp(3.5rem, 2rem + 3.5vw, 5rem);
+      }
+
+      /* Inline header nav, no hamburger */
+      .m2-header { padding-block: 22px; }
+      .m2-burger { display: none; }
+      .m2-brand { font-size: 17px; }
+      .m2-brand__mark { width: 22px; height: 22px; }
+      .m2-topnav { display: flex; align-items: center; gap: clamp(18px, 2.2vw, 40px); font-family: var(--font-family-serif); font-weight: 500; font-size: 16px; }
+      .m2-topnav a { color: var(--brand-light-2); transition: color var(--duration-fast) var(--easing-default); }
+      .m2-topnav a:hover { color: var(--brand-accent-purple); }
+      .m2-topnav__cta { padding: 9px 20px; border-radius: var(--radius-full); background: var(--action-primary); color: var(--on-action-primary) !important; transition: background-color var(--duration-normal) var(--easing-default); }
+      .m2-topnav__cta:hover { background: var(--action-primary-hover); }
+
+      /* Hero -> editorial, generous */
+      .m2-hero { padding-top: clamp(48px, 7vw, 104px); }
+      .m2-hero__title { letter-spacing: -0.02em; }
+      .m2-hero__subtitle { max-width: 640px; }
+      .m2-hero__cta { min-width: 300px; }
+      .m2-hero .m2-stats { margin-top: clamp(48px, 5vw, 72px); }
+      .m2-hero .m2-stats .m2-rail { gap: 24px; }
+      .m2-stat { min-height: 132px; padding: 32px; }
+
+      /* Testimonials + AI -> 3-up / 4-up */
+      #m2-testimonials .m2-rail { grid-template-columns: repeat(3, 1fr); gap: 28px; }
+      #m2-ai .m2-rail { grid-template-columns: repeat(4, 1fr); gap: 20px; }
+      .m2-aicard { height: clamp(400px, 30vw, 460px); }
+
+      /* Selected work -> 3-up */
+      .m2-work-list { grid-template-columns: repeat(3, 1fr); gap: 32px; }
+      .m2-wcard:hover { transform: translateY(-4px); }
+
+      /* About -> 2-column editorial (photo + content) */
+      .m2-about { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: clamp(48px, 5vw, 96px);
+        align-items: center; max-width: var(--m-content-max); margin-inline: auto;
+        padding: var(--section-gap) var(--gutter); overflow: visible; }
+      .m2-about__photo { height: auto; aspect-ratio: 4 / 5; border-radius: var(--radius-2xl); overflow: hidden; }
+      .m2-about__photo::before, .m2-about__photo::after { display: none; }
+      .m2-about__wave { display: none; }              /* scallop is a mobile vertical-transition device */
+      .m2-about__body { margin: 0; padding: 0; }
+      .m2-about__intro { font-size: clamp(1.5rem, 1.1rem + 1.1vw, 2rem); line-height: 1.35; }
+      .m2-about__plabel { margin-top: 36px; }
+      .m2-principle { padding: 16px 20px; }
+
+      /* AI heading width */
+      .m2-ai__head { max-width: 18ch; }
+      .m2-ai__cta { min-width: 320px; }
+
+      /* Footer -> large closing statement, constrained measure */
+      .m2-footer__head { font-size: clamp(3rem, 3vw + 1.5rem, 4.5rem); max-width: 16ch; }
+      .m2-footer__body { font-size: 18px; max-width: 46ch; }
+      .m2-footer__cta { min-width: 340px; }
+      .m2-footer__bar { padding-inline: var(--gutter); }
+
+      /* Richer hover affordances on pointer devices */
+      .m2-btn:hover { transform: translateY(-1px); }
+    }
+
+    /* ---------- WIDE (>= 1440) ---------- */
+    @media (min-width: 1440px) {
+      :root { --m-content-max: 1280px; }
+      .m2-hero__title { font-size: clamp(5rem, 4vw + 2rem, 6rem); }
+    }
+
+    /* Pointer-only hover polish (avoid sticky hover on touch) */
+    @media (hover: hover) and (pointer: fine) {
+      .m2-tcard { transition: transform var(--duration-normal) var(--easing-default), box-shadow var(--duration-normal) var(--easing-default); }
+      .m2-tcard:hover { transform: translateY(-3px); box-shadow: var(--elevation-3); }
+    }
   </style>
 </head>
 <body>
@@ -1750,6 +1871,13 @@
         <svg class="m2-brand__mark" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8.4" r="4.6" stroke="currentColor" stroke-width="1.4"/><circle cx="8.1" cy="15" r="4.6" stroke="currentColor" stroke-width="1.4"/><circle cx="15.9" cy="15" r="4.6" stroke="currentColor" stroke-width="1.4"/></svg>
         <span>Stephen Aase</span>
       </a>
+      <nav class="m2-topnav" aria-label="Primary">
+        <a href="#m2-testimonials">Testimonials</a>
+        <a href="#m2-work">Case studies</a>
+        <a href="#m2-about">About me</a>
+        <a href="#m2-ai">AI leadership</a>
+        <a href="#m2-contact" class="m2-topnav__cta">Get in touch</a>
+      </nav>
       <button class="m2-burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="m2Nav">
         <span></span><span></span><span></span>
       </button>
@@ -2265,7 +2393,7 @@
       // Desktop site gate: lock access until password "G00se" is entered
       const siteGateModal = document.getElementById('siteGateModal');
       const desktopView = window.matchMedia('(min-width: 768px)').matches;
-      if (siteGateModal && desktopView && !gateUnlocked()) {
+      if (false && siteGateModal && desktopView && !gateUnlocked()) {  /* retired: .m2 gate covers all widths */
         const siteGateInput = siteGateModal.querySelector('#siteGateInput');
         const siteGateForm = siteGateModal.querySelector('.modal__form');
         const siteGateError = siteGateModal.querySelector('.modal__error');
