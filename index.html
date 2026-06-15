@@ -331,8 +331,9 @@
 
     /* ---- AI leadership ---- */
     .m2-ai { position: relative; background: var(--hero-bg); color: var(--brand-light-2); padding-block: var(--section-gap); }
-    .m2-ai__head { font-family: var(--font-family-serif); font-weight: 500; font-size: var(--fluid-2xl); line-height: 1.2; margin-top: 14px; }
+    .m2-ai__head { font-family: var(--font-family-serif); font-weight: 500; font-size: clamp(25px, 4.6vw, 40px); line-height: 1.3; margin-top: 16px; }
     .m2-ai__head em { font-style: normal; color: var(--brand-tan); }
+    .m2-ai [data-carousel] { margin-top: clamp(36px, 9vw, 52px); }   /* breathing room: heading -> cards */
     .m2-aicard {
       position: relative; scroll-snap-align: start;
       flex: 0 0 84%; max-width: 295px; height: 415px;
