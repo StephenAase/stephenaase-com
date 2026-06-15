@@ -153,10 +153,10 @@
       align-items: center;
       justify-content: space-between;
       padding: 14px var(--gutter);
-      background: color-mix(in srgb, var(--hero-bg) 88%, transparent);
-      backdrop-filter: saturate(1.2) blur(8px);
+      background: var(--brand-light);
+      box-shadow: 0 1px 0 rgba(49,47,60,0.08);
     }
-    .m2-brand { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-family-serif); font-weight: 600; font-size: 15px; color: var(--brand-light); }
+    a.m2-brand { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-family-serif); font-weight: 700; font-size: 15px; color: var(--brand-core-1); }
     .m2-brand__mark { width: 18px; height: 18px; flex: none; opacity: 0.95; }
     .m2-burger {
       display: inline-flex; flex-direction: column; gap: 4px;
@@ -215,8 +215,11 @@
       color: var(--brand-light-2);
     }
     .m2-hero__cta { margin-top: clamp(18px, 4.5vw, 26px); }
-    .m2-hero__wave { display: block; width: 100%; height: clamp(26px, 7vw, 38px); margin-top: clamp(10px, 3vw, 18px); background: var(--brand-light-2); line-height: 0; }
-    .m2-hero__wave svg { display: block; width: 100%; height: 100%; }
+    /* Waves tile at a fixed 497px (the Figma asset width) so scallop size
+       stays consistent across breakpoints instead of stretching. */
+    .m2-hero__wave { display: block; width: 100%; height: clamp(20px, 4.5vw, 26px); margin-top: clamp(10px, 3vw, 18px);
+      background-color: var(--brand-light-2);
+      background-image: url("assets/wave.svg"); background-repeat: repeat-x; background-position: left top; background-size: 497px 100%; }
 
     /* ---- Stats carousel ---- */
     .m2-stats { margin-top: clamp(56px, 16vw, 96px); }
@@ -317,8 +320,9 @@
     .m2-about__photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 28%; display: block; }
     .m2-about__photo::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 90px; background: linear-gradient(to bottom, var(--brand-light-2), rgba(249,243,235,0)); }
     .m2-about__photo::after { content: ""; position: absolute; inset: auto 0 0 0; height: 38%; background: linear-gradient(to bottom, rgba(37,35,46,0), rgba(37,35,46,0.4)); }
-    .m2-about__wave { position: relative; z-index: 2; width: 100%; height: clamp(26px, 7vw, 36px); margin-top: clamp(-34px, -8.5vw, -26px); line-height: 0; pointer-events: none; }
-    .m2-about__wave svg { display: block; width: 100%; height: 100%; transform: scaleY(-1); }
+    .m2-about__wave { position: relative; z-index: 2; width: 100%; height: clamp(20px, 4.5vw, 26px); margin-top: clamp(-26px, -6.5vw, -20px); pointer-events: none;
+      background-image: url("assets/wave.svg"); background-repeat: repeat-x; background-position: left top; background-size: 497px 100%;
+      transform: scaleY(-1); }
     .m2-about__body { position: relative; z-index: 1; margin-top: 0; padding: clamp(10px, 3vw, 18px) var(--gutter) 0; }
     .m2-about__intro { font-family: var(--font-family-serif); font-weight: 400; font-size: var(--fluid-lg); line-height: 1.4; color: var(--brand-light-2); }
     .m2-about__intro em { font-style: normal; color: var(--brand-tan); }
@@ -345,7 +349,7 @@
     .m2-aicard__label { position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; font-family: var(--font-family-serif); font-weight: 500; font-size: 14px; color: var(--brand-light-2); }
     .m2-aicard__label svg { width: 18px; height: 18px; }
     .m2-aicard__desc { position: relative; z-index: 1; margin-top: auto; font-family: var(--font-family-serif); font-weight: 400; font-size: 12px; line-height: 1.55; color: var(--brand-light-2); }
-    .m2-ai__cta { margin-top: 28px; background: var(--action-primary); color: var(--on-action-primary); pointer-events: none; }
+    .m2-ai__cta { margin-top: 28px; background: var(--action-primary); color: var(--on-action-primary); }
 
     /* ---- Footer / closing CTA ---- */
     .m2-footer { position: relative; overflow: hidden; background: var(--hero-bg); color: var(--brand-light-2); padding: clamp(64px, 17vw, 104px) var(--gutter) 0; }
@@ -358,8 +362,9 @@
     .m2-footer__body { font-family: var(--font-family-serif); font-weight: 400; font-size: 14px; line-height: 1.57; color: var(--brand-light-2); opacity: 0.9; margin-top: clamp(28px, 7vw, 44px); max-width: 300px; }
     .m2-footer__cta { margin-top: clamp(36px, 9vw, 52px); border-radius: var(--radius-sm); }
     .m2-footer__foot { position: relative; margin-top: clamp(48px, 12vw, 72px); margin-inline: calc(-1 * var(--gutter)); }
-    .m2-footer__wave { display: block; width: 100%; height: clamp(22px, 6vw, 30px); background: #1a191f; line-height: 0; }
-    .m2-footer__wave svg { display: block; width: 100%; height: 100%; }
+    .m2-footer__wave { display: block; width: 100%; height: clamp(20px, 4.5vw, 26px);
+      background-color: #1a191f;
+      background-image: url("assets/wave.svg"); background-repeat: repeat-x; background-position: left top; background-size: 497px 100%; }
     .m2-footer__bar { background: #1a191f; display: flex; align-items: center; gap: 28px; padding: 26px var(--gutter); font-family: var(--font-family-serif); font-size: 14px; }
     .m2-footer__bar a { text-decoration: underline; text-underline-offset: 3px; }
     .m2-footer__copy { margin-left: auto; opacity: 0.3; text-decoration: none; }
@@ -1746,7 +1751,7 @@
       .m2-brand__mark { width: 22px; height: 22px; }
       .m2-topnav { display: flex; align-items: center; gap: clamp(18px, 2.2vw, 40px); font-family: var(--font-family-serif); font-weight: 500; font-size: 16px; }
       .m2-topnav a { color: var(--brand-accent-purple); transition: color var(--duration-fast) var(--easing-default); }
-      .m2-topnav a:hover { color: var(--brand-light-2); }
+      .m2-topnav a:hover { color: var(--brand-purple); }
       .m2-topnav__cta, .m2-topnav__cta:hover { color: var(--on-action-primary) !important; }
       .m2-topnav__cta { padding: 9px 20px; border-radius: var(--radius-full); background: var(--action-primary); color: var(--on-action-primary) !important; transition: background-color var(--duration-normal) var(--easing-default); }
       .m2-topnav__cta:hover { background: var(--action-primary-hover); }
@@ -1917,8 +1922,7 @@
           </a>
         </div>
         <div class="m2-hero__wave" aria-hidden="true">
-          <svg preserveAspectRatio="none" viewBox="0 0 497 23.3357" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M38.6628 21.8216L54.7505 15.1784C59.6769 13.1441 65.2115 13.1603 70.1259 15.2235L85.6715 21.7498C90.6234 23.8287 96.2032 23.8287 101.155 21.7498L116.637 15.2502C121.589 13.1713 127.169 13.1713 132.121 15.2502L147.666 21.7765C152.581 23.8397 158.115 23.8559 163.042 21.8216L179.13 15.1784C184.056 13.1441 189.591 13.1604 194.505 15.2235L210.051 21.7499C215.002 23.8287 220.582 23.8287 225.534 21.7499L240.951 15.2777C245.941 13.1826 251.568 13.1996 256.545 15.3247L271.484 21.7024C276.424 23.8116 282.005 23.8448 286.97 21.7946L302.992 15.1784C307.919 13.1441 313.453 13.1604 318.368 15.2235L333.913 21.7499C338.865 23.8288 344.445 23.8288 349.397 21.7499L364.879 15.2502C369.831 13.1713 375.411 13.1713 380.363 15.2502L395.908 21.7765C400.823 23.8397 406.357 23.8559 411.284 21.8216L427.371 15.1784C432.298 13.1442 437.832 13.1604 442.747 15.2235L458.292 21.7499C463.244 23.8288 468.824 23.8288 473.776 21.7499L497 12L497 4.34491e-05L1.04907e-06 0L0 12L23.2875 21.7765C28.2018 23.8397 33.7364 23.8559 38.6628 21.8216Z" fill="var(--hero-bg)"/></svg>
-        </div>
+                  </div>
       </section>
 
       <div class="m2-light">
@@ -2024,8 +2028,7 @@
       <section id="m2-about" class="m2-about" aria-label="About Stephen">
         <div class="m2-about__photo"><img src="assets/about-photo.png" alt="Stephen with his family outdoors" loading="lazy" /></div>
         <div class="m2-about__wave" aria-hidden="true">
-          <svg preserveAspectRatio="none" viewBox="0 0 497 23.3357" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M38.6628 21.8216L54.7505 15.1784C59.6769 13.1441 65.2115 13.1603 70.1259 15.2235L85.6715 21.7498C90.6234 23.8287 96.2032 23.8287 101.155 21.7498L116.637 15.2502C121.589 13.1713 127.169 13.1713 132.121 15.2502L147.666 21.7765C152.581 23.8397 158.115 23.8559 163.042 21.8216L179.13 15.1784C184.056 13.1441 189.591 13.1604 194.505 15.2235L210.051 21.7499C215.002 23.8287 220.582 23.8287 225.534 21.7499L240.951 15.2777C245.941 13.1826 251.568 13.1996 256.545 15.3247L271.484 21.7024C276.424 23.8116 282.005 23.8448 286.97 21.7946L302.992 15.1784C307.919 13.1441 313.453 13.1604 318.368 15.2235L333.913 21.7499C338.865 23.8288 344.445 23.8288 349.397 21.7499L364.879 15.2502C369.831 13.1713 375.411 13.1713 380.363 15.2502L395.908 21.7765C400.823 23.8397 406.357 23.8559 411.284 21.8216L427.371 15.1784C432.298 13.1442 437.832 13.1604 442.747 15.2235L458.292 21.7499C463.244 23.8288 468.824 23.8288 473.776 21.7499L497 12L497 4.34491e-05L1.04907e-06 0L0 12L23.2875 21.7765C28.2018 23.8397 33.7364 23.8559 38.6628 21.8216Z" fill="var(--hero-bg)"/></svg>
-        </div>
+                  </div>
         <div class="m2-about__body">
           <p class="m2-about__intro"><em>Hi, I'm Stephen,</em> inspired by adventure, fueled by family, and driven to make an impact.</p>
           <p class="m2-about__plabel">MY GUIDING PRINCIPLES</p>
@@ -2069,9 +2072,9 @@
           <div class="m2-dots" data-dots aria-hidden="true"></div>
         </div>
         <div class="m2-wrap">
-          <span class="m2-btn m2-ai__cta" role="note">Case study coming soon
+          <button type="button" class="m2-btn m2-ai__cta" data-casestudy>Case study coming soon
             <svg class="m2-btn__arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </span>
+          </button>
         </div>
       </section>
 
@@ -2085,8 +2088,7 @@
         </a>
         <div class="m2-footer__foot">
           <div class="m2-footer__wave" aria-hidden="true">
-            <svg preserveAspectRatio="none" viewBox="0 0 497 23.3357" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M38.6628 21.8216L54.7505 15.1784C59.6769 13.1441 65.2115 13.1603 70.1259 15.2235L85.6715 21.7498C90.6234 23.8287 96.2032 23.8287 101.155 21.7498L116.637 15.2502C121.589 13.1713 127.169 13.1713 132.121 15.2502L147.666 21.7765C152.581 23.8397 158.115 23.8559 163.042 21.8216L179.13 15.1784C184.056 13.1441 189.591 13.1604 194.505 15.2235L210.051 21.7499C215.002 23.8287 220.582 23.8287 225.534 21.7499L240.951 15.2777C245.941 13.1826 251.568 13.1996 256.545 15.3247L271.484 21.7024C276.424 23.8116 282.005 23.8448 286.97 21.7946L302.992 15.1784C307.919 13.1441 313.453 13.1604 318.368 15.2235L333.913 21.7499C338.865 23.8288 344.445 23.8288 349.397 21.7499L364.879 15.2502C369.831 13.1713 375.411 13.1713 380.363 15.2502L395.908 21.7765C400.823 23.8397 406.357 23.8559 411.284 21.8216L427.371 15.1784C432.298 13.1442 437.832 13.1604 442.747 15.2235L458.292 21.7499C463.244 23.8288 468.824 23.8288 473.776 21.7499L497 12L497 4.34491e-05L1.04907e-06 0L0 12L23.2875 21.7765C28.2018 23.8397 33.7364 23.8559 38.6628 21.8216Z" fill="var(--hero-bg)"/></svg>
-          </div>
+                      </div>
           <div class="m2-footer__bar">
             <a href="https://www.linkedin.com/in/stephenaase/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
             <a href="https://www.linkedin.com/in/stephenaase/" target="_blank" rel="noopener noreferrer">Résumé</a>
