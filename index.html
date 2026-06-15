@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Stephen Aase</title>
+  <meta name="description" content="Stephen Aase — product design leader building the teams, systems, and strategy that turn ambitious ideas into products millions of people love." />
+  <link rel="preload" href="fonts/RobotoSlab-variable.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="fonts/Roboto-variable.woff2" as="font" type="font/woff2" crossorigin />
   <script defer data-domain="stephenaase.com" src="https://plausible.io/js/script.js"></script>
   <link rel="stylesheet" href="colors_and_type.css">
   <style>
@@ -915,7 +918,6 @@
       .s-method { min-height: 620px; padding-top: 56px; padding-bottom: 56px; }
       .s-method__label { font-size: 32px; line-height: 1.2; letter-spacing: -0.02em; }
       .s-cta__text { font-size: 17px; }
-      .mobile-only-hero { min-height: 100dvh; }
     }
     /* =============================================================
        PASSWORD MODAL
@@ -2265,15 +2267,6 @@
         }
       }
 
-      const mobileCta = document.querySelector('.mobile-only-hero__cta');
-      if (mobileCta) {
-        mobileCta.addEventListener('click', () => {
-          track('cta_get_in_touch_click', {
-            location: 'mobile_hero',
-            destination: 'linkedin'
-          });
-        });
-      }
 
       const scrim = document.getElementById('passwordModal');
       if (!scrim) return;
