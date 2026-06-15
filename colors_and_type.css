@@ -40,16 +40,16 @@
 @font-face {
   font-family: 'Roboto Slab';
   font-style: normal;
-  font-weight: 300 900;
+  font-weight: 100 900;
   font-display: swap;
-  src: url('wild-wisdom-site/project/system/fonts/roboto-slab-400.woff2') format('woff2');
+  src: url('fonts/RobotoSlab-variable.woff2') format('woff2-variations');
 }
 @font-face {
   font-family: 'Roboto';
   font-style: normal;
-  font-weight: 300 400;
+  font-weight: 100 900;
   font-display: swap;
-  src: url('wild-wisdom-site/project/system/fonts/roboto-400.woff2') format('woff2');
+  src: url('fonts/Roboto-variable.woff2') format('woff2-variations');
 }
 
 :root {
@@ -241,6 +241,52 @@
   --content-wide-width:    960px;
   --sidebar-width:         248px;
   --nav-height:            64px;
+
+  /* =================================================================
+     PORTFOLIO 26.2 — new palette + fluid foundation (mobile-first).
+     Authored as the eventual SITE-WIDE system. The legacy warm tokens
+     above stay only until the desktop pass adopts these and is retired.
+     Names are role-based (not viewport-based) per the responsive plan.
+  ================================================================= */
+
+  /* Brand palette (from Figma variables, file Portfolio26.2) */
+  --brand-purple:         #312f3c;  /* deep ink */
+  --brand-core-1:         #413d57;  /* card borders / lines on dark */
+  --brand-core-2:         #6371a2;  /* blue accent */
+  --brand-accent-purple:  #a063a2;  /* primary action / magenta */
+  --brand-accent-lime:    #ccf17e;  /* lime accent */
+  --brand-green:          #6db961;  /* green accent */
+  --brand-light:          #f9f3eb;  /* cream — primary on dark */
+  --brand-light-2:        #efe8e5;  /* warm off-white */
+  --brand-tan:            #9a8582;  /* muted mauve-tan */
+  --brand-ink:            #2e2f32;  /* default text on light */
+  --hero-bg:              #25232e;  /* hero / dark sections */
+
+  /* Action semantics */
+  --action-primary:        var(--brand-accent-purple);
+  --action-primary-hover:  #b173b3;
+  --action-primary-active: #8d5390;
+  --on-action-primary:     var(--brand-light-2);
+
+  /* Fluid type scale — clamp(min, vw-fluid, max). Scales 320→768 and up. */
+  --fluid-display: clamp(2.75rem, 1.6rem + 5.8vw, 3.5rem);   /* hero title ~44–56px */
+  --fluid-2xl:     clamp(1.75rem, 1.1rem + 3.2vw, 2.25rem);  /* section titles */
+  --fluid-xl:      clamp(1.375rem, 1rem + 1.9vw, 1.625rem);
+  --fluid-lg:      clamp(1.125rem, 0.95rem + 0.9vw, 1.25rem);/* lead */
+  --fluid-stat:    clamp(3rem, 2rem + 5vw, 4rem);            /* big stat numbers */
+
+  /* Fluid spacing rhythm */
+  --gutter:        clamp(20px, 4.5vw, 24px);  /* page side padding */
+  --section-gap:   clamp(56px, 12vw, 88px);   /* vertical rhythm between sections */
+
+  /* Breakpoint scale (documented; min-width layers added in desktop pass) */
+  --bp-sm: 480px;
+  --bp-md: 768px;   /* mobile → tablet handoff (this release renders < md) */
+  --bp-lg: 1024px;
+  --bp-xl: 1280px;
+
+  /* Mobile content frame (design is 375px wide, 24px gutters) */
+  --m-content-max: 420px;   /* keeps the line lengths from the 375 design on bigger phones */
 }
 
 /* =====================================================================

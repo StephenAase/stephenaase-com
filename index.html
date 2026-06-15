@@ -89,92 +89,189 @@
       flex-shrink: 0;
     }
 
-    /* ---------- Mobile-only hero (Figma 1:929) ---------- */
-    .mobile-only-hero {
-      display: none;
-      min-height: 785px;
-      background: #232e47;
-      color: #efede8;
-      padding: 122px 0 134px;
-      flex-direction: column;
-      align-items: center;
-      position: relative;
-      overflow: hidden;
-      isolation: isolate;
+    /* =============================================================
+       PORTFOLIO 26.2 — new mobile experience (mobile-first).
+       Single canonical DOM, role-based names. Hidden by default;
+       shown < --bp-md this release (legacy desktop shows >= md).
+       Component styles below are authored mobile-first (base = mobile);
+       only the root's VISIBILITY is breakpoint-gated during transition.
+    ============================================================= */
+    .m2 { display: none; }            /* shown in the < md query */
+
+    .m2 {
+      font-family: var(--font-family-sans);
+      color: var(--brand-light);
+      background: var(--hero-bg);
+      -webkit-tap-highlight-color: transparent;
     }
-    .mobile-only-hero::before {
-      content: "";
-      position: absolute;
-      inset: -24px 0 0;
-      background-image: url("https://www.figma.com/api/mcp/asset/df47635e-d647-431d-8b52-03ea9f3a7a05");
-      background-size: cover;
-      background-position: center;
-      opacity: 0.1;
-      pointer-events: none;
-      z-index: -1;
+    .m2 *, .m2 *::before, .m2 *::after { box-sizing: border-box; }
+    .m2 a { color: inherit; }
+
+    /* Shared content frame */
+    .m2-wrap {
+      width: 100%;
+      max-width: var(--m-content-max);
+      margin-inline: auto;
+      padding-inline: var(--gutter);
     }
-    .mobile-only-hero__symbol {
-      width: 73.49px;
-      height: 71.306px;
-      object-fit: contain;
-      margin-bottom: 40px;
-    }
-    .mobile-only-hero__title {
-      font-family: "Roboto Slab", var(--font-family-serif);
-      font-weight: 500;
-      font-size: 40.186px;
-      line-height: 43.953px;
-      letter-spacing: -0.8815px;
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    .mobile-only-hero__subtitle {
-      max-width: 320px;
-      font-family: "Roboto Slab", var(--font-family-serif);
-      font-weight: 500;
-      font-size: 20px;
-      line-height: 25px;
-      text-align: center;
-      margin-bottom: 280px;
-    }
-    .mobile-only-hero__subtitle-line {
-      display: block;
-      white-space: nowrap;
-    }
-    .mobile-only-hero__subtitle-accent {
-      color: #f5f386;
-    }
-    .mobile-only-hero__cta {
-      width: 238px;
-      height: 44px;
-      margin-top: auto;
+
+    /* ---- Primary button ---- */
+    .m2-btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
-      padding: 14px 32px;
-      border-radius: 8px;
-      background: #f5f386;
-      color: #232e47;
-      text-decoration: none;
-      box-shadow: none;
-      font-family: var(--font-family-sans);
-      font-weight: 500;
+      width: 100%;
+      min-height: 60px;
+      padding: 0 24px;
+      border-radius: var(--radius-md);
+      background: var(--action-primary);
+      color: var(--on-action-primary);
+      font-family: var(--font-family-serif);
+      font-weight: 700;
       font-size: 16px;
-      line-height: 16px;
-      letter-spacing: 0.64px;
-      transition: background-color 240ms var(--easing-default), opacity 200ms var(--easing-default);
+      letter-spacing: 0.01em;
+      transition: background-color var(--duration-normal) var(--easing-default),
+                  transform var(--duration-fast) var(--easing-default);
     }
-    .mobile-only-hero__cta:hover {
-      background: #ecea72;
+    .m2-btn:hover { background: var(--action-primary-hover); }
+    .m2-btn:active { transform: scale(0.985); background: var(--action-primary-active); }
+    .m2-btn__arrow { width: 18px; height: 18px; flex: none; }
+
+    /* ---- Header (logo + hamburger) ---- */
+    .m2-header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px var(--gutter);
+      background: color-mix(in srgb, var(--hero-bg) 88%, transparent);
+      backdrop-filter: saturate(1.2) blur(8px);
     }
-    .mobile-only-hero__cta:active {
-      opacity: 0.85;
+    .m2-brand { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-family-serif); font-weight: 600; font-size: 15px; color: var(--brand-light); }
+    .m2-brand__mark { width: 18px; height: 18px; flex: none; opacity: 0.95; }
+    .m2-burger {
+      display: inline-flex; flex-direction: column; gap: 4px;
+      width: 28px; height: 28px; align-items: center; justify-content: center;
+      color: var(--brand-light);
     }
-    .mobile-only-hero__cta-arrow {
-      font-size: 19px;
-      line-height: 1;
+    .m2-burger span { width: 20px; height: 2px; background: currentColor; border-radius: 2px; transition: transform var(--duration-normal) var(--easing-default), opacity var(--duration-fast) var(--easing-default); }
+
+    /* ---- Hero ---- */
+    .m2-hero {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      background: var(--hero-bg);
+      padding-top: clamp(28px, 8vw, 40px);
+      padding-bottom: 0;
     }
+    .m2-hero::before {            /* texture overlay @ 10% */
+      content: "";
+      position: absolute; inset: 0;
+      background: url("assets/hero-texture.png") center / cover no-repeat;
+      opacity: 0.10;
+      mix-blend-mode: overlay;
+      pointer-events: none;
+      z-index: -1;
+    }
+    .m2-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      color: var(--brand-light-2);
+      font-size: 12px; line-height: 1.4;
+    }
+    .m2-eyebrow__dot { width: 8px; height: 8px; border-radius: 50%; background: var(--brand-accent-purple); flex: none; }
+    .m2-hero__title {
+      margin-top: clamp(28px, 9vw, 40px);
+      font-family: var(--font-family-serif);
+      font-weight: 500;
+      font-size: var(--fluid-display);
+      line-height: 1.0;
+      letter-spacing: -0.01em;
+      color: var(--brand-light-2);
+    }
+    .m2-hero__title em { font-style: normal; color: var(--brand-tan); }
+    .m2-hero__subtitle {
+      margin-top: 12px;
+      font-size: var(--fluid-lg);
+      line-height: 1.4;
+      color: var(--brand-light-2);
+    }
+    .m2-hero__cta { margin-top: clamp(28px, 8vw, 40px); }
+    .m2-hero__wave { display: block; width: 100%; height: clamp(40px, 12vw, 66px); margin-top: clamp(28px, 8vw, 40px); }
+    .m2-hero__wave svg { display: block; width: 100%; height: 100%; }
+
+    /* ---- Stats carousel ---- */
+    .m2-stats { margin-top: clamp(28px, 8vw, 40px); }
+    .m2-rail {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding-bottom: 4px;
+    }
+    .m2-rail::-webkit-scrollbar { display: none; }
+    .m2-stat {
+      scroll-snap-align: center;
+      flex: 0 0 100%;
+      display: flex; align-items: center; gap: 24px;
+      min-height: 103px;
+      padding: 28px 24px;
+      border: 1px solid var(--brand-core-1);
+      border-radius: var(--radius-md);
+      color: var(--brand-tan);
+    }
+    .m2-stat__value { font-family: var(--font-family-sans); font-weight: 200; font-size: var(--fluid-stat); line-height: 1; white-space: nowrap; }
+    .m2-stat__label { font-weight: 300; font-size: 16px; line-height: 1.35; }
+
+    /* Pagination dots (shared by all carousels) */
+    .m2-dots { display: flex; gap: 8px; justify-content: center; margin-top: 16px; }
+    .m2-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--brand-core-1); transition: background-color var(--duration-normal) var(--easing-default), transform var(--duration-normal) var(--easing-default); }
+    .m2-dot[aria-current="true"] { background: var(--brand-accent-purple); transform: scale(1.25); }
+
+    /* =============================================================
+       PORTFOLIO GATE (mobile) — "Portfolio access"
+    ============================================================= */
+    .m2-gate {
+      position: fixed; inset: 0; z-index: 100;
+      display: grid; place-items: center;
+      padding: 24px;
+      background: color-mix(in srgb, var(--brand-purple) 70%, transparent);
+      backdrop-filter: blur(6px);
+      opacity: 0; visibility: hidden;
+      transition: opacity var(--duration-slow) var(--easing-default), visibility var(--duration-slow);
+    }
+    .m2-gate.is-open { opacity: 1; visibility: visible; }
+    .m2-gate__card {
+      width: 100%; max-width: 360px;
+      background: var(--brand-light);
+      color: var(--brand-ink);
+      border-radius: var(--radius-2xl);
+      padding: 28px 24px 24px;
+      transform: translateY(12px) scale(0.98);
+      transition: transform var(--duration-slow) var(--easing-bounce);
+    }
+    .m2-gate.is-open .m2-gate__card { transform: none; }
+    .m2-gate__lock { width: 28px; height: 28px; color: var(--brand-accent-purple); }
+    .m2-gate__title { font-family: var(--font-family-serif); font-weight: 600; font-size: 34px; line-height: 1.05; margin-top: 12px; color: var(--brand-purple); }
+    .m2-gate__sub { font-size: 14px; line-height: 1.5; margin-top: 12px; color: var(--brand-ink); opacity: 0.8; }
+    .m2-gate__label { display: block; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; margin-top: 20px; color: var(--brand-ink); opacity: 0.6; }
+    .m2-gate__input {
+      width: 100%; margin-top: 8px; padding: 10px 2px;
+      border: none; border-bottom: 1px solid rgba(46,47,50,0.25);
+      background: transparent; font-size: 16px; color: var(--brand-ink);
+      transition: border-color var(--duration-normal) var(--easing-default);
+    }
+    .m2-gate__input:focus { outline: none; border-bottom-color: var(--brand-accent-purple); }
+    .m2-gate__input.is-error { border-bottom-color: #c0392b; }
+    .m2-gate__error { font-size: 13px; color: #c0392b; margin-top: 8px; height: 0; opacity: 0; overflow: hidden; transition: opacity var(--duration-normal); }
+    .m2-gate__error.is-visible { height: auto; opacity: 1; }
+    .m2-gate__submit { margin-top: 20px; }
+    .m2-gate__close { position: absolute; top: 16px; right: 16px; width: 28px; height: 28px; color: var(--brand-ink); }
 
     /* ---------- Sections ---------- */
     section { position: relative; }
@@ -624,8 +721,8 @@
       #siteGateModal {
         display: none !important;
       }
-      .mobile-only-hero {
-        display: flex;
+      .m2 {
+        display: block;
       }
       :root { --page-gutter: 32px; }
       .s-method { min-height: 780px; padding-top: 64px; padding-bottom: 64px; }
@@ -1396,18 +1493,78 @@
   </style>
 </head>
 <body>
-  <section class="mobile-only-hero" aria-label="Mobile introduction">
-    <img class="mobile-only-hero__symbol" src="https://www.figma.com/api/mcp/asset/0de7e147-e4f6-4e94-b08e-57595293bc6f" alt="" />
-    <h1 class="mobile-only-hero__title">Stephen Aase</h1>
-    <p class="mobile-only-hero__subtitle">
-      <span class="mobile-only-hero__subtitle-line">A craftsman of <span class="mobile-only-hero__subtitle-accent">impactful</span></span>
-      <span class="mobile-only-hero__subtitle-line"><span class="mobile-only-hero__subtitle-accent">human-centered</span> experiences.</span>
-    </p>
-    <a class="mobile-only-hero__cta" href="https://www.linkedin.com/in/stephenaase/" target="_blank" rel="noopener noreferrer">
-      Get in touch
-      <span class="mobile-only-hero__cta-arrow" aria-hidden="true">→</span>
-    </a>
-  </section>
+  <!-- ============================================================
+       PORTFOLIO 26.2 — new mobile experience (canonical DOM).
+       Rendered < md this release; legacy desktop (.stage) renders >= md.
+  ============================================================= -->
+  <div class="m2">
+
+    <!-- Portfolio access gate -->
+    <div class="m2-gate" id="m2Gate" role="dialog" aria-modal="true" aria-labelledby="m2GateTitle" hidden>
+      <div class="m2-gate__card" role="document">
+        <svg class="m2-gate__lock" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2"/></svg>
+        <h2 class="m2-gate__title" id="m2GateTitle">Portfolio access</h2>
+        <p class="m2-gate__sub">Thanks for stopping by. My portfolio is currently private while I finish updates. Enter the password to continue.</p>
+        <form class="m2-gate__form" novalidate>
+          <label class="m2-gate__label" for="m2GateInput">Password</label>
+          <input class="m2-gate__input" id="m2GateInput" type="password" autocomplete="current-password" placeholder="Enter password" spellcheck="false" />
+          <p class="m2-gate__error" role="alert">That password isn't quite right — try again.</p>
+          <button type="submit" class="m2-btn m2-gate__submit">
+            Enter portfolio
+            <svg class="m2-btn__arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2"/></svg>
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Header -->
+    <header class="m2-header">
+      <a class="m2-brand" href="#m2-top" aria-label="Stephen Aase home">
+        <svg class="m2-brand__mark" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2l2.6 4.9L20 8l-3.7 3.9.9 5.6L12 15l-5.2 2.5.9-5.6L4 8l5.4-1.1L12 2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        <span>Stephen Aase</span>
+      </a>
+      <button class="m2-burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="m2Nav">
+        <span></span><span></span><span></span>
+      </button>
+    </header>
+
+    <main id="m2-top">
+
+      <!-- Hero -->
+      <section class="m2-hero" id="m2-hero" aria-labelledby="m2-hero-title">
+        <div class="m2-wrap">
+          <p class="m2-eyebrow"><span class="m2-eyebrow__dot" aria-hidden="true"></span>Currently leading AI transformation at Realtor.com</p>
+          <h1 class="m2-hero__title" id="m2-hero-title">Relentlessly <em>curious.</em></h1>
+          <p class="m2-hero__subtitle">I follow hard questions to human-centered answers.</p>
+
+          <!-- Stats carousel -->
+          <div class="m2-stats" data-carousel>
+            <div class="m2-rail" role="group" aria-roledescription="carousel" aria-label="Career highlights">
+              <div class="m2-stat" role="group" aria-roledescription="slide" aria-label="1 of 3"><span class="m2-stat__value">10</span><span class="m2-stat__label">years leading high-performing design orgs</span></div>
+              <div class="m2-stat" role="group" aria-roledescription="slide" aria-label="2 of 3"><span class="m2-stat__value">20</span><span class="m2-stat__label">years designing products people love and use.</span></div>
+              <div class="m2-stat" role="group" aria-roledescription="slide" aria-label="3 of 3"><span class="m2-stat__value">190M</span><span class="m2-stat__label">people using products i've shipped.</span></div>
+            </div>
+            <div class="m2-dots" data-dots aria-hidden="true"></div>
+          </div>
+
+          <a class="m2-btn m2-hero__cta" href="#m2-work">
+            See what i've built
+            <svg class="m2-btn__arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+        <div class="m2-hero__wave" aria-hidden="true">
+          <svg preserveAspectRatio="none" viewBox="0 0 497 66.3357" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M458.337 1.51408L442.249 8.15729C437.323 10.1916 431.789 10.1753 426.874 8.11219L411.329 1.58584C406.377 -0.493047 400.797 -0.493046 395.845 1.58584L380.363 8.08552C375.411 10.1644 369.831 10.1644 364.879 8.08552L349.334 1.55917C344.419 -0.503975 338.885 -0.520209 333.958 1.51407L317.87 8.15729C312.944 10.1916 307.409 10.1753 302.495 8.1122L286.949 1.58584C281.998 -0.493047 276.418 -0.493046 271.466 1.58584L256.049 8.05801C251.059 10.1531 245.432 10.1361 240.455 8.01096L225.516 1.63328C220.576 -0.475914 214.995 -0.50912 210.03 1.54113L194.008 8.15729C189.081 10.1916 183.547 10.1753 178.632 8.11219L163.087 1.58584C158.135 -0.493047 152.555 -0.493045 147.603 1.58584L132.121 8.08552C127.169 10.1644 121.589 10.1644 116.637 8.08552L101.092 1.55917C96.1772 -0.503974 90.6426 -0.520203 85.7162 1.51408L69.6285 8.15729C64.7021 10.1916 59.1675 10.1753 54.2532 8.1122L38.7075 1.58584C33.7557 -0.493046 28.1758 -0.493046 23.2239 1.58584L12.2582 6.18946C4.83161 9.30728 0 16.5758 0 24.6303V46.3357C0 57.3814 8.95429 66.3357 20 66.3357H477C488.046 66.3357 497 57.3814 497 46.3357V24.6303C497 16.5758 492.168 9.30728 484.742 6.18947L473.713 1.55917C468.798 -0.503976 463.264 -0.520206 458.337 1.51408Z" fill="var(--hero-bg)"/></svg>
+        </div>
+      </section>
+
+      <!-- Sections below are scaffolded; built in subsequent steps -->
+      <section id="m2-work" aria-label="Selected work"></section>
+      <section id="m2-about" aria-label="About"></section>
+      <section id="m2-ai" aria-label="AI leadership"></section>
+      <section id="m2-contact" aria-label="Get in touch"></section>
+
+    </main>
+  </div>
 
   <header class="site-header">
     <div class="site-header__inner">
@@ -1533,10 +1690,115 @@
         }
       }
 
+      // Shared portfolio-gate state (session-persisted, both mobile + desktop)
+      var GATE_KEY = 'portfolioUnlocked';
+      var GATE_PW = 'G00se';
+      function gateUnlocked() { try { return sessionStorage.getItem(GATE_KEY) === '1'; } catch (e) { return false; } }
+      function setGateUnlocked() { try { sessionStorage.setItem(GATE_KEY, '1'); } catch (e) {} }
+      var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      /* ========== PORTFOLIO 26.2 mobile experience ========== */
+      (function m2() {
+        var root = document.querySelector('.m2');
+        if (!root) return;
+
+        // --- Portfolio gate ---
+        var gate = document.getElementById('m2Gate');
+        if (gate) {
+          var gInput = gate.querySelector('#m2GateInput');
+          var gForm = gate.querySelector('.m2-gate__form');
+          var gError = gate.querySelector('.m2-gate__error');
+          function openGate() {
+            gate.hidden = false;
+            document.body.style.overflow = 'hidden';
+            gate.offsetHeight; // reflow for transition
+            gate.classList.add('is-open');
+            setTimeout(function () { gInput && gInput.focus(); }, 160);
+          }
+          function closeGate() {
+            gate.classList.remove('is-open');
+            document.body.style.overflow = '';
+            setTimeout(function () { gate.hidden = true; }, 350);
+          }
+          if (!gateUnlocked()) openGate();
+          if (gForm) {
+            gForm.addEventListener('submit', function (e) {
+              e.preventDefault();
+              if ((gInput.value || '').trim() === GATE_PW) {
+                track('site_gate_unlock', { result: 'success', view: 'mobile' });
+                setGateUnlocked();
+                gError.classList.remove('is-visible');
+                gInput.classList.remove('is-error');
+                closeGate();
+              } else {
+                track('site_gate_unlock', { result: 'error', view: 'mobile' });
+                gInput.classList.add('is-error');
+                gError.classList.add('is-visible');
+                gInput.focus(); gInput.select();
+              }
+            });
+          }
+        }
+
+        // --- Carousels: pagination dots track the active card ---
+        root.querySelectorAll('[data-carousel]').forEach(function (carousel) {
+          var rail = carousel.querySelector('.m2-rail');
+          var dotsWrap = carousel.querySelector('[data-dots]');
+          if (!rail || !dotsWrap) return;
+          var slides = Array.prototype.slice.call(rail.children);
+          slides.forEach(function (_, i) {
+            var dot = document.createElement('button');
+            dot.className = 'm2-dot';
+            dot.type = 'button';
+            dot.setAttribute('aria-label', 'Go to item ' + (i + 1));
+            if (i === 0) dot.setAttribute('aria-current', 'true');
+            dot.addEventListener('click', function () {
+              slides[i].scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'nearest', inline: 'center' });
+            });
+            dotsWrap.appendChild(dot);
+          });
+          var dots = Array.prototype.slice.call(dotsWrap.children);
+          var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                var idx = slides.indexOf(entry.target);
+                dots.forEach(function (d, di) {
+                  if (di === idx) d.setAttribute('aria-current', 'true');
+                  else d.removeAttribute('aria-current');
+                });
+              }
+            });
+          }, { root: rail, threshold: 0.6 });
+          slides.forEach(function (s) { io.observe(s); });
+        });
+
+        // --- Hamburger (drawer wired fully in the nav step; toggle aria for now) ---
+        var burger = root.querySelector('.m2-burger');
+        if (burger) {
+          burger.addEventListener('click', function () {
+            var open = burger.getAttribute('aria-expanded') === 'true';
+            burger.setAttribute('aria-expanded', String(!open));
+            track('nav_toggle', { open: !open });
+          });
+        }
+
+        // --- Smooth in-page scroll for hero CTA + same-page anchors ---
+        root.querySelectorAll('a[href^="#"]').forEach(function (link) {
+          link.addEventListener('click', function (e) {
+            var id = link.getAttribute('href');
+            if (id.length < 2) return;
+            var target = document.querySelector(id);
+            if (!target) return;
+            e.preventDefault();
+            target.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'start' });
+          });
+        });
+      })();
+
       // Desktop site gate: lock access until password "G00se" is entered
       const siteGateModal = document.getElementById('siteGateModal');
       const desktopView = window.matchMedia('(min-width: 768px)').matches;
-      if (siteGateModal && desktopView) {
+      if (siteGateModal && desktopView && !gateUnlocked()) {
         const siteGateInput = siteGateModal.querySelector('#siteGateInput');
         const siteGateForm = siteGateModal.querySelector('.modal__form');
         const siteGateError = siteGateModal.querySelector('.modal__error');
@@ -1555,6 +1817,7 @@
             const value = (siteGateInput.value || '').trim();
             if (value === 'G00se') {
               track('site_gate_unlock', { result: 'success' });
+              setGateUnlocked();
               siteGateError.classList.remove('is-visible');
               siteGateInput.classList.remove('is-error');
               siteGateModal.classList.remove('is-open');
