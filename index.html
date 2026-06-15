@@ -185,10 +185,13 @@
     }
     .m2-hero > .m2-wrap, .m2-hero__wave { position: relative; z-index: 1; }
     .m2-eyebrow {
-      display: inline-flex; align-items: center; gap: 8px;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      width: 100%;
       color: var(--brand-light-2);
       font-size: 12px; line-height: 1.4;
     }
+    .m2-eyebrow__label { display: inline-flex; align-items: center; gap: 8px; }
+    .m2-eyebrow__arrow { width: 16px; height: 16px; flex: none; color: var(--brand-accent-purple); }
     .m2-eyebrow__dot { width: 8px; height: 8px; border-radius: 50%; background: var(--brand-accent-purple); flex: none; animation: m2-pulse 2s var(--easing-out) infinite; }
     @keyframes m2-pulse {
       0%   { box-shadow: 0 0 0 0 rgba(160,99,162,0.55); }
@@ -196,7 +199,7 @@
       100% { box-shadow: 0 0 0 0 rgba(160,99,162,0); }
     }
     .m2-hero__title {
-      margin-top: clamp(28px, 9vw, 40px);
+      margin-top: clamp(48px, 14vw, 88px);
       font-family: var(--font-family-serif);
       font-weight: 500;
       font-size: var(--fluid-display);
@@ -211,12 +214,13 @@
       line-height: 1.4;
       color: var(--brand-light-2);
     }
-    .m2-hero__cta { margin-top: clamp(28px, 8vw, 40px); }
-    .m2-hero__wave { display: block; width: 100%; height: clamp(26px, 7vw, 38px); margin-top: clamp(28px, 8vw, 40px); background: var(--brand-light-2); line-height: 0; }
+    .m2-hero__cta { margin-top: clamp(18px, 4.5vw, 26px); }
+    .m2-hero__wave { display: block; width: 100%; height: clamp(26px, 7vw, 38px); margin-top: clamp(10px, 3vw, 18px); background: var(--brand-light-2); line-height: 0; }
     .m2-hero__wave svg { display: block; width: 100%; height: 100%; }
 
     /* ---- Stats carousel ---- */
-    .m2-stats { margin-top: clamp(28px, 8vw, 40px); }
+    .m2-stats { margin-top: clamp(56px, 16vw, 96px); }
+    .m2-stats [data-dots] { display: none; }   /* hero stats: no pagination dots */
     .m2-rail {
       display: flex;
       gap: 12px;
@@ -1892,7 +1896,7 @@
       <!-- Hero -->
       <section class="m2-hero" id="m2-hero" aria-labelledby="m2-hero-title">
         <div class="m2-wrap">
-          <p class="m2-eyebrow"><span class="m2-eyebrow__dot" aria-hidden="true"></span>Currently leading AI transformation at Realtor.com</p>
+          <p class="m2-eyebrow"><span class="m2-eyebrow__label"><span class="m2-eyebrow__dot" aria-hidden="true"></span>Currently leading AI transformation at Realtor.com</span><svg class="m2-eyebrow__arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></p>
           <h1 class="m2-hero__title" id="m2-hero-title">Relentlessly <em>curious.</em></h1>
           <p class="m2-hero__subtitle">I follow hard questions to human-centered answers.</p>
 
