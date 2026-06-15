@@ -16,12 +16,12 @@
       --page-gutter: clamp(24px, 10vw, 144px);
     }
     html, body {
-      background: var(--color-bg-page);
+      background: #1a191f;   /* dark so iOS over-scroll / bottom chrome sits over the footer's dark, not white */
       color: var(--color-text-primary);
       font-family: var(--font-family-serif);
       -webkit-font-smoothing: antialiased;
     }
-    body { overflow-x: clip; }   /* clip (not hidden) so it doesn't break position:sticky */
+    body { overflow-x: clip; background: #1a191f; }   /* clip (not hidden) so it doesn't break position:sticky */
     html { scroll-behavior: smooth; }
     a { color: inherit; text-decoration: none; }
     button { font-family: inherit; cursor: pointer; border: none; background: none; }
@@ -40,7 +40,6 @@
       margin: 0 auto;
       background: var(--color-bg-page);
     }
-    body { background: var(--color-bg-page); }
     .page {
       position: relative;
       width: 100%;
@@ -120,6 +119,8 @@
       margin-inline: auto;
       padding-inline: var(--gutter);
     }
+    /* Jump-link landing: clear the sticky header + breathing room */
+    #m2-top, #m2-hero, #m2-testimonials, #m2-work, #m2-about, #m2-ai, #m2-contact { scroll-margin-top: clamp(76px, 15vw, 104px); }
 
     /* ---- Primary button ---- */
     .m2-btn {
@@ -184,14 +185,13 @@
       z-index: 0;
     }
     .m2-hero > .m2-wrap, .m2-hero__wave { position: relative; z-index: 1; }
-    .m2-eyebrow {
-      display: flex; align-items: center; justify-content: space-between; gap: 12px;
-      width: 100%;
+    a.m2-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
       color: var(--brand-light-2);
       font-size: 12px; line-height: 1.4;
+      transition: color var(--duration-fast) var(--easing-default);
     }
-    .m2-eyebrow__label { display: inline-flex; align-items: center; gap: 8px; }
-    .m2-eyebrow__arrow { width: 16px; height: 16px; flex: none; color: var(--brand-accent-purple); }
+    a.m2-eyebrow:hover { color: var(--brand-accent-purple); }
     .m2-eyebrow__dot { width: 8px; height: 8px; border-radius: 50%; background: var(--brand-accent-purple); flex: none; animation: m2-pulse 2s var(--easing-out) infinite; }
     @keyframes m2-pulse {
       0%   { box-shadow: 0 0 0 0 rgba(160,99,162,0.55); }
@@ -258,10 +258,11 @@
     .m2-section__label { font-family: var(--font-family-serif); font-weight: 500; font-size: 14px; letter-spacing: 0.04em; color: #524e47; margin-bottom: 18px; }
 
     /* ---- Testimonials carousel ---- */
+    /* Testimonials: manual swipe carousel (same pattern as AI leadership) */
     .m2-tcard {
       scroll-snap-align: start;
-      flex: 0 0 86%;
-      max-width: 327px;
+      flex: 0 0 84%;
+      max-width: 340px;
       display: flex; flex-direction: column;
       background: #fff;
       border: 1px solid rgba(0,0,0,0.06);
@@ -316,14 +317,13 @@
 
     /* ---- About / guiding principles ---- */
     .m2-about { position: relative; background: var(--hero-bg); color: var(--brand-light-2); overflow: hidden; padding-bottom: var(--section-gap); }
-    .m2-about__photo { position: relative; height: clamp(300px, 80vw, 360px); }
-    .m2-about__photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 28%; display: block; }
-    .m2-about__photo::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 90px; background: linear-gradient(to bottom, var(--brand-light-2), rgba(249,243,235,0)); }
-    .m2-about__photo::after { content: ""; position: absolute; inset: auto 0 0 0; height: 38%; background: linear-gradient(to bottom, rgba(37,35,46,0), rgba(37,35,46,0.4)); }
-    .m2-about__wave { position: relative; z-index: 2; width: 100%; height: clamp(20px, 4.5vw, 26px); margin-top: clamp(-26px, -6.5vw, -20px); pointer-events: none;
+    .m2-about__photo { position: relative; height: clamp(340px, 92vw, 420px);
+      background-image: url("assets/about-photo.png"); background-repeat: no-repeat; background-position: center 34%; background-size: 175%; }
+    .m2-about__photo::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 72px; background: linear-gradient(to bottom, var(--brand-light-2), rgba(249,243,235,0)); }
+    .m2-about__wave { position: relative; z-index: 2; width: 100%; height: clamp(24px, 6vw, 32px); margin-top: clamp(-30px, -7vw, -24px); pointer-events: none;
       background-image: url("assets/wave.svg"); background-repeat: repeat-x; background-position: left top; background-size: 497px 100%;
       transform: scaleY(-1); }
-    .m2-about__body { position: relative; z-index: 1; margin-top: 0; padding: clamp(10px, 3vw, 18px) var(--gutter) 0; }
+    .m2-about__body { position: relative; z-index: 1; margin-top: 0; padding: clamp(20px, 6vw, 32px) var(--gutter) 0; }
     .m2-about__intro { font-family: var(--font-family-serif); font-weight: 400; font-size: var(--fluid-lg); line-height: 1.4; color: var(--brand-light-2); }
     .m2-about__intro em { font-style: normal; color: var(--brand-tan); }
     .m2-about__plabel { font-family: var(--font-family-serif); font-weight: 500; font-size: 14px; color: var(--brand-light-2); margin-top: 28px; margin-bottom: 12px; }
@@ -365,7 +365,7 @@
     .m2-footer__wave { display: block; width: 100%; height: clamp(20px, 4.5vw, 26px);
       background-color: #1a191f;
       background-image: url("assets/wave.svg"); background-repeat: repeat-x; background-position: left top; background-size: 497px 100%; }
-    .m2-footer__bar { background: #1a191f; display: flex; align-items: center; gap: 28px; padding: 26px var(--gutter); font-family: var(--font-family-serif); font-size: 14px; }
+    .m2-footer__bar { background: #1a191f; display: flex; align-items: center; gap: 28px; padding: 26px var(--gutter) calc(clamp(96px, 22vh, 168px) + env(safe-area-inset-bottom, 0px)); font-family: var(--font-family-serif); font-size: 14px; }
     .m2-footer__bar a { text-decoration: underline; text-underline-offset: 3px; }
     .m2-footer__copy { margin-left: auto; opacity: 0.3; text-decoration: none; }
 
@@ -374,8 +374,9 @@
     ============================================================= */
     .m2-gate {
       position: fixed; inset: 0; z-index: 100;
-      display: grid; place-items: center;
-      padding: 24px;
+      display: grid; align-items: start; justify-items: center;   /* top-aligned so keyboard doesn't push it off-screen */
+      padding: clamp(40px, 11vh, 88px) 24px 24px;
+      overflow-y: auto;
       background: color-mix(in srgb, var(--brand-purple) 70%, transparent);
       backdrop-filter: blur(6px);
       opacity: 0; visibility: hidden;
@@ -1708,16 +1709,17 @@
         --section-gap: clamp(88px, 11vw, 116px);
         --m-content-max: 760px;
       }
-      /* Carousels become static grids; hide dots + snap */
+      /* Carousels become static grids on tablet+ */
       #m2-testimonials .m2-rail,
       #m2-ai .m2-rail {
         display: grid; gap: 24px; overflow: visible;
         scroll-snap-type: none; max-width: var(--m-content-max); margin-inline: auto;
+        padding-inline: var(--gutter);
       }
       #m2-testimonials .m2-rail { grid-template-columns: repeat(2, 1fr); }
       #m2-ai .m2-rail { grid-template-columns: repeat(2, 1fr); }
       #m2-testimonials [data-dots], #m2-ai [data-dots], .m2-stats [data-dots] { display: none; }
-      .m2-tcard, .m2-aicard { flex: none; max-width: none; width: auto; }
+      .m2-tcard, .m2-aicard { flex: none; max-width: none; width: auto; margin-right: 0; }
       .m2-aicard { height: clamp(380px, 46vw, 440px); }
       .m2-section__label { max-width: var(--m-content-max); margin-inline: auto; padding-inline: var(--gutter); }
 
@@ -1778,7 +1780,7 @@
       .m2-about { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: clamp(48px, 5vw, 96px);
         align-items: center; max-width: var(--m-content-max); margin-inline: auto;
         padding: var(--section-gap) var(--gutter); overflow: visible; }
-      .m2-about__photo { height: auto; aspect-ratio: 4 / 5; border-radius: var(--radius-2xl); overflow: hidden; }
+      .m2-about__photo { height: auto; aspect-ratio: 4 / 5; border-radius: var(--radius-2xl); overflow: hidden; background-size: cover; background-position: center 30%; }
       .m2-about__photo::before, .m2-about__photo::after { display: none; }
       .m2-about__wave { display: none; }              /* scallop is a mobile vertical-transition device */
       .m2-about__body { margin: 0; padding: 0; }
@@ -1902,7 +1904,7 @@
       <!-- Hero -->
       <section class="m2-hero" id="m2-hero" aria-labelledby="m2-hero-title">
         <div class="m2-wrap">
-          <p class="m2-eyebrow"><span class="m2-eyebrow__label"><span class="m2-eyebrow__dot" aria-hidden="true"></span>Currently leading AI transformation at Realtor.com</span><svg class="m2-eyebrow__arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></p>
+          <a class="m2-eyebrow" href="#m2-work" aria-label="Currently leading AI transformation at Realtor.com — see the case study"><span class="m2-eyebrow__dot" aria-hidden="true"></span>Currently leading AI transformation at Realtor.com</a>
           <h1 class="m2-hero__title" id="m2-hero-title">Relentlessly <em>curious.</em></h1>
           <p class="m2-hero__subtitle">I follow hard questions to human-centered answers.</p>
 
@@ -1935,17 +1937,6 @@
             <div class="m2-rail" role="group" aria-roledescription="carousel" aria-label="Testimonials" style="padding-inline: var(--gutter); scroll-padding-inline: var(--gutter);">
               <figure class="m2-tcard">
                 <img class="m2-tcard__mark" src="assets/quote-mark.svg" alt="" aria-hidden="true" />
-                <blockquote class="m2-tcard__quote">Stephen was a joy to work with. He was an amazing blend of "think" and "do." I always knew that I'd get amazingly thoughtful design work from him that was both beautiful and innovative. He self-manages and leads well beyond his years, and I can't wait to see what he's up to in 10 years.</blockquote>
-                <figcaption class="m2-tcard__foot">
-                  <div class="m2-tcard__rule"></div>
-                  <div class="m2-tcard__person">
-                    <img class="m2-tcard__avatar" src="assets/avatar-todd.png" alt="Todd Greco" />
-                    <div><div class="m2-tcard__name">Todd Greco</div><div class="m2-tcard__role">Director, AI Outcomes, Slalom</div></div>
-                  </div>
-                </figcaption>
-              </figure>
-              <figure class="m2-tcard">
-                <img class="m2-tcard__mark" src="assets/quote-mark.svg" alt="" aria-hidden="true" />
                 <blockquote class="m2-tcard__quote">Stephen drove teams to deliver industry-leading experiences that changed how customers perceived the world's largest company. And he did it with a kindness and clarity that inspired me (and many others) to be better, try harder, reach further. Should you ever have the chance to work with Stephen, take it. Immediately. While you can.</blockquote>
                 <figcaption class="m2-tcard__foot">
                   <div class="m2-tcard__rule"></div>
@@ -1963,6 +1954,17 @@
                   <div class="m2-tcard__person">
                     <img class="m2-tcard__avatar" src="assets/avatar-nick.png" alt="Nick Nguyen" />
                     <div><div class="m2-tcard__name">Nick Nguyen</div><div class="m2-tcard__role">Director, Rivian</div></div>
+                  </div>
+                </figcaption>
+              </figure>
+              <figure class="m2-tcard">
+                <img class="m2-tcard__mark" src="assets/quote-mark.svg" alt="" aria-hidden="true" />
+                <blockquote class="m2-tcard__quote">Stephen was a joy to work with. He was an amazing blend of "think" and "do." I always knew that I'd get amazingly thoughtful design work from him that was both beautiful and innovative. He self-manages and leads well beyond his years, and I can't wait to see what he's up to in 10 years.</blockquote>
+                <figcaption class="m2-tcard__foot">
+                  <div class="m2-tcard__rule"></div>
+                  <div class="m2-tcard__person">
+                    <img class="m2-tcard__avatar" src="assets/avatar-todd.png" alt="Todd Greco" />
+                    <div><div class="m2-tcard__name">Todd Greco</div><div class="m2-tcard__role">Director, AI Outcomes, Slalom</div></div>
                   </div>
                 </figcaption>
               </figure>
@@ -2026,7 +2028,7 @@
 
       <!-- About / guiding principles -->
       <section id="m2-about" class="m2-about" aria-label="About Stephen">
-        <div class="m2-about__photo"><img src="assets/about-photo.png" alt="Stephen with his family outdoors" loading="lazy" /></div>
+        <div class="m2-about__photo" role="img" aria-label="Stephen with his family outdoors"></div>
         <div class="m2-about__wave" aria-hidden="true">
                   </div>
         <div class="m2-about__body">
@@ -2236,6 +2238,31 @@
         var root = document.querySelector('.m2');
         if (!root) return;
 
+        // --- Shared scroll lock (preserves HP position; keeps it put when the keyboard opens) ---
+        var _lockY = 0, _locks = 0;
+        function lockScroll() {
+          if (_locks === 0) {
+            _lockY = window.scrollY || window.pageYOffset || 0;
+            document.body.style.position = 'fixed';
+            document.body.style.top = (-_lockY) + 'px';
+            document.body.style.left = '0';
+            document.body.style.right = '0';
+            document.body.style.width = '100%';
+          }
+          _locks++;
+        }
+        function unlockScroll() {
+          _locks = Math.max(0, _locks - 1);
+          if (_locks === 0) {
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.left = '';
+            document.body.style.right = '';
+            document.body.style.width = '';
+            window.scrollTo({ top: _lockY, left: 0, behavior: 'instant' });   /* instant: avoid the smooth-scroll "jump back down" */
+          }
+        }
+
         // --- Portfolio gate ---
         var gate = document.getElementById('m2Gate');
         if (gate) {
@@ -2244,14 +2271,13 @@
           var gError = gate.querySelector('.m2-gate__error');
           function openGate() {
             gate.hidden = false;
-            document.body.style.overflow = 'hidden';
+            lockScroll();
             gate.offsetHeight; // reflow for transition
             gate.classList.add('is-open');
-            setTimeout(function () { gInput && gInput.focus(); }, 160);
           }
           function closeGate() {
             gate.classList.remove('is-open');
-            document.body.style.overflow = '';
+            unlockScroll();
             setTimeout(function () { gate.hidden = true; }, 350);
           }
           if (!gateUnlocked()) openGate();
@@ -2319,7 +2345,7 @@
         function openNav() {
           nav.classList.add('is-open');
           burger.setAttribute('aria-expanded', 'true');
-          document.body.style.overflow = 'hidden';
+          lockScroll();
           lastFocus = document.activeElement;
           setTimeout(function () { var c = nav.querySelector('.m2-nav__close'); c && c.focus({ preventScroll: true }); }, 80);
           track('nav_toggle', { open: true });
@@ -2327,7 +2353,7 @@
         function closeNav() {
           nav.classList.remove('is-open');
           burger.setAttribute('aria-expanded', 'false');
-          document.body.style.overflow = '';
+          unlockScroll();
           if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
         }
         if (nav && burger) {
@@ -2347,12 +2373,12 @@
         // --- Case-study modal (closeable; "coming soon" on submit) ---
         var cs = document.getElementById('m2CsModal');
         function openCs() {
-          cs.hidden = false; document.body.style.overflow = 'hidden';
+          cs.hidden = false; lockScroll();
           cs.offsetHeight; cs.classList.add('is-open');
           track('case_study_modal_open');
         }
         function closeCs() {
-          cs.classList.remove('is-open'); document.body.style.overflow = '';
+          cs.classList.remove('is-open'); unlockScroll();
           setTimeout(function () {
             cs.hidden = true;
             var note = cs.querySelector('.m2-gate__note'); if (note) note.classList.remove('is-visible');
