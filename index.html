@@ -20,8 +20,8 @@
       color: var(--color-text-primary);
       font-family: var(--font-family-serif);
       -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
     }
+    body { overflow-x: clip; }   /* clip (not hidden) so it doesn't break position:sticky */
     html { scroll-behavior: smooth; }
     a { color: inherit; text-decoration: none; }
     button { font-family: inherit; cursor: pointer; border: none; background: none; }
@@ -171,21 +171,27 @@
       padding-top: clamp(28px, 8vw, 40px);
       padding-bottom: 0;
     }
-    .m2-hero::before {            /* texture overlay @ 10% */
+    .m2-hero::before {            /* texture overlay */
       content: "";
       position: absolute; inset: 0;
       background: url("assets/hero-texture.png") center / cover no-repeat;
-      opacity: 0.10;
-      mix-blend-mode: overlay;
+      opacity: 0.5;
+      mix-blend-mode: soft-light;
       pointer-events: none;
-      z-index: -1;
+      z-index: 0;
     }
+    .m2-hero > .m2-wrap, .m2-hero__wave { position: relative; z-index: 1; }
     .m2-eyebrow {
       display: inline-flex; align-items: center; gap: 8px;
       color: var(--brand-light-2);
       font-size: 12px; line-height: 1.4;
     }
-    .m2-eyebrow__dot { width: 8px; height: 8px; border-radius: 50%; background: var(--brand-accent-purple); flex: none; }
+    .m2-eyebrow__dot { width: 8px; height: 8px; border-radius: 50%; background: var(--brand-accent-purple); flex: none; animation: m2-pulse 2s var(--easing-out) infinite; }
+    @keyframes m2-pulse {
+      0%   { box-shadow: 0 0 0 0 rgba(160,99,162,0.55); }
+      70%  { box-shadow: 0 0 0 8px rgba(160,99,162,0); }
+      100% { box-shadow: 0 0 0 0 rgba(160,99,162,0); }
+    }
     .m2-hero__title {
       margin-top: clamp(28px, 9vw, 40px);
       font-family: var(--font-family-serif);
@@ -203,8 +209,8 @@
       color: var(--brand-light-2);
     }
     .m2-hero__cta { margin-top: clamp(28px, 8vw, 40px); }
-    .m2-hero__wave { display: block; width: 100%; height: clamp(40px, 12vw, 66px); margin-top: clamp(28px, 8vw, 40px); }
-    .m2-hero__wave svg { display: block; width: 100%; height: 100%; }
+    .m2-hero__wave { display: block; width: 100%; height: clamp(34px, 10vw, 52px); margin-top: clamp(28px, 8vw, 40px); background: var(--brand-light-2); }
+    .m2-hero__wave svg { display: block; width: 100%; height: 100%; transform: scaleY(-1); }
 
     /* ---- Stats carousel ---- */
     .m2-stats { margin-top: clamp(28px, 8vw, 40px); }
@@ -283,17 +289,19 @@
     .m2-wcard__metrics { display: flex; gap: 20px; margin-top: 24px; }
     .m2-wcard__metric { flex: 1; }
     .m2-wcard__mval { font-family: var(--font-family-sans); font-weight: 700; font-size: 24px; line-height: 1; color: var(--wc); }
-    .m2-redact { display: block; width: 64px; height: 26px; border-radius: 2px; opacity: 0.85;
-      background:
-        conic-gradient(var(--wc) 90deg, color-mix(in srgb, var(--wc) 32%, #fff) 0 180deg, var(--wc) 0 270deg, color-mix(in srgb, var(--wc) 32%, #fff) 0);
-      background-size: 13px 13px;
-    }
+    /* Redacted metric value: pixelated grid overlay in the card theme color (matches Figma) */
+    .m2-redact { display: grid; grid-template-columns: repeat(5, 13px); grid-auto-rows: 13px; width: 65px; height: 26px; border-radius: 2px; overflow: hidden; }
+    .m2-redact i { display: block; background: color-mix(in srgb, var(--wc) 26%, #fff); }
+    .m2-redact i:nth-child(2n) { background: color-mix(in srgb, var(--wc) 36%, #fff); }
+    .m2-redact i:nth-child(3n) { background: color-mix(in srgb, var(--wc) 16%, #fff); }
+    .m2-redact i:nth-child(4n) { background: color-mix(in srgb, var(--wc) 52%, #fff); }
+    .m2-redact i:nth-child(7n) { background: color-mix(in srgb, var(--wc) 12%, #fff); }
+    .m2-sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
     .m2-wcard__mlabel { font-family: var(--font-family-sans); font-size: 12px; line-height: 1.4; color: #524e49; margin-top: 8px; }
-    .m2-wcard__cta { display: flex; align-items: center; justify-content: center; gap: 8px; height: 60px; margin: 24px 28px 0; border-radius: 4px; background: var(--wc); color: #fff; font-family: var(--font-family-serif); font-weight: 700; font-size: 16px; }
+    .m2-wcard__cta { display: flex; align-items: center; justify-content: center; gap: 8px; height: 60px; margin: 24px 28px 0; border-radius: var(--radius-sm); background: var(--cta-bg, var(--wc)); color: var(--cta-fg, #fff); font-family: var(--font-family-serif); font-weight: 700; font-size: 16px; }
     .m2-wcard__cta svg { width: 18px; height: 18px; }
     .m2-wcard--realtor { --wc: #c60004; }
-    .m2-wcard--walmart { --wc: #e69a00; }
-    .m2-wcard--walmart .m2-wcard__cta { color: #1a1a1a; }
+    .m2-wcard--walmart { --wc: #e9a107; --cta-bg: #ffc220; --cta-fg: #4a4a4a; }
     .m2-wcard--ds { --wc: #2151da; }
 
     /* ---- About / guiding principles ---- */
@@ -322,22 +330,27 @@
       background: var(--brand-core-1); border-radius: var(--radius-md);
       overflow: hidden; padding: 24px; display: flex; flex-direction: column;
     }
-    .m2-aicard__illus { position: absolute; inset: 0; background-position: center 52%; background-repeat: no-repeat; background-size: 116%; }
+    .m2-aicard::before { content: ""; position: absolute; inset: 0; background: url("assets/hero-texture.png") center / cover no-repeat; opacity: 0.45; mix-blend-mode: soft-light; pointer-events: none; z-index: 0; }
+    .m2-aicard__illus { position: absolute; inset: 0; z-index: 0; background-position: center 52%; background-repeat: no-repeat; background-size: 116%; }
     .m2-aicard__label { position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; font-family: var(--font-family-serif); font-weight: 500; font-size: 14px; color: var(--brand-light-2); }
     .m2-aicard__label svg { width: 18px; height: 18px; }
     .m2-aicard__desc { position: relative; z-index: 1; margin-top: auto; font-family: var(--font-family-serif); font-weight: 400; font-size: 12px; line-height: 1.55; color: var(--brand-light-2); }
     .m2-ai__cta { margin-top: 28px; background: var(--action-primary); color: var(--on-action-primary); pointer-events: none; }
 
     /* ---- Footer / closing CTA ---- */
-    .m2-footer { position: relative; background: var(--hero-bg); color: var(--brand-light-2); padding: var(--section-gap) var(--gutter) 0; }
-    .m2-footer__label { font-family: var(--font-family-serif); font-weight: 500; font-size: 14px; color: var(--brand-light-2); }
-    .m2-footer__head { font-family: var(--font-family-serif); font-weight: 600; font-size: clamp(2.25rem, 1.4rem + 4vw, 3rem); line-height: 1.08; margin-top: 18px; color: var(--brand-light-2); }
-    .m2-footer__head em { font-style: normal; color: var(--brand-accent-purple); }
-    .m2-footer__body { font-family: var(--font-family-serif); font-weight: 400; font-size: 15px; line-height: 1.6; color: var(--brand-light-2); opacity: 0.85; margin-top: 20px; max-width: 320px; }
-    .m2-footer__cta { margin-top: 28px; }
-    .m2-footer__bar { display: flex; align-items: center; gap: 24px; margin-top: 36px; padding: 22px 0 28px; border-top: 1px solid rgba(255,255,255,0.10); font-size: 14px; }
+    .m2-footer { position: relative; background: var(--hero-bg); color: var(--brand-light-2); padding: clamp(64px, 17vw, 104px) var(--gutter) 0; }
+    .m2-footer__label { font-family: var(--font-family-serif); font-weight: 500; font-size: 14px; letter-spacing: 0.04em; color: var(--brand-light-2); }
+    .m2-footer__head { font-family: var(--font-family-serif); font-weight: 500; font-size: clamp(30px, 8.2vw, 38px); line-height: 1.34; letter-spacing: -0.022em; margin-top: 16px; }
+    .m2-footer__head span { display: block; color: var(--brand-light-2); }
+    .m2-footer__head em { display: block; font-style: normal; color: var(--brand-accent-purple); }
+    .m2-footer__body { font-family: var(--font-family-serif); font-weight: 400; font-size: 14px; line-height: 1.57; color: var(--brand-light-2); opacity: 0.9; margin-top: clamp(28px, 7vw, 44px); max-width: 300px; }
+    .m2-footer__cta { margin-top: clamp(36px, 9vw, 52px); border-radius: var(--radius-sm); }
+    .m2-footer__foot { position: relative; margin-top: clamp(48px, 12vw, 72px); margin-inline: calc(-1 * var(--gutter)); }
+    .m2-footer__wave { display: block; width: 100%; height: 22px; }
+    .m2-footer__wave svg { display: block; width: 100%; height: 100%; }
+    .m2-footer__bar { background: #1a191f; display: flex; align-items: center; gap: 28px; padding: 26px var(--gutter); font-family: var(--font-family-serif); font-size: 14px; }
     .m2-footer__bar a { text-decoration: underline; text-underline-offset: 3px; }
-    .m2-footer__copy { margin-left: auto; opacity: 0.5; text-decoration: none; }
+    .m2-footer__copy { margin-left: auto; opacity: 0.3; text-decoration: none; }
 
     /* =============================================================
        PORTFOLIO GATE (mobile) — "Portfolio access"
@@ -353,6 +366,7 @@
     }
     .m2-gate.is-open { opacity: 1; visibility: visible; }
     .m2-gate__card {
+      position: relative;
       width: 100%; max-width: 360px;
       background: var(--brand-light);
       color: var(--brand-ink);
@@ -380,7 +394,7 @@
     .m2-gate__close { position: absolute; top: 16px; right: 16px; width: 28px; height: 28px; color: var(--brand-ink); }
     .m2-gate__note { font-size: 14px; line-height: 1.5; color: var(--brand-accent-purple); margin-top: 16px; height: 0; opacity: 0; overflow: hidden; transition: opacity var(--duration-normal); }
     .m2-gate__note.is-visible { height: auto; opacity: 1; }
-    a.m2-gate__reach { display: inline-block; margin-top: 16px; font-size: 14px; color: var(--brand-accent-purple); text-decoration: underline; text-underline-offset: 3px; }
+    a.m2-gate__reach { display: block; text-align: center; margin-top: 18px; font-size: 14px; color: var(--brand-accent-purple); text-decoration: underline; text-underline-offset: 3px; }
 
     /* =============================================================
        NAV DRAWER (hamburger menu)
@@ -1697,7 +1711,7 @@
             <svg class="m2-btn__arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2"/></svg>
           </button>
         </form>
-        <a class="m2-gate__reach" href="mailto:stephen.aase@gmail.com">No password? Reach out to connect</a>
+        <a class="m2-gate__reach" href="https://www.linkedin.com/in/stephenaase/" target="_blank" rel="noopener noreferrer">No password? Reach out to connect</a>
       </div>
     </div>
 
@@ -1768,7 +1782,7 @@
             <p class="m2-section__label">TESTIMONIALS</p>
           </div>
           <div data-carousel>
-            <div class="m2-rail" role="group" aria-roledescription="carousel" aria-label="Testimonials" style="padding-inline: var(--gutter);">
+            <div class="m2-rail" role="group" aria-roledescription="carousel" aria-label="Testimonials" style="padding-inline: var(--gutter); scroll-padding-inline: var(--gutter);">
               <figure class="m2-tcard">
                 <img class="m2-tcard__mark" src="assets/quote-mark.svg" alt="" aria-hidden="true" />
                 <blockquote class="m2-tcard__quote">Stephen was a joy to work with. He was an amazing blend of "think" and "do." I always knew that I'd get amazingly thoughtful design work from him that was both beautiful and innovative. He self-manages and leads well beyond his years, and I can't wait to see what he's up to in 10 years.</blockquote>
@@ -1820,8 +1834,8 @@
                   <span class="m2-wcard__title">AI transformation</span>
                   <span class="m2-wcard__desc">Building the methods, agents, and curriculum that let Design lead in the AI age.</span>
                   <span class="m2-wcard__metrics">
-                    <span class="m2-wcard__metric"><span class="m2-wcard__mval">L3+</span><span class="m2-wcard__mlabel">AI Maturity for the Product Design team</span></span>
-                    <span class="m2-wcard__metric"><span class="m2-wcard__mval">25%</span><span class="m2-wcard__mlabel">increase in velocity rate from AI workflows</span></span>
+                    <span class="m2-wcard__metric"><span class="m2-redact" data-redact role="img" aria-label="L3+"></span><span class="m2-wcard__mlabel">AI Maturity for the Product Design team</span></span>
+                    <span class="m2-wcard__metric"><span class="m2-redact" data-redact role="img" aria-label="25%"></span><span class="m2-wcard__mlabel">increase in velocity rate from AI workflows</span></span>
                   </span>
                 </span>
                 <span class="m2-wcard__cta">Read the case study <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
@@ -1834,8 +1848,8 @@
                   <span class="m2-wcard__title">Membership that matters</span>
                   <span class="m2-wcard__desc">Designing Walmart+ to make everyday essentials more accessible and affordable for millions of families.</span>
                   <span class="m2-wcard__metrics">
-                    <span class="m2-wcard__metric"><span class="m2-redact" aria-hidden="true"></span><span class="m2-wcard__mlabel">Walmart+ acquisition rate in the first year.</span></span>
-                    <span class="m2-wcard__metric"><span class="m2-redact" aria-hidden="true"></span><span class="m2-wcard__mlabel">basket increase for Walmart+ members.</span></span>
+                    <span class="m2-wcard__metric"><span class="m2-redact" data-redact role="img" aria-label="200%"></span><span class="m2-wcard__mlabel">Walmart+ acquisition rate in the first year.</span></span>
+                    <span class="m2-wcard__metric"><span class="m2-redact" data-redact role="img" aria-label="25%"></span><span class="m2-wcard__mlabel">basket increase for Walmart+ members.</span></span>
                   </span>
                 </span>
                 <span class="m2-wcard__cta">Read the case study <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
@@ -1848,8 +1862,8 @@
                   <span class="m2-wcard__title">Scale, by design</span>
                   <span class="m2-wcard__desc">Take a peek into how to build a tokenized Design System to power multi-brand experiences.</span>
                   <span class="m2-wcard__metrics">
-                    <span class="m2-wcard__metric"><span class="m2-redact" aria-hidden="true"></span><span class="m2-wcard__mlabel">Reduction in Design &amp; Engineering handoff</span></span>
-                    <span class="m2-wcard__metric"><span class="m2-redact" aria-hidden="true"></span><span class="m2-wcard__mlabel">Annual savings through scalable theming</span></span>
+                    <span class="m2-wcard__metric"><span class="m2-redact" data-redact role="img" aria-label="Redacted metric"></span><span class="m2-wcard__mlabel">Reduction in Design &amp; Engineering handoff</span></span>
+                    <span class="m2-wcard__metric"><span class="m2-redact" data-redact role="img" aria-label="Redacted metric"></span><span class="m2-wcard__mlabel">Annual savings through scalable theming</span></span>
                   </span>
                 </span>
                 <span class="m2-wcard__cta">Read the case study <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
@@ -1881,7 +1895,7 @@
           <h2 class="m2-ai__head">I design the org to put AI to work, freeing teams for <em>judgment, vision, and insight.</em></h2>
         </div>
         <div data-carousel>
-          <div class="m2-rail" role="group" aria-roledescription="carousel" aria-label="How I lead with AI" style="padding-inline: var(--gutter);">
+          <div class="m2-rail" role="group" aria-roledescription="carousel" aria-label="How I lead with AI" style="padding-inline: var(--gutter); scroll-padding-inline: var(--gutter);">
             <article class="m2-aicard">
               <div class="m2-aicard__illus" style="background-image:url('assets/ai-infrastructure.png')"></div>
               <div class="m2-aicard__label">INFRASTRUCTURE <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
@@ -1915,15 +1929,20 @@
       <!-- Footer / closing CTA -->
       <footer id="m2-contact" class="m2-footer" aria-label="Get in touch">
         <p class="m2-footer__label">GET IN TOUCH</p>
-        <h2 class="m2-footer__head">Still learning.<br>Still building.<br><em>Always leading toward better.</em></h2>
+        <h2 class="m2-footer__head"><span>Still learning. Still building.</span><em>Always leading toward better.</em></h2>
         <p class="m2-footer__body">I'm at my best leading orgs toward the best possible experiences for the people they serve. If that's your work too, let's talk.</p>
         <a class="m2-btn m2-footer__cta" href="mailto:stephen.aase@gmail.com">Stephen.Aase@gmail.com
           <svg class="m2-btn__arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
-        <div class="m2-footer__bar">
-          <a href="https://www.linkedin.com/in/stephenaase/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-          <a href="https://www.linkedin.com/in/stephenaase/" target="_blank" rel="noopener noreferrer">Résumé</a>
-          <span class="m2-footer__copy">© 2026 Stephen</span>
+        <div class="m2-footer__foot">
+          <div class="m2-footer__wave" aria-hidden="true">
+            <svg preserveAspectRatio="none" viewBox="0 0 497 66.3357" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M458.337 1.51408L442.249 8.15729C437.323 10.1916 431.789 10.1753 426.874 8.11219L411.329 1.58584C406.377 -0.493047 400.797 -0.493046 395.845 1.58584L380.363 8.08552C375.411 10.1644 369.831 10.1644 364.879 8.08552L349.334 1.55917C344.419 -0.503975 338.885 -0.520209 333.958 1.51407L317.87 8.15729C312.944 10.1916 307.409 10.1753 302.495 8.1122L286.949 1.58584C281.998 -0.493047 276.418 -0.493046 271.466 1.58584L256.049 8.05801C251.059 10.1531 245.432 10.1361 240.455 8.01096L225.516 1.63328C220.576 -0.475914 214.995 -0.50912 210.03 1.54113L194.008 8.15729C189.081 10.1916 183.547 10.1753 178.632 8.11219L163.087 1.58584C158.135 -0.493047 152.555 -0.493045 147.603 1.58584L132.121 8.08552C127.169 10.1644 121.589 10.1644 116.637 8.08552L101.092 1.55917C96.1772 -0.503974 90.6426 -0.520203 85.7162 1.51408L69.6285 8.15729C64.7021 10.1916 59.1675 10.1753 54.2532 8.1122L38.7075 1.58584C33.7557 -0.493046 28.1758 -0.493046 23.2239 1.58584L12.2582 6.18946C4.83161 9.30728 0 16.5758 0 24.6303V46.3357C0 57.3814 8.95429 66.3357 20 66.3357H477C488.046 66.3357 497 57.3814 497 46.3357V24.6303C497 16.5758 492.168 9.30728 484.742 6.18947L473.713 1.55917C468.798 -0.503976 463.264 -0.520206 458.337 1.51408Z" fill="#1a191f"/></svg>
+          </div>
+          <div class="m2-footer__bar">
+            <a href="https://www.linkedin.com/in/stephenaase/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a href="https://www.linkedin.com/in/stephenaase/" target="_blank" rel="noopener noreferrer">Résumé</a>
+            <span class="m2-footer__copy">© 2026 Stephen</span>
+          </div>
         </div>
       </footer>
 
@@ -2104,6 +2123,11 @@
           }
         }
 
+        // --- Fill redacted-metric pixel grids ---
+        root.querySelectorAll('[data-redact]').forEach(function (r) {
+          for (var i = 0; i < 10; i++) r.appendChild(document.createElement('i'));
+        });
+
         // --- Carousels: pagination dots track the active card ---
         root.querySelectorAll('[data-carousel]').forEach(function (carousel) {
           var rail = carousel.querySelector('.m2-rail');
@@ -2146,14 +2170,14 @@
           burger.setAttribute('aria-expanded', 'true');
           document.body.style.overflow = 'hidden';
           lastFocus = document.activeElement;
-          setTimeout(function () { var c = nav.querySelector('.m2-nav__close'); c && c.focus(); }, 80);
+          setTimeout(function () { var c = nav.querySelector('.m2-nav__close'); c && c.focus({ preventScroll: true }); }, 80);
           track('nav_toggle', { open: true });
         }
         function closeNav() {
           nav.classList.remove('is-open');
           burger.setAttribute('aria-expanded', 'false');
           document.body.style.overflow = '';
-          if (lastFocus && lastFocus.focus) lastFocus.focus();
+          if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
         }
         if (nav && burger) {
           burger.addEventListener('click', openNav);
