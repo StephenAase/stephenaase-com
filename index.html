@@ -343,9 +343,11 @@
     .m2-ai__cta { margin-top: 28px; background: var(--action-primary); color: var(--on-action-primary); pointer-events: none; }
 
     /* ---- Footer / closing CTA ---- */
-    .m2-footer { position: relative; background: var(--hero-bg); color: var(--brand-light-2); padding: clamp(64px, 17vw, 104px) var(--gutter) 0; }
+    .m2-footer { position: relative; overflow: hidden; background: var(--hero-bg); color: var(--brand-light-2); padding: clamp(64px, 17vw, 104px) var(--gutter) 0; }
+    .m2-footer::before { content: ""; position: absolute; inset: 0; background: url("assets/hero-texture.png") center / cover no-repeat; opacity: 0.5; mix-blend-mode: soft-light; pointer-events: none; z-index: 0; }
+    .m2-footer > * { position: relative; z-index: 1; }
     .m2-footer__label { font-family: var(--font-family-serif); font-weight: 500; font-size: 14px; letter-spacing: 0.04em; color: var(--brand-light-2); }
-    .m2-footer__head { font-family: var(--font-family-serif); font-weight: 500; font-size: clamp(30px, 8.2vw, 38px); line-height: 1.34; letter-spacing: -0.022em; margin-top: 16px; }
+    .m2-footer__head { font-family: var(--font-family-serif); font-weight: 500; font-size: clamp(32px, 9vw, 42px); line-height: 1.3; letter-spacing: -0.022em; margin-top: 18px; }
     .m2-footer__head span { display: block; color: var(--brand-light-2); }
     .m2-footer__head em { display: block; font-style: normal; color: var(--brand-accent-purple); }
     .m2-footer__body { font-family: var(--font-family-serif); font-weight: 400; font-size: 14px; line-height: 1.57; color: var(--brand-light-2); opacity: 0.9; margin-top: clamp(28px, 7vw, 44px); max-width: 300px; }
@@ -409,7 +411,8 @@
     .m2-nav__scrim { position: absolute; inset: 0; background: rgba(37,35,46,0.45); opacity: 0; transition: opacity var(--duration-slow) var(--easing-default); }
     .m2-nav.is-open .m2-nav__scrim { opacity: 1; }
     .m2-nav__panel {
-      position: absolute; inset: 0 0 auto 0;
+      position: absolute; inset: 0;          /* full-screen drop-down */
+      height: 100dvh;
       background: var(--brand-light);
       padding: 16px var(--gutter) 56px;
       transform: translateY(-101%);
@@ -417,10 +420,10 @@
       box-shadow: 0 24px 60px rgba(37,35,46,0.3);
       overflow: hidden;
     }
-    .m2-nav__panel::before {            /* subtle organic cream texture */
+    .m2-nav__panel::before {            /* organic cream texture */
       content: ""; position: absolute; inset: 0;
       background: url("assets/hero-texture.png") center / cover no-repeat;
-      opacity: 0.06; mix-blend-mode: multiply; pointer-events: none;
+      opacity: 0.55; mix-blend-mode: multiply; pointer-events: none;
     }
     .m2-nav.is-open .m2-nav__panel { transform: none; }
     .m2-nav__top, .m2-nav__links { position: relative; z-index: 1; }
@@ -1716,7 +1719,7 @@
       .m2-work-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; align-items: start; }
 
       /* Buttons that were full-width become content-width where it reads better */
-      .m2-hero__cta, .m2-ai__cta, .m2-footer__cta { width: auto; min-width: 300px; }
+      .m2-hero__cta, .m2-ai__cta, .m2-footer__cta { width: 100%; max-width: 360px; min-width: 0; }
     }
 
     /* ---------- DESKTOP (>= 1024) ---------- */
@@ -2070,7 +2073,7 @@
       <!-- Footer / closing CTA -->
       <footer id="m2-contact" class="m2-footer" aria-label="Get in touch">
         <p class="m2-footer__label">GET IN TOUCH</p>
-        <h2 class="m2-footer__head"><span>Still learning. Still building.</span><em>Always leading toward better.</em></h2>
+        <h2 class="m2-footer__head"><span>Still learning.<br>Still building.</span><em>Always leading toward better.</em></h2>
         <p class="m2-footer__body">I'm at my best leading orgs toward the best possible experiences for the people they serve. If that's your work too, let's talk.</p>
         <a class="m2-btn m2-footer__cta" href="mailto:stephen.aase@gmail.com">Stephen.Aase@gmail.com
           <svg class="m2-btn__arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
