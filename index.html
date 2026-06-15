@@ -2259,7 +2259,7 @@
             document.body.style.left = '';
             document.body.style.right = '';
             document.body.style.width = '';
-            window.scrollTo(0, _lockY);
+            window.scrollTo({ top: _lockY, left: 0, behavior: 'instant' });   /* instant: avoid the smooth-scroll "jump back down" */
           }
         }
 
