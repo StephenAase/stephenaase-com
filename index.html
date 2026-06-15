@@ -233,6 +233,66 @@
     .m2-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--brand-core-1); transition: background-color var(--duration-normal) var(--easing-default), transform var(--duration-normal) var(--easing-default); }
     .m2-dot[aria-current="true"] { background: var(--brand-accent-purple); transform: scale(1.25); }
 
+    /* ---- Light sections (cream) ---- */
+    .m2-light { background: var(--brand-light-2); color: var(--brand-ink); }
+    .m2-section { padding-block: var(--section-gap); }
+    .m2-section__label { font-family: var(--font-family-serif); font-weight: 500; font-size: 14px; letter-spacing: 0.04em; color: #524e47; margin-bottom: 18px; }
+
+    /* ---- Testimonials carousel ---- */
+    .m2-tcard {
+      scroll-snap-align: start;
+      flex: 0 0 86%;
+      max-width: 327px;
+      display: flex; flex-direction: column;
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.06);
+      border-radius: 4px;
+      padding: 30px 21px 28px 26px;
+      box-shadow: var(--elevation-1);
+    }
+    .m2-tcard__mark { width: 40px; height: 41px; }
+    .m2-tcard__quote { font-family: var(--font-family-sans); font-style: italic; font-size: 17px; line-height: 1.5; color: #524e47; margin-top: 12px; }
+    .m2-tcard__foot { margin-top: auto; padding-top: 22px; }
+    .m2-tcard__rule { height: 1px; background: rgba(0,0,0,0.12); margin-bottom: 18px; }
+    .m2-tcard__person { display: flex; align-items: center; gap: 12px; }
+    .m2-tcard__avatar { width: 47px; height: 47px; border-radius: 50%; object-fit: cover; flex: none; }
+    .m2-tcard__name { font-family: var(--font-family-serif); font-weight: 600; font-size: 18px; color: #524e47; line-height: 1.2; }
+    .m2-tcard__role { font-family: var(--font-family-serif); font-size: 12.5px; color: #8a857b; margin-top: 2px; }
+
+    /* ---- Work / case-study cards ---- */
+    .m2-work-list { display: flex; flex-direction: column; gap: 28px; }
+    .m2-wcard {
+      display: block; width: 100%; text-align: left;
+      background: #fff; color: var(--brand-ink);
+      border-radius: 18px; overflow: hidden;
+      box-shadow: 0 0 20px rgba(0,0,0,0.10);
+      padding-bottom: 32px;
+      transition: transform var(--duration-normal) var(--easing-default), box-shadow var(--duration-normal) var(--easing-default);
+    }
+    .m2-wcard:hover { box-shadow: 0 8px 30px rgba(0,0,0,0.16); }
+    .m2-wcard:active { transform: scale(0.99); }
+    .m2-wcard__cover { display: block; width: 100%; aspect-ratio: 359 / 300; object-fit: cover; }
+    .m2-wcard__body { display: block; padding: 20px 28px 0; }
+    .m2-wcard__eyebrow, .m2-wcard__title, .m2-wcard__desc, .m2-wcard__mval, .m2-wcard__mlabel { display: block; }
+    .m2-wcard__eyebrow { font-family: var(--font-family-serif); font-weight: 700; font-size: 10px; letter-spacing: 0.06em; color: #9b958d; }
+    .m2-wcard__title { font-family: var(--font-family-serif); font-weight: 500; font-size: 24px; line-height: 1.2; margin-top: 4px; color: var(--wc); }
+    .m2-wcard__desc { font-family: var(--font-family-serif); font-size: 14px; line-height: 1.55; color: #524e49; margin-top: 10px; }
+    .m2-wcard__metrics { display: flex; gap: 20px; margin-top: 24px; }
+    .m2-wcard__metric { flex: 1; }
+    .m2-wcard__mval { font-family: var(--font-family-sans); font-weight: 700; font-size: 24px; line-height: 1; color: var(--wc); }
+    .m2-redact { display: block; width: 64px; height: 26px; border-radius: 2px; opacity: 0.85;
+      background:
+        conic-gradient(var(--wc) 90deg, color-mix(in srgb, var(--wc) 32%, #fff) 0 180deg, var(--wc) 0 270deg, color-mix(in srgb, var(--wc) 32%, #fff) 0);
+      background-size: 13px 13px;
+    }
+    .m2-wcard__mlabel { font-family: var(--font-family-sans); font-size: 12px; line-height: 1.4; color: #524e49; margin-top: 8px; }
+    .m2-wcard__cta { display: flex; align-items: center; justify-content: center; gap: 8px; height: 60px; margin: 24px 28px 0; border-radius: 4px; background: var(--wc); color: #fff; font-family: var(--font-family-serif); font-weight: 700; font-size: 16px; }
+    .m2-wcard__cta svg { width: 18px; height: 18px; }
+    .m2-wcard--realtor { --wc: #c60004; }
+    .m2-wcard--walmart { --wc: #e69a00; }
+    .m2-wcard--walmart .m2-wcard__cta { color: #1a1a1a; }
+    .m2-wcard--ds { --wc: #2151da; }
+
     /* =============================================================
        PORTFOLIO GATE (mobile) — "Portfolio access"
     ============================================================= */
@@ -1557,8 +1617,105 @@
         </div>
       </section>
 
-      <!-- Sections below are scaffolded; built in subsequent steps -->
-      <section id="m2-work" aria-label="Selected work"></section>
+      <div class="m2-light">
+        <!-- Testimonials -->
+        <section id="m2-testimonials" class="m2-section" aria-label="Testimonials">
+          <div class="m2-wrap">
+            <p class="m2-section__label">TESTIMONIALS</p>
+          </div>
+          <div data-carousel>
+            <div class="m2-rail" role="group" aria-roledescription="carousel" aria-label="Testimonials" style="padding-inline: var(--gutter);">
+              <figure class="m2-tcard">
+                <img class="m2-tcard__mark" src="assets/quote-mark.svg" alt="" aria-hidden="true" />
+                <blockquote class="m2-tcard__quote">Stephen was a joy to work with. He was an amazing blend of "think" and "do." I always knew that I'd get amazingly thoughtful design work from him that was both beautiful and innovative. He self-manages and leads well beyond his years, and I can't wait to see what he's up to in 10 years.</blockquote>
+                <figcaption class="m2-tcard__foot">
+                  <div class="m2-tcard__rule"></div>
+                  <div class="m2-tcard__person">
+                    <img class="m2-tcard__avatar" src="assets/avatar-todd.png" alt="Todd Greco" />
+                    <div><div class="m2-tcard__name">Todd Greco</div><div class="m2-tcard__role">Director, AI Outcomes, Slalom</div></div>
+                  </div>
+                </figcaption>
+              </figure>
+              <figure class="m2-tcard">
+                <img class="m2-tcard__mark" src="assets/quote-mark.svg" alt="" aria-hidden="true" />
+                <blockquote class="m2-tcard__quote">Stephen drove teams to deliver industry-leading experiences that changed how customers perceived the world's largest company. And he did it with a kindness and clarity that inspired me (and many others) to be better, try harder, reach further. Should you ever have the chance to work with Stephen, take it. Immediately. While you can.</blockquote>
+                <figcaption class="m2-tcard__foot">
+                  <div class="m2-tcard__rule"></div>
+                  <div class="m2-tcard__person">
+                    <img class="m2-tcard__avatar" src="assets/avatar-bill.png" alt="Bill Kurland" />
+                    <div><div class="m2-tcard__name">Bill Kurland</div><div class="m2-tcard__role">Sr. Director, McDonald's</div></div>
+                  </div>
+                </figcaption>
+              </figure>
+              <figure class="m2-tcard">
+                <img class="m2-tcard__mark" src="assets/quote-mark.svg" alt="" aria-hidden="true" />
+                <blockquote class="m2-tcard__quote">Stephen is that unicorn that invariably makes everyone feel like they may actually accomplish the Herculean task set in front of them. More than once in my time at Walmart, I've given an assignment to someone and watched them look a little nervous at the task. Then I tell them that Stephen is going to help and all is well again. He's that guy. You want him on your team, always.</blockquote>
+                <figcaption class="m2-tcard__foot">
+                  <div class="m2-tcard__rule"></div>
+                  <div class="m2-tcard__person">
+                    <img class="m2-tcard__avatar" src="assets/avatar-nick.png" alt="Nick Nguyen" />
+                    <div><div class="m2-tcard__name">Nick Nguyen</div><div class="m2-tcard__role">Director, Rivian</div></div>
+                  </div>
+                </figcaption>
+              </figure>
+            </div>
+            <div class="m2-dots" data-dots aria-hidden="true"></div>
+          </div>
+        </section>
+
+        <!-- Selected work -->
+        <section id="m2-work" class="m2-section" aria-label="Selected work">
+          <div class="m2-wrap">
+            <p class="m2-section__label">SELECTED WORK</p>
+            <div class="m2-work-list">
+
+              <button type="button" class="m2-wcard m2-wcard--realtor" data-casestudy aria-label="Realtor.com — AI transformation case study">
+                <img class="m2-wcard__cover" src="assets/work-realtor.png" alt="" />
+                <span class="m2-wcard__body">
+                  <span class="m2-wcard__eyebrow">REALTOR.COM</span>
+                  <span class="m2-wcard__title">AI transformation</span>
+                  <span class="m2-wcard__desc">Building the methods, agents, and curriculum that let Design lead in the AI age.</span>
+                  <span class="m2-wcard__metrics">
+                    <span class="m2-wcard__metric"><span class="m2-wcard__mval">L3+</span><span class="m2-wcard__mlabel">AI Maturity for the Product Design team</span></span>
+                    <span class="m2-wcard__metric"><span class="m2-wcard__mval">25%</span><span class="m2-wcard__mlabel">increase in velocity rate from AI workflows</span></span>
+                  </span>
+                </span>
+                <span class="m2-wcard__cta">Read the case study <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </button>
+
+              <button type="button" class="m2-wcard m2-wcard--walmart" data-casestudy aria-label="Walmart — Membership that matters case study">
+                <img class="m2-wcard__cover" src="assets/work-walmart.png" alt="" />
+                <span class="m2-wcard__body">
+                  <span class="m2-wcard__eyebrow">WALMART</span>
+                  <span class="m2-wcard__title">Membership that matters</span>
+                  <span class="m2-wcard__desc">Designing Walmart+ to make everyday essentials more accessible and affordable for millions of families.</span>
+                  <span class="m2-wcard__metrics">
+                    <span class="m2-wcard__metric"><span class="m2-redact" aria-hidden="true"></span><span class="m2-wcard__mlabel">Walmart+ acquisition rate in the first year.</span></span>
+                    <span class="m2-wcard__metric"><span class="m2-redact" aria-hidden="true"></span><span class="m2-wcard__mlabel">basket increase for Walmart+ members.</span></span>
+                  </span>
+                </span>
+                <span class="m2-wcard__cta">Read the case study <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </button>
+
+              <button type="button" class="m2-wcard m2-wcard--ds" data-casestudy aria-label="Design systems — Scale, by design case study">
+                <img class="m2-wcard__cover" src="assets/work-designsystems.png" alt="" />
+                <span class="m2-wcard__body">
+                  <span class="m2-wcard__eyebrow">DESIGN SYSTEMS</span>
+                  <span class="m2-wcard__title">Scale, by design</span>
+                  <span class="m2-wcard__desc">Take a peek into how to build a tokenized Design System to power multi-brand experiences.</span>
+                  <span class="m2-wcard__metrics">
+                    <span class="m2-wcard__metric"><span class="m2-redact" aria-hidden="true"></span><span class="m2-wcard__mlabel">Reduction in Design &amp; Engineering handoff</span></span>
+                    <span class="m2-wcard__metric"><span class="m2-redact" aria-hidden="true"></span><span class="m2-wcard__mlabel">Annual savings through scalable theming</span></span>
+                  </span>
+                </span>
+                <span class="m2-wcard__cta">Read the case study <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </button>
+
+            </div>
+          </div>
+        </section>
+      </div>
+
       <section id="m2-about" aria-label="About"></section>
       <section id="m2-ai" aria-label="AI leadership"></section>
       <section id="m2-contact" aria-label="Get in touch"></section>
