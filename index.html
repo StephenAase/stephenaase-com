@@ -375,6 +375,64 @@
     .m2-gate__error.is-visible { height: auto; opacity: 1; }
     .m2-gate__submit { margin-top: 20px; }
     .m2-gate__close { position: absolute; top: 16px; right: 16px; width: 28px; height: 28px; color: var(--brand-ink); }
+    .m2-gate__note { font-size: 14px; line-height: 1.5; color: var(--brand-accent-purple); margin-top: 16px; height: 0; opacity: 0; overflow: hidden; transition: opacity var(--duration-normal); }
+    .m2-gate__note.is-visible { height: auto; opacity: 1; }
+    a.m2-gate__reach { display: inline-block; margin-top: 16px; font-size: 14px; color: var(--brand-accent-purple); text-decoration: underline; text-underline-offset: 3px; }
+
+    /* =============================================================
+       NAV DRAWER (hamburger menu)
+    ============================================================= */
+    .m2-nav { position: fixed; inset: 0; z-index: 95; visibility: hidden; }
+    .m2-nav.is-open { visibility: visible; }
+    .m2-nav__scrim { position: absolute; inset: 0; background: rgba(37,35,46,0.45); opacity: 0; transition: opacity var(--duration-slow) var(--easing-default); }
+    .m2-nav.is-open .m2-nav__scrim { opacity: 1; }
+    .m2-nav__panel {
+      position: absolute; inset: 0 0 auto 0;
+      background: var(--brand-light);
+      padding: 14px var(--gutter) 44px;
+      transform: translateY(-101%);
+      transition: transform var(--duration-slow) var(--easing-default);
+      box-shadow: 0 24px 60px rgba(37,35,46,0.3);
+    }
+    .m2-nav.is-open .m2-nav__panel { transform: none; }
+    .m2-nav__top { display: flex; align-items: center; justify-content: space-between; }
+    .m2-nav__brand { display: flex; align-items: center; gap: 8px; color: var(--brand-purple); font-family: var(--font-family-serif); font-weight: 600; font-size: 15px; }
+    .m2-nav__brand svg { width: 18px; height: 18px; }
+    .m2-nav__close { width: 28px; height: 28px; color: var(--brand-purple); }
+    .m2-nav__links { margin-top: 34px; display: flex; flex-direction: column; align-items: flex-start; gap: 24px; }
+    .m2-nav .m2-nav__link {
+      font-family: var(--font-family-serif); font-weight: 500; font-size: 24px;
+      color: var(--brand-accent-purple);
+      opacity: 0; transform: translateY(10px);
+      transition: opacity var(--duration-normal) var(--easing-out), transform var(--duration-normal) var(--easing-out), color var(--duration-fast);
+    }
+    .m2-nav.is-open .m2-nav__link { opacity: 1; transform: none; }
+    .m2-nav.is-open .m2-nav__link:nth-child(1) { transition-delay: 0.10s; }
+    .m2-nav.is-open .m2-nav__link:nth-child(2) { transition-delay: 0.15s; }
+    .m2-nav.is-open .m2-nav__link:nth-child(3) { transition-delay: 0.20s; }
+    .m2-nav.is-open .m2-nav__link:nth-child(4) { transition-delay: 0.25s; }
+    .m2-nav.is-open .m2-nav__link:nth-child(5) { transition-delay: 0.30s; }
+    .m2-nav__link:active { color: var(--brand-purple); }
+    /* hamburger -> X */
+    .m2-burger[aria-expanded="true"] span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .m2-burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+    .m2-burger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+    /* =============================================================
+       SCROLL REVEAL (progressive enhancement; off by default)
+    ============================================================= */
+    .m2.reveal-on [data-reveal] { opacity: 0; transform: translateY(22px); transition: opacity var(--duration-slow) var(--easing-out), transform var(--duration-slow) var(--easing-out); }
+    .m2.reveal-on [data-reveal].is-in { opacity: 1; transform: none; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .m2 *, .m2 *::before, .m2 *::after { transition-duration: 0.001ms !important; animation-duration: 0.001ms !important; }
+      .m2.reveal-on [data-reveal] { opacity: 1; transform: none; }
+      .m2-rail { scroll-behavior: auto; }
+    }
+
+    /* =============================================================
+       PORTFOLIO GATE (mobile) — "Portfolio access"
+    ============================================================= */
 
     /* ---------- Sections ---------- */
     section { position: relative; }
@@ -1620,6 +1678,47 @@
       </div>
     </div>
 
+    <!-- Case study access modal (closeable; no live pages yet) -->
+    <div class="m2-gate" id="m2CsModal" role="dialog" aria-modal="true" aria-labelledby="m2CsTitle" hidden>
+      <div class="m2-gate__card" role="document">
+        <button class="m2-gate__close" type="button" aria-label="Close" data-cs-close>
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+        <svg class="m2-gate__lock" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2"/></svg>
+        <h2 class="m2-gate__title" id="m2CsTitle">Case study access</h2>
+        <p class="m2-gate__sub">This one's password-protected — a closer look at the thinking behind a project I'm proud of. If I sent you a password, you're in the right place; drop it below.</p>
+        <form class="m2-cs__form" novalidate>
+          <label class="m2-gate__label" for="m2CsInput">Password</label>
+          <input class="m2-gate__input" id="m2CsInput" type="password" placeholder="Enter password" spellcheck="false" />
+          <p class="m2-gate__note">These case studies are coming soon. Reach out and I'll happily walk you through the work.</p>
+          <button type="submit" class="m2-btn m2-gate__submit">Unlock the case study
+            <svg class="m2-btn__arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2"/></svg>
+          </button>
+        </form>
+        <a class="m2-gate__reach" href="mailto:stephen.aase@gmail.com">No password? Reach out to connect</a>
+      </div>
+    </div>
+
+    <!-- Nav drawer -->
+    <nav class="m2-nav" id="m2Nav" aria-label="Site menu">
+      <div class="m2-nav__scrim" data-nav-close></div>
+      <div class="m2-nav__panel" role="dialog" aria-modal="true" aria-label="Menu">
+        <div class="m2-nav__top">
+          <span class="m2-nav__brand"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2l2.6 4.9L20 8l-3.7 3.9.9 5.6L12 15l-5.2 2.5.9-5.6L4 8l5.4-1.1L12 2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>Stephen Aase</span>
+          <button class="m2-nav__close" type="button" aria-label="Close menu" data-nav-close>
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </button>
+        </div>
+        <div class="m2-nav__links">
+          <a class="m2-nav__link" href="#m2-testimonials">Testimonials</a>
+          <a class="m2-nav__link" href="#m2-work">Case studies</a>
+          <a class="m2-nav__link" href="#m2-about">About me</a>
+          <a class="m2-nav__link" href="#m2-ai">AI leadership</a>
+          <a class="m2-nav__link" href="#m2-contact">Get in touch</a>
+        </div>
+      </div>
+    </nav>
+
     <!-- Header -->
     <header class="m2-header">
       <a class="m2-brand" href="#m2-top" aria-label="Stephen Aase home">
@@ -2035,17 +2134,68 @@
           slides.forEach(function (s) { io.observe(s); });
         });
 
-        // --- Hamburger (drawer wired fully in the nav step; toggle aria for now) ---
+        // --- Nav drawer (focus-trapped) ---
+        var nav = document.getElementById('m2Nav');
         var burger = root.querySelector('.m2-burger');
-        if (burger) {
-          burger.addEventListener('click', function () {
-            var open = burger.getAttribute('aria-expanded') === 'true';
-            burger.setAttribute('aria-expanded', String(!open));
-            track('nav_toggle', { open: !open });
+        var navPanel = nav ? nav.querySelector('.m2-nav__panel') : null;
+        var lastFocus = null;
+        function openNav() {
+          nav.classList.add('is-open');
+          burger.setAttribute('aria-expanded', 'true');
+          document.body.style.overflow = 'hidden';
+          lastFocus = document.activeElement;
+          setTimeout(function () { var c = nav.querySelector('.m2-nav__close'); c && c.focus(); }, 80);
+          track('nav_toggle', { open: true });
+        }
+        function closeNav() {
+          nav.classList.remove('is-open');
+          burger.setAttribute('aria-expanded', 'false');
+          document.body.style.overflow = '';
+          if (lastFocus && lastFocus.focus) lastFocus.focus();
+        }
+        if (nav && burger) {
+          burger.addEventListener('click', openNav);
+          nav.querySelectorAll('[data-nav-close]').forEach(function (el) { el.addEventListener('click', closeNav); });
+          nav.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') { closeNav(); return; }
+            if (e.key !== 'Tab') return;
+            var f = navPanel.querySelectorAll('a[href], button:not([disabled])');
+            if (!f.length) return;
+            var first = f[0], last = f[f.length - 1];
+            if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+            else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
           });
         }
 
-        // --- Smooth in-page scroll for hero CTA + same-page anchors ---
+        // --- Case-study modal (closeable; "coming soon" on submit) ---
+        var cs = document.getElementById('m2CsModal');
+        function openCs() {
+          cs.hidden = false; document.body.style.overflow = 'hidden';
+          cs.offsetHeight; cs.classList.add('is-open');
+          track('case_study_modal_open');
+        }
+        function closeCs() {
+          cs.classList.remove('is-open'); document.body.style.overflow = '';
+          setTimeout(function () {
+            cs.hidden = true;
+            var note = cs.querySelector('.m2-gate__note'); if (note) note.classList.remove('is-visible');
+            var form = cs.querySelector('.m2-cs__form'); if (form) form.reset();
+          }, 350);
+        }
+        if (cs) {
+          root.querySelectorAll('[data-casestudy]').forEach(function (card) { card.addEventListener('click', openCs); });
+          cs.querySelectorAll('[data-cs-close]').forEach(function (el) { el.addEventListener('click', closeCs); });
+          cs.addEventListener('click', function (e) { if (e.target === cs) closeCs(); });
+          cs.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeCs(); });
+          var csForm = cs.querySelector('.m2-cs__form');
+          if (csForm) csForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            cs.querySelector('.m2-gate__note').classList.add('is-visible');
+            track('case_study_submit');
+          });
+        }
+
+        // --- Smooth in-page scroll (nav links close the drawer first) ---
         root.querySelectorAll('a[href^="#"]').forEach(function (link) {
           link.addEventListener('click', function (e) {
             var id = link.getAttribute('href');
@@ -2053,9 +2203,25 @@
             var target = document.querySelector(id);
             if (!target) return;
             e.preventDefault();
-            target.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'start' });
+            var isNavLink = link.classList.contains('m2-nav__link');
+            if (isNavLink && nav && nav.classList.contains('is-open')) closeNav();
+            var delay = (isNavLink && !prefersReducedMotion) ? 320 : 0;
+            setTimeout(function () {
+              target.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'start' });
+            }, delay);
           });
         });
+
+        // --- Scroll reveal (below-the-fold only; respects reduced motion) ---
+        if (!prefersReducedMotion && 'IntersectionObserver' in window) {
+          root.classList.add('reveal-on');
+          var revealEls = root.querySelectorAll('.m2-section__label, .m2-wcard, .m2-about__intro, .m2-about__plabel, .m2-principle, .m2-ai__head, .m2-ai__cta, .m2-footer__head, .m2-footer__body, .m2-footer__cta');
+          revealEls.forEach(function (el) { el.setAttribute('data-reveal', ''); });
+          var ro = new IntersectionObserver(function (entries) {
+            entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('is-in'); ro.unobserve(en.target); } });
+          }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+          revealEls.forEach(function (el) { ro.observe(el); });
+        }
       })();
 
       // Desktop site gate: lock access until password "G00se" is entered
