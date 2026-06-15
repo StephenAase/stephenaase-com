@@ -276,7 +276,7 @@
   --fluid-stat:    clamp(3rem, 2rem + 5vw, 4rem);            /* big stat numbers */
 
   /* Fluid spacing rhythm */
-  --gutter:        clamp(20px, 4.5vw, 24px);  /* page side padding */
+  --gutter:        16px;  /* page side padding (mobile); tablet/desktop override in index.html */
   --section-gap:   clamp(56px, 12vw, 88px);   /* vertical rhythm between sections */
 
   /* Breakpoint scale (documented; min-width layers added in desktop pass) */
@@ -285,8 +285,9 @@
   --bp-lg: 1024px;
   --bp-xl: 1280px;
 
-  /* Mobile content frame (design is 375px wide, 24px gutters) */
-  --m-content-max: 420px;   /* keeps the line lengths from the 375 design on bigger phones */
+  /* Mobile: no content cap so text/CTAs and carousels share the same 16px
+     gutter and align. Tablet/desktop caps are set in index.html. */
+  --m-content-max: none;
 }
 
 /* =====================================================================
