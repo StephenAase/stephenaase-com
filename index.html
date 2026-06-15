@@ -293,6 +293,49 @@
     .m2-wcard--walmart .m2-wcard__cta { color: #1a1a1a; }
     .m2-wcard--ds { --wc: #2151da; }
 
+    /* ---- About / guiding principles ---- */
+    .m2-about { position: relative; background: var(--hero-bg); color: var(--brand-light-2); overflow: hidden; padding-bottom: var(--section-gap); }
+    .m2-about__photo { position: relative; height: clamp(300px, 80vw, 360px); }
+    .m2-about__photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 28%; display: block; }
+    .m2-about__photo::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 90px; background: linear-gradient(to bottom, var(--brand-light-2), rgba(249,243,235,0)); }
+    .m2-about__photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(37,35,46,0) 35%, var(--hero-bg) 94%); }
+    .m2-about__body { position: relative; margin-top: -52px; padding-inline: var(--gutter); }
+    .m2-about__intro { font-family: var(--font-family-serif); font-weight: 400; font-size: var(--fluid-lg); line-height: 1.4; color: var(--brand-light-2); }
+    .m2-about__intro em { font-style: normal; color: var(--brand-tan); }
+    .m2-about__plabel { font-family: var(--font-family-serif); font-weight: 500; font-size: 14px; color: var(--brand-light-2); margin-top: 28px; margin-bottom: 12px; }
+    .m2-principle { display: flex; align-items: center; gap: 12px; background: var(--brand-core-1); border-radius: var(--radius-md); padding: 13px 16px; min-height: 51px; }
+    .m2-principle + .m2-principle { margin-top: 12px; }
+    .m2-principle__icon { width: 24px; height: 24px; flex: none; }
+    .m2-principle__text { font-family: var(--font-family-sans); font-weight: 400; font-size: 14px; line-height: 1.4; color: var(--brand-light-2); }
+    .m2-principle__text b { font-weight: 700; }
+
+    /* ---- AI leadership ---- */
+    .m2-ai { position: relative; background: var(--hero-bg); color: var(--brand-light-2); padding-block: var(--section-gap); }
+    .m2-ai__head { font-family: var(--font-family-serif); font-weight: 500; font-size: var(--fluid-2xl); line-height: 1.2; margin-top: 14px; }
+    .m2-ai__head em { font-style: normal; color: var(--brand-tan); }
+    .m2-aicard {
+      position: relative; scroll-snap-align: start;
+      flex: 0 0 84%; max-width: 295px; height: 415px;
+      background: var(--brand-core-1); border-radius: var(--radius-md);
+      overflow: hidden; padding: 24px; display: flex; flex-direction: column;
+    }
+    .m2-aicard__illus { position: absolute; inset: 0; background-position: center 52%; background-repeat: no-repeat; background-size: 116%; }
+    .m2-aicard__label { position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; font-family: var(--font-family-serif); font-weight: 500; font-size: 14px; color: var(--brand-light-2); }
+    .m2-aicard__label svg { width: 18px; height: 18px; }
+    .m2-aicard__desc { position: relative; z-index: 1; margin-top: auto; font-family: var(--font-family-serif); font-weight: 400; font-size: 12px; line-height: 1.55; color: var(--brand-light-2); }
+    .m2-ai__cta { margin-top: 28px; background: var(--action-primary); color: var(--on-action-primary); pointer-events: none; }
+
+    /* ---- Footer / closing CTA ---- */
+    .m2-footer { position: relative; background: var(--hero-bg); color: var(--brand-light-2); padding: var(--section-gap) var(--gutter) 0; }
+    .m2-footer__label { font-family: var(--font-family-serif); font-weight: 500; font-size: 14px; color: var(--brand-light-2); }
+    .m2-footer__head { font-family: var(--font-family-serif); font-weight: 600; font-size: clamp(2.25rem, 1.4rem + 4vw, 3rem); line-height: 1.08; margin-top: 18px; color: var(--brand-light-2); }
+    .m2-footer__head em { font-style: normal; color: var(--brand-accent-purple); }
+    .m2-footer__body { font-family: var(--font-family-serif); font-weight: 400; font-size: 15px; line-height: 1.6; color: var(--brand-light-2); opacity: 0.85; margin-top: 20px; max-width: 320px; }
+    .m2-footer__cta { margin-top: 28px; }
+    .m2-footer__bar { display: flex; align-items: center; gap: 24px; margin-top: 36px; padding: 22px 0 28px; border-top: 1px solid rgba(255,255,255,0.10); font-size: 14px; }
+    .m2-footer__bar a { text-decoration: underline; text-underline-offset: 3px; }
+    .m2-footer__copy { margin-left: auto; opacity: 0.5; text-decoration: none; }
+
     /* =============================================================
        PORTFOLIO GATE (mobile) — "Portfolio access"
     ============================================================= */
@@ -1716,9 +1759,72 @@
         </section>
       </div>
 
-      <section id="m2-about" aria-label="About"></section>
-      <section id="m2-ai" aria-label="AI leadership"></section>
-      <section id="m2-contact" aria-label="Get in touch"></section>
+      <!-- About / guiding principles -->
+      <section id="m2-about" class="m2-about" aria-label="About Stephen">
+        <div class="m2-about__photo"><img src="assets/about-photo.png" alt="Stephen with his family outdoors" loading="lazy" /></div>
+        <div class="m2-about__body">
+          <p class="m2-about__intro"><em>Hi, I'm Stephen,</em> inspired by adventure, fueled by family, and driven to make an impact.</p>
+          <p class="m2-about__plabel">MY GUIDING PRINCIPLES</p>
+          <div class="m2-principle"><img class="m2-principle__icon" src="assets/icon-curiosity.svg" alt="" aria-hidden="true" /><p class="m2-principle__text"><b>Embrace curiosity,</b> explore, evolve</p></div>
+          <div class="m2-principle"><img class="m2-principle__icon" src="assets/icon-excellence.svg" alt="" aria-hidden="true" /><p class="m2-principle__text"><b>Strive for excellence,</b> not perfection</p></div>
+          <div class="m2-principle"><img class="m2-principle__icon" src="assets/icon-boldly.svg" alt="" aria-hidden="true" /><p class="m2-principle__text"><b>Design boldly,</b> courage for impact</p></div>
+          <div class="m2-principle"><img class="m2-principle__icon" src="assets/icon-love.svg" alt="" aria-hidden="true" /><p class="m2-principle__text"><b>Love the problem,</b> not the solution</p></div>
+          <div class="m2-principle"><img class="m2-principle__icon" src="assets/icon-inspire.png" alt="" aria-hidden="true" /><p class="m2-principle__text"><b>Inspire by example,</b> player coach</p></div>
+        </div>
+      </section>
+
+      <!-- AI leadership -->
+      <section id="m2-ai" class="m2-ai" aria-label="AI leadership">
+        <div class="m2-wrap">
+          <p class="m2-section__label" style="color:var(--brand-light-2)">AI LEADERSHIP</p>
+          <h2 class="m2-ai__head">I design the org to put AI to work, freeing teams for <em>judgment, vision, and insight.</em></h2>
+        </div>
+        <div data-carousel>
+          <div class="m2-rail" role="group" aria-roledescription="carousel" aria-label="How I lead with AI" style="padding-inline: var(--gutter);">
+            <article class="m2-aicard">
+              <div class="m2-aicard__illus" style="background-image:url('assets/ai-infrastructure.png')"></div>
+              <div class="m2-aicard__label">INFRASTRUCTURE <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <p class="m2-aicard__desc">An AI-augmented process that compresses discovery and define — building to learn, not studying to guess.</p>
+            </article>
+            <article class="m2-aicard">
+              <div class="m2-aicard__illus" style="background-image:url('assets/ai-human.png')"></div>
+              <div class="m2-aicard__label">HUMAN IN THE LOOP <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <p class="m2-aicard__desc">Named design and dev agents for critique, scope, usability, and consumer advocacy — each amplifying a designer, never replacing one.</p>
+            </article>
+            <article class="m2-aicard">
+              <div class="m2-aicard__illus" style="background-image:url('assets/ai-metrics.png')"></div>
+              <div class="m2-aicard__label">BEHAVIORAL METRICS <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <p class="m2-aicard__desc">Adoption tracked through behavioral metrics and leading indicators — whether the team's capability actually compounds, not vanity usage.</p>
+            </article>
+            <article class="m2-aicard">
+              <div class="m2-aicard__illus" style="background-image:url('assets/ai-craft.png')"></div>
+              <div class="m2-aicard__label">CRAFT + VELOCITY <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <p class="m2-aicard__desc">A workflow that takes design into the real codebase with guardrails — closing the gap between intent and shipped product.</p>
+            </article>
+          </div>
+          <div class="m2-dots" data-dots aria-hidden="true"></div>
+        </div>
+        <div class="m2-wrap">
+          <span class="m2-btn m2-ai__cta" role="note">Case study coming soon
+            <svg class="m2-btn__arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </div>
+      </section>
+
+      <!-- Footer / closing CTA -->
+      <footer id="m2-contact" class="m2-footer" aria-label="Get in touch">
+        <p class="m2-footer__label">GET IN TOUCH</p>
+        <h2 class="m2-footer__head">Still learning.<br>Still building.<br><em>Always leading toward better.</em></h2>
+        <p class="m2-footer__body">I'm at my best leading orgs toward the best possible experiences for the people they serve. If that's your work too, let's talk.</p>
+        <a class="m2-btn m2-footer__cta" href="mailto:stephen.aase@gmail.com">Stephen.Aase@gmail.com
+          <svg class="m2-btn__arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <div class="m2-footer__bar">
+          <a href="https://www.linkedin.com/in/stephenaase/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          <a href="https://www.linkedin.com/in/stephenaase/" target="_blank" rel="noopener noreferrer">Résumé</a>
+          <span class="m2-footer__copy">© 2026 Stephen</span>
+        </div>
+      </footer>
 
     </main>
   </div>
