@@ -61,9 +61,28 @@ documented per his request ("document all decisions / edge cases").
 13. **Guiding-principle icons** are the exact Walmart Living Design pictograms
     exported from Figma (`/assets/icon-*`).
 
+## Phase 2 — responsive desktop (done)
+The new DOM is now the site at **all** widths (legacy desktop retired —
+`.stage`/`.site-header`/`#siteGateModal` hidden; legacy gate JS disabled).
+Mobile-first base + `min-width` layers re-compose each section:
+- **Tablet (≥768):** carousels → 2-up grids (dots hidden), hamburger kept,
+  hero stats → 3-up row, selected work → 2-up.
+- **Desktop (≥1024):** inline header nav (hamburger hidden) with a "Get in
+  touch" pill; editorial hero (≈88px title, 3-up stats, auto-width CTA);
+  testimonials 3-up, selected work 3-up, AI leadership 4-up; **About → 2-column**
+  (rounded photo + content); footer scaled up with a constrained measure;
+  pointer-only hover affordances.
+- **Wide (≥1440):** larger hero title, wider max content.
+- Fluid type/space/gutter tokens scale per breakpoint; scroll-reveal +
+  `prefers-reduced-motion` carry across all breakpoints.
+- **Liberty taken:** the scallop waves are a mobile vertical-transition device;
+  on desktop the About becomes a side-by-side, so its scallop is hidden there.
+
 ## Still open / next steps
-- Real **Résumé** link (see #10).
-- **Desktop & tablet** breakpoints: add `min-width` layers to this DOM using the
-  new tokens, then remove the legacy `.stage`/`.page` block and warm tokens.
+- Real **Résumé** link (footer currently → LinkedIn stand-in).
+- Hero stat-card "cut off as it scrolls" (mobile) — couldn't reproduce; awaiting
+  a screenshot/device from Stephen.
+- Optional: the legacy desktop markup is hidden (not deleted) — can be removed
+  in a cleanup pass along with the warm-palette tokens.
 - Optional: revisit the 8 npm-audit advisories (dependency-only; don't affect
   this static build).
