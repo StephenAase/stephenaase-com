@@ -192,6 +192,7 @@
       transition: color var(--duration-fast) var(--easing-default);
     }
     a.m2-eyebrow:hover { color: var(--brand-accent-purple); }
+    .m2-eyebrow__cta { display: none; }   /* desktop-only "See the Case Study" link */
     .m2-eyebrow__dot { width: 8px; height: 8px; border-radius: 50%; background: var(--brand-accent-purple); flex: none; animation: m2-pulse 2s var(--easing-out) infinite; }
     @keyframes m2-pulse {
       0%   { box-shadow: 0 0 0 0 rgba(160,99,162,0.55); }
@@ -1813,6 +1814,106 @@
       .m2-tcard { transition: transform var(--duration-normal) var(--easing-default), box-shadow var(--duration-normal) var(--easing-default); }
       .m2-tcard:hover { transform: translateY(-3px); box-shadow: var(--elevation-3); }
     }
+
+    /* =============================================================
+       DESKTOP REDESIGN — Figma Portfolio26.2 (node 344-4696)
+       Nav, Hero, Testimonials, Case studies for tablet + desktop.
+       Appended last so it overrides the Phase-2 responsive layers.
+    ============================================================= */
+
+    /* ---------- TABLET+ (>= 768): eyebrow status bar, horizontal case cards ---------- */
+    @media (min-width: 768px) {
+      /* Eyebrow becomes a full-width bordered status bar: text left, link right */
+      .m2-hero a.m2-eyebrow {
+        width: 100%;
+        justify-content: flex-start;
+        gap: 12px;
+        padding: 14px clamp(20px, 2vw, 28px);
+        border: 1px solid var(--brand-core-1);
+        border-radius: var(--radius-full);
+        font-size: 14px;
+        color: var(--brand-light-2);
+      }
+      .m2-hero .m2-eyebrow__cta {
+        display: inline-flex; align-items: center; gap: 8px;
+        margin-left: auto;
+        color: var(--brand-tan);
+        white-space: nowrap;
+      }
+      .m2-hero .m2-eyebrow__arrow { width: 16px; height: 16px; flex: none; }
+      .m2-hero a.m2-eyebrow:hover { color: var(--brand-light-2); }
+      .m2-hero a.m2-eyebrow:hover .m2-eyebrow__cta { color: var(--brand-accent-purple); }
+
+      /* Case studies -> single column of horizontal cards */
+      .m2-work-list { display: grid; grid-template-columns: 1fr; gap: clamp(24px, 3vw, 32px); }
+      .m2-wcard {
+        display: grid;
+        grid-template-columns: minmax(0, 1.02fr) minmax(0, 1fr);
+        grid-template-rows: auto auto;
+        align-items: stretch;
+        padding-bottom: 0;
+        min-height: clamp(320px, 38vw, 460px);
+        border-radius: 20px;
+      }
+      .m2-wcard__cover {
+        grid-column: 1; grid-row: 1 / 3;
+        width: 100%; height: 100%;
+        aspect-ratio: auto;
+        object-fit: cover;
+      }
+      .m2-wcard__body {
+        grid-column: 2; grid-row: 1;
+        align-self: end;
+        padding: clamp(30px, 3.4vw, 56px) clamp(26px, 2.8vw, 52px) 0;
+      }
+      .m2-wcard__cta {
+        grid-column: 2; grid-row: 2;
+        align-self: start; justify-self: start;
+        width: max-content; min-width: 252px;
+        margin: clamp(20px, 2vw, 28px) clamp(26px, 2.8vw, 52px) clamp(30px, 3.4vw, 56px);
+      }
+    }
+
+    /* ---------- DESKTOP (>= 1024): 2-col hero, stacked stats, inline-nav polish ---------- */
+    @media (min-width: 1024px) {
+      /* Nav: plain links to match Figma (retire the pill on "Get in Touch") */
+      .m2-topnav__cta {
+        padding: 0; background: transparent; border-radius: 0;
+        color: var(--brand-accent-purple) !important;
+      }
+      .m2-topnav__cta:hover { background: transparent; color: var(--brand-purple) !important; }
+
+      /* Hero -> two columns: content left, stats stacked right; eyebrow spans the top */
+      .m2-hero > .m2-wrap {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) clamp(360px, 29vw, 412px);
+        column-gap: clamp(48px, 6vw, 104px);
+        align-content: start;
+        grid-template-areas:
+          "eyebrow eyebrow"
+          "title   stats"
+          "sub     stats"
+          "cta     stats";
+      }
+      .m2-hero a.m2-eyebrow  { grid-area: eyebrow; }
+      .m2-hero__title        { grid-area: title; margin-top: clamp(40px, 5vw, 72px); }
+      .m2-hero__subtitle     { grid-area: sub; margin-top: 16px; max-width: 32ch; }
+      .m2-hero__cta          { grid-area: cta; align-self: start; justify-self: start;
+                               width: auto; min-width: 300px; margin-top: clamp(24px, 3vw, 36px); }
+      .m2-hero .m2-stats     { grid-area: stats; align-self: start; margin-top: clamp(40px, 5vw, 72px); }
+
+      /* Stats -> stacked single column */
+      .m2-hero .m2-stats .m2-rail { grid-template-columns: 1fr; gap: 16px; }
+      .m2-hero .m2-stat { min-height: clamp(112px, 9vw, 132px); padding: 28px 32px; }
+      .m2-hero .m2-stat__value { font-size: clamp(2.75rem, 1.6rem + 2vw, 4rem); }
+
+      /* Case-study cards -> larger editorial typography */
+      .m2-wcard__title  { font-size: clamp(28px, 2.3vw, 36px); }
+      .m2-wcard__desc   { font-size: 16px; margin-top: 12px; max-width: 48ch; }
+      .m2-wcard__metrics{ margin-top: 28px; }
+      .m2-wcard__mval   { font-size: 28px; }
+      .m2-wcard__mlabel { font-size: 13px; }
+    }
   </style>
 </head>
 <body>
@@ -1889,10 +1990,10 @@
       </a>
       <nav class="m2-topnav" aria-label="Primary">
         <a href="#m2-testimonials">Testimonials</a>
-        <a href="#m2-work">Case studies</a>
-        <a href="#m2-about">About me</a>
-        <a href="#m2-ai">AI leadership</a>
-        <a href="#m2-contact" class="m2-topnav__cta">Get in touch</a>
+        <a href="#m2-work">Case Studies</a>
+        <a href="#m2-about">About Me</a>
+        <a href="#m2-ai">AI Leadership</a>
+        <a href="#m2-contact" class="m2-topnav__cta">Get in Touch</a>
       </nav>
       <button class="m2-burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="m2Nav">
         <span></span><span></span><span></span>
@@ -1904,7 +2005,7 @@
       <!-- Hero -->
       <section class="m2-hero" id="m2-hero" aria-labelledby="m2-hero-title">
         <div class="m2-wrap">
-          <a class="m2-eyebrow" href="#m2-work" aria-label="Currently leading AI transformation at Realtor.com — see the case study"><span class="m2-eyebrow__dot" aria-hidden="true"></span>Currently leading AI transformation at Realtor.com</a>
+          <a class="m2-eyebrow" href="#m2-work" aria-label="Currently leading AI transformation at Realtor.com — see the case study"><span class="m2-eyebrow__dot" aria-hidden="true"></span><span class="m2-eyebrow__text">Currently leading AI transformation at Realtor.com</span><span class="m2-eyebrow__cta" aria-hidden="true">See the Case Study <svg class="m2-eyebrow__arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
           <h1 class="m2-hero__title" id="m2-hero-title">Relentlessly <em>curious.</em></h1>
           <p class="m2-hero__subtitle">I follow hard questions to human-centered answers.</p>
 
