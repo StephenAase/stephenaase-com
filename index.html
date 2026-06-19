@@ -661,6 +661,62 @@
       .m2-wcard__mval   { font-size: 28px; }
       .m2-wcard__mlabel { font-size: 13px; }
     }
+
+    /* =============================================================
+       DESKTOP SECTIONS — Figma Portfolio26.2 exact specs
+       Testimonials 354:4896 · Closing CTA 365:5344 · Footer 365:5366
+       Content band = 1280 centered (=224 gutter @1728).
+    ============================================================= */
+    @media (min-width: 1024px) {
+      /* ---- Testimonials: 3 cards 400px, gap 40, white, radius 8 ---- */
+      #m2-testimonials { padding-inline: clamp(24px, 5vw, 64px); }
+      #m2-testimonials .m2-wrap { max-width: 1280px; margin-inline: auto; padding-inline: 0; }
+      #m2-testimonials .m2-rail { max-width: 1280px; margin-inline: auto; padding-inline: 0 !important;
+        grid-template-columns: repeat(3, 1fr); gap: 40px; }
+      #m2-testimonials .m2-section__label { font-size: 24px; line-height: 40px; letter-spacing: 0; color: #524e47; margin-bottom: 24px; }
+      #m2-testimonials .m2-tcard {
+        display: flex; flex-direction: column;
+        background: #fff; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px;
+        min-height: 530px; padding: 30px 21px 30px 26px;
+        box-shadow: 0 2px 10px rgba(20,16,10,0.07);
+      }
+      #m2-testimonials .m2-tcard__mark { width: 40.375px; height: 41px; }
+      #m2-testimonials .m2-tcard__quote {
+        font-family: var(--font-family-sans); font-style: italic; font-weight: 400;
+        font-size: 20px; line-height: 30px; color: #524e47; margin-top: 8px;
+      }
+      #m2-testimonials .m2-tcard__foot { margin-top: auto; padding-top: 0; }
+      #m2-testimonials .m2-tcard__rule { width: 280px; height: 1px; background: #c5c1b8; margin-bottom: 24px; }
+      #m2-testimonials .m2-tcard__person { align-items: flex-end; gap: 12px; }
+      #m2-testimonials .m2-tcard__avatar { width: 47px; height: 47px; }
+      #m2-testimonials .m2-tcard__name { font-size: 18.8px; line-height: 26.6px; color: #524e47; margin-bottom: -8px; }
+      #m2-testimonials .m2-tcard__role { font-size: 12.5px; line-height: 26.6px; color: #8a857b; margin-top: 0; }
+
+      /* ---- Closing CTA (365:5344): two-tone 80px statement ---- */
+      .m2-footer { padding-inline: clamp(24px, 5vw, 64px); }
+      .m2-footer__label,
+      .m2-footer__head,
+      .m2-footer__body,
+      .m2-footer__cta { max-width: 1280px; margin-inline: auto; }
+      .m2-footer__label { font-size: 24px; line-height: 40px; letter-spacing: 0; }
+      .m2-footer__head { font-size: clamp(48px, 6.6vw, 80px); line-height: 1.25; letter-spacing: -0.01em; margin-top: 32px; }
+      .m2-footer__head em { color: var(--brand-tan); }
+      .m2-footer__body {
+        font-family: var(--font-family-sans); font-weight: 400;
+        font-size: 24px; line-height: 41px; opacity: 1; color: var(--brand-light-2);
+        margin-top: 32px; max-width: 532px; margin-inline: 0;
+      }
+      .m2-footer__cta { width: 327px; min-width: 0; margin-top: 56px; margin-inline: 0; border-radius: 8px; }
+
+      /* ---- Footer bar (365:5366): full-bleed #1a191f, links left, © right @30% ---- */
+      .m2-footer__foot { margin-inline: calc(-1 * clamp(24px, 5vw, 64px)); }
+      .m2-footer__bar {
+        padding: 36px max(clamp(24px, 5vw, 64px), calc((100% - 1280px) / 2));
+        gap: 32px; font-size: 14px; min-height: 100px; align-items: center;
+      }
+      .m2-footer__bar a { color: var(--brand-light-2); }
+      .m2-footer__copy { font-size: 14px; opacity: 0.3; }
+    }
   </style>
 </head>
 <body>
@@ -930,7 +986,7 @@
       <!-- Footer / closing CTA -->
       <footer id="m2-contact" class="m2-footer" aria-label="Get in touch">
         <p class="m2-footer__label">GET IN TOUCH</p>
-        <h2 class="m2-footer__head"><span>Still learning.<br>Still building.</span><em>Always leading toward better.</em></h2>
+        <h2 class="m2-footer__head"><span>Still learning.<br>Still building.</span><em>Always leading<br>toward better.</em></h2>
         <p class="m2-footer__body">I'm at my best leading orgs toward the best possible experiences for the people they serve. If that's your work too, let's talk.</p>
         <a class="m2-btn m2-footer__cta" href="mailto:stephen.aase@gmail.com">Stephen.Aase@gmail.com
           <svg class="m2-btn__arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
