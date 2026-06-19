@@ -234,7 +234,10 @@
     }
     .m2-wcard:hover { box-shadow: 0 8px 30px rgba(0,0,0,0.16); }
     .m2-wcard:active { transform: scale(0.99); }
-    .m2-wcard__cover { display: block; width: 100%; aspect-ratio: 359 / 300; object-fit: cover; }
+    .m2-wcard__cover { display: block; width: 100%; aspect-ratio: 359 / 300; background-size: cover; background-position: center; background-repeat: no-repeat; }
+    .m2-wcard--realtor .m2-wcard__cover { background-image: url("assets/work-realtor.png"); }
+    .m2-wcard--walmart .m2-wcard__cover { background-image: url("assets/work-walmart.png"); }
+    .m2-wcard--ds .m2-wcard__cover { background-image: url("assets/work-designsystems.png"); }
     .m2-wcard__body { display: block; padding: 20px 28px 0; }
     .m2-wcard__eyebrow, .m2-wcard__title, .m2-wcard__desc, .m2-wcard__mval, .m2-wcard__mlabel { display: block; }
     .m2-wcard__eyebrow { font-family: var(--font-family-serif); font-weight: 700; font-size: 10px; letter-spacing: 0.06em; color: #9b958d; }
@@ -619,8 +622,12 @@
         grid-column: 2; grid-row: 1 / 3;
         width: 100%; height: 100%;
         aspect-ratio: auto;
-        object-fit: cover;
+        background-size: cover; background-position: center;
       }
+      /* Desktop band art (Figma 368:9332/9381/9534) — full 564×675 compositions */
+      .m2-wcard--realtor .m2-wcard__cover { background-image: url("assets/case-band-realtor.png"); }
+      .m2-wcard--walmart .m2-wcard__cover { background-image: url("assets/case-band-walmart.png"); }
+      .m2-wcard--ds .m2-wcard__cover { background-image: url("assets/case-band-ds.png"); }
       .m2-wcard__body {
         grid-column: 1; grid-row: 1;
         align-self: start;
@@ -968,7 +975,7 @@
             <div class="m2-work-list">
 
               <button type="button" class="m2-wcard m2-wcard--realtor" data-casestudy aria-label="Realtor.com — AI transformation case study">
-                <img class="m2-wcard__cover" src="assets/work-realtor.png" alt="" />
+                <span class="m2-wcard__cover" aria-hidden="true"></span>
                 <span class="m2-wcard__body">
                   <span class="m2-wcard__eyebrow">REALTOR.COM</span>
                   <span class="m2-wcard__title">AI transformation by Design</span>
@@ -982,7 +989,7 @@
               </button>
 
               <button type="button" class="m2-wcard m2-wcard--walmart" data-casestudy aria-label="Walmart — Membership that matters case study">
-                <img class="m2-wcard__cover" src="assets/work-walmart.png" alt="" />
+                <span class="m2-wcard__cover" aria-hidden="true"></span>
                 <span class="m2-wcard__body">
                   <span class="m2-wcard__eyebrow">WALMART</span>
                   <span class="m2-wcard__title">Membership that matters</span>
@@ -996,7 +1003,7 @@
               </button>
 
               <button type="button" class="m2-wcard m2-wcard--ds" data-casestudy aria-label="Design systems — Scale, by design case study">
-                <img class="m2-wcard__cover" src="assets/work-designsystems.png" alt="" />
+                <span class="m2-wcard__cover" aria-hidden="true"></span>
                 <span class="m2-wcard__body">
                   <span class="m2-wcard__eyebrow">DESIGN SYSTEMS</span>
                   <span class="m2-wcard__title">Designing Systems for Scale</span>
