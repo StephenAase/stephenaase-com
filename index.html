@@ -266,11 +266,13 @@
     .m2-about__intro { font-family: var(--font-family-serif); font-weight: 400; font-size: var(--fluid-lg); line-height: 1.4; color: var(--brand-light-2); }
     .m2-about__intro em { font-style: normal; color: var(--lello); }
     .m2-about__plabel { font-family: var(--font-family-serif); font-weight: 500; font-size: 14px; color: var(--brand-light-2); margin-top: 28px; margin-bottom: 12px; }
-    .m2-principle { display: flex; align-items: center; gap: 12px; background: var(--brand-core-1); border-radius: var(--radius-md); padding: 13px 16px; min-height: 51px; }
-    .m2-principle + .m2-principle { margin-top: 12px; }
-    .m2-principle__icon { width: 24px; height: 24px; flex: none; }
-    .m2-principle__text { font-family: var(--font-family-sans); font-weight: 400; font-size: 14px; line-height: 1.4; color: var(--brand-light-2); }
+    /* Mobile (Figma): 2×2 grid of small column cards; 4 shown (--deskonly hidden) */
+    .m2-principles { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .m2-principle { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; background: var(--brand-core-1); border-radius: 8px; padding: 16px; min-height: 119px; }
+    .m2-principle__icon { width: 32px; height: 32px; flex: none; }
+    .m2-principle__text { font-family: var(--font-family-sans); font-weight: 400; font-size: 14px; line-height: 1.43; color: var(--brand-light-2); }
     .m2-principle__text b { font-weight: 700; }
+    .m2-principle--deskonly { display: none; }
 
     /* ---- AI leadership ---- */
     .m2-ai { position: relative; background: var(--hero-bg); color: var(--brand-light-2); padding-block: var(--section-gap); }
@@ -713,16 +715,16 @@
        Content band = 1280 centered (=224 gutter @1728).
     ============================================================= */
     @media (min-width: 1024px) {
-      /* ---- Testimonials: 3 cards 400px, gap 40, white, radius 8 ---- */
+      /* ---- Testimonials: 1432 band, 3 cards 460px, gap 26, white, radius 8, pad 40 ---- */
       #m2-testimonials { padding-inline: clamp(24px, 5vw, 64px); }
-      #m2-testimonials .m2-wrap { max-width: 1280px; margin-inline: auto; padding-inline: 0; }
-      #m2-testimonials .m2-rail { max-width: 1280px; margin-inline: auto; padding-inline: 0 !important;
-        grid-template-columns: repeat(3, 1fr); gap: 40px; }
+      #m2-testimonials .m2-wrap { max-width: 1432px; margin-inline: auto; padding-inline: 0; }
+      #m2-testimonials .m2-rail { max-width: 1432px; margin-inline: auto; padding-inline: 0 !important;
+        grid-template-columns: repeat(3, 1fr); gap: 26px; }
       #m2-testimonials .m2-section__label { font-size: 24px; line-height: 40px; letter-spacing: 0; color: #524e47; margin-bottom: 24px; }
       #m2-testimonials .m2-tcard {
         display: flex; flex-direction: column;
         background: #fff; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px;
-        min-height: 530px; padding: 30px 21px 30px 26px;
+        min-height: 530px; padding: 40px;
         box-shadow: 0 2px 10px rgba(20,16,10,0.07);
       }
       #m2-testimonials .m2-tcard__mark { width: 40.375px; height: 41px; }
@@ -775,9 +777,9 @@
       .m2-about__intro { font-family: var(--font-family-serif); font-weight: 400; font-size: 48px; line-height: 56px; max-width: 1100px; }
       .m2-about__intro em { color: var(--lello); }
       .m2-about__plabel { font-size: 24px; line-height: 40px; margin-top: 40px; margin-bottom: 24px; }
-      .m2-about .m2-principles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
-      .m2-about .m2-principle { flex-direction: column; align-items: flex-start; gap: 32px; min-height: 280px; padding: 60px 40px 48px; border-radius: 8px; background: var(--brand-core-1); }
-      .m2-about .m2-principle + .m2-principle { margin-top: 0; }
+      .m2-about .m2-principles { display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; }
+      .m2-about .m2-principle { flex: 0 1 calc((100% - 80px) / 3); flex-direction: column; align-items: flex-start; gap: 32px; min-height: 280px; padding: 60px 40px 48px; border-radius: 8px; background: var(--brand-core-1); }
+      .m2-about .m2-principle--deskonly { display: flex; }   /* 5th card shows on desktop (3+2 centered) */
       .m2-about .m2-principle__icon { width: 60px; height: 60px; }
       .m2-about .m2-principle__text { font-family: var(--font-family-sans); font-weight: 300; font-size: 36px; line-height: 40px; color: var(--brand-light-2); }
 
@@ -1021,9 +1023,8 @@
             <div class="m2-principle"><img class="m2-principle__icon" src="assets/principle-curiosity.svg" alt="" aria-hidden="true" /><p class="m2-principle__text">Embrace curiosity, explore, evolve</p></div>
             <div class="m2-principle"><img class="m2-principle__icon" src="assets/principle-excellence.svg" alt="" aria-hidden="true" /><p class="m2-principle__text">Strive for excellence, not perfection</p></div>
             <div class="m2-principle"><img class="m2-principle__icon" src="assets/principle-bold.svg" alt="" aria-hidden="true" /><p class="m2-principle__text">Be bold, courage creates impact</p></div>
-            <div class="m2-principle"><img class="m2-principle__icon" src="assets/principle-love.svg" alt="" aria-hidden="true" /><p class="m2-principle__text">Love the problem, not the solution</p></div>
+            <div class="m2-principle m2-principle--deskonly"><img class="m2-principle__icon" src="assets/principle-love.svg" alt="" aria-hidden="true" /><p class="m2-principle__text">Love the problem, not the solution</p></div>
             <div class="m2-principle"><img class="m2-principle__icon" src="assets/principle-inspire.svg" alt="" aria-hidden="true" /><p class="m2-principle__text">Inspire by example, player coach</p></div>
-            <div class="m2-principle"><img class="m2-principle__icon" src="assets/principle-excellence.svg" alt="" aria-hidden="true" /><p class="m2-principle__text">Embrace curiosity, explore, evolve</p></div>
           </div>
         </div>
       </section>
