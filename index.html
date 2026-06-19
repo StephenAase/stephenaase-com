@@ -296,9 +296,9 @@
     .m2-footer::before { content: ""; position: absolute; inset: 0; background: url("assets/hero-texture.png") center / cover no-repeat; opacity: 0.5; mix-blend-mode: soft-light; pointer-events: none; z-index: 0; }
     .m2-footer > * { position: relative; z-index: 1; }
     .m2-footer__label { font-family: var(--font-family-serif); font-weight: 500; font-size: 14px; letter-spacing: 0.04em; color: var(--brand-light-2); }
-    .m2-footer__head { font-family: var(--font-family-serif); font-weight: 500; font-size: clamp(32px, 9vw, 42px); line-height: 1.3; letter-spacing: -0.022em; margin-top: 18px; }
+    .m2-footer__head { font-family: var(--font-family-serif); font-weight: 500; font-size: clamp(34px, 10.13vw, 42px); line-height: 1.34; letter-spacing: -0.023em; margin-top: 18px; }   /* Figma mobile 38px @375 */
     .m2-footer__head span { display: block; color: var(--brand-light-2); }
-    .m2-footer__head em { display: block; font-style: normal; color: var(--brand-accent-purple); }
+    .m2-footer__head em { display: block; font-style: normal; color: var(--brand-tan); }
     .m2-footer__body { font-family: var(--font-family-serif); font-weight: 400; font-size: 14px; line-height: 1.57; color: var(--brand-light-2); opacity: 0.9; margin-top: clamp(28px, 7vw, 44px); max-width: 300px; }
     .m2-footer__cta { margin-top: clamp(36px, 9vw, 52px); border-radius: var(--radius-sm); }
     .m2-footer__foot { position: relative; margin-top: clamp(48px, 12vw, 72px); margin-inline: calc(-1 * var(--gutter)); }
@@ -707,16 +707,8 @@
       #m2-testimonials .m2-tcard__name { font-size: 18.8px; line-height: 26.6px; color: #524e47; margin-bottom: -8px; }
       #m2-testimonials .m2-tcard__role { font-size: 12.5px; line-height: 26.6px; color: #8a857b; margin-top: 0; }
 
-      /* ---- Case Studies (365:5098): 3 empty white cards 1280×618, gap 32 ---- */
-      #m2-work { padding-inline: clamp(24px, 5vw, 64px); }
-      #m2-work .m2-wrap { max-width: 1280px; margin-inline: auto; padding-inline: 0; }
+      /* ---- Case Studies label sizing (cards keep their real branded design) ---- */
       #m2-work .m2-section__label { font-size: 24px; line-height: 40px; letter-spacing: 0; color: #524e47; margin-bottom: 24px; }
-      #m2-work .m2-work-list { display: flex; flex-direction: column; gap: 32px; }
-      #m2-work .m2-wcard {
-        display: block; width: 100%; min-height: 0; height: clamp(420px, 36vw, 618px);
-        background: #fff; border: none; border-radius: 8px; box-shadow: none; padding: 0;
-      }
-      #m2-work .m2-wcard:hover { transform: none; box-shadow: none; }
 
       /* ---- Closing CTA (365:5344): two-tone 80px statement ---- */
       .m2-footer { padding-inline: clamp(24px, 5vw, 64px); }
@@ -939,9 +931,49 @@
           <div class="m2-wrap">
             <p class="m2-section__label">CASE STUDIES</p>
             <div class="m2-work-list">
-              <button type="button" class="m2-wcard" data-casestudy aria-label="Case study — coming soon"></button>
-              <button type="button" class="m2-wcard" data-casestudy aria-label="Case study — coming soon"></button>
-              <button type="button" class="m2-wcard" data-casestudy aria-label="Case study — coming soon"></button>
+
+              <button type="button" class="m2-wcard m2-wcard--realtor" data-casestudy aria-label="Realtor.com — AI transformation case study">
+                <img class="m2-wcard__cover" src="assets/work-realtor.png" alt="" />
+                <span class="m2-wcard__body">
+                  <span class="m2-wcard__eyebrow">REALTOR.COM</span>
+                  <span class="m2-wcard__title">AI transformation</span>
+                  <span class="m2-wcard__desc">Building the methods, agents, and curriculum that let Design lead in the AI age.</span>
+                  <span class="m2-wcard__metrics">
+                    <span class="m2-wcard__metric"><span class="m2-redact" data-redact role="img" aria-label="L3+"></span><span class="m2-wcard__mlabel">AI Maturity for the Product Design team</span></span>
+                    <span class="m2-wcard__metric"><span class="m2-redact" data-redact role="img" aria-label="25%"></span><span class="m2-wcard__mlabel">increase in velocity rate from AI workflows</span></span>
+                  </span>
+                </span>
+                <span class="m2-wcard__cta">Read the case study <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </button>
+
+              <button type="button" class="m2-wcard m2-wcard--walmart" data-casestudy aria-label="Walmart — Membership that matters case study">
+                <img class="m2-wcard__cover" src="assets/work-walmart.png" alt="" />
+                <span class="m2-wcard__body">
+                  <span class="m2-wcard__eyebrow">WALMART</span>
+                  <span class="m2-wcard__title">Membership that matters</span>
+                  <span class="m2-wcard__desc">Designing Walmart+ to make everyday essentials more accessible and affordable for millions of families.</span>
+                  <span class="m2-wcard__metrics">
+                    <span class="m2-wcard__metric"><span class="m2-redact" data-redact role="img" aria-label="200%"></span><span class="m2-wcard__mlabel">Walmart+ acquisition rate in the first year.</span></span>
+                    <span class="m2-wcard__metric"><span class="m2-redact" data-redact role="img" aria-label="25%"></span><span class="m2-wcard__mlabel">basket increase for Walmart+ members.</span></span>
+                  </span>
+                </span>
+                <span class="m2-wcard__cta">Read the case study <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </button>
+
+              <button type="button" class="m2-wcard m2-wcard--ds" data-casestudy aria-label="Design systems — Scale, by design case study">
+                <img class="m2-wcard__cover" src="assets/work-designsystems.png" alt="" />
+                <span class="m2-wcard__body">
+                  <span class="m2-wcard__eyebrow">DESIGN SYSTEMS</span>
+                  <span class="m2-wcard__title">Scale, by design</span>
+                  <span class="m2-wcard__desc">Take a peek into how to build a tokenized Design System to power multi-brand experiences.</span>
+                  <span class="m2-wcard__metrics">
+                    <span class="m2-wcard__metric"><span class="m2-redact" data-redact role="img" aria-label="Redacted metric"></span><span class="m2-wcard__mlabel">Reduction in Design &amp; Engineering handoff</span></span>
+                    <span class="m2-wcard__metric"><span class="m2-redact" data-redact role="img" aria-label="Redacted metric"></span><span class="m2-wcard__mlabel">Annual savings through scalable theming</span></span>
+                  </span>
+                </span>
+                <span class="m2-wcard__cta">Read the case study <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </button>
+
             </div>
           </div>
         </section>
