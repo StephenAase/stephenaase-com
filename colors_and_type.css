@@ -258,9 +258,10 @@
   --brand-green:          #6db961;  /* green accent */
   --brand-light:          #f9f3eb;  /* cream — primary on dark */
   --brand-light-2:        #efe8e5;  /* warm off-white */
-  --brand-tan:            #9a8582;  /* muted mauve-tan */
+  --brand-tan:            #9a8582;  /* muted mauve-tan (stat labels, testimonial role) */
+  --lello:                #fed59d;  /* peach/gold — two-tone heading accent + stat numbers */
   --brand-ink:            #2e2f32;  /* default text on light */
-  --hero-bg:              #25232e;  /* hero / dark sections */
+  --hero-bg:              #282632;  /* hero (rebuilt Figma) */
 
   /* Action semantics */
   --action-primary:        var(--brand-accent-purple);

@@ -8,7 +8,7 @@
   <link rel="preload" href="fonts/RobotoSlab-variable.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="fonts/Roboto-variable.woff2" as="font" type="font/woff2" crossorigin />
   <script defer data-domain="stephenaase.com" src="https://plausible.io/js/script.js"></script>
-  <link rel="stylesheet" href="colors_and_type.css?v=20260619">
+  <link rel="stylesheet" href="colors_and_type.css?v=20260619b">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -133,7 +133,7 @@
       letter-spacing: -0.01em;
       color: var(--brand-light-2);
     }
-    .m2-hero__title em { font-style: normal; color: var(--brand-tan); }
+    .m2-hero__title em { font-style: normal; color: var(--lello); }
     .m2-hero__subtitle {
       margin-top: 12px;
       font-size: clamp(18px, 5.33vw, 20px);     /* Figma mobile 20px @375 */
@@ -170,7 +170,7 @@
       border-radius: var(--radius-md);
       color: var(--brand-tan);
     }
-    .m2-stat__value { font-family: var(--font-family-sans); font-weight: 200; font-size: clamp(48px, 17.07vw, 64px); line-height: 1; white-space: nowrap; }   /* Figma mobile 64px @375 */
+    .m2-stat__value { font-family: var(--font-family-sans); font-weight: 200; font-size: clamp(48px, 17.07vw, 64px); line-height: 1; white-space: nowrap; color: var(--lello); }   /* Figma mobile 64px @375, peach */
     .m2-stat__label { font-weight: 300; font-size: 16px; line-height: 1.375; }
 
     /* Eyebrow ↓ arrow (mobile): full-width row, dot+text left, arrow right */
@@ -184,6 +184,10 @@
       .m2-hero .m2-stats { margin-inline: calc(-1 * var(--gutter)); }
       .m2-hero .m2-stats .m2-rail { padding-inline: var(--gutter); scroll-padding-inline: var(--gutter); gap: 12px; }
       .m2-hero .m2-stat { flex: 0 0 calc(100vw - 2 * var(--gutter)); }
+      /* AI: eyebrow "AI LEADERSHIP" sits ABOVE the heading on mobile (Figma) */
+      #m2-ai .m2-wrap { display: flex; flex-direction: column; align-items: flex-start; }
+      #m2-ai .m2-ai__sub { order: -1; font-size: 16px; line-height: 20px; margin: 0 0 24px; }
+      #m2-ai .m2-ai__head { margin-top: 0; }
     }
 
     /* Pagination dots (shared by all carousels) */
@@ -255,7 +259,7 @@
     .m2-wcard--ds { --wc: #2151da; }
 
     /* ---- About / guiding principles ---- */
-    .m2-about { position: relative; background: var(--hero-bg); color: var(--brand-light-2); overflow: hidden; padding-bottom: var(--section-gap); }
+    .m2-about { position: relative; background: #312f3c; color: var(--brand-light-2); overflow: hidden; padding-bottom: var(--section-gap); }
     .m2-about__photo { position: relative; height: clamp(340px, 92vw, 420px);
       background-image: url("assets/about-photo.png"); background-repeat: no-repeat; background-position: center 34%; background-size: 175%; }
     .m2-about__photo::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 72px; background: linear-gradient(to bottom, var(--brand-light-2), rgba(249,243,235,0)); }
@@ -264,18 +268,20 @@
       transform: scaleY(-1); }
     .m2-about__body { position: relative; z-index: 1; margin-top: 0; padding: clamp(20px, 6vw, 32px) var(--gutter) 0; }
     .m2-about__intro { font-family: var(--font-family-serif); font-weight: 400; font-size: var(--fluid-lg); line-height: 1.4; color: var(--brand-light-2); }
-    .m2-about__intro em { font-style: normal; color: var(--brand-tan); }
+    .m2-about__intro em { font-style: normal; color: var(--lello); }
     .m2-about__plabel { font-family: var(--font-family-serif); font-weight: 500; font-size: 14px; color: var(--brand-light-2); margin-top: 28px; margin-bottom: 12px; }
-    .m2-principle { display: flex; align-items: center; gap: 12px; background: var(--brand-core-1); border-radius: var(--radius-md); padding: 13px 16px; min-height: 51px; }
-    .m2-principle + .m2-principle { margin-top: 12px; }
-    .m2-principle__icon { width: 24px; height: 24px; flex: none; }
-    .m2-principle__text { font-family: var(--font-family-sans); font-weight: 400; font-size: 14px; line-height: 1.4; color: var(--brand-light-2); }
+    /* Mobile (Figma): 2×2 grid of small column cards; 4 shown (--deskonly hidden) */
+    .m2-principles { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .m2-principle { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; background: var(--brand-core-1); border-radius: 8px; padding: 16px; min-height: 119px; }
+    .m2-principle__icon { width: 32px; height: 32px; flex: none; }
+    .m2-principle__text { font-family: var(--font-family-sans); font-weight: 400; font-size: 14px; line-height: 1.43; color: var(--brand-light-2); }
     .m2-principle__text b { font-weight: 700; }
+    .m2-principle--deskonly { display: none; }
 
     /* ---- AI leadership ---- */
-    .m2-ai { position: relative; background: var(--hero-bg); color: var(--brand-light-2); padding-block: var(--section-gap); }
-    .m2-ai__head { font-family: var(--font-family-serif); font-weight: 500; font-size: clamp(25px, 4.6vw, 40px); line-height: 1.3; margin-top: 16px; }
-    .m2-ai__head em { font-style: normal; color: var(--brand-tan); }
+    .m2-ai { position: relative; background: #312f3c; color: var(--brand-light-2); padding-block: var(--section-gap); }
+    .m2-ai__head { font-family: var(--font-family-serif); font-weight: 400; font-size: clamp(20px, 5.33vw, 40px); line-height: 1.4; margin-top: 16px; }   /* Figma mobile 20px @375 */
+    .m2-ai__head em { font-style: normal; color: var(--lello); }
     .m2-ai__sub { font-family: var(--font-family-serif); font-weight: 500; font-size: 14px; letter-spacing: 0.04em; color: var(--brand-light-2); margin-top: 14px; }
     .m2-ai [data-carousel] { margin-top: clamp(36px, 9vw, 52px); }   /* breathing room: heading -> cards */
     .m2-aicard {
@@ -292,13 +298,13 @@
     .m2-ai__cta { margin-top: 28px; background: var(--action-primary); color: var(--on-action-primary); }
 
     /* ---- Footer / closing CTA ---- */
-    .m2-footer { position: relative; overflow: hidden; background: var(--hero-bg); color: var(--brand-light-2); padding: clamp(64px, 17vw, 104px) var(--gutter) 0; }
+    .m2-footer { position: relative; overflow: hidden; background: #272531; color: var(--brand-light-2); padding: clamp(64px, 17vw, 104px) var(--gutter) 0; }
     .m2-footer::before { content: ""; position: absolute; inset: 0; background: url("assets/hero-texture.png") center / cover no-repeat; opacity: 0.5; mix-blend-mode: soft-light; pointer-events: none; z-index: 0; }
     .m2-footer > * { position: relative; z-index: 1; }
     .m2-footer__label { font-family: var(--font-family-serif); font-weight: 500; font-size: 14px; letter-spacing: 0.04em; color: var(--brand-light-2); }
-    .m2-footer__head { font-family: var(--font-family-serif); font-weight: 500; font-size: clamp(34px, 10.13vw, 42px); line-height: 1.34; letter-spacing: -0.023em; margin-top: 18px; }   /* Figma mobile 38px @375 */
+    .m2-footer__head { font-family: var(--font-family-serif); font-weight: 500; font-size: clamp(34px, 10.67vw, 42px); line-height: 1.3; letter-spacing: -0.023em; margin-top: 18px; }   /* Figma mobile 40px @375 */
     .m2-footer__head span { display: block; color: var(--brand-light-2); }
-    .m2-footer__head em { display: block; font-style: normal; color: var(--brand-tan); }
+    .m2-footer__head em { display: block; font-style: normal; color: var(--lello); }
     .m2-footer__body { font-family: var(--font-family-serif); font-weight: 400; font-size: 14px; line-height: 1.57; color: var(--brand-light-2); opacity: 0.9; margin-top: clamp(28px, 7vw, 44px); max-width: 300px; }
     .m2-footer__cta { margin-top: clamp(36px, 9vw, 52px); border-radius: var(--radius-sm); }
     .m2-footer__foot { position: relative; margin-top: clamp(48px, 12vw, 72px); margin-inline: calc(-1 * var(--gutter)); }
@@ -312,47 +318,52 @@
     /* =============================================================
        PORTFOLIO GATE (mobile) — "Portfolio access"
     ============================================================= */
+    /* iOS-style bottom sheet (Figma "Global / Case Study Access") */
     .m2-gate {
       position: fixed; inset: 0; z-index: 100;
-      display: grid; align-items: start; justify-items: center;   /* top-aligned so keyboard doesn't push it off-screen */
-      padding: clamp(40px, 11vh, 88px) 24px 24px;
-      overflow-y: auto;
-      background: color-mix(in srgb, var(--brand-purple) 70%, transparent);
-      backdrop-filter: blur(6px);
+      display: flex; align-items: flex-end; justify-content: center;
+      background: color-mix(in srgb, #201e1a 56%, transparent);
       opacity: 0; visibility: hidden;
-      transition: opacity var(--duration-slow) var(--easing-default), visibility var(--duration-slow);
+      transition: opacity 360ms var(--easing-default), visibility 360ms;
     }
     .m2-gate.is-open { opacity: 1; visibility: visible; }
     .m2-gate__card {
       position: relative;
-      width: 100%; max-width: 360px;
+      width: 100%; max-width: 440px;
       background: var(--brand-light);
       color: var(--brand-ink);
-      border-radius: var(--radius-2xl);
-      padding: 28px 24px 24px;
-      transform: translateY(12px) scale(0.98);
-      transition: transform var(--duration-slow) var(--easing-bounce);
+      border-radius: 33px 33px 0 0;
+      padding: 44px 24px 40px;
+      box-shadow: 0 -8px 39px rgba(0,0,0,0.12);
+      max-height: 92dvh; overflow-y: auto;
+      transform: translateY(100%);
+      transition: transform 520ms cubic-bezier(0.16, 1, 0.3, 1);
     }
     .m2-gate.is-open .m2-gate__card { transform: none; }
+    .m2-gate__card::before {            /* grabber handle */
+      content: ""; position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
+      width: 35px; height: 4px; border-radius: 2px; background: rgba(32,30,26,0.16);
+    }
     .m2-gate__lock { width: 28px; height: 28px; color: var(--brand-accent-purple); }
-    .m2-gate__title { font-family: var(--font-family-serif); font-weight: 600; font-size: 34px; line-height: 1.05; margin-top: 12px; color: var(--brand-purple); }
-    .m2-gate__sub { font-size: 14px; line-height: 1.5; margin-top: 12px; color: var(--brand-ink); opacity: 0.8; }
-    .m2-gate__label { display: block; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; margin-top: 20px; color: var(--brand-ink); opacity: 0.6; }
+    .m2-gate__title { font-family: "Roboto Slab", var(--font-family-serif); font-weight: 500; font-size: 56px; line-height: 1.0; margin-top: 12px; letter-spacing: -0.01em; color: var(--brand-core-1); }
+    .m2-gate__sub { font-family: var(--font-family-sans); font-size: 14px; line-height: 22px; margin-top: 12px; color: var(--brand-core-1); max-width: 290px; }
+    .m2-gate__label { display: block; font-family: "Roboto Slab", var(--font-family-serif); font-weight: 500; font-size: 14px; line-height: 40px; letter-spacing: 0; text-transform: uppercase; margin-top: 24px; color: #524e47; }
     .m2-gate__input {
-      width: 100%; margin-top: 8px; padding: 10px 2px;
-      border: none; border-bottom: 1px solid rgba(46,47,50,0.25);
-      background: transparent; font-size: 16px; color: var(--brand-ink);
+      width: 100%; margin-top: 0; padding: 6px 0;
+      border: none; border-bottom: 1px solid #c5c1b8;
+      background: transparent; font-family: var(--font-family-sans); font-size: 16px; color: var(--brand-core-1);
       transition: border-color var(--duration-normal) var(--easing-default);
     }
+    .m2-gate__input::placeholder { color: #c5c1b8; }
     .m2-gate__input:focus { outline: none; border-bottom-color: var(--brand-accent-purple); }
     .m2-gate__input.is-error { border-bottom-color: #c0392b; }
     .m2-gate__error { font-size: 13px; color: #c0392b; margin-top: 8px; height: 0; opacity: 0; overflow: hidden; transition: opacity var(--duration-normal); }
     .m2-gate__error.is-visible { height: auto; opacity: 1; }
-    .m2-gate__submit { margin-top: 20px; }
-    .m2-gate__close { position: absolute; top: 16px; right: 16px; width: 28px; height: 28px; color: var(--brand-ink); }
+    .m2-gate__submit { margin-top: 28px; border-radius: 8px; }
+    .m2-gate__close { position: absolute; top: 20px; right: 24px; width: 32px; height: 32px; color: var(--brand-core-1); z-index: 1; }
     .m2-gate__note { font-size: 14px; line-height: 1.5; color: var(--brand-accent-purple); margin-top: 16px; height: 0; opacity: 0; overflow: hidden; transition: opacity var(--duration-normal); }
     .m2-gate__note.is-visible { height: auto; opacity: 1; }
-    a.m2-gate__reach { display: block; text-align: center; margin-top: 18px; font-size: 14px; color: var(--brand-accent-purple); text-decoration: underline; text-underline-offset: 3px; }
+    a.m2-gate__reach { display: block; text-align: center; margin-top: 24px; font-family: "Roboto Slab", var(--font-family-serif); font-weight: 400; font-size: 14px; line-height: 28px; color: var(--brand-accent-purple); text-decoration: underline; text-underline-offset: 3px; }
 
     /* =============================================================
        NAV DRAWER (hamburger menu)
@@ -362,30 +373,31 @@
     .m2-nav__scrim { position: absolute; inset: 0; background: rgba(37,35,46,0.45); opacity: 0; transition: opacity var(--duration-slow) var(--easing-default); }
     .m2-nav.is-open .m2-nav__scrim { opacity: 1; }
     .m2-nav__panel {
-      position: absolute; inset: 0;          /* full-screen drop-down */
+      position: absolute; inset: 0;          /* full-screen takeover */
       height: 100dvh;
       background: var(--brand-light);
       padding: 16px var(--gutter) 56px;
+      display: flex; flex-direction: column;
       transform: translateY(-101%);
-      transition: transform var(--duration-slow) var(--easing-default);
+      transition: transform 540ms cubic-bezier(0.16, 1, 0.3, 1);
       box-shadow: 0 24px 60px rgba(37,35,46,0.3);
       overflow: hidden;
     }
     .m2-nav__panel::before {            /* organic cream texture */
       content: ""; position: absolute; inset: 0;
       background: url("assets/hero-texture.png") center / cover no-repeat;
-      opacity: 0.55; mix-blend-mode: multiply; pointer-events: none;
+      opacity: 0.5; mix-blend-mode: overlay; pointer-events: none;
     }
     .m2-nav.is-open .m2-nav__panel { transform: none; }
     .m2-nav__top, .m2-nav__links { position: relative; z-index: 1; }
-    .m2-nav__top { display: flex; align-items: center; justify-content: space-between; }
-    .m2-nav__brand { display: flex; align-items: center; gap: 8px; color: var(--brand-purple); font-family: var(--font-family-serif); font-weight: 600; font-size: 15px; }
-    .m2-nav__brand svg { width: 18px; height: 18px; }
-    .m2-nav__close { width: 28px; height: 28px; color: var(--brand-purple); }
-    .m2-nav__links { margin-top: 40px; display: flex; flex-direction: column; align-items: flex-start; gap: clamp(28px, 7vw, 44px); }
+    .m2-nav__top { display: flex; align-items: center; justify-content: space-between; min-height: 46px; }
+    .m2-nav__brand { display: flex; align-items: center; gap: 8px; color: var(--brand-core-1); font-family: "Roboto Slab", var(--font-family-serif); font-weight: 700; font-size: 16px; letter-spacing: -0.16px; }
+    .m2-nav__brand svg { width: 22px; height: 22px; }
+    .m2-nav__close { width: 32px; height: 32px; color: var(--brand-accent-purple); }
+    .m2-nav__links { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; padding-bottom: 80px; }
     .m2-nav .m2-nav__link {
-      font-family: var(--font-family-serif); font-weight: 500; font-size: 24px;
-      color: var(--brand-accent-purple);
+      font-family: "Roboto Slab", var(--font-family-serif); font-weight: 500; font-size: 24px; line-height: 56px;
+      color: #6371a2; text-align: center;
       opacity: 0; transform: translateY(10px);
       transition: opacity var(--duration-normal) var(--easing-out), transform var(--duration-normal) var(--easing-out), color var(--duration-fast);
     }
@@ -395,7 +407,7 @@
     .m2-nav.is-open .m2-nav__link:nth-child(3) { transition-delay: 0.20s; }
     .m2-nav.is-open .m2-nav__link:nth-child(4) { transition-delay: 0.25s; }
     .m2-nav.is-open .m2-nav__link:nth-child(5) { transition-delay: 0.30s; }
-    .m2-nav__link:active { color: var(--brand-purple); }
+    .m2-nav__link:hover, .m2-nav__link:active { color: var(--brand-accent-purple); }
     /* hamburger -> X */
     .m2-burger[aria-expanded="true"] span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
     .m2-burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
@@ -533,8 +545,32 @@
 
     /* Pointer-only hover polish (avoid sticky hover on touch) */
     @media (hover: hover) and (pointer: fine) {
-      .m2-tcard { transition: transform var(--duration-normal) var(--easing-default), box-shadow var(--duration-normal) var(--easing-default); }
-      .m2-tcard:hover { transform: translateY(-3px); box-shadow: var(--elevation-3); }
+      .m2-tcard { transition: transform 360ms var(--easing-out), box-shadow 360ms var(--easing-out); }
+      .m2-tcard:hover { transform: translateY(-4px); box-shadow: var(--elevation-3); }
+
+      /* Case-study cards: lift + deepen shadow, cover image gently zooms */
+      .m2-wcard { transition: transform 420ms var(--easing-out), box-shadow 420ms var(--easing-out); }
+      .m2-wcard:hover { transform: translateY(-6px); box-shadow: 0 18px 44px rgba(20,16,10,0.20); }
+      .m2-wcard__cover { transition: transform 640ms var(--easing-out); will-change: transform; }
+      .m2-wcard:hover .m2-wcard__cover { transform: scale(1.04); }
+
+      /* AI cards: subtle lift + art zoom */
+      .m2-aicard { transition: transform 420ms var(--easing-out), box-shadow 420ms var(--easing-out); }
+      .m2-aicard:hover { transform: translateY(-6px); box-shadow: 0 18px 44px rgba(0,0,0,0.28); }
+      .m2-aicard__illus { transition: transform 700ms var(--easing-out); }
+      .m2-aicard:hover .m2-aicard__illus { transform: scale(1.05); }
+
+      /* Principle cards: gentle surface lift */
+      .m2-about .m2-principle { transition: transform 320ms var(--easing-out), background-color 320ms var(--easing-out); }
+      .m2-about .m2-principle:hover { transform: translateY(-3px); background-color: #4b4763; }
+
+      /* Buttons: lift + shadow */
+      .m2-btn { transition: background-color var(--duration-normal) var(--easing-default), transform 240ms var(--easing-out), box-shadow 240ms var(--easing-out); }
+      .m2-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(160,99,162,0.32); }
+
+      /* Eyebrow status bar + nav arrow nudge */
+      .m2-hero a.m2-eyebrow .m2-eyebrow__arrow { transition: transform 260ms var(--easing-out); }
+      .m2-hero a.m2-eyebrow:hover .m2-eyebrow__arrow { transform: translate(2px, -2px); }
     }
 
     /* =============================================================
@@ -550,9 +586,10 @@
         width: 100%;
         justify-content: flex-start;
         gap: 12px;
-        padding: 14px clamp(20px, 2vw, 28px);
-        border: 1px solid var(--brand-core-1);
-        border-radius: var(--radius-full);
+        padding: 10px 16px;
+        background: rgba(26, 25, 31, 0.5);
+        border: none;
+        border-radius: 8px;
         font-size: 14px;
         color: var(--brand-light-2);
       }
@@ -567,33 +604,33 @@
       .m2-hero a.m2-eyebrow:hover { color: var(--brand-light-2); }
       .m2-hero a.m2-eyebrow:hover .m2-eyebrow__cta { color: var(--brand-accent-purple); }
 
-      /* Case studies -> single column of horizontal cards */
-      .m2-work-list { display: grid; grid-template-columns: 1fr; gap: clamp(24px, 3vw, 32px); }
+      /* Case studies -> stacked horizontal cards: content LEFT, colored band RIGHT (Figma) */
+      .m2-work-list { display: grid; grid-template-columns: 1fr; gap: 32px; }
       .m2-wcard {
         display: grid;
-        grid-template-columns: minmax(0, 1.02fr) minmax(0, 1fr);
-        grid-template-rows: auto auto;
+        grid-template-columns: minmax(0, 1fr) clamp(360px, 39.4%, 564px);
+        grid-template-rows: 1fr auto;
         align-items: stretch;
         padding-bottom: 0;
-        min-height: clamp(320px, 38vw, 460px);
-        border-radius: 20px;
+        min-height: clamp(440px, 47vw, 675px);
+        border-radius: 8px;
       }
       .m2-wcard__cover {
-        grid-column: 1; grid-row: 1 / 3;
+        grid-column: 2; grid-row: 1 / 3;
         width: 100%; height: 100%;
         aspect-ratio: auto;
         object-fit: cover;
       }
       .m2-wcard__body {
-        grid-column: 2; grid-row: 1;
-        align-self: end;
-        padding: clamp(30px, 3.4vw, 56px) clamp(26px, 2.8vw, 52px) 0;
+        grid-column: 1; grid-row: 1;
+        align-self: start;
+        padding: clamp(40px, 3.6vw, 52px) clamp(40px, 4vw, 60px) 0 clamp(44px, 5.3vw, 76px);
       }
       .m2-wcard__cta {
-        grid-column: 2; grid-row: 2;
-        align-self: start; justify-self: start;
-        width: max-content; min-width: 252px;
-        margin: clamp(20px, 2vw, 28px) clamp(26px, 2.8vw, 52px) clamp(30px, 3.4vw, 56px);
+        grid-column: 1; grid-row: 2;
+        align-self: end; justify-self: start;
+        width: 295px; min-width: 0; border-radius: 4px;
+        margin: clamp(24px, 2.6vw, 38px) 0 clamp(40px, 3.6vw, 52px) clamp(44px, 5.3vw, 76px);
       }
     }
 
@@ -603,23 +640,22 @@
       .m2-header { padding-inline: max(24px, calc((100% - 1440px) / 2)); padding-block: 17px; }
       a.m2-brand { font-size: 16px; color: var(--brand-core-1); letter-spacing: -0.16px; }
       .m2-brand__mark { width: 22px; height: 22px; }
-      .m2-topnav { display: flex; align-items: center; gap: 23px; font-family: var(--font-family-serif); font-weight: 500; font-size: 14px; letter-spacing: -0.16px; }
-      .m2-topnav a { color: var(--brand-accent-purple); transition: color var(--duration-fast) var(--easing-default); }
-      .m2-topnav a:hover { color: var(--brand-purple); }
+      .m2-topnav { display: flex; align-items: center; gap: 23px; font-family: "Roboto Slab", var(--font-family-serif); font-weight: 500; font-size: 14px; letter-spacing: -0.16px; }
+      .m2-topnav a { color: #6371a2; transition: color var(--duration-fast) var(--easing-default); }
+      .m2-topnav a:hover { color: #4d5783; }
       .m2-topnav__cta, .m2-topnav__cta:hover { padding: 0; background: transparent; border-radius: 0; }
-      .m2-topnav__cta { color: var(--brand-accent-purple) !important; }
-      .m2-topnav__cta:hover { color: var(--brand-purple) !important; }
+      .m2-topnav__cta { color: #6371a2 !important; }
+      .m2-topnav__cta:hover { color: #4d5783 !important; }
 
-      /* ---- Hero (Figma 344:4696): 1440 frame @144 gutter; text+stats inset 80 (=1280 @224); eyebrow inset 32 ---- */
+      /* ---- Hero (rebuilt Figma 368:9223): 1440 frame @144 gutter; title at gutter, ~200 gap to stats ---- */
       .m2-hero { padding-top: 32px; padding-bottom: 0; padding-inline: clamp(24px, 5vw, 64px); }  /* nav -> eyebrow = 32 */
       .m2-hero > .m2-wrap {
-        --hero-inset: clamp(24px, 4.63vw, 80px);  /* text/stats inset within the 1440 frame (=80 @1728) */
         max-width: 1440px;
         margin-inline: auto;
-        padding-inline: var(--hero-inset);
+        padding-inline: 0;                        /* content = 1440; title aligns with eyebrow/gutter */
         display: grid;
-        grid-template-columns: minmax(0, 1fr) clamp(300px, 23.73vw, 410px);  /* stats col = 410 @1728 */
-        column-gap: clamp(28px, 3.18vw, 55px);
+        grid-template-columns: minmax(0, 1fr) clamp(340px, 28.5%, 410px);  /* stats col = 410 @1440 */
+        column-gap: clamp(48px, 6vw, 96px);       /* title left, stats right → ~200 visual gap */
         align-content: start;
         grid-template-areas:
           "eyebrow eyebrow"
@@ -628,10 +664,10 @@
           "cta     stats";
         padding-bottom: 166px;                    /* + wave's ~18px margin = 188 last-stat -> wave */
       }
-      /* Eyebrow status bar: net 32 inset from the 1440 frame at any hero-inset */
+      /* Eyebrow status bar: full 1440-wide bar at the gutter */
       .m2-hero a.m2-eyebrow {
         grid-area: eyebrow;
-        margin-inline: calc(32px - var(--hero-inset));
+        margin-inline: 0;
         padding: 11px 16px;
         font-size: 14px;
       }
@@ -662,20 +698,19 @@
       }
       .m2-hero .m2-stat__value {
         font-family: var(--font-family-sans); font-weight: 100;
-        font-size: clamp(56px, 4.63vw, 80px); line-height: 0.35; color: var(--brand-light-2);
+        font-size: clamp(56px, 4.63vw, 80px); line-height: 0.35; color: var(--lello);
       }
       .m2-hero .m2-stat__label {
         font-weight: 300; font-size: clamp(16px, 1.157vw, 20px); line-height: 1.38;
         color: var(--brand-tan); max-width: 230px;
       }
 
-      /* Case-study cards -> larger editorial typography */
-      .m2-wcard__title  { font-size: clamp(28px, 2.3vw, 36px); }
-      .m2-wcard__desc   { font-size: 16px; margin-top: 12px; max-width: 48ch; }
-      .m2-wcard__metrics{ margin-top: 28px; }
-      .m2-wcard__mval   { font-size: 28px; }
-      .m2-wcard__mlabel { font-size: 13px; }
-    }
+      /* Case-study cards -> editorial typography (Figma: title 74/84, desc 24/32) */
+      .m2-wcard__eyebrow { font-weight: 700; font-size: 14px; letter-spacing: 0.04em; line-height: 30px; color: #c5c1b8; }
+      .m2-wcard__title  { font-weight: 700; font-size: clamp(40px, 5.1vw, 74px); line-height: 1.135; margin-top: 0; color: #2d2d2d; }
+      .m2-wcard__desc   { font-size: clamp(18px, 1.66vw, 24px); line-height: 1.33; margin-top: 16px; max-width: 661px; color: #524e47; }
+      .m2-wcard__metrics{ margin-top: 40px; gap: 40px; }
+      .m2-wcard__mlabel { font-size: 16px; line-height: 1.5; color: #524e47; }
 
     /* =============================================================
        DESKTOP SECTIONS — Figma Portfolio26.2 exact specs
@@ -683,16 +718,16 @@
        Content band = 1280 centered (=224 gutter @1728).
     ============================================================= */
     @media (min-width: 1024px) {
-      /* ---- Testimonials: 3 cards 400px, gap 40, white, radius 8 ---- */
+      /* ---- Testimonials: 1432 band, 3 cards 460px, gap 26, white, radius 8, pad 40 ---- */
       #m2-testimonials { padding-inline: clamp(24px, 5vw, 64px); }
-      #m2-testimonials .m2-wrap { max-width: 1280px; margin-inline: auto; padding-inline: 0; }
-      #m2-testimonials .m2-rail { max-width: 1280px; margin-inline: auto; padding-inline: 0 !important;
-        grid-template-columns: repeat(3, 1fr); gap: 40px; }
+      #m2-testimonials .m2-wrap { max-width: 1432px; margin-inline: auto; padding-inline: 0; }
+      #m2-testimonials .m2-rail { max-width: 1432px; margin-inline: auto; padding-inline: 0 !important;
+        grid-template-columns: repeat(3, 1fr); gap: 26px; }
       #m2-testimonials .m2-section__label { font-size: 24px; line-height: 40px; letter-spacing: 0; color: #524e47; margin-bottom: 24px; }
       #m2-testimonials .m2-tcard {
         display: flex; flex-direction: column;
         background: #fff; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px;
-        min-height: 530px; padding: 30px 21px 30px 26px;
+        min-height: 530px; padding: 40px;
         box-shadow: 0 2px 10px rgba(20,16,10,0.07);
       }
       #m2-testimonials .m2-tcard__mark { width: 40.375px; height: 41px; }
@@ -718,7 +753,7 @@
       .m2-footer__cta { max-width: 1280px; margin-inline: auto; }
       .m2-footer__label { font-size: 24px; line-height: 40px; letter-spacing: 0; }
       .m2-footer__head { font-size: clamp(48px, 6.6vw, 80px); line-height: 1.25; letter-spacing: -0.01em; margin-top: 32px; }
-      .m2-footer__head em { color: var(--brand-tan); }
+      .m2-footer__head em { color: var(--lello); }
       .m2-footer__body {
         font-family: var(--font-family-sans); font-weight: 400;
         font-size: 24px; line-height: 41px; opacity: 1; color: var(--brand-light-2);
@@ -743,11 +778,11 @@
       .m2-about__wave { display: block; position: relative; z-index: 2; width: 100%; height: clamp(24px, 2vw, 34px); margin-top: clamp(-32px, -2.4vw, -24px); }
       .m2-about__body { max-width: calc(1280px + 2 * clamp(24px, 5vw, 64px)); margin-inline: auto; padding-inline: clamp(24px, 5vw, 64px); padding-block: clamp(48px, 6vw, 96px) var(--section-gap); }
       .m2-about__intro { font-family: var(--font-family-serif); font-weight: 400; font-size: 48px; line-height: 56px; max-width: 1100px; }
-      .m2-about__intro em { color: var(--brand-tan); }
+      .m2-about__intro em { color: var(--lello); }
       .m2-about__plabel { font-size: 24px; line-height: 40px; margin-top: 40px; margin-bottom: 24px; }
-      .m2-about .m2-principles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
-      .m2-about .m2-principle { flex-direction: column; align-items: flex-start; gap: 32px; min-height: 280px; padding: 60px 40px 48px; border-radius: 8px; background: var(--brand-core-1); }
-      .m2-about .m2-principle + .m2-principle { margin-top: 0; }
+      .m2-about .m2-principles { display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; }
+      .m2-about .m2-principle { flex: 0 1 calc((100% - 80px) / 3); flex-direction: column; align-items: flex-start; gap: 32px; min-height: 280px; padding: 60px 40px 48px; border-radius: 8px; background: var(--brand-core-1); }
+      .m2-about .m2-principle--deskonly { display: flex; }   /* 5th card shows on desktop (3+2 centered) */
       .m2-about .m2-principle__icon { width: 60px; height: 60px; }
       .m2-about .m2-principle__text { font-family: var(--font-family-sans); font-weight: 300; font-size: 36px; line-height: 40px; color: var(--brand-light-2); }
 
@@ -755,7 +790,7 @@
       #m2-ai { padding-inline: clamp(24px, 5vw, 64px); }
       #m2-ai .m2-wrap { max-width: 1280px; margin-inline: auto; padding-inline: 0; }
       #m2-ai .m2-ai__head { font-family: var(--font-family-serif); font-weight: 400; font-size: 48px; line-height: 56px; margin-top: 0; max-width: 1100px; }
-      #m2-ai .m2-ai__head em { color: var(--brand-tan); }
+      #m2-ai .m2-ai__head em { color: var(--lello); }
       #m2-ai .m2-ai__sub { font-size: 24px; line-height: 40px; letter-spacing: 0; margin-top: 40px; }
       #m2-ai [data-carousel] { margin-top: 40px; }
       #m2-ai .m2-rail { max-width: 1280px; margin-inline: auto; padding-inline: 0 !important; grid-template-columns: repeat(4, 1fr); gap: 40px; }
@@ -864,9 +899,9 @@
           <!-- Stats carousel -->
           <div class="m2-stats" data-carousel>
             <div class="m2-rail" role="group" aria-roledescription="carousel" aria-label="Career highlights">
-              <div class="m2-stat" role="group" aria-roledescription="slide" aria-label="1 of 3"><span class="m2-stat__value">10</span><span class="m2-stat__label">years leading high-performing design orgs</span></div>
-              <div class="m2-stat" role="group" aria-roledescription="slide" aria-label="2 of 3"><span class="m2-stat__value">20</span><span class="m2-stat__label">years designing products people love and use.</span></div>
-              <div class="m2-stat" role="group" aria-roledescription="slide" aria-label="3 of 3"><span class="m2-stat__value">190M</span><span class="m2-stat__label">people using products i've shipped.</span></div>
+              <div class="m2-stat" role="group" aria-roledescription="slide" aria-label="1 of 3"><span class="m2-stat__value">10</span><span class="m2-stat__label">years designing products people love and use</span></div>
+              <div class="m2-stat" role="group" aria-roledescription="slide" aria-label="2 of 3"><span class="m2-stat__value">20</span><span class="m2-stat__label">years in leadership, building high performing teams</span></div>
+              <div class="m2-stat" role="group" aria-roledescription="slide" aria-label="3 of 3"><span class="m2-stat__value">190</span><span class="m2-stat__label">million people using products i've shipped</span></div>
             </div>
             <div class="m2-dots" data-dots aria-hidden="true"></div>
           </div>
@@ -929,14 +964,14 @@
         <!-- Selected work -->
         <section id="m2-work" class="m2-section" aria-label="Selected work">
           <div class="m2-wrap">
-            <p class="m2-section__label">CASE STUDIES</p>
+            <p class="m2-section__label">SELECTED WORK</p>
             <div class="m2-work-list">
 
               <button type="button" class="m2-wcard m2-wcard--realtor" data-casestudy aria-label="Realtor.com — AI transformation case study">
                 <img class="m2-wcard__cover" src="assets/work-realtor.png" alt="" />
                 <span class="m2-wcard__body">
                   <span class="m2-wcard__eyebrow">REALTOR.COM</span>
-                  <span class="m2-wcard__title">AI transformation</span>
+                  <span class="m2-wcard__title">AI transformation by Design</span>
                   <span class="m2-wcard__desc">Building the methods, agents, and curriculum that let Design lead in the AI age.</span>
                   <span class="m2-wcard__metrics">
                     <span class="m2-wcard__metric"><span class="m2-redact" data-redact role="img" aria-label="L3+"></span><span class="m2-wcard__mlabel">AI Maturity for the Product Design team</span></span>
@@ -964,7 +999,7 @@
                 <img class="m2-wcard__cover" src="assets/work-designsystems.png" alt="" />
                 <span class="m2-wcard__body">
                   <span class="m2-wcard__eyebrow">DESIGN SYSTEMS</span>
-                  <span class="m2-wcard__title">Scale, by design</span>
+                  <span class="m2-wcard__title">Designing Systems for Scale</span>
                   <span class="m2-wcard__desc">Take a peek into how to build a tokenized Design System to power multi-brand experiences.</span>
                   <span class="m2-wcard__metrics">
                     <span class="m2-wcard__metric"><span class="m2-redact" data-redact role="img" aria-label="Redacted metric"></span><span class="m2-wcard__mlabel">Reduction in Design &amp; Engineering handoff</span></span>
@@ -991,9 +1026,8 @@
             <div class="m2-principle"><img class="m2-principle__icon" src="assets/principle-curiosity.svg" alt="" aria-hidden="true" /><p class="m2-principle__text">Embrace curiosity, explore, evolve</p></div>
             <div class="m2-principle"><img class="m2-principle__icon" src="assets/principle-excellence.svg" alt="" aria-hidden="true" /><p class="m2-principle__text">Strive for excellence, not perfection</p></div>
             <div class="m2-principle"><img class="m2-principle__icon" src="assets/principle-bold.svg" alt="" aria-hidden="true" /><p class="m2-principle__text">Be bold, courage creates impact</p></div>
-            <div class="m2-principle"><img class="m2-principle__icon" src="assets/principle-love.svg" alt="" aria-hidden="true" /><p class="m2-principle__text">Love the problem, not the solution</p></div>
+            <div class="m2-principle m2-principle--deskonly"><img class="m2-principle__icon" src="assets/principle-love.svg" alt="" aria-hidden="true" /><p class="m2-principle__text">Love the problem, not the solution</p></div>
             <div class="m2-principle"><img class="m2-principle__icon" src="assets/principle-inspire.svg" alt="" aria-hidden="true" /><p class="m2-principle__text">Inspire by example, player coach</p></div>
-            <div class="m2-principle"><img class="m2-principle__icon" src="assets/principle-excellence.svg" alt="" aria-hidden="true" /><p class="m2-principle__text">Embrace curiosity, explore, evolve</p></div>
           </div>
         </div>
       </section>
@@ -1002,7 +1036,7 @@
       <section id="m2-ai" class="m2-ai" aria-label="AI leadership">
         <div class="m2-wrap">
           <h2 class="m2-ai__head">I design the org to put AI to work, freeing teams for <em>judgment, vision, and insight.</em></h2>
-          <p class="m2-ai__sub">BUILDING AN AI ENABLED DESIGN TEAM</p>
+          <p class="m2-ai__sub">AI LEADERSHIP</p>
         </div>
         <div data-carousel>
           <div class="m2-rail" role="group" aria-roledescription="carousel" aria-label="How I lead with AI" style="padding-inline: var(--gutter); scroll-padding-inline: var(--gutter);">
@@ -1039,9 +1073,9 @@
       <!-- Footer / closing CTA -->
       <footer id="m2-contact" class="m2-footer" aria-label="Get in touch">
         <p class="m2-footer__label">GET IN TOUCH</p>
-        <h2 class="m2-footer__head"><span>Still learning.<br>Still building.</span><em>Always leading<br>toward better.</em></h2>
+        <h2 class="m2-footer__head"><span>Still learning. </span><em>Always building.</em></h2>
         <p class="m2-footer__body">I'm at my best leading orgs toward the best possible experiences for the people they serve. If that's your work too, let's talk.</p>
-        <a class="m2-btn m2-footer__cta" href="mailto:stephen.aase@gmail.com">Stephen.Aase@gmail.com
+        <a class="m2-btn m2-footer__cta" href="https://www.linkedin.com/in/stephenaase/" target="_blank" rel="noopener noreferrer">Find me on LinkedIn
           <svg class="m2-btn__arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
         <div class="m2-footer__foot">
