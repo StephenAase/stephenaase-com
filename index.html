@@ -312,47 +312,52 @@
     /* =============================================================
        PORTFOLIO GATE (mobile) — "Portfolio access"
     ============================================================= */
+    /* iOS-style bottom sheet (Figma "Global / Case Study Access") */
     .m2-gate {
       position: fixed; inset: 0; z-index: 100;
-      display: grid; align-items: start; justify-items: center;   /* top-aligned so keyboard doesn't push it off-screen */
-      padding: clamp(40px, 11vh, 88px) 24px 24px;
-      overflow-y: auto;
-      background: color-mix(in srgb, var(--brand-purple) 70%, transparent);
-      backdrop-filter: blur(6px);
+      display: flex; align-items: flex-end; justify-content: center;
+      background: color-mix(in srgb, #201e1a 56%, transparent);
       opacity: 0; visibility: hidden;
-      transition: opacity var(--duration-slow) var(--easing-default), visibility var(--duration-slow);
+      transition: opacity 360ms var(--easing-default), visibility 360ms;
     }
     .m2-gate.is-open { opacity: 1; visibility: visible; }
     .m2-gate__card {
       position: relative;
-      width: 100%; max-width: 360px;
+      width: 100%; max-width: 440px;
       background: var(--brand-light);
       color: var(--brand-ink);
-      border-radius: var(--radius-2xl);
-      padding: 28px 24px 24px;
-      transform: translateY(12px) scale(0.98);
-      transition: transform var(--duration-slow) var(--easing-bounce);
+      border-radius: 33px 33px 0 0;
+      padding: 44px 24px 40px;
+      box-shadow: 0 -8px 39px rgba(0,0,0,0.12);
+      max-height: 92dvh; overflow-y: auto;
+      transform: translateY(100%);
+      transition: transform 520ms cubic-bezier(0.16, 1, 0.3, 1);
     }
     .m2-gate.is-open .m2-gate__card { transform: none; }
+    .m2-gate__card::before {            /* grabber handle */
+      content: ""; position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
+      width: 35px; height: 4px; border-radius: 2px; background: rgba(32,30,26,0.16);
+    }
     .m2-gate__lock { width: 28px; height: 28px; color: var(--brand-accent-purple); }
-    .m2-gate__title { font-family: var(--font-family-serif); font-weight: 600; font-size: 34px; line-height: 1.05; margin-top: 12px; color: var(--brand-purple); }
-    .m2-gate__sub { font-size: 14px; line-height: 1.5; margin-top: 12px; color: var(--brand-ink); opacity: 0.8; }
-    .m2-gate__label { display: block; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; margin-top: 20px; color: var(--brand-ink); opacity: 0.6; }
+    .m2-gate__title { font-family: "Roboto Slab", var(--font-family-serif); font-weight: 500; font-size: 56px; line-height: 1.0; margin-top: 12px; letter-spacing: -0.01em; color: var(--brand-core-1); }
+    .m2-gate__sub { font-family: var(--font-family-sans); font-size: 14px; line-height: 22px; margin-top: 12px; color: var(--brand-core-1); max-width: 290px; }
+    .m2-gate__label { display: block; font-family: "Roboto Slab", var(--font-family-serif); font-weight: 500; font-size: 14px; line-height: 40px; letter-spacing: 0; text-transform: uppercase; margin-top: 24px; color: #524e47; }
     .m2-gate__input {
-      width: 100%; margin-top: 8px; padding: 10px 2px;
-      border: none; border-bottom: 1px solid rgba(46,47,50,0.25);
-      background: transparent; font-size: 16px; color: var(--brand-ink);
+      width: 100%; margin-top: 0; padding: 6px 0;
+      border: none; border-bottom: 1px solid #c5c1b8;
+      background: transparent; font-family: var(--font-family-sans); font-size: 16px; color: var(--brand-core-1);
       transition: border-color var(--duration-normal) var(--easing-default);
     }
+    .m2-gate__input::placeholder { color: #c5c1b8; }
     .m2-gate__input:focus { outline: none; border-bottom-color: var(--brand-accent-purple); }
     .m2-gate__input.is-error { border-bottom-color: #c0392b; }
     .m2-gate__error { font-size: 13px; color: #c0392b; margin-top: 8px; height: 0; opacity: 0; overflow: hidden; transition: opacity var(--duration-normal); }
     .m2-gate__error.is-visible { height: auto; opacity: 1; }
-    .m2-gate__submit { margin-top: 20px; }
-    .m2-gate__close { position: absolute; top: 16px; right: 16px; width: 28px; height: 28px; color: var(--brand-ink); }
+    .m2-gate__submit { margin-top: 28px; border-radius: 8px; }
+    .m2-gate__close { position: absolute; top: 20px; right: 24px; width: 32px; height: 32px; color: var(--brand-core-1); z-index: 1; }
     .m2-gate__note { font-size: 14px; line-height: 1.5; color: var(--brand-accent-purple); margin-top: 16px; height: 0; opacity: 0; overflow: hidden; transition: opacity var(--duration-normal); }
     .m2-gate__note.is-visible { height: auto; opacity: 1; }
-    a.m2-gate__reach { display: block; text-align: center; margin-top: 18px; font-size: 14px; color: var(--brand-accent-purple); text-decoration: underline; text-underline-offset: 3px; }
+    a.m2-gate__reach { display: block; text-align: center; margin-top: 24px; font-family: "Roboto Slab", var(--font-family-serif); font-weight: 400; font-size: 14px; line-height: 28px; color: var(--brand-accent-purple); text-decoration: underline; text-underline-offset: 3px; }
 
     /* =============================================================
        NAV DRAWER (hamburger menu)
@@ -362,30 +367,31 @@
     .m2-nav__scrim { position: absolute; inset: 0; background: rgba(37,35,46,0.45); opacity: 0; transition: opacity var(--duration-slow) var(--easing-default); }
     .m2-nav.is-open .m2-nav__scrim { opacity: 1; }
     .m2-nav__panel {
-      position: absolute; inset: 0;          /* full-screen drop-down */
+      position: absolute; inset: 0;          /* full-screen takeover */
       height: 100dvh;
       background: var(--brand-light);
       padding: 16px var(--gutter) 56px;
+      display: flex; flex-direction: column;
       transform: translateY(-101%);
-      transition: transform var(--duration-slow) var(--easing-default);
+      transition: transform 540ms cubic-bezier(0.16, 1, 0.3, 1);
       box-shadow: 0 24px 60px rgba(37,35,46,0.3);
       overflow: hidden;
     }
     .m2-nav__panel::before {            /* organic cream texture */
       content: ""; position: absolute; inset: 0;
       background: url("assets/hero-texture.png") center / cover no-repeat;
-      opacity: 0.55; mix-blend-mode: multiply; pointer-events: none;
+      opacity: 0.5; mix-blend-mode: overlay; pointer-events: none;
     }
     .m2-nav.is-open .m2-nav__panel { transform: none; }
     .m2-nav__top, .m2-nav__links { position: relative; z-index: 1; }
-    .m2-nav__top { display: flex; align-items: center; justify-content: space-between; }
-    .m2-nav__brand { display: flex; align-items: center; gap: 8px; color: var(--brand-purple); font-family: var(--font-family-serif); font-weight: 600; font-size: 15px; }
-    .m2-nav__brand svg { width: 18px; height: 18px; }
-    .m2-nav__close { width: 28px; height: 28px; color: var(--brand-purple); }
-    .m2-nav__links { margin-top: 40px; display: flex; flex-direction: column; align-items: flex-start; gap: clamp(28px, 7vw, 44px); }
+    .m2-nav__top { display: flex; align-items: center; justify-content: space-between; min-height: 46px; }
+    .m2-nav__brand { display: flex; align-items: center; gap: 8px; color: var(--brand-core-1); font-family: "Roboto Slab", var(--font-family-serif); font-weight: 700; font-size: 16px; letter-spacing: -0.16px; }
+    .m2-nav__brand svg { width: 22px; height: 22px; }
+    .m2-nav__close { width: 32px; height: 32px; color: var(--brand-accent-purple); }
+    .m2-nav__links { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; padding-bottom: 80px; }
     .m2-nav .m2-nav__link {
-      font-family: var(--font-family-serif); font-weight: 500; font-size: 24px;
-      color: var(--brand-accent-purple);
+      font-family: "Roboto Slab", var(--font-family-serif); font-weight: 500; font-size: 24px; line-height: 56px;
+      color: #6371a2; text-align: center;
       opacity: 0; transform: translateY(10px);
       transition: opacity var(--duration-normal) var(--easing-out), transform var(--duration-normal) var(--easing-out), color var(--duration-fast);
     }
@@ -395,7 +401,7 @@
     .m2-nav.is-open .m2-nav__link:nth-child(3) { transition-delay: 0.20s; }
     .m2-nav.is-open .m2-nav__link:nth-child(4) { transition-delay: 0.25s; }
     .m2-nav.is-open .m2-nav__link:nth-child(5) { transition-delay: 0.30s; }
-    .m2-nav__link:active { color: var(--brand-purple); }
+    .m2-nav__link:hover, .m2-nav__link:active { color: var(--brand-accent-purple); }
     /* hamburger -> X */
     .m2-burger[aria-expanded="true"] span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
     .m2-burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
@@ -533,8 +539,32 @@
 
     /* Pointer-only hover polish (avoid sticky hover on touch) */
     @media (hover: hover) and (pointer: fine) {
-      .m2-tcard { transition: transform var(--duration-normal) var(--easing-default), box-shadow var(--duration-normal) var(--easing-default); }
-      .m2-tcard:hover { transform: translateY(-3px); box-shadow: var(--elevation-3); }
+      .m2-tcard { transition: transform 360ms var(--easing-out), box-shadow 360ms var(--easing-out); }
+      .m2-tcard:hover { transform: translateY(-4px); box-shadow: var(--elevation-3); }
+
+      /* Case-study cards: lift + deepen shadow, cover image gently zooms */
+      .m2-wcard { transition: transform 420ms var(--easing-out), box-shadow 420ms var(--easing-out); }
+      .m2-wcard:hover { transform: translateY(-6px); box-shadow: 0 18px 44px rgba(20,16,10,0.20); }
+      .m2-wcard__cover { transition: transform 640ms var(--easing-out); will-change: transform; }
+      .m2-wcard:hover .m2-wcard__cover { transform: scale(1.04); }
+
+      /* AI cards: subtle lift + art zoom */
+      .m2-aicard { transition: transform 420ms var(--easing-out), box-shadow 420ms var(--easing-out); }
+      .m2-aicard:hover { transform: translateY(-6px); box-shadow: 0 18px 44px rgba(0,0,0,0.28); }
+      .m2-aicard__illus { transition: transform 700ms var(--easing-out); }
+      .m2-aicard:hover .m2-aicard__illus { transform: scale(1.05); }
+
+      /* Principle cards: gentle surface lift */
+      .m2-about .m2-principle { transition: transform 320ms var(--easing-out), background-color 320ms var(--easing-out); }
+      .m2-about .m2-principle:hover { transform: translateY(-3px); background-color: #4b4763; }
+
+      /* Buttons: lift + shadow */
+      .m2-btn { transition: background-color var(--duration-normal) var(--easing-default), transform 240ms var(--easing-out), box-shadow 240ms var(--easing-out); }
+      .m2-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(160,99,162,0.32); }
+
+      /* Eyebrow status bar + nav arrow nudge */
+      .m2-hero a.m2-eyebrow .m2-eyebrow__arrow { transition: transform 260ms var(--easing-out); }
+      .m2-hero a.m2-eyebrow:hover .m2-eyebrow__arrow { transform: translate(2px, -2px); }
     }
 
     /* =============================================================
