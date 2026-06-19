@@ -276,7 +276,7 @@
   --fluid-stat:    clamp(3rem, 2rem + 5vw, 4rem);            /* big stat numbers */
 
   /* Fluid spacing rhythm */
-  --gutter:        16px;  /* page side padding (mobile); tablet/desktop override in index.html */
+  --gutter:        24px;  /* page side padding (mobile, Figma 375); tablet/desktop override in index.html */
   --section-gap:   clamp(56px, 12vw, 88px);   /* vertical rhythm between sections */
 
   /* Breakpoint scale (documented; min-width layers added in desktop pass) */

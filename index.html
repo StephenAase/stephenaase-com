@@ -8,7 +8,7 @@
   <link rel="preload" href="fonts/RobotoSlab-variable.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="fonts/Roboto-variable.woff2" as="font" type="font/woff2" crossorigin />
   <script defer data-domain="stephenaase.com" src="https://plausible.io/js/script.js"></script>
-  <link rel="stylesheet" href="colors_and_type.css">
+  <link rel="stylesheet" href="colors_and_type.css?v=20260619">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -128,7 +128,7 @@
       margin-top: clamp(48px, 14vw, 88px);
       font-family: var(--font-family-serif);
       font-weight: 500;
-      font-size: var(--fluid-display);
+      font-size: clamp(44px, 14.93vw, 56px);   /* Figma mobile 56px @375 */
       line-height: 1.0;
       letter-spacing: -0.01em;
       color: var(--brand-light-2);
@@ -136,7 +136,7 @@
     .m2-hero__title em { font-style: normal; color: var(--brand-tan); }
     .m2-hero__subtitle {
       margin-top: 12px;
-      font-size: var(--fluid-lg);
+      font-size: clamp(18px, 5.33vw, 20px);     /* Figma mobile 20px @375 */
       line-height: 1.4;
       color: var(--brand-light-2);
     }
@@ -165,13 +165,26 @@
       flex: 0 0 100%;
       display: flex; align-items: center; gap: 24px;
       min-height: 103px;
-      padding: 28px 24px;
+      padding: 30px 21px 29px 26px;
       border: 1px solid var(--brand-core-1);
       border-radius: var(--radius-md);
       color: var(--brand-tan);
     }
-    .m2-stat__value { font-family: var(--font-family-sans); font-weight: 200; font-size: var(--fluid-stat); line-height: 1; white-space: nowrap; }
-    .m2-stat__label { font-weight: 300; font-size: 16px; line-height: 1.35; }
+    .m2-stat__value { font-family: var(--font-family-sans); font-weight: 200; font-size: clamp(48px, 17.07vw, 64px); line-height: 1; white-space: nowrap; }   /* Figma mobile 64px @375 */
+    .m2-stat__label { font-weight: 300; font-size: 16px; line-height: 1.375; }
+
+    /* Eyebrow ↓ arrow (mobile): full-width row, dot+text left, arrow right */
+    .m2-eyebrow__down { width: 19px; height: 19px; flex: none; margin-left: auto; color: var(--brand-accent-purple); }
+
+    /* ---- Mobile hero specifics (Figma 365:7290 @375) ---- */
+    @media (max-width: 767.98px) {
+      .m2-hero a.m2-eyebrow { display: flex; width: 100%; }
+      .m2-hero .m2-eyebrow__text { flex: 0 1 auto; }
+      /* Stats peek carousel: full-bleed rail, card = viewport − 2 gutters, neighbours peek */
+      .m2-hero .m2-stats { margin-inline: calc(-1 * var(--gutter)); }
+      .m2-hero .m2-stats .m2-rail { padding-inline: var(--gutter); scroll-padding-inline: var(--gutter); gap: 12px; }
+      .m2-hero .m2-stat { flex: 0 0 calc(100vw - 2 * var(--gutter)); }
+    }
 
     /* Pagination dots (shared by all carousels) */
     .m2-dots { display: none; }   /* pagination dots removed across all carousels */
@@ -550,6 +563,7 @@
         white-space: nowrap;
       }
       .m2-hero .m2-eyebrow__arrow { width: 16px; height: 16px; flex: none; }
+      .m2-hero .m2-eyebrow__down { display: none; }   /* mobile-only; desktop shows the CTA link */
       .m2-hero a.m2-eyebrow:hover { color: var(--brand-light-2); }
       .m2-hero a.m2-eyebrow:hover .m2-eyebrow__cta { color: var(--brand-accent-purple); }
 
@@ -851,7 +865,7 @@
       <!-- Hero -->
       <section class="m2-hero" id="m2-hero" aria-labelledby="m2-hero-title">
         <div class="m2-wrap">
-          <a class="m2-eyebrow" href="#m2-work" aria-label="Currently leading AI transformation at Realtor.com — see the case study"><span class="m2-eyebrow__dot" aria-hidden="true"></span><span class="m2-eyebrow__text">Currently leading AI transformation at Realtor.com</span><span class="m2-eyebrow__cta" aria-hidden="true">See the Case Study <svg class="m2-eyebrow__arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+          <a class="m2-eyebrow" href="#m2-work" aria-label="Currently leading AI transformation at Realtor.com — see the case study"><span class="m2-eyebrow__dot" aria-hidden="true"></span><span class="m2-eyebrow__text">Currently leading AI transformation at Realtor.com</span><svg class="m2-eyebrow__down" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="m2-eyebrow__cta" aria-hidden="true">See the Case Study <svg class="m2-eyebrow__arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
           <h1 class="m2-hero__title" id="m2-hero-title">Relentlessly <em>curious.</em></h1>
           <p class="m2-hero__subtitle">I follow hard questions to human-centered answers.</p>
 
