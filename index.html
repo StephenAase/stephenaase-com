@@ -133,7 +133,7 @@
       letter-spacing: -0.01em;
       color: var(--brand-light-2);
     }
-    .m2-hero__title em { font-style: normal; color: var(--brand-tan); }
+    .m2-hero__title em { font-style: normal; color: var(--lello); }
     .m2-hero__subtitle {
       margin-top: 12px;
       font-size: clamp(18px, 5.33vw, 20px);     /* Figma mobile 20px @375 */
@@ -170,7 +170,7 @@
       border-radius: var(--radius-md);
       color: var(--brand-tan);
     }
-    .m2-stat__value { font-family: var(--font-family-sans); font-weight: 200; font-size: clamp(48px, 17.07vw, 64px); line-height: 1; white-space: nowrap; }   /* Figma mobile 64px @375 */
+    .m2-stat__value { font-family: var(--font-family-sans); font-weight: 200; font-size: clamp(48px, 17.07vw, 64px); line-height: 1; white-space: nowrap; color: var(--lello); }   /* Figma mobile 64px @375, peach */
     .m2-stat__label { font-weight: 300; font-size: 16px; line-height: 1.375; }
 
     /* Eyebrow ↓ arrow (mobile): full-width row, dot+text left, arrow right */
@@ -264,7 +264,7 @@
       transform: scaleY(-1); }
     .m2-about__body { position: relative; z-index: 1; margin-top: 0; padding: clamp(20px, 6vw, 32px) var(--gutter) 0; }
     .m2-about__intro { font-family: var(--font-family-serif); font-weight: 400; font-size: var(--fluid-lg); line-height: 1.4; color: var(--brand-light-2); }
-    .m2-about__intro em { font-style: normal; color: var(--brand-tan); }
+    .m2-about__intro em { font-style: normal; color: var(--lello); }
     .m2-about__plabel { font-family: var(--font-family-serif); font-weight: 500; font-size: 14px; color: var(--brand-light-2); margin-top: 28px; margin-bottom: 12px; }
     .m2-principle { display: flex; align-items: center; gap: 12px; background: var(--brand-core-1); border-radius: var(--radius-md); padding: 13px 16px; min-height: 51px; }
     .m2-principle + .m2-principle { margin-top: 12px; }
@@ -275,7 +275,7 @@
     /* ---- AI leadership ---- */
     .m2-ai { position: relative; background: var(--hero-bg); color: var(--brand-light-2); padding-block: var(--section-gap); }
     .m2-ai__head { font-family: var(--font-family-serif); font-weight: 500; font-size: clamp(25px, 4.6vw, 40px); line-height: 1.3; margin-top: 16px; }
-    .m2-ai__head em { font-style: normal; color: var(--brand-tan); }
+    .m2-ai__head em { font-style: normal; color: var(--lello); }
     .m2-ai__sub { font-family: var(--font-family-serif); font-weight: 500; font-size: 14px; letter-spacing: 0.04em; color: var(--brand-light-2); margin-top: 14px; }
     .m2-ai [data-carousel] { margin-top: clamp(36px, 9vw, 52px); }   /* breathing room: heading -> cards */
     .m2-aicard {
@@ -298,7 +298,7 @@
     .m2-footer__label { font-family: var(--font-family-serif); font-weight: 500; font-size: 14px; letter-spacing: 0.04em; color: var(--brand-light-2); }
     .m2-footer__head { font-family: var(--font-family-serif); font-weight: 500; font-size: clamp(34px, 10.13vw, 42px); line-height: 1.34; letter-spacing: -0.023em; margin-top: 18px; }   /* Figma mobile 38px @375 */
     .m2-footer__head span { display: block; color: var(--brand-light-2); }
-    .m2-footer__head em { display: block; font-style: normal; color: var(--brand-tan); }
+    .m2-footer__head em { display: block; font-style: normal; color: var(--lello); }
     .m2-footer__body { font-family: var(--font-family-serif); font-weight: 400; font-size: 14px; line-height: 1.57; color: var(--brand-light-2); opacity: 0.9; margin-top: clamp(28px, 7vw, 44px); max-width: 300px; }
     .m2-footer__cta { margin-top: clamp(36px, 9vw, 52px); border-radius: var(--radius-sm); }
     .m2-footer__foot { position: relative; margin-top: clamp(48px, 12vw, 72px); margin-inline: calc(-1 * var(--gutter)); }
@@ -633,12 +633,12 @@
       .m2-header { padding-inline: max(24px, calc((100% - 1440px) / 2)); padding-block: 17px; }
       a.m2-brand { font-size: 16px; color: var(--brand-core-1); letter-spacing: -0.16px; }
       .m2-brand__mark { width: 22px; height: 22px; }
-      .m2-topnav { display: flex; align-items: center; gap: 23px; font-family: var(--font-family-serif); font-weight: 500; font-size: 14px; letter-spacing: -0.16px; }
-      .m2-topnav a { color: var(--brand-accent-purple); transition: color var(--duration-fast) var(--easing-default); }
-      .m2-topnav a:hover { color: var(--brand-purple); }
+      .m2-topnav { display: flex; align-items: center; gap: 23px; font-family: "Roboto Slab", var(--font-family-serif); font-weight: 500; font-size: 14px; letter-spacing: -0.16px; }
+      .m2-topnav a { color: #6371a2; transition: color var(--duration-fast) var(--easing-default); }
+      .m2-topnav a:hover { color: #4d5783; }
       .m2-topnav__cta, .m2-topnav__cta:hover { padding: 0; background: transparent; border-radius: 0; }
-      .m2-topnav__cta { color: var(--brand-accent-purple) !important; }
-      .m2-topnav__cta:hover { color: var(--brand-purple) !important; }
+      .m2-topnav__cta { color: #6371a2 !important; }
+      .m2-topnav__cta:hover { color: #4d5783 !important; }
 
       /* ---- Hero (Figma 344:4696): 1440 frame @144 gutter; text+stats inset 80 (=1280 @224); eyebrow inset 32 ---- */
       .m2-hero { padding-top: 32px; padding-bottom: 0; padding-inline: clamp(24px, 5vw, 64px); }  /* nav -> eyebrow = 32 */
@@ -692,7 +692,7 @@
       }
       .m2-hero .m2-stat__value {
         font-family: var(--font-family-sans); font-weight: 100;
-        font-size: clamp(56px, 4.63vw, 80px); line-height: 0.35; color: var(--brand-light-2);
+        font-size: clamp(56px, 4.63vw, 80px); line-height: 0.35; color: var(--lello);
       }
       .m2-hero .m2-stat__label {
         font-weight: 300; font-size: clamp(16px, 1.157vw, 20px); line-height: 1.38;
@@ -748,7 +748,7 @@
       .m2-footer__cta { max-width: 1280px; margin-inline: auto; }
       .m2-footer__label { font-size: 24px; line-height: 40px; letter-spacing: 0; }
       .m2-footer__head { font-size: clamp(48px, 6.6vw, 80px); line-height: 1.25; letter-spacing: -0.01em; margin-top: 32px; }
-      .m2-footer__head em { color: var(--brand-tan); }
+      .m2-footer__head em { color: var(--lello); }
       .m2-footer__body {
         font-family: var(--font-family-sans); font-weight: 400;
         font-size: 24px; line-height: 41px; opacity: 1; color: var(--brand-light-2);
@@ -773,7 +773,7 @@
       .m2-about__wave { display: block; position: relative; z-index: 2; width: 100%; height: clamp(24px, 2vw, 34px); margin-top: clamp(-32px, -2.4vw, -24px); }
       .m2-about__body { max-width: calc(1280px + 2 * clamp(24px, 5vw, 64px)); margin-inline: auto; padding-inline: clamp(24px, 5vw, 64px); padding-block: clamp(48px, 6vw, 96px) var(--section-gap); }
       .m2-about__intro { font-family: var(--font-family-serif); font-weight: 400; font-size: 48px; line-height: 56px; max-width: 1100px; }
-      .m2-about__intro em { color: var(--brand-tan); }
+      .m2-about__intro em { color: var(--lello); }
       .m2-about__plabel { font-size: 24px; line-height: 40px; margin-top: 40px; margin-bottom: 24px; }
       .m2-about .m2-principles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
       .m2-about .m2-principle { flex-direction: column; align-items: flex-start; gap: 32px; min-height: 280px; padding: 60px 40px 48px; border-radius: 8px; background: var(--brand-core-1); }
@@ -785,7 +785,7 @@
       #m2-ai { padding-inline: clamp(24px, 5vw, 64px); }
       #m2-ai .m2-wrap { max-width: 1280px; margin-inline: auto; padding-inline: 0; }
       #m2-ai .m2-ai__head { font-family: var(--font-family-serif); font-weight: 400; font-size: 48px; line-height: 56px; margin-top: 0; max-width: 1100px; }
-      #m2-ai .m2-ai__head em { color: var(--brand-tan); }
+      #m2-ai .m2-ai__head em { color: var(--lello); }
       #m2-ai .m2-ai__sub { font-size: 24px; line-height: 40px; letter-spacing: 0; margin-top: 40px; }
       #m2-ai [data-carousel] { margin-top: 40px; }
       #m2-ai .m2-rail { max-width: 1280px; margin-inline: auto; padding-inline: 0 !important; grid-template-columns: repeat(4, 1fr); gap: 40px; }
@@ -894,9 +894,9 @@
           <!-- Stats carousel -->
           <div class="m2-stats" data-carousel>
             <div class="m2-rail" role="group" aria-roledescription="carousel" aria-label="Career highlights">
-              <div class="m2-stat" role="group" aria-roledescription="slide" aria-label="1 of 3"><span class="m2-stat__value">10</span><span class="m2-stat__label">years leading high-performing design orgs</span></div>
-              <div class="m2-stat" role="group" aria-roledescription="slide" aria-label="2 of 3"><span class="m2-stat__value">20</span><span class="m2-stat__label">years designing products people love and use.</span></div>
-              <div class="m2-stat" role="group" aria-roledescription="slide" aria-label="3 of 3"><span class="m2-stat__value">190M</span><span class="m2-stat__label">people using products i've shipped.</span></div>
+              <div class="m2-stat" role="group" aria-roledescription="slide" aria-label="1 of 3"><span class="m2-stat__value">10</span><span class="m2-stat__label">years designing products people love and use</span></div>
+              <div class="m2-stat" role="group" aria-roledescription="slide" aria-label="2 of 3"><span class="m2-stat__value">20</span><span class="m2-stat__label">years in leadership, building high performing teams</span></div>
+              <div class="m2-stat" role="group" aria-roledescription="slide" aria-label="3 of 3"><span class="m2-stat__value">190</span><span class="m2-stat__label">million people using products i've shipped</span></div>
             </div>
             <div class="m2-dots" data-dots aria-hidden="true"></div>
           </div>
@@ -959,14 +959,14 @@
         <!-- Selected work -->
         <section id="m2-work" class="m2-section" aria-label="Selected work">
           <div class="m2-wrap">
-            <p class="m2-section__label">CASE STUDIES</p>
+            <p class="m2-section__label">SELECTED WORK</p>
             <div class="m2-work-list">
 
               <button type="button" class="m2-wcard m2-wcard--realtor" data-casestudy aria-label="Realtor.com — AI transformation case study">
                 <img class="m2-wcard__cover" src="assets/work-realtor.png" alt="" />
                 <span class="m2-wcard__body">
                   <span class="m2-wcard__eyebrow">REALTOR.COM</span>
-                  <span class="m2-wcard__title">AI transformation</span>
+                  <span class="m2-wcard__title">AI transformation by Design</span>
                   <span class="m2-wcard__desc">Building the methods, agents, and curriculum that let Design lead in the AI age.</span>
                   <span class="m2-wcard__metrics">
                     <span class="m2-wcard__metric"><span class="m2-redact" data-redact role="img" aria-label="L3+"></span><span class="m2-wcard__mlabel">AI Maturity for the Product Design team</span></span>
@@ -994,7 +994,7 @@
                 <img class="m2-wcard__cover" src="assets/work-designsystems.png" alt="" />
                 <span class="m2-wcard__body">
                   <span class="m2-wcard__eyebrow">DESIGN SYSTEMS</span>
-                  <span class="m2-wcard__title">Scale, by design</span>
+                  <span class="m2-wcard__title">Designing Systems for Scale</span>
                   <span class="m2-wcard__desc">Take a peek into how to build a tokenized Design System to power multi-brand experiences.</span>
                   <span class="m2-wcard__metrics">
                     <span class="m2-wcard__metric"><span class="m2-redact" data-redact role="img" aria-label="Redacted metric"></span><span class="m2-wcard__mlabel">Reduction in Design &amp; Engineering handoff</span></span>
@@ -1069,9 +1069,9 @@
       <!-- Footer / closing CTA -->
       <footer id="m2-contact" class="m2-footer" aria-label="Get in touch">
         <p class="m2-footer__label">GET IN TOUCH</p>
-        <h2 class="m2-footer__head"><span>Still learning.<br>Still building.</span><em>Always leading<br>toward better.</em></h2>
+        <h2 class="m2-footer__head"><span>Still learning. </span><em>Always building.</em></h2>
         <p class="m2-footer__body">I'm at my best leading orgs toward the best possible experiences for the people they serve. If that's your work too, let's talk.</p>
-        <a class="m2-btn m2-footer__cta" href="mailto:stephen.aase@gmail.com">Stephen.Aase@gmail.com
+        <a class="m2-btn m2-footer__cta" href="https://www.linkedin.com/in/stephenaase/" target="_blank" rel="noopener noreferrer">Find me on LinkedIn
           <svg class="m2-btn__arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
         <div class="m2-footer__foot">
