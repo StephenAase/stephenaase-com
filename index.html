@@ -262,9 +262,10 @@
     .m2-about__photo { position: relative; height: clamp(340px, 92vw, 420px);
       background-image: url("assets/about-photo.png"); background-repeat: no-repeat; background-position: center 34%; background-size: 175%; }
     .m2-about__photo::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 72px; background: linear-gradient(to bottom, var(--brand-light-2), rgba(249,243,235,0)); }
-    .m2-about__wave { position: relative; z-index: 2; width: 100%; height: clamp(24px, 6vw, 32px); margin-top: clamp(-30px, -7vw, -24px); pointer-events: none;
-      background-image: url("assets/wave.svg"); background-repeat: repeat-x; background-position: left top; background-size: 497px 100%;
-      transform: scaleY(-1); }
+    /* Photo -> body scallop: same seamless tile as the hero wave, filled brand-purple */
+    .m2-about__wave { position: relative; z-index: 2; width: 100%; height: 23px; margin-top: -22px; pointer-events: none;
+      background-color: transparent;
+      background-image: url("assets/wave-tile-purple.svg"); background-repeat: repeat-x; background-position: left bottom; background-size: auto 100%; }
     .m2-about__body { position: relative; z-index: 1; margin-top: 0; padding: clamp(20px, 6vw, 32px) var(--gutter) 0; }
     .m2-about__intro { font-family: var(--font-family-serif); font-weight: 400; font-size: var(--fluid-lg); line-height: 1.4; color: var(--brand-light-2); }
     .m2-about__intro em { font-style: normal; color: var(--lello); }
@@ -547,11 +548,9 @@
       .m2-tcard { transition: transform 360ms var(--easing-out), box-shadow 360ms var(--easing-out); }
       .m2-tcard:hover { transform: translateY(-4px); box-shadow: var(--elevation-3); }
 
-      /* Case-study cards: lift + deepen shadow, cover image gently zooms */
+      /* Case-study cards: lift + deepen shadow on hover (no image zoom) */
       .m2-wcard { transition: transform 420ms var(--easing-out), box-shadow 420ms var(--easing-out); }
       .m2-wcard:hover { transform: translateY(-6px); box-shadow: 0 18px 44px rgba(20,16,10,0.20); }
-      .m2-wcard__cover { transition: transform 640ms var(--easing-out); will-change: transform; }
-      .m2-wcard:hover .m2-wcard__cover { transform: scale(1.04); }
 
       /* AI cards: subtle lift + art zoom */
       .m2-aicard { transition: transform 420ms var(--easing-out), box-shadow 420ms var(--easing-out); }
@@ -792,9 +791,9 @@
       .m2-about__photo { display: block; width: 100%; height: clamp(380px, 40vw, 560px); aspect-ratio: auto; border-radius: 0; background-size: cover; background-position: center 32%; }
       .m2-about__photo::before { display: block; content: ""; position: absolute; inset: 0 0 auto 0; height: 140px; background: linear-gradient(to bottom, var(--brand-light-2), rgba(249,243,235,0)); z-index: 1; }
       .m2-about__photo::after { display: none; }
-      .m2-about__wave { display: block; position: relative; z-index: 2; width: 100%; height: clamp(24px, 2vw, 34px); margin-top: clamp(-32px, -2.4vw, -24px); }
+      .m2-about__wave { display: block; height: 23px; margin-top: -22px; }
       .m2-about__body { max-width: calc(1280px + 2 * clamp(24px, 5vw, 64px)); margin-inline: auto; padding-inline: clamp(24px, 5vw, 64px); padding-block: clamp(48px, 6vw, 96px) var(--section-gap); }
-      .m2-about__intro { font-family: var(--font-family-serif); font-weight: 400; font-size: 48px; line-height: 56px; max-width: 1100px; }
+      .m2-about__intro { font-family: var(--font-family-serif); font-weight: 400; font-size: 48px; line-height: 60px; max-width: 1100px; }
       .m2-about__intro em { color: var(--lello); }
       .m2-about__plabel { font-size: 24px; line-height: 40px; margin-top: 40px; margin-bottom: 24px; }
       .m2-about .m2-principles { display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; }
