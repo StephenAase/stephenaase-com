@@ -299,7 +299,7 @@
 
     /* ---- Footer / closing CTA ---- */
     .m2-footer { position: relative; overflow: hidden; background: #272531; color: var(--brand-light-2); padding: clamp(64px, 17vw, 104px) var(--gutter) 0; }
-    .m2-footer::before { content: ""; position: absolute; inset: 0; background: url("assets/hero-texture.png") center / cover no-repeat; opacity: 0.5; mix-blend-mode: soft-light; pointer-events: none; z-index: 0; }
+    .m2-footer::before { content: ""; position: absolute; inset: 0; background: url("assets/contact-bg.png") center / cover no-repeat; opacity: 1; mix-blend-mode: normal; pointer-events: none; z-index: 0; }   /* Figma 376:2981 — #272531 + topographic texture baked in */
     .m2-footer > * { position: relative; z-index: 1; }
     .m2-footer__label { font-family: var(--font-family-serif); font-weight: 500; font-size: 14px; letter-spacing: 0.04em; color: var(--brand-light-2); }
     .m2-footer__head { font-family: var(--font-family-serif); font-weight: 500; font-size: clamp(34px, 10.67vw, 42px); line-height: 1.3; letter-spacing: -0.023em; margin-top: 18px; }   /* Figma mobile 40px @375 */
@@ -726,6 +726,7 @@
       .m2-wcard__cta  { grid-row: 2; align-self: start; margin: 58px 0 0 76px; }  /* content -> CTA gap 58 */
       #m2-work .m2-redact { grid-template-columns: repeat(3, 24px); grid-auto-rows: 24px; width: 72px; height: 48px; }  /* Figma 24px squares */
       #m2-work .m2-redact__unit { font-size: 40px; }
+    }
 
     /* =============================================================
        DESKTOP SECTIONS — Figma Portfolio26.2 exact specs
@@ -762,23 +763,25 @@
       #m2-work .m2-section__label { font-size: 24px; line-height: 40px; letter-spacing: 0; color: #524e47; margin-bottom: 24px; }
 
       /* ---- Closing CTA (365:5344): two-tone 80px statement ---- */
-      .m2-footer { padding-inline: clamp(24px, 5vw, 64px); }
+      /* Center a 1280 content band via the footer padding, then left-align every child within it
+         so label/head/body/cta share ONE left edge (matches the About grid). Figma 368:9689. */
+      .m2-footer { padding-top: clamp(104px, 12.5vw, 180px); padding-inline: max(clamp(24px, 5vw, 64px), calc((100% - 1280px) / 2)); }
       .m2-footer__label,
       .m2-footer__head,
       .m2-footer__body,
-      .m2-footer__cta { max-width: 1280px; margin-inline: auto; }
+      .m2-footer__cta { margin-inline: 0; max-width: 100%; }
       .m2-footer__label { font-size: 24px; line-height: 40px; letter-spacing: 0; }
-      .m2-footer__head { font-size: clamp(48px, 6.6vw, 80px); line-height: 1.25; letter-spacing: -0.01em; margin-top: 32px; }
+      .m2-footer__head { font-size: clamp(48px, 6.6vw, 80px); line-height: 1.25; letter-spacing: -0.01em; margin-top: 32px; max-width: 815px; }
       .m2-footer__head em { color: var(--lello); }
       .m2-footer__body {
         font-family: var(--font-family-sans); font-weight: 400;
         font-size: 24px; line-height: 41px; opacity: 1; color: var(--brand-light-2);
-        margin-top: 32px; max-width: 532px; margin-inline: 0;
+        margin-top: 32px; max-width: 532px;
       }
-      .m2-footer__cta { width: 327px; min-width: 0; margin-top: 56px; margin-inline: 0; border-radius: 8px; }
+      .m2-footer__cta { width: 327px; min-width: 0; margin-top: 56px; border-radius: 8px; }
 
       /* ---- Footer bar (365:5366): full-bleed #1a191f, links left, © right @30% ---- */
-      .m2-footer__foot { margin-inline: calc(-1 * clamp(24px, 5vw, 64px)); }
+      .m2-footer__foot { width: 100vw; margin-inline: calc(50% - 50vw); }   /* full-bleed regardless of the centered-band padding above */
       .m2-footer__bar {
         padding: 36px max(clamp(24px, 5vw, 64px), calc((100% - 1280px) / 2));
         gap: 32px; font-size: 14px; min-height: 100px; align-items: center;
@@ -802,21 +805,23 @@
       .m2-about .m2-principle__icon { width: 60px; height: 60px; }
       .m2-about .m2-principle__text { font-family: var(--font-family-sans); font-weight: 300; font-size: 36px; line-height: 40px; color: var(--brand-light-2); }
 
-      /* ---- AI Leadership (365:5198): heading + sub + 4 cards 289×415 ---- */
+      /* ---- AI Leadership (368:9629): heading + sub + 4 cards 330×415, 1440 band ---- */
       #m2-ai { padding-inline: clamp(24px, 5vw, 64px); }
-      #m2-ai .m2-wrap { max-width: 1280px; margin-inline: auto; padding-inline: 0; }
+      #m2-ai .m2-wrap { max-width: 1440px; margin-inline: auto; padding-inline: 0; }
       #m2-ai .m2-ai__head { font-family: var(--font-family-serif); font-weight: 400; font-size: 48px; line-height: 56px; margin-top: 0; max-width: 1100px; }
       #m2-ai .m2-ai__head em { color: var(--lello); }
       #m2-ai .m2-ai__sub { font-size: 24px; line-height: 40px; letter-spacing: 0; margin-top: 40px; }
       #m2-ai [data-carousel] { margin-top: 40px; }
-      #m2-ai .m2-rail { max-width: 1280px; margin-inline: auto; padding-inline: 0 !important; grid-template-columns: repeat(4, 1fr); gap: 40px; }
+      #m2-ai .m2-rail { max-width: 1440px; margin-inline: auto; padding-inline: 0 !important; grid-template-columns: repeat(4, 1fr); gap: 40px; }
       #m2-ai .m2-aicard {
         height: 415px; border-radius: 8px; background: var(--brand-core-1); overflow: hidden;
-        padding: 24px 25px 54px 24px;
+        padding: 24px 25px 36px 24px;
       }
       #m2-ai .m2-aicard__illus { background-size: cover; background-position: center; }
       #m2-ai .m2-aicard__label { font-size: 14px; line-height: 28px; font-weight: 500; }
       #m2-ai .m2-aicard__desc { font-size: 20px; line-height: 28px; font-weight: 400; }
+      /* CTA: card-width (330), aligned to the right under card 4 (Figma 368:9672) */
+      #m2-ai .m2-ai__cta { display: flex; width: 330px; min-width: 0; max-width: none; margin: 40px 0 0 auto; }
     }
 
     /* About at the Figma reference scale (1440 content frame, 452px cards) */
@@ -825,6 +830,85 @@
       .m2-about__photo::before { height: 220px; }   /* top fade trimmed so it clears the faces on the shorter crop */
       .m2-about__body { max-width: 1440px; padding-inline: 0; padding-block: 80px 160px; }
       .m2-about__intro { max-width: none; }   /* full-width like Figma: 452px cards => uniform 280px height */
+
+      /* Footer/contact on the same 1440 grid as About (Figma 368:9689 = 144px gutter @1728) */
+      .m2-footer { padding-inline: max(clamp(24px, 5vw, 64px), calc((100% - 1440px) / 2)); }
+      .m2-footer__bar { padding-inline: max(clamp(24px, 5vw, 64px), calc((100% - 1440px) / 2)); }
+    }
+
+    /* =============================================================
+       PASSWORD GATES — DESKTOP MODAL (>= 1024)
+       Mobile keeps the iOS bottom sheet above. On desktop both the
+       portfolio gate and the case-study gate become centered modals
+       with desktop-grade password fields: a boxed input with a focus
+       ring and a show/hide reveal toggle (pointer + keyboard).
+    ============================================================= */
+    .m2-gate__field { position: relative; }
+    .m2-gate__reveal { display: none; }   /* reveal toggle is a desktop affordance */
+
+    @media (min-width: 1024px) {
+      /* Bottom sheet -> centered modal, over a blurred scrim */
+      .m2-gate {
+        align-items: center;
+        padding: 40px;
+        background: color-mix(in srgb, #201e1a 62%, transparent);
+        backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+      }
+      .m2-gate__card {
+        width: 100%; max-width: 468px;
+        border-radius: 20px;
+        padding: 48px 48px 44px;
+        max-height: min(88dvh, 760px);
+        box-shadow: 0 24px 64px rgba(20,16,10,0.28), 0 2px 8px rgba(20,16,10,0.12);
+        transform: translateY(10px) scale(0.97);
+        transition: transform 380ms var(--easing-out), opacity 280ms var(--easing-out);
+      }
+      .m2-gate.is-open .m2-gate__card { transform: none; }
+      .m2-gate__card::before { display: none; }      /* no grabber handle on desktop */
+
+      /* Tighter typographic scale for a centered dialog */
+      .m2-gate__title { font-size: 34px; margin-top: 16px; }
+      .m2-gate__sub { font-size: 15px; line-height: 24px; max-width: none; }
+      .m2-gate__label { line-height: 1; margin-top: 28px; margin-bottom: 10px; }
+
+      /* Desktop password field: boxed input + focus ring + reveal toggle */
+      .m2-gate__input {
+        padding: 13px 48px 13px 16px;       /* right padding clears the toggle */
+        border: 1px solid #c5c1b8; border-radius: 10px;
+        background: #fff; font-size: 15px;
+        transition: border-color var(--duration-normal) var(--easing-default),
+                    box-shadow var(--duration-normal) var(--easing-default);
+      }
+      .m2-gate__input:hover { border-color: #a8a399; }
+      .m2-gate__input:focus {
+        border-bottom-color: var(--brand-accent-purple); border-color: var(--brand-accent-purple);
+        box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand-accent-purple) 22%, transparent);
+      }
+      .m2-gate__input.is-error {
+        border-color: #c0392b;
+        box-shadow: 0 0 0 3px color-mix(in srgb, #c0392b 16%, transparent);
+      }
+      .m2-gate__reveal {
+        display: flex; align-items: center; justify-content: center;
+        position: absolute; top: 50%; right: 8px; transform: translateY(-50%);
+        width: 34px; height: 34px; padding: 0;
+        border: none; border-radius: 8px; background: transparent;
+        color: #8a857b; cursor: pointer;
+        transition: color var(--duration-fast) var(--easing-default),
+                    background-color var(--duration-fast) var(--easing-default);
+      }
+      .m2-gate__reveal:hover { color: var(--brand-core-1); background: rgba(32,30,26,0.06); }
+      .m2-gate__reveal:focus-visible {
+        outline: none; color: var(--brand-accent-purple);
+        box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand-accent-purple) 22%, transparent);
+      }
+      .m2-gate__reveal svg { width: 20px; height: 20px; }
+      .m2-gate__reveal .m2-gate__eye-off { display: none; }
+      .m2-gate__reveal[aria-pressed="true"] .m2-gate__eye-on { display: none; }
+      .m2-gate__reveal[aria-pressed="true"] .m2-gate__eye-off { display: block; }
+
+      .m2-gate__submit { margin-top: 32px; }
+      .m2-gate__close { top: 18px; right: 18px; }    /* inset on the rounded modal corner */
     }
   </style>
 </head>
@@ -842,7 +926,13 @@
         <p class="m2-gate__sub">Thanks for stopping by. My portfolio is currently private while I finish updates. Enter the password to continue.</p>
         <form class="m2-gate__form" novalidate>
           <label class="m2-gate__label" for="m2GateInput">Password</label>
-          <input class="m2-gate__input" id="m2GateInput" type="password" autocomplete="current-password" placeholder="Enter password" spellcheck="false" />
+          <div class="m2-gate__field">
+            <input class="m2-gate__input" id="m2GateInput" type="password" autocomplete="current-password" placeholder="Enter password" spellcheck="false" />
+            <button type="button" class="m2-gate__reveal" data-pw-toggle aria-label="Show password" aria-pressed="false">
+              <svg class="m2-gate__eye-on" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/></svg>
+              <svg class="m2-gate__eye-off" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 3l18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M10.6 5.1A10.8 10.8 0 0 1 12 5c6.5 0 10 7 10 7a18.5 18.5 0 0 1-3.16 4.04M6.46 6.46A18.4 18.4 0 0 0 2 12s3.5 7 10 7a10.7 10.7 0 0 0 4.18-.84" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </button>
+          </div>
           <p class="m2-gate__error" role="alert">That password isn't quite right — try again.</p>
           <button type="submit" class="m2-btn m2-gate__submit">
             Enter portfolio
@@ -863,7 +953,13 @@
         <p class="m2-gate__sub">This one's password-protected — a closer look at the thinking behind a project I'm proud of. If I sent you a password, you're in the right place; drop it below.</p>
         <form class="m2-cs__form" novalidate>
           <label class="m2-gate__label" for="m2CsInput">Password</label>
-          <input class="m2-gate__input" id="m2CsInput" type="password" placeholder="Enter password" spellcheck="false" />
+          <div class="m2-gate__field">
+            <input class="m2-gate__input" id="m2CsInput" type="password" autocomplete="current-password" placeholder="Enter password" spellcheck="false" />
+            <button type="button" class="m2-gate__reveal" data-pw-toggle aria-label="Show password" aria-pressed="false">
+              <svg class="m2-gate__eye-on" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/></svg>
+              <svg class="m2-gate__eye-off" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 3l18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M10.6 5.1A10.8 10.8 0 0 1 12 5c6.5 0 10 7 10 7a18.5 18.5 0 0 1-3.16 4.04M6.46 6.46A18.4 18.4 0 0 0 2 12s3.5 7 10 7a10.7 10.7 0 0 0 4.18-.84" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </button>
+          </div>
           <p class="m2-gate__note">These case studies are coming soon. Reach out and I'll happily walk you through the work.</p>
           <button type="submit" class="m2-btn m2-gate__submit">Unlock the case study
             <svg class="m2-btn__arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2"/></svg>
@@ -1164,6 +1260,37 @@
           }
         }
 
+        // --- Desktop modal helpers (gates render as centered modals >= 1024) ---
+        var isDesktop = window.matchMedia('(min-width: 1024px)');
+        function focusInput(el) {
+          if (el && isDesktop.matches) setTimeout(function () { el.focus({ preventScroll: true }); }, 80);
+        }
+        function trapTab(container, e) {
+          if (e.key !== 'Tab') return;
+          var f = Array.prototype.filter.call(
+            container.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])'),
+            function (el) { return el.offsetParent !== null; }   // skip hidden (e.g. the mobile-only reveal toggle)
+          );
+          if (!f.length) return;
+          var first = f[0], last = f[f.length - 1];
+          if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+          else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+        }
+
+        // --- Show/hide password toggles (desktop reveal affordance) ---
+        root.querySelectorAll('[data-pw-toggle]').forEach(function (btn) {
+          var field = btn.closest('.m2-gate__field');
+          var input = field && field.querySelector('.m2-gate__input');
+          if (!input) return;
+          btn.addEventListener('click', function () {
+            var show = input.type === 'password';
+            input.type = show ? 'text' : 'password';
+            btn.setAttribute('aria-pressed', String(show));
+            btn.setAttribute('aria-label', show ? 'Hide password' : 'Show password');
+            input.focus({ preventScroll: true });
+          });
+        });
+
         // --- Portfolio gate ---
         var gate = document.getElementById('m2Gate');
         if (gate) {
@@ -1175,7 +1302,9 @@
             lockScroll();
             gate.offsetHeight; // reflow for transition
             gate.classList.add('is-open');
+            focusInput(gInput);   // desktop: drop the cursor straight into the field
           }
+          gate.addEventListener('keydown', function (e) { trapTab(gate, e); });   // keyboard-trap the modal (no Esc: gate is required)
           function closeGate() {
             gate.classList.remove('is-open');
             unlockScroll();
@@ -1276,6 +1405,7 @@
         function openCs() {
           cs.hidden = false; lockScroll();
           cs.offsetHeight; cs.classList.add('is-open');
+          focusInput(cs.querySelector('#m2CsInput'));   // desktop: focus the field on open
           track('case_study_modal_open');
         }
         function closeCs() {
@@ -1290,7 +1420,7 @@
           root.querySelectorAll('[data-casestudy]').forEach(function (card) { card.addEventListener('click', openCs); });
           cs.querySelectorAll('[data-cs-close]').forEach(function (el) { el.addEventListener('click', closeCs); });
           cs.addEventListener('click', function (e) { if (e.target === cs) closeCs(); });
-          cs.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeCs(); });
+          cs.addEventListener('keydown', function (e) { if (e.key === 'Escape') { closeCs(); return; } trapTab(cs, e); });
           var csForm = cs.querySelector('.m2-cs__form');
           if (csForm) csForm.addEventListener('submit', function (e) {
             e.preventDefault();
