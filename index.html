@@ -96,18 +96,11 @@
       position: relative;
       isolation: isolate;
       overflow: hidden;
-      background: var(--hero-bg);
+      /* Pre-composited textured background (Figma 371:1790): texture baked onto the dark
+         bg so it renders reliably, no CSS blend mode needed. */
+      background: var(--hero-bg) url("assets/hero-bg-texture.png") center top / cover no-repeat;
       padding-top: clamp(28px, 8vw, 40px);
       padding-bottom: 0;
-    }
-    .m2-hero::before {            /* texture overlay (Figma 371:1471: overlay @ 0.20, bottom) */
-      content: "";
-      position: absolute; inset: 0;
-      background: url("assets/hero-texture-new.png") center bottom / cover no-repeat;
-      opacity: 0.5;                /* 0.2 (Figma) renders imperceptible in CSS overlay; 0.5 matches the intended visibility */
-      mix-blend-mode: overlay;
-      pointer-events: none;
-      z-index: 0;
     }
     .m2-hero > .m2-wrap, .m2-hero__wave { position: relative; z-index: 1; }
     a.m2-eyebrow {
@@ -660,7 +653,7 @@
         margin-inline: auto;
         padding-inline: 0;                        /* content = 1440; title aligns with eyebrow/gutter */
         display: grid;
-        grid-template-columns: minmax(0, 1fr) clamp(340px, 28.5%, 410px);  /* stats col = 410 @1440 */
+        grid-template-columns: minmax(0, 1fr) clamp(380px, 33.5%, 440px);  /* stats col wide enough to keep every label to 2 lines (Figma card 425) */
         column-gap: clamp(48px, 6vw, 96px);       /* title left, stats right → ~200 visual gap */
         align-content: start;
         grid-template-areas:
@@ -691,7 +684,9 @@
       .m2-hero__cta {
         grid-area: cta; align-self: start; justify-self: start;
         width: 327px; max-width: 100%; min-width: 0; margin-top: 56px;  /* subtitle -> CTA (8px ramp) */
+        font-size: 20px; line-height: 28px;             /* Figma 368:9244: Roboto Slab Bold 20/28 */
       }
+      .m2-hero__cta .m2-btn__arrow { width: 24px; height: 24px; }  /* Figma 368:9248: arrow 24px */
       .m2-hero .m2-stats { grid-area: stats; align-self: start; margin-top: 128px; }
 
       /* Stats: stacked, 40 between; number 80px Thin light, label 20px Light tan (Figma 354:4821) */
@@ -699,16 +694,17 @@
       .m2-hero .m2-stat {
         min-height: 129px; gap: 30px; align-items: center;
         padding: 38px 26px 36px 33px;
+        background: rgba(26, 25, 31, 0.3);          /* Figma 368:9251 card fill */
         border: 1px solid var(--brand-core-1);
         border-radius: 10px;
       }
       .m2-hero .m2-stat__value {
         font-family: var(--font-family-sans); font-weight: 100;
-        font-size: clamp(56px, 4.63vw, 80px); line-height: 0.35; color: var(--lello);
+        font-size: clamp(64px, 5.56vw, 80px); line-height: 0.35; color: var(--lello);  /* Figma 368:9261: Roboto Thin 80px @1440 */
       }
       .m2-hero .m2-stat__label {
-        font-weight: 300; font-size: clamp(16px, 1.157vw, 20px); line-height: 1.38;
-        color: var(--brand-tan); max-width: 230px;
+        font-weight: 300; font-size: clamp(17px, 1.39vw, 20px); line-height: 1.38;       /* Figma 368:9262: Roboto Light 20/27.6 */
+        color: var(--brand-tan); max-width: 274px;                                       /* fits the sentence to 2 lines (never 3) */
       }
 
       /* Case-study cards -> editorial typography (Figma: title 74/84, desc 24/32) */
