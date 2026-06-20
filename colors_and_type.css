@@ -251,6 +251,7 @@
 
   /* Brand palette (from Figma variables, file Portfolio26.2) */
   --brand-purple:         #312f3c;  /* deep ink */
+  --darkest-purp:         #1a191f;  /* darkest ink — nav banner bg (Figma) */
   --brand-core-1:         #413d57;  /* card borders / lines on dark */
   --brand-core-2:         #6371a2;  /* blue accent */
   --brand-accent-purple:  #a063a2;  /* primary action / magenta */
