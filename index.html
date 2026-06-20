@@ -79,15 +79,15 @@
       align-items: center;
       justify-content: space-between;
       padding: 14px var(--gutter);
-      background: var(--brand-light);
-      box-shadow: 0 1px 0 rgba(49,47,60,0.08);
+      background: var(--darkest-purp);
+      box-shadow: 0 1px 0 rgba(239,232,229,0.10);
     }
-    a.m2-brand { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-family-serif); font-weight: 700; font-size: 15px; color: var(--brand-core-1); }
+    a.m2-brand { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-family-serif); font-weight: 700; font-size: 15px; color: var(--brand-light-2); }
     .m2-brand__mark { width: 18px; height: 18px; flex: none; opacity: 0.95; }
     .m2-burger {
       display: inline-flex; flex-direction: column; gap: 4px;
       width: 28px; height: 28px; align-items: center; justify-content: center;
-      color: var(--brand-accent-purple);
+      color: var(--brand-light-2);
     }
     .m2-burger span { width: 20px; height: 2px; background: currentColor; border-radius: 2px; transition: transform var(--duration-normal) var(--easing-default), opacity var(--duration-fast) var(--easing-default); }
 
@@ -487,11 +487,11 @@
       .m2-brand { font-size: 17px; }
       .m2-brand__mark { width: 22px; height: 22px; }
       .m2-topnav { display: flex; align-items: center; gap: clamp(18px, 2.2vw, 40px); font-family: var(--font-family-serif); font-weight: 500; font-size: 16px; }
-      .m2-topnav a { color: var(--brand-accent-purple); transition: color var(--duration-fast) var(--easing-default); }
-      .m2-topnav a:hover { color: var(--brand-purple); }
-      .m2-topnav__cta, .m2-topnav__cta:hover { color: var(--on-action-primary) !important; }
-      .m2-topnav__cta { padding: 9px 20px; border-radius: var(--radius-full); background: var(--action-primary); color: var(--on-action-primary) !important; transition: background-color var(--duration-normal) var(--easing-default); }
-      .m2-topnav__cta:hover { background: var(--action-primary-hover); }
+      .m2-topnav a { color: var(--brand-light-2); transition: color var(--duration-fast) var(--easing-default); }
+      .m2-topnav a:hover { color: var(--lello); }
+      .m2-topnav__cta, .m2-topnav__cta:hover { color: var(--darkest-purp) !important; }
+      .m2-topnav__cta { padding: 9px 20px; border-radius: var(--radius-full); background: var(--lello); color: var(--darkest-purp) !important; transition: background-color var(--duration-normal) var(--easing-default); }
+      .m2-topnav__cta:hover { background: var(--brand-light-2); }
 
       /* Hero -> editorial, generous */
       .m2-hero { padding-top: clamp(48px, 7vw, 104px); }
@@ -558,9 +558,9 @@
       .m2-aicard__illus { transition: transform 700ms var(--easing-out); }
       .m2-aicard:hover .m2-aicard__illus { transform: scale(1.05); }
 
-      /* Principle cards: gentle surface lift */
-      .m2-about .m2-principle { transition: transform 320ms var(--easing-out), background-color 320ms var(--easing-out); }
-      .m2-about .m2-principle:hover { transform: translateY(-3px); background-color: #4b4763; }
+      /* Principle cards: lift + soft shadow (no color change; matches the AI cards) */
+      .m2-about .m2-principle { transition: transform 320ms var(--easing-out), box-shadow 320ms var(--easing-out); }
+      .m2-about .m2-principle:hover { transform: translateY(-6px); box-shadow: 0 18px 44px rgba(0,0,0,0.28); }
 
       /* Buttons: lift + shadow */
       .m2-btn { transition: background-color var(--duration-normal) var(--easing-default), transform 240ms var(--easing-out), box-shadow 240ms var(--easing-out); }
@@ -640,14 +640,14 @@
     @media (min-width: 1024px) {
       /* ---- Nav: center a 1440 frame; brand 16 + plain purple links 14 (Figma) ---- */
       .m2-header { padding-inline: max(24px, calc((100% - 1440px) / 2)); padding-block: 17px; }
-      a.m2-brand { font-size: 16px; color: var(--brand-core-1); letter-spacing: -0.16px; }
+      a.m2-brand { font-size: 16px; color: var(--brand-light-2); letter-spacing: -0.16px; }
       .m2-brand__mark { width: 22px; height: 22px; }
       .m2-topnav { display: flex; align-items: center; gap: 23px; font-family: "Roboto Slab", var(--font-family-serif); font-weight: 500; font-size: 14px; letter-spacing: -0.16px; }
-      .m2-topnav a { color: #6371a2; transition: color var(--duration-fast) var(--easing-default); }
-      .m2-topnav a:hover { color: #4d5783; }
+      .m2-topnav a { color: var(--brand-light-2); transition: color var(--duration-fast) var(--easing-default); }
+      .m2-topnav a:hover { color: var(--lello); }
       .m2-topnav__cta, .m2-topnav__cta:hover { padding: 0; background: transparent; border-radius: 0; }
-      .m2-topnav__cta { color: #6371a2 !important; }
-      .m2-topnav__cta:hover { color: #4d5783 !important; }
+      .m2-topnav__cta { color: var(--brand-light-2) !important; }
+      .m2-topnav__cta:hover { color: var(--lello) !important; }
 
       /* ---- Hero (rebuilt Figma 368:9223): 1440 frame @144 gutter; title at gutter, ~200 gap to stats ---- */
       .m2-hero { padding-top: 32px; padding-bottom: 0; padding-inline: clamp(24px, 5vw, 64px); }  /* nav -> eyebrow = 32 */
@@ -818,6 +818,14 @@
       #m2-ai .m2-aicard__label { font-size: 14px; line-height: 28px; font-weight: 500; }
       #m2-ai .m2-aicard__desc { font-size: 20px; line-height: 28px; font-weight: 400; }
     }
+
+    /* About at the Figma reference scale (1440 content frame, 452px cards) */
+    @media (min-width: 1440px) {
+      .m2-about__photo { height: 586px; }   /* wave/photo boundary raised 200px from the Figma 786 */
+      .m2-about__photo::before { height: 220px; }   /* top fade trimmed so it clears the faces on the shorter crop */
+      .m2-about__body { max-width: 1440px; padding-inline: 0; padding-block: 80px 160px; }
+      .m2-about__intro { max-width: none; }   /* full-width like Figma: 452px cards => uniform 280px height */
+    }
   </style>
 </head>
 <body>
@@ -888,7 +896,7 @@
     <!-- Header -->
     <header class="m2-header">
       <a class="m2-brand" href="#m2-top" aria-label="Stephen Aase home">
-        <svg class="m2-brand__mark" viewBox="0 0 22.5103 21.8416" fill="none" aria-hidden="true"><circle cx="7.80062" cy="14.041" r="7.05057" stroke="#a063a2" stroke-width="1.5"/><circle cx="14.7098" cy="14.041" r="7.05057" stroke="#a063a2" stroke-width="1.5"/><circle cx="11.3667" cy="7.80057" r="7.05057" stroke="#a063a2" stroke-width="1.5"/></svg>
+        <svg class="m2-brand__mark" viewBox="0 0 22.5103 21.8416" fill="none" aria-hidden="true"><circle cx="7.80062" cy="14.041" r="7.05057" stroke="#fed59d" stroke-width="1.5"/><circle cx="14.7098" cy="14.041" r="7.05057" stroke="#fed59d" stroke-width="1.5"/><circle cx="11.3667" cy="7.80057" r="7.05057" stroke="#fed59d" stroke-width="1.5"/></svg>
         <span>Stephen Aase</span>
       </a>
       <nav class="m2-topnav" aria-label="Primary">
