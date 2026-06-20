@@ -100,12 +100,12 @@
       padding-top: clamp(28px, 8vw, 40px);
       padding-bottom: 0;
     }
-    .m2-hero::before {            /* texture overlay */
+    .m2-hero::before {            /* texture overlay (Figma 371:1471: overlay @ 0.20, bottom) */
       content: "";
       position: absolute; inset: 0;
-      background: url("assets/hero-texture.png") center / cover no-repeat;
-      opacity: 0.5;
-      mix-blend-mode: soft-light;
+      background: url("assets/hero-texture-new.png") center bottom / cover no-repeat;
+      opacity: 0.2;
+      mix-blend-mode: overlay;
       pointer-events: none;
       z-index: 0;
     }
@@ -141,11 +141,10 @@
       color: var(--brand-light-2);
     }
     .m2-hero__cta { margin-top: clamp(18px, 4.5vw, 26px); }
-    /* Waves tile at a fixed 497px (the Figma asset width) so scallop size
-       stays consistent across breakpoints instead of stretching. */
-    .m2-hero__wave { display: block; width: 100%; height: clamp(20px, 4.5vw, 26px); margin-top: clamp(10px, 3vw, 18px);
-      background-color: var(--brand-light-2);
-      background-image: url("assets/wave.svg"); background-repeat: repeat-x; background-position: left top; background-size: 497px 100%; }
+    /* Hero wave (exact Figma asset 371:1515) stretched full-width across breakpoints */
+    .m2-hero__wave { display: block; width: 100%; height: 23px; margin-top: 0;
+      background-color: transparent;
+      background-image: url("assets/wave-hero.svg"); background-repeat: no-repeat; background-position: left bottom; background-size: 100% 100%; }
 
     /* ---- Stats carousel ---- */
     .m2-stats { margin-top: clamp(56px, 16vw, 96px); }
@@ -599,7 +598,7 @@
       .m2-hero .m2-eyebrow__cta {
         display: inline-flex; align-items: center; gap: 8px;
         margin-left: auto;
-        color: var(--brand-tan);
+        color: var(--brand-light-2);
         white-space: nowrap;
       }
       .m2-hero .m2-eyebrow__arrow { width: 16px; height: 16px; flex: none; }
@@ -669,7 +668,7 @@
           "title   stats"
           "sub     stats"
           "cta     stats";
-        padding-bottom: 166px;                    /* + wave's ~18px margin = 188 last-stat -> wave */
+        padding-bottom: 128px;                    /* last stat -> wave; module height ~869 (Figma) */
       }
       /* Eyebrow status bar: full 1440-wide bar at the gutter */
       .m2-hero a.m2-eyebrow {
@@ -691,7 +690,7 @@
       }
       .m2-hero__cta {
         grid-area: cta; align-self: start; justify-self: start;
-        width: 327px; max-width: 100%; min-width: 0; margin-top: 57px;  /* subtitle -> CTA */
+        width: 327px; max-width: 100%; min-width: 0; margin-top: 56px;  /* subtitle -> CTA (8px ramp) */
       }
       .m2-hero .m2-stats { grid-area: stats; align-self: start; margin-top: 128px; }
 
