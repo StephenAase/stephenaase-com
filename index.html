@@ -104,7 +104,7 @@
       content: "";
       position: absolute; inset: 0;
       background: url("assets/hero-texture-new.png") center bottom / cover no-repeat;
-      opacity: 0.2;
+      opacity: 0.5;                /* 0.2 (Figma) renders imperceptible in CSS overlay; 0.5 matches the intended visibility */
       mix-blend-mode: overlay;
       pointer-events: none;
       z-index: 0;
