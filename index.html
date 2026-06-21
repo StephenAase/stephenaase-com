@@ -366,6 +366,11 @@
     .m2-gate__input::placeholder { color: #c5c1b8; }
     .m2-gate__input:focus { outline: none; border-bottom-color: var(--brand-accent-purple); }
     .m2-gate__input.is-error { border-bottom-color: #c0392b; }
+    /* Mask via CSS so the field isn't a native password input — Safari/iCloud and
+       password managers only offer AutoFill on type=password. JS upgrades the input
+       to a masked text field where text-security is supported (else keeps password). */
+    .m2-gate__input { -webkit-text-security: disc; }
+    .m2-gate__input.is-revealed { -webkit-text-security: none; }
     .m2-gate__error { font-size: 13px; color: #c0392b; margin-top: 8px; height: 0; opacity: 0; overflow: hidden; transition: opacity var(--duration-normal); }
     .m2-gate__error.is-visible { height: auto; opacity: 1; }
     .m2-gate__submit { margin-top: 28px; border-radius: 8px; }
@@ -938,7 +943,7 @@
         <form class="m2-gate__form" novalidate>
           <label class="m2-gate__label" for="m2GateInput">Password</label>
           <div class="m2-gate__field">
-            <input class="m2-gate__input" id="m2GateInput" type="password" autocomplete="current-password" placeholder="Enter password" spellcheck="false" />
+            <input class="m2-gate__input" id="m2GateInput" type="password" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" data-1p-ignore data-lpignore="true" data-bwignore data-form-type="other" placeholder="Enter password" />
             <button type="button" class="m2-gate__reveal" data-pw-toggle aria-label="Show password" aria-pressed="false">
               <svg class="m2-gate__eye-on" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/></svg>
               <svg class="m2-gate__eye-off" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 3l18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M10.6 5.1A10.8 10.8 0 0 1 12 5c6.5 0 10 7 10 7a18.5 18.5 0 0 1-3.16 4.04M6.46 6.46A18.4 18.4 0 0 0 2 12s3.5 7 10 7a10.7 10.7 0 0 0 4.18-.84" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
@@ -965,7 +970,7 @@
         <form class="m2-cs__form" novalidate>
           <label class="m2-gate__label" for="m2CsInput">Password</label>
           <div class="m2-gate__field">
-            <input class="m2-gate__input" id="m2CsInput" type="password" autocomplete="current-password" placeholder="Enter password" spellcheck="false" />
+            <input class="m2-gate__input" id="m2CsInput" type="password" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" data-1p-ignore data-lpignore="true" data-bwignore data-form-type="other" placeholder="Enter password" />
             <button type="button" class="m2-gate__reveal" data-pw-toggle aria-label="Show password" aria-pressed="false">
               <svg class="m2-gate__eye-on" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/></svg>
               <svg class="m2-gate__eye-off" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 3l18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M10.6 5.1A10.8 10.8 0 0 1 12 5c6.5 0 10 7 10 7a18.5 18.5 0 0 1-3.16 4.04M6.46 6.46A18.4 18.4 0 0 0 2 12s3.5 7 10 7a10.7 10.7 0 0 0 4.18-.84" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
@@ -1290,16 +1295,32 @@
           else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
         }
 
+        // --- Keep gate passcodes out of browser/iCloud + password-manager autofill ---
+        // These are shared gate passwords, not personal credentials. Safari/iCloud only
+        // offer "AutoFill" on native type=password fields, so where CSS text-security is
+        // supported we render a masked TEXT input instead. Falls back to type=password
+        // (still masked) on the rare browser without text-security.
+        var maskWithCss = !!(window.CSS && CSS.supports &&
+          (CSS.supports('-webkit-text-security', 'disc') || CSS.supports('text-security', 'disc')));
+        if (maskWithCss) {
+          root.querySelectorAll('.m2-gate__input').forEach(function (input) {
+            input.type = 'text';
+            input.dataset.maskMode = 'css';   // masked by the .m2-gate__input text-security rule
+          });
+        }
+
         // --- Show/hide password toggles (desktop reveal affordance) ---
         root.querySelectorAll('[data-pw-toggle]').forEach(function (btn) {
           var field = btn.closest('.m2-gate__field');
           var input = field && field.querySelector('.m2-gate__input');
           if (!input) return;
           btn.addEventListener('click', function () {
-            var show = input.type === 'password';
-            input.type = show ? 'text' : 'password';
-            btn.setAttribute('aria-pressed', String(show));
-            btn.setAttribute('aria-label', show ? 'Hide password' : 'Show password');
+            var cssMode = input.dataset.maskMode === 'css';
+            var reveal = cssMode ? !input.classList.contains('is-revealed') : input.type === 'password';
+            if (cssMode) input.classList.toggle('is-revealed', reveal);
+            else input.type = reveal ? 'text' : 'password';
+            btn.setAttribute('aria-pressed', String(reveal));
+            btn.setAttribute('aria-label', reveal ? 'Hide password' : 'Show password');
             input.focus({ preventScroll: true });
           });
         });
@@ -1427,6 +1448,8 @@
             cs.hidden = true;
             var note = cs.querySelector('.m2-gate__note'); if (note) note.classList.remove('is-visible');
             var form = cs.querySelector('.m2-cs__form'); if (form) form.reset();
+            var inp = cs.querySelector('.m2-gate__input'); if (inp) inp.classList.remove('is-revealed');
+            var tg = cs.querySelector('[data-pw-toggle]'); if (tg) { tg.setAttribute('aria-pressed', 'false'); tg.setAttribute('aria-label', 'Show password'); }
           }, 350);
         }
         if (cs) {
