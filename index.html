@@ -178,8 +178,15 @@
 
     /* ---- Mobile hero specifics (Figma 365:7290 @375) ---- */
     @media (max-width: 767.98px) {
+      /* Jump-link landings: 40px gap between the section top and the 56px sticky nav */
+      #m2-hero, #m2-testimonials, #m2-work, #m2-about, #m2-ai, #m2-contact { scroll-margin-top: 96px; }
+      /* Suppress the hamburger nav on mobile to encourage scrolling — hidden + inert but kept in
+         layout (markup intact, header height unchanged), not removed */
+      .m2-burger { visibility: hidden; }
       .m2-hero a.m2-eyebrow { display: flex; width: 100%; }
       .m2-hero .m2-eyebrow__text { flex: 0 1 auto; }
+      /* Breathing room between the CTA and the hero scallop wave (mobile only) */
+      .m2-hero__wave { margin-top: 80px; }
       /* Stats peek carousel: full-bleed rail, card = viewport − 2 gutters, neighbours peek */
       .m2-hero .m2-stats { margin-inline: calc(-1 * var(--gutter)); }
       .m2-hero .m2-stats .m2-rail { padding-inline: var(--gutter); scroll-padding-inline: var(--gutter); gap: 12px; }
@@ -279,7 +286,7 @@
 
     /* Wavy line divider between About and AI (Figma 376:3044) — tone-on-tone on the dark sections */
     .m2-divider-wave { width: 100%; height: 13px;
-      background: url("assets/wave-line-divider.svg") center / 100% 100% no-repeat, #312f3c;
+      background: url("assets/wave-line-divider.svg") left center / auto 100% repeat-x, #312f3c;
       box-shadow: 0 1px 0 0 #312f3c, 0 -1px 0 0 #312f3c; }   /* close fractional-pixel seams top + bottom */
 
     /* ---- AI leadership ---- */
@@ -302,7 +309,7 @@
     .m2-ai__cta { margin-top: 28px; background: var(--action-primary); color: var(--on-action-primary); }
 
     /* ---- Footer / closing CTA ---- */
-    .m2-footer { position: relative; overflow: hidden; background: #272531; color: var(--brand-light-2); padding: clamp(64px, 17vw, 104px) var(--gutter) 0; }
+    .m2-footer { position: relative; overflow: hidden; background: #272531; color: var(--brand-light-2); padding: clamp(120px, 48vw, 180px) var(--gutter) 0; }   /* Figma 368:5158 — GET IN TOUCH opened up: ~180px top @375 */
     .m2-footer::before { content: ""; position: absolute; inset: 0; background: url("assets/contact-bg.png") center / cover no-repeat; opacity: 1; mix-blend-mode: normal; pointer-events: none; z-index: 0; }   /* Figma 376:2981 — #272531 + topographic texture baked in */
     .m2-footer > * { position: relative; z-index: 1; }
     .m2-footer__label { font-family: var(--font-family-serif); font-weight: 500; font-size: 14px; letter-spacing: 0.04em; color: var(--brand-light-2); }
@@ -311,7 +318,7 @@
     .m2-footer__head em { display: block; font-style: normal; color: var(--lello); }
     .m2-footer__body { font-family: var(--font-family-serif); font-weight: 400; font-size: 14px; line-height: 1.57; color: var(--brand-light-2); opacity: 0.9; margin-top: clamp(28px, 7vw, 44px); max-width: 300px; }
     .m2-footer__cta { margin-top: clamp(36px, 9vw, 52px); border-radius: var(--radius-sm); }
-    .m2-footer__foot { position: relative; margin-top: clamp(48px, 12vw, 72px); margin-inline: calc(-1 * var(--gutter)); }
+    .m2-footer__foot { position: relative; margin-top: clamp(120px, 48vw, 180px); margin-inline: calc(-1 * var(--gutter)); }   /* Figma 368:5158 — ~180px below the CTA @375 */
     .m2-footer__wave { display: block; width: 100%; height: clamp(20px, 4.5vw, 26px);
       background-color: transparent;
       background-image: url("assets/wave-tile-darkest.svg"); background-repeat: repeat-x; background-position: left bottom; background-size: auto 100%;
@@ -322,9 +329,12 @@
       background-image: url("assets/wave-tile-purple.svg"); background-repeat: repeat-x; background-position: left top; background-size: auto 100%;
       transform: scaleY(-1);
       box-shadow: 0 1px 0 0 #312f3c; }   /* #312F3C tile = AI-section color; flipped so it scallops down into the panel (mirrors the bottom wave). Shadow closes the seam to the AI section above (flipped -> renders visually up). */
-    .m2-footer__bar { background: #1a191f; display: flex; align-items: center; gap: 28px; padding: 26px var(--gutter) calc(clamp(96px, 22vh, 168px) + env(safe-area-inset-bottom, 0px)); font-family: var(--font-family-serif); font-size: 14px; }
+    .m2-footer__bar { position: relative; overflow: hidden; background: #1a191f; display: flex; align-items: flex-start; gap: 28px; padding: 26px var(--gutter) calc(clamp(96px, 22vh, 168px) + env(safe-area-inset-bottom, 0px)); font-family: var(--font-family-serif); font-size: 14px; }
+    /* Wildflower visual growing from the bottom of the darkest footer bar (Figma 380:4298) */
+    .m2-footer__flowers { position: absolute; left: 0; right: 0; bottom: 0; height: 209px; z-index: 0; pointer-events: none;
+      background: url("assets/footer-flowers.png") bottom center / auto 100% no-repeat; }
     .m2-footer__bar a { text-decoration: underline; text-underline-offset: 3px; }
-    .m2-footer__copy { opacity: 0.3; text-decoration: none; }
+    .m2-footer__copy { position: relative; z-index: 1; margin-left: auto; opacity: 0.3; text-decoration: none; }
 
     /* =============================================================
        PORTFOLIO GATE (mobile) — "Portfolio access"
@@ -806,6 +816,7 @@
       }
       .m2-footer__bar a { color: var(--brand-light-2); }
       .m2-footer__copy { font-size: 14px; opacity: 0.3; }
+      .m2-footer__flowers { display: none; }   /* flowers are the mobile footer treatment; desktop bar is a thin links/© strip */
 
       /* ---- About (365:5094): photo band + heading + 6-principle grid ---- */
       .m2-about { display: block; max-width: none; margin: 0; padding: 0; overflow: hidden; }
@@ -1108,7 +1119,7 @@
               <button type="button" class="m2-wcard m2-wcard--realtor" data-casestudy aria-label="Realtor.com — AI transformation case study">
                 <span class="m2-wcard__cover" aria-hidden="true"></span>
                 <span class="m2-wcard__body">
-                  <span class="m2-wcard__eyebrow">REALTOR&gt;COM</span>
+                  <span class="m2-wcard__eyebrow">REALTOR.COM</span>
                   <span class="m2-wcard__title">AI transformation, by design</span>
                   <span class="m2-wcard__desc">Building the methods, agents, and curriculum that let Design lead in the AI age.</span>
                   <span class="m2-wcard__results">
@@ -1227,6 +1238,7 @@
           <div class="m2-footer__wave" aria-hidden="true">
                       </div>
           <div class="m2-footer__bar">
+            <div class="m2-footer__flowers" aria-hidden="true"></div>
             <span class="m2-footer__copy">© 2026 Stephen Aase</span>
           </div>
         </div>
