@@ -294,7 +294,7 @@
       background: var(--brand-core-1); border-radius: var(--radius-md);
       overflow: hidden; padding: 24px; display: flex; flex-direction: column;
     }
-    .m2-aicard::before { content: ""; position: absolute; inset: 0; background: url("assets/hero-texture.png") center bottom / cover no-repeat; opacity: 0.10; mix-blend-mode: overlay; pointer-events: none; z-index: 0; }
+    .m2-aicard::before { content: ""; position: absolute; inset: 0; background: url("assets/hero-texture.png") center bottom / cover no-repeat; opacity: 0.33; mix-blend-mode: overlay; pointer-events: none; z-index: 0; }   /* Figma layer is overlay@10%, but renders ~0.33 in-browser to match the comp */
     .m2-aicard__illus { position: absolute; inset: 0; z-index: 0; background-repeat: no-repeat; background-position: 50% 73%; background-size: 166%; }   /* transparent art floats over texture (Figma 548px on 330 card) */
     .m2-aicard__label { position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; font-family: var(--font-family-serif); font-weight: 500; font-size: 14px; color: var(--brand-light-2); }
     .m2-aicard__label svg { width: 18px; height: 18px; }
