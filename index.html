@@ -1488,11 +1488,12 @@
           var prevBehavior = rootEl.style.scrollBehavior;
           rootEl.style.scrollBehavior = 'auto';   // keep CSS smooth-scroll from fighting the rAF steps
           var startT = null;
-          function easeInOutQuad(t) { return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; }
+          // easeInOutCubic: clearly perceptible ease-in (slow start) and ease-out (slow stop).
+          function easeInOutCubic(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
           function step(ts) {
             if (startT === null) startT = ts;
             var p = Math.min((ts - startT) / duration, 1);
-            window.scrollTo(0, startY + dist * easeInOutQuad(p));
+            window.scrollTo(0, startY + dist * easeInOutCubic(p));
             if (p < 1) { requestAnimationFrame(step); }
             else { rootEl.style.scrollBehavior = prevBehavior; }
           }
