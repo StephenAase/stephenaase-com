@@ -144,7 +144,8 @@
     /* Hero wave: seamless scallop tile, full-bleed, repeated across the full viewport width */
     .m2-hero__wave { display: block; width: 100vw; margin-inline: calc(50% - 50vw); height: 23px; margin-top: 0;
       background-color: transparent;
-      background-image: url("assets/wave-tile.svg"); background-repeat: repeat-x; background-position: left bottom; background-size: auto 100%; }
+      background-image: url("assets/wave-tile.svg"); background-repeat: repeat-x; background-position: left bottom; background-size: auto 100%;
+      box-shadow: 0 1px 0 0 #efe8e5; }   /* close the fractional-pixel seam to the cream (.m2-light) section below */
 
     /* ---- Stats carousel ---- */
     .m2-stats { margin-top: clamp(56px, 16vw, 96px); }
@@ -262,7 +263,8 @@
     /* Photo -> body scallop: same seamless tile as the hero wave, filled brand-purple */
     .m2-about__wave { position: relative; z-index: 2; width: 100%; height: 23px; margin-top: -22px; pointer-events: none;
       background-color: transparent;
-      background-image: url("assets/wave-tile-purple.svg"); background-repeat: repeat-x; background-position: left bottom; background-size: auto 100%; }
+      background-image: url("assets/wave-tile-purple.svg"); background-repeat: repeat-x; background-position: left bottom; background-size: auto 100%;
+      box-shadow: 0 1px 0 0 #312f3c; }   /* close the fractional-pixel seam to the body below */
     .m2-about__body { position: relative; z-index: 1; margin-top: 0; padding: clamp(20px, 6vw, 32px) var(--gutter) 0; }
     .m2-about__intro { font-family: var(--font-family-serif); font-weight: 400; font-size: var(--fluid-lg); line-height: 1.4; color: var(--brand-light-2); }
     .m2-about__intro em { font-style: normal; color: var(--lello); }
@@ -277,7 +279,8 @@
 
     /* Wavy line divider between About and AI (Figma 376:3044) — tone-on-tone on the dark sections */
     .m2-divider-wave { width: 100%; height: 13px;
-      background: url("assets/wave-line-divider.svg") center / 100% 100% no-repeat, #312f3c; }
+      background: url("assets/wave-line-divider.svg") center / 100% 100% no-repeat, #312f3c;
+      box-shadow: 0 1px 0 0 #312f3c, 0 -1px 0 0 #312f3c; }   /* close fractional-pixel seams top + bottom */
 
     /* ---- AI leadership ---- */
     .m2-ai { position: relative; background: #312f3c; color: var(--brand-light-2); padding-block: var(--section-gap); }
@@ -311,12 +314,14 @@
     .m2-footer__foot { position: relative; margin-top: clamp(48px, 12vw, 72px); margin-inline: calc(-1 * var(--gutter)); }
     .m2-footer__wave { display: block; width: 100%; height: clamp(20px, 4.5vw, 26px);
       background-color: transparent;
-      background-image: url("assets/wave-tile-darkest.svg"); background-repeat: repeat-x; background-position: left bottom; background-size: auto 100%; }
+      background-image: url("assets/wave-tile-darkest.svg"); background-repeat: repeat-x; background-position: left bottom; background-size: auto 100%;
+      box-shadow: 0 1px 0 0 #1a191f; }   /* close the fractional-pixel seam to the footer bar below */
     /* Scalloped top edge: panel scallops up into the AI section (#312f3c) above. Figma 368:9680, mirrors the bottom wave. */
     .m2-footer__wave--top { position: absolute; top: 0; left: 0; width: 100%; height: clamp(20px, 4.5vw, 26px); z-index: 1; pointer-events: none;
       background-color: transparent;
       background-image: url("assets/wave-tile-purple.svg"); background-repeat: repeat-x; background-position: left top; background-size: auto 100%;
-      transform: scaleY(-1); }   /* #312F3C tile = AI-section color; flipped so it scallops down into the panel (mirrors the bottom wave) */
+      transform: scaleY(-1);
+      box-shadow: 0 1px 0 0 #312f3c; }   /* #312F3C tile = AI-section color; flipped so it scallops down into the panel (mirrors the bottom wave). Shadow closes the seam to the AI section above (flipped -> renders visually up). */
     .m2-footer__bar { background: #1a191f; display: flex; align-items: center; gap: 28px; padding: 26px var(--gutter) calc(clamp(96px, 22vh, 168px) + env(safe-area-inset-bottom, 0px)); font-family: var(--font-family-serif); font-size: 14px; }
     .m2-footer__bar a { text-decoration: underline; text-underline-offset: 3px; }
     .m2-footer__copy { opacity: 0.3; text-decoration: none; }
