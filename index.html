@@ -309,11 +309,16 @@
     .m2-footer__cta { margin-top: clamp(36px, 9vw, 52px); border-radius: var(--radius-sm); }
     .m2-footer__foot { position: relative; margin-top: clamp(48px, 12vw, 72px); margin-inline: calc(-1 * var(--gutter)); }
     .m2-footer__wave { display: block; width: 100%; height: clamp(20px, 4.5vw, 26px);
-      background-color: #1a191f;
-      background-image: url("assets/wave.svg"); background-repeat: repeat-x; background-position: left top; background-size: 497px 100%; }
+      background-color: transparent;
+      background-image: url("assets/wave-tile-darkest.svg"); background-repeat: repeat-x; background-position: left bottom; background-size: auto 100%; }
+    /* Scalloped top edge: panel scallops up into the AI section (#312f3c) above. Figma 368:9680, mirrors the bottom wave. */
+    .m2-footer__wave--top { position: absolute; top: 0; left: 0; width: 100%; height: clamp(20px, 4.5vw, 26px); z-index: 1; pointer-events: none;
+      background-color: transparent;
+      background-image: url("assets/wave-tile-purple.svg"); background-repeat: repeat-x; background-position: left top; background-size: auto 100%;
+      transform: scaleY(-1); }   /* #312F3C tile = AI-section color; flipped so it scallops down into the panel (mirrors the bottom wave) */
     .m2-footer__bar { background: #1a191f; display: flex; align-items: center; gap: 28px; padding: 26px var(--gutter) calc(clamp(96px, 22vh, 168px) + env(safe-area-inset-bottom, 0px)); font-family: var(--font-family-serif); font-size: 14px; }
     .m2-footer__bar a { text-decoration: underline; text-underline-offset: 3px; }
-    .m2-footer__copy { margin-left: auto; opacity: 0.3; text-decoration: none; }
+    .m2-footer__copy { opacity: 0.3; text-decoration: none; }
 
     /* =============================================================
        PORTFOLIO GATE (mobile) — "Portfolio access"
@@ -1192,6 +1197,7 @@
 
       <!-- Footer / closing CTA -->
       <footer id="m2-contact" class="m2-footer" aria-label="Get in touch">
+        <div class="m2-footer__wave--top" aria-hidden="true"></div>
         <p class="m2-footer__label">GET IN TOUCH</p>
         <h2 class="m2-footer__head"><span>Still learning. </span><em>Always building.</em></h2>
         <p class="m2-footer__body">I'm at my best leading orgs toward the best possible experiences for the people they serve. If that's your work too, let's talk.</p>
@@ -1202,9 +1208,7 @@
           <div class="m2-footer__wave" aria-hidden="true">
                       </div>
           <div class="m2-footer__bar">
-            <a href="https://www.linkedin.com/in/stephenaase/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-            <a href="https://www.linkedin.com/in/stephenaase/" target="_blank" rel="noopener noreferrer">Résumé</a>
-            <span class="m2-footer__copy">© 2026 Stephen</span>
+            <span class="m2-footer__copy">© 2026 Stephen Aase</span>
           </div>
         </div>
       </footer>
