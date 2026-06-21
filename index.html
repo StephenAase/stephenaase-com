@@ -655,7 +655,7 @@
     /* ---------- DESKTOP (>= 1024): 2-col hero, stacked stats, inline-nav polish ---------- */
     @media (min-width: 1024px) {
       /* ---- Nav: center a 1440 frame; brand 16 + plain purple links 14 (Figma) ---- */
-      .m2-header { padding-inline: max(24px, calc((100% - 1440px) / 2)); padding-block: 17px; }
+      .m2-header { padding-inline: max(24px, calc((100% - 1440px) / 2)); padding-block: 18px; min-height: 64px; }   /* Figma 376:2942: 64px bar = 28px row + 18px block padding */
       a.m2-brand { font-size: 16px; color: var(--brand-light-2); letter-spacing: -0.16px; }
       .m2-brand__mark { width: 22px; height: 22px; }
       .m2-topnav { display: flex; align-items: center; gap: 23px; font-family: "Roboto Slab", var(--font-family-serif); font-weight: 500; font-size: 14px; letter-spacing: -0.16px; }
