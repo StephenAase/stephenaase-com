@@ -251,10 +251,10 @@
     .m2-redact__unit { font-family: var(--font-family-sans); font-weight: 700; font-size: 28px; line-height: 1; color: var(--wc); }
     .m2-sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
     .m2-wcard__mlabel { font-family: var(--font-family-sans); font-size: 12px; line-height: 1.4; color: #524e49; margin-top: 8px; }
-    .m2-wcard__cta { display: flex; align-items: center; justify-content: center; gap: 8px; height: 60px; margin: 24px 28px 0; border-radius: var(--radius-sm); background: var(--cta-bg, var(--wc)); color: var(--cta-fg, #fff); font-family: var(--font-family-serif); font-weight: 700; font-size: 16px; }
+    .m2-wcard__cta { display: flex; align-items: center; justify-content: center; gap: 8px; height: 60px; margin: 24px 28px 0; border-radius: 8px; background: var(--cta-bg, var(--wc)); color: var(--cta-fg, #fff); font-family: var(--font-family-serif); font-weight: 700; font-size: 16px; }
     .m2-wcard__cta svg { width: 18px; height: 18px; }
     .m2-wcard--realtor { --wc: #c60004; }
-    .m2-wcard--walmart { --wc: #e9a107; --cta-bg: #ffc220; --cta-fg: #4a4a4a; }
+    .m2-wcard--walmart { --wc: #e9a107; --cta-bg: #ffc220; --cta-fg: #1a1815; }
     .m2-wcard--ds { --wc: #004cf3; }
 
     /* ---- About / guiding principles ---- */
@@ -640,9 +640,11 @@
       .m2-wcard__cta {
         grid-column: 1; grid-row: 2;
         align-self: end; justify-self: start;
-        width: 295px; min-width: 0; border-radius: 4px;
+        width: 295px; min-width: 0; border-radius: 8px;
+        font-size: 20px; line-height: 28px;        /* Figma 368:9374: Roboto Slab Bold 20/28 */
         margin: clamp(24px, 2.6vw, 38px) 0 clamp(40px, 3.6vw, 52px) clamp(44px, 5.3vw, 76px);
       }
+      .m2-wcard__cta svg { width: 24px; height: 24px; }   /* Figma arrow ~23x24 */
     }
 
     /* ---------- DESKTOP (>= 1024): 2-col hero, stacked stats, inline-nav polish ---------- */
