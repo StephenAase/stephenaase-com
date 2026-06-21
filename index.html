@@ -783,10 +783,10 @@
         font-size: 24px; line-height: 41px; opacity: 1; color: var(--brand-light-2);
         margin-top: 32px; max-width: 532px;
       }
-      .m2-footer__cta { width: 327px; min-width: 0; margin-top: 56px; border-radius: 8px; }
+      .m2-footer__cta { width: 327px; min-width: 0; margin-top: 56px; margin-bottom: 200px; border-radius: 8px; }
 
       /* ---- Footer bar (365:5366): full-bleed #1a191f, links left, © right @30% ---- */
-      .m2-footer__foot { width: 100vw; margin-inline: calc(50% - 50vw); }   /* full-bleed regardless of the centered-band padding above */
+      .m2-footer__foot { width: 100vw; margin-inline: calc(50% - 50vw); margin-top: 0; }   /* full-bleed; CTA owns the gap below it (200px) */
       .m2-footer__bar {
         padding: 36px max(clamp(24px, 5vw, 64px), calc((100% - 1280px) / 2));
         gap: 32px; font-size: 14px; min-height: 100px; align-items: center;
