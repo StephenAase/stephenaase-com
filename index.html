@@ -44,8 +44,15 @@
       margin-inline: auto;
       padding-inline: var(--gutter);
     }
-    /* Jump-link landing: clear the sticky header + breathing room */
-    #m2-top, #m2-hero, #m2-testimonials, #m2-work, #m2-about, #m2-ai, #m2-contact { scroll-margin-top: clamp(76px, 15vw, 84px); }
+    /* Jump-link landing: clear the sticky header + breathing room.
+       About/top/hero keep a positive offset (About's first element is a full-bleed
+       photo at its top edge, so it must not slide under the nav). */
+    #m2-top, #m2-hero, #m2-about { scroll-margin-top: clamp(76px, 15vw, 84px); }
+    /* Testimonials/Work/AI/Contact open with ~158px of pure top padding, so a jump
+       used to land the heading ~178px below the nav. Pull the target up so the jump
+       scrolls past about half that padding (behind the opaque nav): heading now lands
+       ~89px below the nav — half the old gap. Only padding is hidden, never content. */
+    #m2-testimonials, #m2-work, #m2-ai, #m2-contact { scroll-margin-top: -5px; }
 
     /* ---- Primary button ---- */
     .m2-btn {
@@ -1466,6 +1473,32 @@
         }
 
         // --- Smooth in-page scroll (nav links close the drawer first) ---
+        // Custom rAF scroll so the pace is tunable (the browser's native smooth scroll isn't).
+        // Honors the target's scroll-margin-top, so the tightened jump-link landings are preserved.
+        function smoothScrollToTarget(target) {
+          var smt = parseFloat(getComputedStyle(target).scrollMarginTop) || 0;
+          var startY = window.scrollY || window.pageYOffset || 0;
+          var maxY = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+          var destY = Math.min(maxY, Math.max(0, startY + target.getBoundingClientRect().top - smt));
+          var dist = destY - startY;
+          if (Math.abs(dist) < 1) return;
+          // Duration scales mildly with distance — deliberate but not sluggish. Bump 0.4 up to slow further.
+          var duration = Math.min(850, Math.max(500, Math.abs(dist) * 0.4));
+          var rootEl = document.documentElement;
+          var prevBehavior = rootEl.style.scrollBehavior;
+          rootEl.style.scrollBehavior = 'auto';   // keep CSS smooth-scroll from fighting the rAF steps
+          var startT = null;
+          function easeInOutQuad(t) { return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; }
+          function step(ts) {
+            if (startT === null) startT = ts;
+            var p = Math.min((ts - startT) / duration, 1);
+            window.scrollTo(0, startY + dist * easeInOutQuad(p));
+            if (p < 1) { requestAnimationFrame(step); }
+            else { rootEl.style.scrollBehavior = prevBehavior; }
+          }
+          requestAnimationFrame(step);
+        }
+
         root.querySelectorAll('a[href^="#"]').forEach(function (link) {
           link.addEventListener('click', function (e) {
             var id = link.getAttribute('href');
@@ -1477,7 +1510,8 @@
             if (isNavLink && nav && nav.classList.contains('is-open')) closeNav();
             var delay = (isNavLink && !prefersReducedMotion) ? 320 : 0;
             setTimeout(function () {
-              target.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'start' });
+              if (prefersReducedMotion) { target.scrollIntoView({ behavior: 'auto', block: 'start' }); }
+              else { smoothScrollToTarget(target); }
             }, delay);
           });
         });
