@@ -278,6 +278,10 @@
     .m2-principle__text b { font-weight: 700; }
     .m2-principle--deskonly { display: none; }
 
+    /* Wavy line divider between About and AI (Figma 376:3044) — tone-on-tone on the dark sections */
+    .m2-divider-wave { width: 100%; height: 13px;
+      background: url("assets/wave-line-divider.svg") center / 100% 100% no-repeat, #312f3c; }
+
     /* ---- AI leadership ---- */
     .m2-ai { position: relative; background: #312f3c; color: var(--brand-light-2); padding-block: var(--section-gap); }
     .m2-ai__head { font-family: var(--font-family-serif); font-weight: 400; font-size: clamp(20px, 5.33vw, 40px); line-height: 1.4; margin-top: 16px; }   /* Figma mobile 20px @375 */
@@ -290,8 +294,8 @@
       background: var(--brand-core-1); border-radius: var(--radius-md);
       overflow: hidden; padding: 24px; display: flex; flex-direction: column;
     }
-    .m2-aicard::before { content: ""; position: absolute; inset: 0; background: url("assets/hero-texture.png") center / cover no-repeat; opacity: 0.45; mix-blend-mode: soft-light; pointer-events: none; z-index: 0; }
-    .m2-aicard__illus { position: absolute; inset: 0; z-index: 0; background-position: center 52%; background-repeat: no-repeat; background-size: 116%; }
+    .m2-aicard::before { content: ""; position: absolute; inset: 0; background: url("assets/hero-texture.png") center bottom / cover no-repeat; opacity: 0.10; mix-blend-mode: overlay; pointer-events: none; z-index: 0; }
+    .m2-aicard__illus { position: absolute; inset: 0; z-index: 0; background-repeat: no-repeat; background-position: 50% 73%; background-size: 166%; }   /* transparent art floats over texture (Figma 548px on 330 card) */
     .m2-aicard__label { position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; font-family: var(--font-family-serif); font-weight: 500; font-size: 14px; color: var(--brand-light-2); }
     .m2-aicard__label svg { width: 18px; height: 18px; }
     .m2-aicard__desc { position: relative; z-index: 1; margin-top: auto; font-family: var(--font-family-serif); font-weight: 400; font-size: 12px; line-height: 1.55; color: var(--brand-light-2); }
@@ -822,7 +826,7 @@
         height: 415px; border-radius: 8px; background: var(--brand-core-1); overflow: hidden;
         padding: 24px 25px 36px 24px;
       }
-      #m2-ai .m2-aicard__illus { background-size: cover; background-position: center; }
+      /* illustration framing comes from base .m2-aicard__illus (transparent art over texture) */
       #m2-ai .m2-aicard__label { font-size: 14px; line-height: 28px; font-weight: 500; }
       #m2-ai .m2-aicard__desc { font-size: 20px; line-height: 28px; font-weight: 400; }
       /* CTA: card-width (330), aligned to the right under card 4 (Figma 368:9672) */
@@ -1157,6 +1161,9 @@
         </div>
       </section>
 
+      <!-- Wavy line divider: About -> AI -->
+      <div class="m2-divider-wave" aria-hidden="true"></div>
+
       <!-- AI leadership -->
       <section id="m2-ai" class="m2-ai" aria-label="AI leadership">
         <div class="m2-wrap">
@@ -1166,22 +1173,22 @@
         <div data-carousel>
           <div class="m2-rail" role="group" aria-roledescription="carousel" aria-label="How I lead with AI" style="padding-inline: var(--gutter); scroll-padding-inline: var(--gutter);">
             <article class="m2-aicard">
-              <div class="m2-aicard__illus" style="background-image:url('assets/ai-infrastructure.png')"></div>
+              <div class="m2-aicard__illus" style="background-image:url('assets/ai-infrastructure-art.png')"></div>
               <div class="m2-aicard__label">INFRASTRUCTURE <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
               <p class="m2-aicard__desc">Build an AI-augmented process that compresses discovery and define.</p>
             </article>
             <article class="m2-aicard">
-              <div class="m2-aicard__illus" style="background-image:url('assets/ai-human.png')"></div>
+              <div class="m2-aicard__illus" style="background-image:url('assets/ai-human-art.png')"></div>
               <div class="m2-aicard__label">HUMAN IN THE LOOP <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
               <p class="m2-aicard__desc">Design consumer advocacy agents to work alongside designers.</p>
             </article>
             <article class="m2-aicard">
-              <div class="m2-aicard__illus" style="background-image:url('assets/ai-metrics.png')"></div>
+              <div class="m2-aicard__illus" style="background-image:url('assets/ai-metrics-art.png')"></div>
               <div class="m2-aicard__label">BEHAVIORAL METRICS <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
               <p class="m2-aicard__desc">Track high-velocity squads to improve ways of working.</p>
             </article>
             <article class="m2-aicard">
-              <div class="m2-aicard__illus" style="background-image:url('assets/ai-craft.png')"></div>
+              <div class="m2-aicard__illus" style="background-image:url('assets/ai-craft-art.png')"></div>
               <div class="m2-aicard__label">CRAFT + VELOCITY <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
               <p class="m2-aicard__desc">Push highly crafted intent to production. Never lower the bar.</p>
             </article>
