@@ -1364,7 +1364,8 @@
             unlockScroll();
             setTimeout(function () { gate.hidden = true; }, 350);
           }
-          if (!gateUnlocked()) openGate();
+          // Portfolio gate suppressed — site no longer gated (case-study gates remain). Re-enable: uncomment.
+          // if (!gateUnlocked()) openGate();
           if (gForm) {
             gForm.addEventListener('submit', function (e) {
               e.preventDefault();
