@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Internal working docs (playbooks, settings) — keep out of search
+Disallow: /docs/
+
+Sitemap: https://stephenaase.com/sitemap.xml
