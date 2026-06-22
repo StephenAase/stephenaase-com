@@ -266,7 +266,7 @@
     .m2-about { position: relative; background: #312f3c; color: var(--brand-light-2); overflow: hidden; padding-bottom: var(--section-gap); }
     .m2-about__photo { position: relative; height: clamp(240px, calc(92vw - 100px), 320px);   /* wave raised 100px over the photo (Figma 368:4298 crop) */
       background-image: url("assets/about-photo.png"); background-repeat: no-repeat; background-position: center 34%; background-size: 175%; }
-    .m2-about__photo::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 72px; background: linear-gradient(to bottom, var(--brand-light-2), rgba(249,243,235,0)); }
+    .m2-about__photo::before { display: none; }   /* top-fade gradient removed per request */
     /* Photo -> body scallop: same seamless tile as the hero wave, filled brand-purple */
     .m2-about__wave { position: relative; z-index: 2; width: 100%; height: 23px; margin-top: -22px; pointer-events: none;
       background-color: transparent;
@@ -821,7 +821,7 @@
       /* ---- About (365:5094): photo band + heading + 6-principle grid ---- */
       .m2-about { display: block; max-width: none; margin: 0; padding: 0; overflow: hidden; }
       .m2-about__photo { display: block; width: 100%; height: clamp(280px, calc(40vw - 100px), 460px); aspect-ratio: auto; border-radius: 0; background-size: cover; background-position: center 32%; }   /* wave raised 100px over the photo (Figma 368:4298 crop) */
-      .m2-about__photo::before { display: block; content: ""; position: absolute; inset: 0 0 auto 0; height: 140px; background: linear-gradient(to bottom, var(--brand-light-2), rgba(249,243,235,0)); z-index: 1; }
+      .m2-about__photo::before { display: none; }   /* top-fade gradient removed per request */
       .m2-about__photo::after { display: none; }
       .m2-about__wave { display: block; height: 23px; margin-top: -22px; }
       .m2-about__body { max-width: calc(1280px + 2 * clamp(24px, 5vw, 64px)); margin-inline: auto; padding-inline: clamp(24px, 5vw, 64px); padding-block: clamp(48px, 6vw, 96px) var(--section-gap); }
@@ -856,9 +856,9 @@
     /* About at the Figma reference scale (1440 content frame, 452px cards) */
     @media (min-width: 1440px) {
       .m2-about__photo { height: 486px; }   /* wave/photo boundary raised 300px from the Figma 786 (100px higher per request) */
-      .m2-about__photo::before { height: 220px; }   /* top fade trimmed so it clears the faces on the shorter crop */
       .m2-about__body { max-width: 1440px; padding-inline: 0; padding-block: 80px 160px; }
       .m2-about__intro { max-width: none; }   /* full-width like Figma: 452px cards => uniform 280px height */
+      #m2-ai .m2-ai__head { max-width: none; }   /* full-width to match .m2-about__intro */
 
       /* Footer/contact on the same 1440 grid as About (Figma 368:9689 = 144px gutter @1728) */
       .m2-footer { padding-inline: max(clamp(24px, 5vw, 64px), calc((100% - 1440px) / 2)); }
@@ -1172,7 +1172,7 @@
         <div class="m2-about__wave" aria-hidden="true">
                   </div>
         <div class="m2-about__body">
-          <p class="m2-about__intro"><em>Hi!</em> I'm Inspired by adventure, fueled by family, and driven to make an impact.</p>
+          <p class="m2-about__intro">Inspired by adventure, fueled by family, and driven to make an impact.</p>
           <p class="m2-about__plabel">MY GUIDING PRINCIPLES</p>
           <div class="m2-principles">
             <div class="m2-principle"><img class="m2-principle__icon" src="assets/principle-curiosity.svg" alt="" aria-hidden="true" /><p class="m2-principle__text">Embrace curiosity, explore, evolve</p></div>
