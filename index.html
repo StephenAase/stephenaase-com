@@ -264,7 +264,7 @@
 
     /* ---- About / guiding principles ---- */
     .m2-about { position: relative; background: #312f3c; color: var(--brand-light-2); overflow: hidden; padding-bottom: var(--section-gap); }
-    .m2-about__photo { position: relative; height: clamp(340px, 92vw, 420px);
+    .m2-about__photo { position: relative; height: clamp(240px, calc(92vw - 100px), 320px);   /* wave raised 100px over the photo (Figma 368:4298 crop) */
       background-image: url("assets/about-photo.png"); background-repeat: no-repeat; background-position: center 34%; background-size: 175%; }
     .m2-about__photo::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 72px; background: linear-gradient(to bottom, var(--brand-light-2), rgba(249,243,235,0)); }
     /* Photo -> body scallop: same seamless tile as the hero wave, filled brand-purple */
@@ -273,7 +273,7 @@
       background-image: url("assets/wave-tile-purple.svg"); background-repeat: repeat-x; background-position: left bottom; background-size: auto 100%;
       box-shadow: 0 1px 0 0 #312f3c; }   /* close the fractional-pixel seam to the body below */
     .m2-about__body { position: relative; z-index: 1; margin-top: 0; padding: clamp(20px, 6vw, 32px) var(--gutter) 0; }
-    .m2-about__intro { font-family: var(--font-family-serif); font-weight: 400; font-size: var(--fluid-lg); line-height: 1.4; color: var(--brand-light-2); }
+    .m2-about__intro { font-family: var(--font-family-serif); font-weight: 400; font-size: clamp(20px, 5.33vw, 40px); line-height: 1.4; color: var(--brand-light-2); }   /* matches .m2-ai__head — About + AI headlines share one size */
     .m2-about__intro em { font-style: normal; color: var(--lello); }
     .m2-about__plabel { font-family: var(--font-family-serif); font-weight: 500; font-size: 14px; color: var(--brand-light-2); margin-top: 28px; margin-bottom: 12px; }
     /* Mobile (Figma): 2×2 grid of small column cards; 4 shown (--deskonly hidden) */
@@ -820,7 +820,7 @@
 
       /* ---- About (365:5094): photo band + heading + 6-principle grid ---- */
       .m2-about { display: block; max-width: none; margin: 0; padding: 0; overflow: hidden; }
-      .m2-about__photo { display: block; width: 100%; height: clamp(380px, 40vw, 560px); aspect-ratio: auto; border-radius: 0; background-size: cover; background-position: center 32%; }
+      .m2-about__photo { display: block; width: 100%; height: clamp(280px, calc(40vw - 100px), 460px); aspect-ratio: auto; border-radius: 0; background-size: cover; background-position: center 32%; }   /* wave raised 100px over the photo (Figma 368:4298 crop) */
       .m2-about__photo::before { display: block; content: ""; position: absolute; inset: 0 0 auto 0; height: 140px; background: linear-gradient(to bottom, var(--brand-light-2), rgba(249,243,235,0)); z-index: 1; }
       .m2-about__photo::after { display: none; }
       .m2-about__wave { display: block; height: 23px; margin-top: -22px; }
@@ -837,7 +837,7 @@
       /* ---- AI Leadership (368:9629): heading + sub + 4 cards 330×415, 1440 band ---- */
       #m2-ai { padding-inline: clamp(24px, 5vw, 64px); }
       #m2-ai .m2-wrap { max-width: 1440px; margin-inline: auto; padding-inline: 0; }
-      #m2-ai .m2-ai__head { font-family: var(--font-family-serif); font-weight: 400; font-size: 48px; line-height: 56px; margin-top: 0; max-width: 1100px; }
+      #m2-ai .m2-ai__head { font-family: var(--font-family-serif); font-weight: 400; font-size: 48px; line-height: 60px; margin-top: 0; max-width: 1100px; }   /* line-height 60px matches .m2-about__intro + Figma 368:9633 */
       #m2-ai .m2-ai__head em { color: var(--lello); }
       #m2-ai .m2-ai__sub { font-size: 24px; line-height: 40px; letter-spacing: 0; margin-top: 40px; }
       #m2-ai [data-carousel] { margin-top: 40px; }
@@ -855,7 +855,7 @@
 
     /* About at the Figma reference scale (1440 content frame, 452px cards) */
     @media (min-width: 1440px) {
-      .m2-about__photo { height: 586px; }   /* wave/photo boundary raised 200px from the Figma 786 */
+      .m2-about__photo { height: 486px; }   /* wave/photo boundary raised 300px from the Figma 786 (100px higher per request) */
       .m2-about__photo::before { height: 220px; }   /* top fade trimmed so it clears the faces on the shorter crop */
       .m2-about__body { max-width: 1440px; padding-inline: 0; padding-block: 80px 160px; }
       .m2-about__intro { max-width: none; }   /* full-width like Figma: 452px cards => uniform 280px height */
@@ -979,7 +979,7 @@
         </button>
         <svg class="m2-gate__lock" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2"/></svg>
         <h2 class="m2-gate__title" id="m2CsTitle">Case study access</h2>
-        <p class="m2-gate__sub">This one's password-protected — a closer look at the thinking behind a project I'm proud of. If I sent you a password, you're in the right place; drop it below.</p>
+        <p class="m2-gate__sub">This one's password-protected — If I sent you a password, you're in the right place; drop it below.</p>
         <form class="m2-cs__form" novalidate>
           <label class="m2-gate__label" for="m2CsInput">Password</label>
           <div class="m2-gate__field">
@@ -1172,7 +1172,7 @@
         <div class="m2-about__wave" aria-hidden="true">
                   </div>
         <div class="m2-about__body">
-          <p class="m2-about__intro"><em>Hi, I'm Stephen,</em> inspired by adventure, fueled by family, and driven to make an impact.</p>
+          <p class="m2-about__intro"><em>Hi!</em> I'm Inspired by adventure, fueled by family, and driven to make an impact.</p>
           <p class="m2-about__plabel">MY GUIDING PRINCIPLES</p>
           <div class="m2-principles">
             <div class="m2-principle"><img class="m2-principle__icon" src="assets/principle-curiosity.svg" alt="" aria-hidden="true" /><p class="m2-principle__text">Embrace curiosity, explore, evolve</p></div>
@@ -1190,7 +1190,7 @@
       <!-- AI leadership -->
       <section id="m2-ai" class="m2-ai" aria-label="AI leadership">
         <div class="m2-wrap">
-          <h2 class="m2-ai__head">I design the org to put AI to work, freeing teams for <em>judgment, vision, and insight.</em></h2>
+          <h2 class="m2-ai__head">I design how AI and teams work together, so people spend their time on <em>vision, judgment, and insight.</em></h2>
           <p class="m2-ai__sub">AI LEADERSHIP</p>
         </div>
         <div data-carousel>
@@ -1230,7 +1230,7 @@
         <div class="m2-footer__wave--top" aria-hidden="true"></div>
         <p class="m2-footer__label">GET IN TOUCH</p>
         <h2 class="m2-footer__head"><span>Still learning. </span><em>Always building.</em></h2>
-        <p class="m2-footer__body">I'm at my best leading orgs toward the best possible experiences for the people they serve. If that's your work too, let's talk.</p>
+        <p class="m2-footer__body">I'm at my best leading orgs toward experiences worthy of the people they serve. If that's your work too, let's talk.</p>
         <a class="m2-btn m2-footer__cta" href="https://www.linkedin.com/in/stephenaase/" target="_blank" rel="noopener noreferrer">Find me on LinkedIn
           <svg class="m2-btn__arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
