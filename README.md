@@ -1,19 +1,17 @@
-# Stephenaase.com
+# stephenaase.com
 
-Minimal, incremental website launch using GitHub-first workflow.
+Personal site for https://www.stephenaase.com
 
-## Development
+## Local preview
 
-Open `index.html` in your browser for a local preview.
+```bash
+npm run preview
+```
 
-## Release model
+Open http://localhost:4173
 
-- One issue = one small change (target <=2 hours).
-- One short-lived branch per issue.
-- One focused PR per branch.
-- Merge to `main` only after preview smoke test.
+## Deploy
 
-## Deployment
+Push to `main` on GitHub. Vercel deploys automatically.
 
-This site is configured for GitHub Pages from the `main` branch root.
-Custom domain is set via `CNAME`.
+**One-time setup:** Import this repo at [vercel.com/new](https://vercel.com/new), set framework to **Other** (no build step), and add domains `stephenaase.com` + `www.stephenaase.com`. Remove those domains from any older Vercel project first.
