@@ -51,6 +51,13 @@
   font-display: swap;
   src: url('fonts/Roboto-variable.woff2') format('woff2-variations');
 }
+@font-face {
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('fonts/Geist-Medium.woff2') format('woff2');
+}
 
 :root {
 
@@ -126,6 +133,7 @@
 
   --font-family-serif: 'Roboto Slab', 'Lora', ui-serif, Georgia, serif;
   --font-family-sans:  'Roboto', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-family-nav:   'Geist', 'Roboto', 'Inter', ui-sans-serif, system-ui, sans-serif;
   --font-family-mono:  'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
 
   /* Scale — Major Third ×1.250 */
@@ -254,7 +262,8 @@
   --darkest-purp:         #1a191f;  /* darkest ink — nav banner bg (Figma) */
   --brand-core-1:         #413d57;  /* card borders / lines on dark */
   --brand-core-2:         #6371a2;  /* blue accent */
-  --brand-accent-purple:  #a063a2;  /* primary action / magenta */
+  --brand-accent-purple:  #a063a2;  /* primary action / magenta — nav links */
+  --brand-logo-stroke:    #cb5988;  /* trefoil mark in global nav (Figma 597:138311) */
   --brand-accent-lime:    #ccf17e;  /* lime accent */
   --brand-green:          #6db961;  /* green accent */
   --brand-light:          #f9f3eb;  /* cream — primary on dark */

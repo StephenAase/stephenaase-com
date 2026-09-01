@@ -46,15 +46,19 @@
   }
   </script>
 
+  <link rel="preload" href="fonts/Geist-Medium.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="fonts/RobotoSlab-variable.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="fonts/Roboto-variable.woff2" as="font" type="font/woff2" crossorigin />
   <script defer data-domain="stephenaase.com" src="https://plausible.io/js/script.js"></script>
-  <link rel="stylesheet" href="colors_and_type.css?v=20260619b">
+  <link rel="stylesheet" href="colors_and_type.css?v=20260901b">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
       --page-max: 1440px;
-      --page-gutter: clamp(24px, 10vw, 144px);
+      --page-margin-min: 24px;
+      /* Gutter grows with viewport: 180px @ 1800, 280px @ 2000, min 24px below ~1488 */
+      --page-gutter: max(var(--page-margin-min), calc((100% - var(--page-max)) / 2));
+      --gutter: var(--page-margin-min);
     }
     html, body {
       background: #1a191f;   /* dark so iOS over-scroll / bottom chrome sits over the footer's dark, not white */
@@ -78,17 +82,15 @@
     .m2 *, .m2 *::before, .m2 *::after { box-sizing: border-box; }
     .m2 a { color: inherit; }
 
-    /* Shared content frame */
+    /* Shared content frame — max 1440px, centered, side space grows on wide screens */
     .m2-wrap {
-      width: 100%;
-      max-width: var(--m-content-max);
+      width: min(var(--page-max), calc(100% - 2 * var(--page-margin-min)));
       margin-inline: auto;
-      padding-inline: var(--gutter);
     }
     /* Jump-link landing: clear the sticky header + breathing room.
        About/top/hero keep a positive offset (About's first element is a full-bleed
        photo at its top edge, so it must not slide under the nav). */
-    #m2-top, #m2-hero, #m2-about { scroll-margin-top: clamp(76px, 15vw, 84px); }
+    #m2-top, #m2-hero, #m2-about { scroll-margin-top: 64px; }
     /* Testimonials/Work/AI/Contact open with ~158px of pure top padding, so a jump
        used to land the heading ~178px below the nav. Pull the target up so the jump
        scrolls past about half that padding (behind the opaque nav): heading now lands
@@ -118,7 +120,7 @@
     .m2-btn:active { transform: scale(0.985); background: var(--action-primary-active); }
     .m2-btn__arrow { width: 18px; height: 18px; flex: none; }
 
-    /* ---- Header (logo + hamburger) ---- */
+    /* ---- Header (Figma Portfolio26.2 nav — 597:138311 / 597:138948) ---- */
     .m2-header {
       position: sticky;
       top: 0;
@@ -126,18 +128,28 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 14px var(--gutter);
-      background: var(--darkest-purp);
-      box-shadow: 0 1px 0 rgba(239,232,229,0.10);
+      gap: 16px;
+      min-height: 64px;
+      padding-inline: var(--page-gutter);
+      background: #fff;
+      color: #000;
+      font-family: var(--font-family-nav);
+      font-weight: 500;
+      font-size: 16px;
+      line-height: normal;
     }
-    a.m2-brand { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-family-serif); font-weight: 700; font-size: 15px; color: var(--brand-light-2); }
-    .m2-brand__mark { width: 18px; height: 18px; flex: none; opacity: 0.95; }
-    .m2-burger {
-      display: inline-flex; flex-direction: column; gap: 4px;
-      width: 28px; height: 28px; align-items: center; justify-content: center;
-      color: var(--brand-light-2);
+    .m2-header a.m2-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: inherit;
+      font-weight: inherit;
+      font-size: inherit;
+      line-height: inherit;
+      color: #000 !important;
+      white-space: nowrap;
     }
-    .m2-burger span { width: 20px; height: 2px; background: currentColor; border-radius: 2px; transition: transform var(--duration-normal) var(--easing-default), opacity var(--duration-fast) var(--easing-default); }
+    .m2-header .m2-brand__mark { width: 22.51px; height: 21.84px; flex: none; display: block; }
 
     /* ---- Hero ---- */
     .m2-hero {
@@ -219,11 +231,8 @@
 
     /* ---- Mobile hero specifics (Figma 365:7290 @375) ---- */
     @media (max-width: 767.98px) {
-      /* Jump-link landings: 40px gap between the section top and the 56px sticky nav */
-      #m2-hero, #m2-testimonials, #m2-work, #m2-about, #m2-ai, #m2-contact { scroll-margin-top: 96px; }
-      /* Suppress the hamburger nav on mobile to encourage scrolling — hidden + inert but kept in
-         layout (markup intact, header height unchanged), not removed */
-      .m2-burger { visibility: hidden; }
+      /* Jump-link landings: 40px gap between the section top and the 64px sticky nav */
+      #m2-hero, #m2-testimonials, #m2-work, #m2-about, #m2-ai, #m2-contact { scroll-margin-top: 104px; }
       .m2-hero a.m2-eyebrow { display: flex; width: 100%; }
       .m2-hero .m2-eyebrow__text { flex: 0 1 auto; }
       /* Breathing room between the CTA and the hero scallop wave (mobile only) */
@@ -313,7 +322,7 @@
       background-color: transparent;
       background-image: url("assets/wave-tile-purple.svg"); background-repeat: repeat-x; background-position: left bottom; background-size: auto 100%;
       box-shadow: 0 1px 0 0 #312f3c; }   /* close the fractional-pixel seam to the body below */
-    .m2-about__body { position: relative; z-index: 1; margin-top: 0; padding: clamp(20px, 6vw, 32px) var(--gutter) 0; }
+    .m2-about__body { position: relative; z-index: 1; margin-top: 0; padding: clamp(20px, 6vw, 32px) var(--page-gutter) 0; }
     .m2-about__intro { font-family: var(--font-family-serif); font-weight: 400; font-size: clamp(20px, 5.33vw, 40px); line-height: 1.4; color: var(--brand-light-2); }   /* matches .m2-ai__head — About + AI headlines share one size */
     .m2-about__intro em { font-style: normal; color: var(--lello); }
     .m2-about__intro-lg { display: none; }   /* longer bio shows on desktop only; mobile/tablet show -sm */
@@ -351,7 +360,7 @@
     .m2-ai__cta { margin-top: 28px; background: var(--action-primary); color: var(--on-action-primary); }
 
     /* ---- Footer / closing CTA ---- */
-    .m2-footer { position: relative; overflow: hidden; background: #272531; color: var(--brand-light-2); padding: clamp(120px, 48vw, 180px) var(--gutter) 0; }   /* Figma 368:5158 — GET IN TOUCH opened up: ~180px top @375 */
+    .m2-footer { position: relative; overflow: hidden; background: #272531; color: var(--brand-light-2); padding: clamp(120px, 48vw, 180px) var(--page-gutter) 0; }   /* Figma 368:5158 — GET IN TOUCH opened up: ~180px top @375 */
     .m2-footer::before { content: ""; position: absolute; inset: 0; background: url("assets/contact-bg.png") center / cover no-repeat; opacity: 1; mix-blend-mode: normal; pointer-events: none; z-index: 0; }   /* Figma 376:2981 — #272531 + topographic texture baked in */
     .m2-footer > * { position: relative; z-index: 1; }
     .m2-footer__label { font-family: var(--font-family-serif); font-weight: 500; font-size: 14px; letter-spacing: 0.04em; color: var(--brand-light-2); }
@@ -360,7 +369,7 @@
     .m2-footer__head em { display: block; font-style: normal; color: var(--lello); }
     .m2-footer__body { font-family: var(--font-family-serif); font-weight: 400; font-size: 14px; line-height: 1.57; color: var(--brand-light-2); opacity: 0.9; margin-top: clamp(28px, 7vw, 44px); max-width: 300px; }
     .m2-footer__cta { margin-top: clamp(36px, 9vw, 52px); border-radius: var(--radius-sm); }
-    .m2-footer__foot { position: relative; margin-top: clamp(120px, 48vw, 180px); margin-inline: calc(-1 * var(--gutter)); }   /* Figma 368:5158 — ~180px below the CTA @375 */
+    .m2-footer__foot { position: relative; margin-top: clamp(120px, 48vw, 180px); margin-inline: calc(-1 * var(--page-gutter)); }   /* Figma 368:5158 — ~180px below the CTA @375 */
     .m2-footer__wave { display: block; width: 100%; height: clamp(20px, 4.5vw, 26px);
       background-color: transparent;
       background-image: url("assets/wave-tile-darkest.svg"); background-repeat: repeat-x; background-position: left bottom; background-size: auto 100%;
@@ -371,7 +380,7 @@
       background-image: url("assets/wave-tile-purple.svg"); background-repeat: repeat-x; background-position: left top; background-size: auto 100%;
       transform: scaleY(-1);
       box-shadow: 0 1px 0 0 #312f3c; }   /* #312F3C tile = AI-section color; flipped so it scallops down into the panel (mirrors the bottom wave). Shadow closes the seam to the AI section above (flipped -> renders visually up). */
-    .m2-footer__bar { position: relative; overflow: hidden; background: #1a191f; display: flex; align-items: flex-start; gap: 28px; padding: 26px var(--gutter) calc(clamp(96px, 22vh, 168px) + env(safe-area-inset-bottom, 0px)); font-family: var(--font-family-serif); font-size: 14px; }
+    .m2-footer__bar { position: relative; overflow: hidden; background: #1a191f; display: flex; align-items: flex-start; gap: 28px; padding: 26px var(--page-gutter) calc(clamp(96px, 22vh, 168px) + env(safe-area-inset-bottom, 0px)); font-family: var(--font-family-serif); font-size: 14px; }
     /* Wildflower visual growing from the bottom of the darkest footer bar (Figma 380:4298) */
     .m2-footer__flowers { position: absolute; left: 0; right: 0; bottom: 0; height: 209px; z-index: 0; pointer-events: none;
       background: url("assets/footer-flowers.png") bottom center / auto 100% no-repeat; }
@@ -434,54 +443,6 @@
     a.m2-gate__reach { display: block; text-align: center; margin-top: 24px; font-family: "Roboto Slab", var(--font-family-serif); font-weight: 400; font-size: 14px; line-height: 28px; color: var(--brand-accent-purple); text-decoration: underline; text-underline-offset: 3px; }
 
     /* =============================================================
-       NAV DRAWER (hamburger menu)
-    ============================================================= */
-    .m2-nav { position: fixed; inset: 0; z-index: 95; visibility: hidden; }
-    .m2-nav.is-open { visibility: visible; }
-    .m2-nav__scrim { position: absolute; inset: 0; background: rgba(37,35,46,0.45); opacity: 0; transition: opacity var(--duration-slow) var(--easing-default); }
-    .m2-nav.is-open .m2-nav__scrim { opacity: 1; }
-    .m2-nav__panel {
-      position: absolute; inset: 0;          /* full-screen takeover */
-      height: 100dvh;
-      background: var(--brand-light);
-      padding: 16px var(--gutter) 56px;
-      display: flex; flex-direction: column;
-      transform: translateY(-101%);
-      transition: transform 540ms cubic-bezier(0.16, 1, 0.3, 1);
-      box-shadow: 0 24px 60px rgba(37,35,46,0.3);
-      overflow: hidden;
-    }
-    .m2-nav__panel::before {            /* organic cream texture */
-      content: ""; position: absolute; inset: 0;
-      background: url("assets/hero-texture.png") center / cover no-repeat;
-      opacity: 0.5; mix-blend-mode: overlay; pointer-events: none;
-    }
-    .m2-nav.is-open .m2-nav__panel { transform: none; }
-    .m2-nav__top, .m2-nav__links { position: relative; z-index: 1; }
-    .m2-nav__top { display: flex; align-items: center; justify-content: space-between; min-height: 46px; }
-    .m2-nav__brand { display: flex; align-items: center; gap: 8px; color: var(--brand-core-1); font-family: "Roboto Slab", var(--font-family-serif); font-weight: 700; font-size: 16px; letter-spacing: -0.16px; }
-    .m2-nav__brand svg { width: 22px; height: 22px; }
-    .m2-nav__close { width: 32px; height: 32px; color: var(--brand-accent-purple); }
-    .m2-nav__links { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; padding-bottom: 80px; }
-    .m2-nav .m2-nav__link {
-      font-family: "Roboto Slab", var(--font-family-serif); font-weight: 500; font-size: 24px; line-height: 56px;
-      color: #6371a2; text-align: center;
-      opacity: 0; transform: translateY(10px);
-      transition: opacity var(--duration-normal) var(--easing-out), transform var(--duration-normal) var(--easing-out), color var(--duration-fast);
-    }
-    .m2-nav.is-open .m2-nav__link { opacity: 1; transform: none; }
-    .m2-nav.is-open .m2-nav__link:nth-child(1) { transition-delay: 0.10s; }
-    .m2-nav.is-open .m2-nav__link:nth-child(2) { transition-delay: 0.15s; }
-    .m2-nav.is-open .m2-nav__link:nth-child(3) { transition-delay: 0.20s; }
-    .m2-nav.is-open .m2-nav__link:nth-child(4) { transition-delay: 0.25s; }
-    .m2-nav.is-open .m2-nav__link:nth-child(5) { transition-delay: 0.30s; }
-    .m2-nav__link:hover, .m2-nav__link:active { color: var(--brand-accent-purple); }
-    /* hamburger -> X */
-    .m2-burger[aria-expanded="true"] span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
-    .m2-burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
-    .m2-burger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
-
-    /* =============================================================
        SCROLL REVEAL (progressive enhancement; off by default)
     ============================================================= */
     .m2.reveal-on [data-reveal] { opacity: 0; transform: translateY(22px); transition: opacity var(--duration-slow) var(--easing-out), transform var(--duration-slow) var(--easing-out); }
@@ -501,16 +462,15 @@
        PORTFOLIO 26.2 — RESPONSIVE LAYERS (Phase 2)
        Mobile-first base above; min-width layers re-compose the same
        DOM for tablet + desktop. Carousels -> grids, hero -> editorial,
-       About -> 2-col, hamburger -> inline nav. Rhythm scales up.
+       About -> 2-col, inline nav at desktop. Rhythm scales up.
     ============================================================= */
     .m2-topnav { display: none; }   /* inline nav appears >= lg */
 
     /* ---------- TABLET (>= 768) ---------- */
     @media (min-width: 768px) {
       :root {
-        --gutter: clamp(40px, 6vw, 64px);
         --section-gap: clamp(88px, 11vw, 116px);
-        --m-content-max: 760px;
+        --m-content-max: var(--page-max);
       }
       /* Carousels become static grids on tablet+ */
       #m2-testimonials .m2-rail,
@@ -540,26 +500,31 @@
     /* ---------- DESKTOP (>= 1024) ---------- */
     @media (min-width: 1024px) {
       :root {
-        --gutter: clamp(64px, 5.5vw, 112px);
         --section-gap: clamp(128px, 11vw, 184px);
-        --m-content-max: 1180px;
+        --m-content-max: var(--page-max);
         --fluid-display: clamp(3.5rem, 1.5rem + 5vw, 5.5rem);   /* hero ~ up to 88px */
         --fluid-2xl:     clamp(2.25rem, 1.4rem + 2.4vw, 3.25rem);
         --fluid-lg:      clamp(1.25rem, 1rem + 0.7vw, 1.5rem);
         --fluid-stat:    clamp(3.5rem, 2rem + 3.5vw, 5rem);
       }
 
-      /* Inline header nav, no hamburger */
-      .m2-header { padding-block: 22px; }
-      .m2-burger { display: none; }
-      .m2-brand { font-size: 17px; }
-      .m2-brand__mark { width: 22px; height: 22px; }
-      .m2-topnav { display: flex; align-items: center; gap: clamp(18px, 2.2vw, 40px); font-family: var(--font-family-serif); font-weight: 500; font-size: 16px; }
-      .m2-topnav a { color: var(--brand-light-2); transition: color var(--duration-fast) var(--easing-default); }
-      .m2-topnav a:hover { color: var(--lello); }
-      .m2-topnav__cta, .m2-topnav__cta:hover { color: var(--darkest-purp) !important; }
-      .m2-topnav__cta { padding: 9px 20px; border-radius: var(--radius-full); background: var(--lello); color: var(--darkest-purp) !important; transition: background-color var(--duration-normal) var(--easing-default); }
-      .m2-topnav__cta:hover { background: var(--brand-light-2); }
+      /* Inline header nav (Figma 597:138311) */
+      .m2-topnav {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+        font-family: inherit;
+        font-weight: inherit;
+        font-size: inherit;
+        line-height: inherit;
+        white-space: nowrap;
+      }
+      .m2-header .m2-topnav a,
+      .m2-header .m2-topnav a:visited {
+        color: var(--brand-accent-purple) !important;
+        transition: color var(--duration-fast) var(--easing-default);
+      }
+      .m2-header .m2-topnav a:hover { color: var(--action-primary-hover) !important; }
 
       /* Hero -> editorial, generous */
       .m2-hero { padding-top: clamp(48px, 7vw, 104px); }
@@ -581,8 +546,10 @@
 
       /* About -> 2-column editorial (photo + content) */
       .m2-about { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: clamp(48px, 5vw, 96px);
-        align-items: center; max-width: var(--m-content-max); margin-inline: auto;
-        padding: var(--section-gap) var(--gutter); overflow: visible; }
+        align-items: center;
+        width: min(var(--page-max), calc(100% - 2 * var(--page-margin-min)));
+        margin-inline: auto;
+        padding: var(--section-gap) 0; overflow: visible; }
       .m2-about__photo { height: auto; aspect-ratio: 4 / 5; border-radius: var(--radius-2xl); overflow: hidden; background-size: cover; background-position: center 30%; }
       .m2-about__photo::before, .m2-about__photo::after { display: none; }
       .m2-about__wave { display: none; }              /* scallop is a mobile vertical-transition device */
@@ -599,7 +566,7 @@
       .m2-footer__head { font-size: clamp(3rem, 3vw + 1.5rem, 4.5rem); max-width: 16ch; }
       .m2-footer__body { font-size: 18px; max-width: 46ch; }
       .m2-footer__cta { min-width: 340px; }
-      .m2-footer__bar { padding-inline: var(--gutter); }
+      .m2-footer__bar { padding-inline: var(--page-gutter); }
 
       /* Richer hover affordances on pointer devices */
       .m2-btn:hover { transform: translateY(-1px); }
@@ -607,7 +574,7 @@
 
     /* ---------- WIDE (>= 1440) ---------- */
     @media (min-width: 1440px) {
-      :root { --m-content-max: 1280px; }
+      :root { --m-content-max: var(--page-max); }
       .m2-hero__title { font-size: clamp(5rem, 4vw + 2rem, 6rem); }
     }
 
@@ -706,25 +673,16 @@
       .m2-wcard__cta svg { width: 24px; height: 24px; }   /* Figma arrow ~23x24 */
     }
 
-    /* ---------- DESKTOP (>= 1024): 2-col hero, stacked stats, inline-nav polish ---------- */
+    /* ---------- DESKTOP (>= 1024): 2-col hero, stacked stats ---------- */
     @media (min-width: 1024px) {
-      /* ---- Nav: center a 1440 frame; brand 16 + plain purple links 14 (Figma) ---- */
-      .m2-header { padding-inline: max(24px, calc((100% - 1440px) / 2)); padding-block: 18px; min-height: 64px; }   /* Figma 376:2942: 64px bar = 28px row + 18px block padding */
-      a.m2-brand { font-size: 16px; color: var(--brand-light-2); letter-spacing: -0.16px; }
-      .m2-brand__mark { width: 22px; height: 22px; }
-      .m2-topnav { display: flex; align-items: center; gap: 23px; font-family: "Roboto Slab", var(--font-family-serif); font-weight: 500; font-size: 14px; letter-spacing: -0.16px; }
-      .m2-topnav a { color: var(--brand-light-2); transition: color var(--duration-fast) var(--easing-default); }
-      .m2-topnav a:hover { color: var(--lello); }
-      .m2-topnav__cta, .m2-topnav__cta:hover { padding: 0; background: transparent; border-radius: 0; }
-      .m2-topnav__cta { color: var(--brand-light-2) !important; }
-      .m2-topnav__cta:hover { color: var(--lello) !important; }
+      /* Nav styles: see first @media (min-width: 1024px) block above — do not override here. */
 
-      /* ---- Hero (rebuilt Figma 368:9223): 1440 frame @144 gutter; title at gutter, ~200 gap to stats ---- */
-      .m2-hero { padding-top: 32px; padding-bottom: 0; padding-inline: clamp(24px, 5vw, 64px); }  /* nav -> eyebrow = 32 */
+      /* ---- Hero: content in the shared 1440 page frame ---- */
+      .m2-hero { padding-top: 32px; padding-bottom: 0; padding-inline: 0; }
       .m2-hero > .m2-wrap {
-        max-width: 1440px;
+        width: min(var(--page-max), calc(100% - 2 * var(--page-margin-min)));
         margin-inline: auto;
-        padding-inline: 0;                        /* content = 1440; title aligns with eyebrow/gutter */
+        padding-inline: 0;
         display: grid;
         grid-template-columns: minmax(0, 1fr) clamp(380px, 33.5%, 440px);  /* stats col wide enough to keep every label to 2 lines (Figma card 425) */
         column-gap: clamp(48px, 6vw, 96px);       /* title left, stats right → ~200 visual gap */
@@ -790,7 +748,7 @@
       .m2-wcard__results-item::before { left: 8px; }
 
       /* Case studies: match Figma 368:9326 — 1432 card, 737 content, top-aligned content */
-      #m2-work .m2-wrap { max-width: none; width: min(1432px, calc(100% - 2 * clamp(16px, 1.8vw, 40px))); margin-inline: auto; padding-inline: 0; }
+      #m2-work .m2-wrap { width: min(var(--page-max), calc(100% - 2 * var(--page-margin-min))); margin-inline: auto; padding-inline: 0; }
       #m2-work .m2-section__label { max-width: none; margin-inline: 0; padding-inline: 0; font-family: "Roboto Slab", var(--font-family-serif); font-weight: 500; }
       .m2-wcard { grid-template-rows: auto auto 1fr; min-height: 675px; }
       .m2-wcard__cover { grid-column: 2; grid-row: 1 / 4; }
@@ -801,13 +759,13 @@
     /* =============================================================
        DESKTOP SECTIONS — Figma Portfolio26.2 exact specs
        Testimonials 354:4896 · Closing CTA 365:5344 · Footer 365:5366
-       Content band = 1280 centered (=224 gutter @1728).
+       Content band = 1440 centered; side space grows with viewport.
     ============================================================= */
     @media (min-width: 1024px) {
       /* ---- Testimonials: 1432 band, 3 cards 460px, gap 26, white, radius 8, pad 40 ---- */
-      #m2-testimonials { padding-inline: clamp(24px, 5vw, 64px); }
-      #m2-testimonials .m2-wrap { max-width: 1432px; margin-inline: auto; padding-inline: 0; }
-      #m2-testimonials .m2-rail { max-width: 1432px; margin-inline: auto; padding-inline: 0 !important;
+      #m2-testimonials { padding-inline: 0; }
+      #m2-testimonials .m2-wrap { width: min(var(--page-max), calc(100% - 2 * var(--page-margin-min))); margin-inline: auto; padding-inline: 0; }
+      #m2-testimonials .m2-rail { width: min(var(--page-max), calc(100% - 2 * var(--page-margin-min))); margin-inline: auto; padding-inline: 0 !important;
         grid-template-columns: repeat(3, 1fr); gap: 26px; }
       #m2-testimonials .m2-section__label { font-size: 24px; line-height: 40px; letter-spacing: 0; color: #524e47; margin-bottom: 24px;
         max-width: none; padding-inline: 0; margin-inline: 0; }   /* flush-left with the cards (VQA) */
@@ -835,7 +793,7 @@
       /* ---- Closing CTA (365:5344): two-tone 80px statement ---- */
       /* Center a 1280 content band via the footer padding, then left-align every child within it
          so label/head/body/cta share ONE left edge (matches the About grid). Figma 368:9689. */
-      .m2-footer { padding-top: clamp(104px, 12.5vw, 180px); padding-inline: max(clamp(24px, 5vw, 64px), calc((100% - 1280px) / 2)); }
+      .m2-footer { padding-top: clamp(104px, 12.5vw, 180px); padding-inline: var(--page-gutter); }
       .m2-footer__label,
       .m2-footer__head,
       .m2-footer__body,
@@ -853,7 +811,7 @@
       /* ---- Footer bar (365:5366): full-bleed #1a191f, links left, © right @30% ---- */
       .m2-footer__foot { width: 100vw; margin-inline: calc(50% - 50vw); margin-top: 0; }   /* full-bleed; CTA owns the gap below it (200px) */
       .m2-footer__bar {
-        padding: 36px max(clamp(24px, 5vw, 64px), calc((100% - 1280px) / 2));
+        padding: 36px var(--page-gutter);
         gap: 32px; font-size: 14px; min-height: 100px; align-items: center;
       }
       .m2-footer__bar a { color: var(--brand-light-2); }
@@ -866,7 +824,12 @@
       .m2-about__photo::before { display: none; }   /* top-fade gradient removed per request */
       .m2-about__photo::after { display: none; }
       .m2-about__wave { display: block; height: 23px; margin-top: -22px; }
-      .m2-about__body { max-width: calc(1280px + 2 * clamp(24px, 5vw, 64px)); margin-inline: auto; padding-inline: clamp(24px, 5vw, 64px); padding-block: clamp(48px, 6vw, 96px) var(--section-gap); }
+      .m2-about__body {
+        width: min(var(--page-max), calc(100% - 2 * var(--page-margin-min)));
+        margin-inline: auto;
+        padding-inline: 0;
+        padding-block: clamp(48px, 6vw, 96px) var(--section-gap);
+      }
       .m2-about__intro { font-family: var(--font-family-serif); font-weight: 400; font-size: 48px; line-height: 60px; max-width: 1100px; }
       .m2-about__intro em { color: var(--lello); }
       .m2-about__intro-sm { display: none; }   /* desktop swaps to the longer bio */
@@ -879,13 +842,13 @@
       .m2-about .m2-principle__text { font-family: var(--font-family-sans); font-weight: 300; font-size: 36px; line-height: 40px; color: var(--brand-light-2); }
 
       /* ---- AI Leadership (368:9629): heading + sub + 4 cards 330×415, 1440 band ---- */
-      #m2-ai { padding-inline: clamp(24px, 5vw, 64px); }
-      #m2-ai .m2-wrap { max-width: 1440px; margin-inline: auto; padding-inline: 0; }
+      #m2-ai { padding-inline: 0; }
+      #m2-ai .m2-wrap { width: min(var(--page-max), calc(100% - 2 * var(--page-margin-min))); margin-inline: auto; padding-inline: 0; }
       #m2-ai .m2-ai__head { font-family: var(--font-family-serif); font-weight: 400; font-size: 48px; line-height: 60px; margin-top: 0; max-width: 1100px; }   /* line-height 60px matches .m2-about__intro + Figma 368:9633 */
       #m2-ai .m2-ai__head em { color: var(--lello); }
       #m2-ai .m2-ai__sub { font-size: 24px; line-height: 40px; letter-spacing: 0; margin-top: 40px; }
       #m2-ai [data-carousel] { margin-top: 40px; }
-      #m2-ai .m2-rail { max-width: 1440px; margin-inline: auto; padding-inline: 0 !important; grid-template-columns: repeat(4, 1fr); gap: 40px; }
+      #m2-ai .m2-rail { width: min(var(--page-max), calc(100% - 2 * var(--page-margin-min))); margin-inline: auto; padding-inline: 0 !important; grid-template-columns: repeat(4, 1fr); gap: 40px; }
       #m2-ai .m2-aicard {
         height: 415px; border-radius: 8px; background: var(--brand-core-1); overflow: hidden;
         padding: 24px 25px 36px 24px;
@@ -899,14 +862,9 @@
 
     /* About at the Figma reference scale (1440 content frame, 452px cards) */
     @media (min-width: 1440px) {
-      .m2-about__photo { height: 486px; }   /* wave/photo boundary raised 300px from the Figma 786 (100px higher per request) */
-      .m2-about__body { max-width: 1440px; padding-inline: 0; padding-block: 80px 160px; }
-      .m2-about__intro { max-width: none; }   /* full-width like Figma: 452px cards => uniform 280px height */
-      #m2-ai .m2-ai__head { max-width: none; }   /* full-width to match .m2-about__intro */
-
-      /* Footer/contact on the same 1440 grid as About (Figma 368:9689 = 144px gutter @1728) */
-      .m2-footer { padding-inline: max(clamp(24px, 5vw, 64px), calc((100% - 1440px) / 2)); }
-      .m2-footer__bar { padding-inline: max(clamp(24px, 5vw, 64px), calc((100% - 1440px) / 2)); }
+      .m2-about__photo { height: 486px; }
+      .m2-about__intro { max-width: none; }
+      #m2-ai .m2-ai__head { max-width: none; }
     }
 
     /* =============================================================
@@ -1042,30 +1000,10 @@
       </div>
     </div>
 
-    <!-- Nav drawer -->
-    <nav class="m2-nav" id="m2Nav" aria-label="Site menu">
-      <div class="m2-nav__scrim" data-nav-close></div>
-      <div class="m2-nav__panel" role="dialog" aria-modal="true" aria-label="Menu">
-        <div class="m2-nav__top">
-          <span class="m2-nav__brand"><svg viewBox="0 0 22.5103 21.8416" fill="none" aria-hidden="true"><circle cx="7.80062" cy="14.041" r="7.05057" stroke="#a063a2" stroke-width="1.5"/><circle cx="14.7098" cy="14.041" r="7.05057" stroke="#a063a2" stroke-width="1.5"/><circle cx="11.3667" cy="7.80057" r="7.05057" stroke="#a063a2" stroke-width="1.5"/></svg>Stephen Aase</span>
-          <button class="m2-nav__close" type="button" aria-label="Close menu" data-nav-close>
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-          </button>
-        </div>
-        <div class="m2-nav__links">
-          <a class="m2-nav__link" href="#m2-testimonials">Testimonials</a>
-          <a class="m2-nav__link" href="#m2-work">Case studies</a>
-          <a class="m2-nav__link" href="#m2-about">About me</a>
-          <a class="m2-nav__link" href="#m2-ai">AI leadership</a>
-          <a class="m2-nav__link" href="#m2-contact">Get in touch</a>
-        </div>
-      </div>
-    </nav>
-
     <!-- Header -->
     <header class="m2-header">
       <a class="m2-brand" href="#m2-top" aria-label="Stephen Aase home">
-        <svg class="m2-brand__mark" viewBox="0 0 22.5103 21.8416" fill="none" aria-hidden="true"><circle cx="7.80062" cy="14.041" r="7.05057" stroke="#fed59d" stroke-width="1.5"/><circle cx="14.7098" cy="14.041" r="7.05057" stroke="#fed59d" stroke-width="1.5"/><circle cx="11.3667" cy="7.80057" r="7.05057" stroke="#fed59d" stroke-width="1.5"/></svg>
+        <img class="m2-brand__mark" src="assets/logo.svg" alt="" aria-hidden="true" width="23" height="22" />
         <span>Stephen Aase</span>
       </a>
       <nav class="m2-topnav" aria-label="Primary">
@@ -1073,11 +1011,8 @@
         <a href="#m2-work">Case Studies</a>
         <a href="#m2-about">About Me</a>
         <a href="#m2-ai">AI Leadership</a>
-        <a href="#m2-contact" class="m2-topnav__cta">Get in Touch</a>
+        <a href="#m2-contact">Get in Touch</a>
       </nav>
-      <button class="m2-burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="m2Nav">
-        <span></span><span></span><span></span>
-      </button>
     </header>
 
     <main id="m2-top">
@@ -1458,39 +1393,6 @@
           slides.forEach(function (s) { io.observe(s); });
         });
 
-        // --- Nav drawer (focus-trapped) ---
-        var nav = document.getElementById('m2Nav');
-        var burger = root.querySelector('.m2-burger');
-        var navPanel = nav ? nav.querySelector('.m2-nav__panel') : null;
-        var lastFocus = null;
-        function openNav() {
-          nav.classList.add('is-open');
-          burger.setAttribute('aria-expanded', 'true');
-          lockScroll();
-          lastFocus = document.activeElement;
-          setTimeout(function () { var c = nav.querySelector('.m2-nav__close'); c && c.focus({ preventScroll: true }); }, 80);
-          track('nav_toggle', { open: true });
-        }
-        function closeNav() {
-          nav.classList.remove('is-open');
-          burger.setAttribute('aria-expanded', 'false');
-          unlockScroll();
-          if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
-        }
-        if (nav && burger) {
-          burger.addEventListener('click', openNav);
-          nav.querySelectorAll('[data-nav-close]').forEach(function (el) { el.addEventListener('click', closeNav); });
-          nav.addEventListener('keydown', function (e) {
-            if (e.key === 'Escape') { closeNav(); return; }
-            if (e.key !== 'Tab') return;
-            var f = navPanel.querySelectorAll('a[href], button:not([disabled])');
-            if (!f.length) return;
-            var first = f[0], last = f[f.length - 1];
-            if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-            else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
-          });
-        }
-
         // --- Case-study modal (closeable; "coming soon" on submit) ---
         var cs = document.getElementById('m2CsModal');
         function openCs() {
@@ -1557,13 +1459,8 @@
             var target = document.querySelector(id);
             if (!target) return;
             e.preventDefault();
-            var isNavLink = link.classList.contains('m2-nav__link');
-            if (isNavLink && nav && nav.classList.contains('is-open')) closeNav();
-            var delay = (isNavLink && !prefersReducedMotion) ? 320 : 0;
-            setTimeout(function () {
-              if (prefersReducedMotion) { target.scrollIntoView({ behavior: 'auto', block: 'start' }); }
-              else { smoothScrollToTarget(target); }
-            }, delay);
+            if (prefersReducedMotion) { target.scrollIntoView({ behavior: 'auto', block: 'start' }); }
+            else { smoothScrollToTarget(target); }
           });
         });
 
