@@ -58,6 +58,13 @@
   font-display: swap;
   src: url('fonts/Geist-Medium.woff2') format('woff2');
 }
+@font-face {
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('fonts/Geist-variable.woff2') format('woff2-variations');
+}
 
 :root {
 
@@ -134,6 +141,7 @@
   --font-family-serif: 'Roboto Slab', 'Lora', ui-serif, Georgia, serif;
   --font-family-sans:  'Roboto', 'Inter', ui-sans-serif, system-ui, sans-serif;
   --font-family-nav:   'Geist', 'Roboto', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-family-geist: 'Geist', 'Roboto', 'Inter', ui-sans-serif, system-ui, sans-serif;
   --font-family-mono:  'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
 
   /* Scale — Major Third ×1.250 */
@@ -272,6 +280,12 @@
   --lello:                #fed59d;  /* peach/gold — two-tone heading accent + stat numbers */
   --brand-ink:            #2e2f32;  /* default text on light */
   --hero-bg:              #282632;  /* hero (rebuilt Figma) */
+
+  /* Frosted glass — Figma bg rgba(217,217,217,0.2) + background blur (614:147292) */
+  --glass-fill:           rgba(217, 217, 217, 0.2);
+  --glass-blur:           40px;
+  --glass-border:         rgba(255, 255, 255, 0.32);
+  --glass-highlight:      inset 0 1px 0 rgba(255, 255, 255, 0.18);
 
   /* Action semantics */
   --action-primary:        var(--brand-accent-purple);

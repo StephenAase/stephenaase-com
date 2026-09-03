@@ -47,10 +47,11 @@
   </script>
 
   <link rel="preload" href="fonts/Geist-Medium.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="fonts/Geist-variable.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="fonts/RobotoSlab-variable.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="fonts/Roboto-variable.woff2" as="font" type="font/woff2" crossorigin />
   <script defer data-domain="stephenaase.com" src="https://plausible.io/js/script.js"></script>
-  <link rel="stylesheet" href="colors_and_type.css?v=20260901b">
+  <link rel="stylesheet" href="colors_and_type.css?v=20260901d">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -151,27 +152,57 @@
     }
     .m2-header .m2-brand__mark { width: 22.51px; height: 21.84px; flex: none; display: block; }
 
-    /* ---- Hero ---- */
+    /* ---- Hero (Figma 614:147292 desktop) ---- */
     .m2-hero {
       position: relative;
       isolation: isolate;
       overflow: hidden;
-      /* Pre-composited textured background (Figma 371:1790): texture baked onto the dark
-         bg so it renders reliably, no CSS blend mode needed. */
-      background: var(--hero-bg) url("assets/hero-bg-texture.png") center top / cover no-repeat;
       padding-top: clamp(28px, 8vw, 40px);
       padding-bottom: 0;
     }
-    .m2-hero > .m2-wrap, .m2-hero__wave { position: relative; z-index: 1; }
+    /* Background behind content (z-index -1) so glass children can backdrop-blur it.
+       Two breakpoints only: mobile art here (0–1023px), desktop art at >=1024px. */
+    .m2-hero__bg {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background-color: var(--hero-bg);
+      background-image: url("assets/hero-atmospheric-mobile.png");
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: 42% 18%;
+    }
+    .m2-hero > .m2-wrap, .m2-hero__wave { position: relative; }
+
+    /* Figma glass: fill + background blur + hairline border */
+    .m2-glass {
+      background: var(--glass-fill);
+      backdrop-filter: blur(var(--glass-blur));
+      -webkit-backdrop-filter: blur(var(--glass-blur));
+      border: none;
+      box-shadow: none;
+    }
+    @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+      .m2-glass { background: rgba(217, 217, 217, 0.35); }
+    }
     a.m2-eyebrow {
       display: inline-flex; align-items: center; gap: 8px;
-      color: var(--brand-light-2);
-      font-size: 12px; line-height: 1.4;
-      transition: color var(--duration-fast) var(--easing-default);
+      color: #fff;
+      font-family: var(--font-family-geist);
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 1.4;
+      text-decoration: none;
+      transition: opacity var(--duration-fast) var(--easing-default);
     }
-    a.m2-eyebrow:hover { color: var(--brand-accent-purple); }
-    .m2-eyebrow__cta { display: none; }   /* desktop-only "See the Case Study" link */
-    .m2-eyebrow__dot { width: 8px; height: 8px; border-radius: 50%; background: var(--brand-accent-purple); flex: none; animation: m2-pulse 2s var(--easing-out) infinite; }
+    a.m2-eyebrow:hover { opacity: 0.88; }
+    .m2-eyebrow__cta { display: none; }
+    .m2-eyebrow__dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: #fff; flex: none;
+      animation: m2-pulse 2s var(--easing-out) infinite;
+    }
     @keyframes m2-pulse {
       0%   { box-shadow: 0 0 0 0 rgba(160,99,162,0.55); }
       70%  { box-shadow: 0 0 0 8px rgba(160,99,162,0); }
@@ -179,21 +210,49 @@
     }
     .m2-hero__title {
       margin-top: clamp(48px, 14vw, 88px);
-      font-family: var(--font-family-serif);
-      font-weight: 500;
-      font-size: clamp(44px, 14.93vw, 56px);   /* Figma mobile 56px @375 */
-      line-height: 1.0;
+      font-family: var(--font-family-geist);
+      font-weight: 200;
+      font-size: 48px;
+      line-height: 56px;
       letter-spacing: -0.01em;
-      color: var(--brand-light-2);
+      color: #fff;
     }
-    .m2-hero__title em { font-style: normal; color: var(--lello); }
+    .m2-hero__title-line { display: block; }
     .m2-hero__subtitle {
-      margin-top: 12px;
-      font-size: clamp(18px, 5.33vw, 20px);     /* Figma mobile 20px @375 */
-      line-height: 1.4;
-      color: var(--brand-light-2);
+      margin-top: 16px;
+      font-family: var(--font-family-geist);
+      font-weight: 300;
+      font-size: 18px;
+      line-height: 28px;
+      color: #fff;
     }
-    .m2-hero__cta { margin-top: clamp(18px, 4.5vw, 26px); }
+    .m2 a.m2-hero__cta,
+    .m2-hero__cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: auto;
+      min-height: 44px;
+      padding: 8px 24px;
+      margin-top: 24px;
+      border-radius: var(--radius-md);
+      background: #fff;
+      color: #b34771;
+      font-family: var(--font-family-geist);
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 28px;
+      letter-spacing: 0;
+      text-decoration: none;
+      transition: background-color 400ms ease-in-out,
+                  transform var(--duration-fast) var(--easing-default);
+    }
+    .m2-hero__cta:visited { color: #b34771; }
+    .m2 a.m2-hero__cta:hover,
+    .m2-hero__cta:hover { background: rgba(255, 255, 255, 0.9); }
+    .m2-hero__cta:active { transform: scale(0.985); }
+    .m2-hero__cta .m2-btn__arrow { width: 19px; height: 19px; flex: none; color: currentColor; }
     /* Hero wave: seamless scallop tile, full-bleed, repeated across the full viewport width */
     .m2-hero__wave { display: block; width: 100vw; margin-inline: calc(50% - 50vw); height: 23px; margin-top: 0;
       background-color: transparent;
@@ -201,7 +260,7 @@
       box-shadow: 0 1px 0 0 #efe8e5; }   /* close the fractional-pixel seam to the cream (.m2-light) section below */
 
     /* ---- Stats carousel ---- */
-    .m2-stats { margin-top: clamp(56px, 16vw, 96px); }
+    .m2-hero .m2-stats { margin-top: clamp(40px, 8vw, 56px); }
     .m2-stats [data-dots] { display: none; }   /* hero stats: no pagination dots */
     .m2-rail {
       display: flex;
@@ -217,30 +276,167 @@
       scroll-snap-align: center;
       flex: 0 0 100%;
       display: flex; align-items: center; gap: 24px;
-      min-height: 103px;
-      padding: 30px 21px 29px 26px;
-      border: 1px solid var(--brand-core-1);
-      border-radius: var(--radius-md);
-      color: var(--brand-tan);
+      min-height: 100px;
+      padding: 24px;
+      border-radius: 16px;
+      color: var(--brand-light-2);
     }
-    .m2-stat__value { font-family: var(--font-family-sans); font-weight: 200; font-size: clamp(48px, 17.07vw, 64px); line-height: 1; white-space: nowrap; color: var(--lello); }   /* Figma mobile 64px @375, peach */
-    .m2-stat__label { font-weight: 300; font-size: 16px; line-height: 1.375; }
+    .m2-stat__value {
+      font-family: var(--font-family-geist);
+      font-weight: 100;
+      font-size: clamp(48px, 17.07vw, 64px);
+      line-height: 1;
+      white-space: nowrap;
+      color: #efe8e5;
+      flex: none;
+    }
+    .m2-stat__label {
+      font-family: var(--font-family-geist);
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 1.375;
+      color: var(--brand-light-2);
+    }
+    .m2-stat__label-br { display: none; }   /* desktop stat-3 line breaks */
 
     /* Eyebrow ↓ arrow (mobile): full-width row, dot+text left, arrow right */
     .m2-eyebrow__down { width: 19px; height: 19px; flex: none; margin-left: auto; color: var(--brand-accent-purple); }
 
-    /* ---- Mobile hero specifics (Figma 365:7290 @375) ---- */
+    /* Responsive copy toggles — defaults for tablet/desktop; swapped in mobile block below */
+    .m2-only-mobile { display: none; }
+    .m2-only-desktop { display: inline; }
+
+    /* ---- Mobile hero specifics (Figma 615:147296 @375) ---- */
     @media (max-width: 767.98px) {
+      .m2-only-mobile { display: inline; }
+      .m2-only-desktop { display: none; }
+
       /* Jump-link landings: 40px gap between the section top and the 64px sticky nav */
       #m2-hero, #m2-testimonials, #m2-work, #m2-about, #m2-ai, #m2-contact { scroll-margin-top: 104px; }
-      .m2-hero a.m2-eyebrow { display: flex; width: 100%; }
-      .m2-hero .m2-eyebrow__text { flex: 0 1 auto; }
-      /* Breathing room between the CTA and the hero scallop wave (mobile only) */
-      .m2-hero__wave { margin-top: 80px; }
-      /* Stats peek carousel: full-bleed rail, card = viewport − 2 gutters, neighbours peek */
-      .m2-hero .m2-stats { margin-inline: calc(-1 * var(--gutter)); }
-      .m2-hero .m2-stats .m2-rail { padding-inline: var(--gutter); scroll-padding-inline: var(--gutter); gap: 12px; }
-      .m2-hero .m2-stat { flex: 0 0 calc(100vw - 2 * var(--gutter)); }
+
+      .m2-hero {
+        padding-top: 16px;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+      }
+      /* Hero background art is defined once in base (mobile) + desktop @1024 — see .m2-hero__bg */
+      .m2-hero > .m2-wrap {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+        padding-inline: 24px;
+        flex: 1;
+        min-height: 0;
+      }
+
+      /* Status pill — compact glass capsule (612:145531) */
+      .m2-hero a.m2-eyebrow {
+        display: inline-flex;
+        align-self: flex-start;
+        width: auto;
+        max-width: 100%;
+        margin-left: -8px;   /* Figma inset 16px vs content 24px */
+        padding: 8px 16px;
+        font-size: 12px;
+        line-height: 1.4;
+        white-space: nowrap;
+      }
+      .m2-hero .m2-eyebrow__text { flex: 0 1 auto; white-space: nowrap; }
+      .m2-eyebrow__down, .m2-eyebrow__cta { display: none !important; }
+
+      .m2-hero__title {
+        margin-top: 76px;
+        font-size: 48px;
+        line-height: 56px;
+        font-weight: 200;
+        letter-spacing: -0.01em;
+      }
+      .m2-hero__title-br { display: none; }
+      .m2-hero__title-line { display: inline; }
+      .m2-hero__title-line + .m2-hero__title-line::before { content: " "; }
+
+      .m2-hero__subtitle {
+        margin-top: 16px;
+        font-size: 18px;
+        line-height: 28px;
+        font-weight: 300;
+      }
+
+      .m2 a.m2-hero__cta,
+      .m2-hero__cta {
+        align-self: flex-start;
+        margin-top: 24px;
+        min-height: 48px;
+        height: 48px;
+        padding: 0 24px;
+        font-size: 16px;
+        line-height: 28px;
+        color: var(--brand-accent-purple);
+        background: #fff;
+      }
+      .m2-hero__cta:visited { color: var(--brand-accent-purple); }
+
+      /* Stats peek carousel (601:145368) */
+      .m2-hero .m2-stats {
+        margin-top: 48px;
+        margin-inline: calc(-1 * 24px);
+        width: calc(100% + 48px);
+      }
+      .m2-hero .m2-stats .m2-rail {
+        padding-inline: 24px 16px;
+        scroll-padding-inline: 24px;
+        gap: 8px;
+      }
+      .m2-hero .m2-stat {
+        flex: 0 0 343px;
+        min-height: 100px;
+        height: 100px;
+        padding: 24px;
+        gap: 16px;
+        border-radius: 8px;
+        align-items: center;
+      }
+      .m2-hero .m2-stat__value {
+        font-size: 56px;
+        line-height: 22px;
+      }
+      .m2-hero .m2-stat:not(:first-child) .m2-stat__value {
+        font-size: 64px;
+      }
+      .m2-hero .m2-stat__label {
+        font-size: 16px;
+        line-height: 22px;
+      }
+      .m2-stat__label-br { display: none !important; }
+
+      /* Stats pagination dots — one per card, active dot is a wider pill (615:147296) */
+      .m2-hero .m2-stats [data-dots] {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 6px;
+        margin-top: 8px;
+        padding-left: 24px;
+      }
+      .m2-hero .m2-stats .m2-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 999px;
+        background: #d6b2d7;
+        transform: none;
+        transition: width var(--duration-normal) var(--easing-default),
+                    background-color var(--duration-normal) var(--easing-default);
+      }
+      .m2-hero .m2-stats .m2-dot[aria-current="true"] {
+        width: 18px;
+        background: #a063a2;
+        transform: none;
+      }
+
+      .m2-hero__wave { margin-top: 54px; flex-shrink: 0; }
+
       /* AI: eyebrow "AI LEADERSHIP" sits ABOVE the heading on mobile (Figma) */
       #m2-ai .m2-wrap { display: flex; flex-direction: column; align-items: flex-start; }
       #m2-ai .m2-ai__sub { order: -1; font-size: 16px; line-height: 20px; margin: 0 0 24px; }
@@ -486,15 +682,15 @@
       .m2-aicard { height: clamp(380px, 46vw, 440px); }
       .m2-section__label { max-width: var(--m-content-max); margin-inline: auto; padding-inline: var(--gutter); }
 
-      /* Hero stats -> 3-up row */
-      .m2-hero .m2-stats .m2-rail { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; overflow: visible; scroll-snap-type: none; }
-      .m2-stat { flex: none; }
+      /* Hero stats -> 3-up row (overridden at 1024) */
+      .m2-hero .m2-stats .m2-rail { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; overflow: visible; scroll-snap-type: none; }
 
       /* Selected work -> 2-up grid */
       .m2-work-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; align-items: start; }
 
       /* Buttons that were full-width become content-width where it reads better */
       .m2-hero__cta, .m2-ai__cta, .m2-footer__cta { width: 100%; max-width: 360px; min-width: 0; }
+      .m2-hero__cta { width: auto; max-width: none; }
     }
 
     /* ---------- DESKTOP (>= 1024) ---------- */
@@ -526,14 +722,8 @@
       }
       .m2-header .m2-topnav a:hover { color: var(--action-primary-hover) !important; }
 
-      /* Hero -> editorial, generous */
+      /* Hero -> editorial, generous — detailed specs in Figma desktop block below */
       .m2-hero { padding-top: clamp(48px, 7vw, 104px); }
-      .m2-hero__title { letter-spacing: -0.02em; }
-      .m2-hero__subtitle { max-width: 640px; }
-      .m2-hero__cta { min-width: 300px; }
-      .m2-hero .m2-stats { margin-top: clamp(48px, 5vw, 72px); }
-      .m2-hero .m2-stats .m2-rail { gap: 24px; }
-      .m2-stat { min-height: 132px; padding: 32px; }
 
       /* Testimonials + AI -> 3-up / 4-up */
       #m2-testimonials .m2-rail { grid-template-columns: repeat(3, 1fr); gap: 28px; }
@@ -575,7 +765,6 @@
     /* ---------- WIDE (>= 1440) ---------- */
     @media (min-width: 1440px) {
       :root { --m-content-max: var(--page-max); }
-      .m2-hero__title { font-size: clamp(5rem, 4vw + 2rem, 6rem); }
     }
 
     /* Pointer-only hover polish (avoid sticky hover on touch) */
@@ -600,6 +789,9 @@
       /* Buttons: lift + shadow */
       .m2-btn { transition: background-color var(--duration-normal) var(--easing-default), transform 240ms var(--easing-out), box-shadow 240ms var(--easing-out); }
       .m2-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(160,99,162,0.32); }
+      .m2-hero__cta { transition: background-color 400ms ease-in-out, transform 240ms var(--easing-out); }
+      .m2 a.m2-hero__cta:hover,
+      .m2-hero__cta:hover { background: rgba(255, 255, 255, 0.9); }
 
       /* Eyebrow status bar + nav arrow nudge */
       .m2-hero a.m2-eyebrow .m2-eyebrow__arrow { transition: transform 260ms var(--easing-out); }
@@ -612,31 +804,9 @@
        Appended last so it overrides the Phase-2 responsive layers.
     ============================================================= */
 
-    /* ---------- TABLET+ (>= 768): eyebrow status bar, horizontal case cards ---------- */
+    /* ---------- TABLET+ (>= 768): case cards ---------- */
     @media (min-width: 768px) {
-      /* Eyebrow becomes a full-width bordered status bar: text left, link right */
-      .m2-hero a.m2-eyebrow {
-        width: 100%;
-        justify-content: flex-start;
-        gap: 12px;
-        padding: 10px 16px;
-        background: rgba(26, 25, 31, 0.5);
-        border: none;
-        border-radius: 8px;
-        font-size: 14px;
-        color: var(--brand-light-2);
-      }
-      .m2-hero .m2-eyebrow__cta {
-        display: inline-flex; align-items: center; gap: 8px;
-        margin-left: auto;
-        color: var(--brand-light-2);
-        white-space: nowrap;
-      }
-      .m2-hero .m2-eyebrow__arrow { width: 16px; height: 16px; flex: none; color: var(--brand-accent-purple); }
-      .m2-hero .m2-eyebrow__down { display: none; }   /* mobile-only; desktop shows the CTA link */
-      .m2-hero a.m2-eyebrow:hover { color: var(--brand-light-2); }
-      .m2-hero a.m2-eyebrow:hover .m2-eyebrow__cta { color: var(--brand-accent-purple); }
-
+      /* Eyebrow desktop overrides live in the 1024 Figma hero block below */
       /* Case studies -> stacked horizontal cards: content LEFT, colored band RIGHT (Figma) */
       .m2-work-list { display: grid; grid-template-columns: 1fr; gap: 32px; }
       .m2-wcard {
@@ -677,66 +847,109 @@
     @media (min-width: 1024px) {
       /* Nav styles: see first @media (min-width: 1024px) block above — do not override here. */
 
-      /* ---- Hero: content in the shared 1440 page frame ---- */
-      .m2-hero { padding-top: 32px; padding-bottom: 0; padding-inline: 0; }
+      /* ---- Hero: Figma 614:147292 — content-driven band, wave flush ---- */
+      .m2-hero {
+        height: auto;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        padding-top: 24px;
+        padding-bottom: 0;
+      }
+      .m2-hero__bg {
+        background: url("assets/hero-atmospheric.png") center top / cover no-repeat;
+      }
       .m2-hero > .m2-wrap {
         width: min(var(--page-max), calc(100% - 2 * var(--page-margin-min)));
         margin-inline: auto;
         padding-inline: 0;
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) clamp(380px, 33.5%, 440px);  /* stats col wide enough to keep every label to 2 lines (Figma card 425) */
-        column-gap: clamp(48px, 6vw, 96px);       /* title left, stats right → ~200 visual gap */
-        align-content: start;
-        grid-template-areas:
-          "eyebrow eyebrow"
-          "title   stats"
-          "sub     stats"
-          "cta     stats";
-        padding-bottom: 228px;                    /* last stat -> wave; +100px taller hero (was 128) */
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        flex: 1;
+        min-height: 0;
+        padding-bottom: 0;
       }
-      /* Eyebrow status bar: full 1440-wide bar at the gutter */
+      /* Status pill — frosted capsule, no right CTA (612:145518) */
       .m2-hero a.m2-eyebrow {
-        grid-area: eyebrow;
-        margin-inline: 0;
-        padding: 11px 16px;
-        font-size: 14px;
+        width: auto;
+        max-width: 100%;
+        padding: 8px 24px;
+        border-radius: 8px;
+        font-size: 16px;
+        line-height: 1.4;
+        color: #fff;
       }
+      .m2-eyebrow__dot { animation: none; background: #fff; }
+      .m2-eyebrow__cta, .m2-eyebrow__down { display: none !important; }
       .m2-hero__title {
-        grid-area: title; margin-top: 128px;                  /* eyebrow -> title */
-        font-size: clamp(64px, 7.41vw, 128px);                /* 128 @1728 */
-        line-height: 0.953; letter-spacing: -0.02em;
-        color: var(--brand-light-2);
+        margin-top: 72px;
+        font-size: clamp(80px, 9vw, 110px);
+        line-height: 1;
+        letter-spacing: -1px;
+        font-weight: 200;
+        color: #fff;
+        max-width: 100%;
       }
+      .m2-hero__title-line { display: block; white-space: nowrap; }
       .m2-hero__subtitle {
-        grid-area: sub; margin-top: 32px; max-width: none;     /* title -> subtitle */
-        font-size: clamp(20px, 1.852vw, 32px); line-height: 1.281;
-        color: var(--brand-light-2);
+        margin-top: 24px;
+        max-width: 1439px;
+        font-size: clamp(22px, 1.85vw, 32px);
+        line-height: 1.5;
+        font-weight: 300;
+        color: #fff;
       }
+      .m2 a.m2-hero__cta,
       .m2-hero__cta {
-        grid-area: cta; align-self: start; justify-self: start;
-        width: 327px; max-width: 100%; min-width: 0; margin-top: 56px;  /* subtitle -> CTA (8px ramp) */
-        font-size: 20px; line-height: 28px;             /* Figma 368:9244: Roboto Slab Bold 20/28 */
+        margin-top: 24px;
+        width: 350px;
+        min-width: 350px;
+        max-width: 100%;
+        min-height: 60px;
+        height: 60px;
+        padding: 0 32px;
+        gap: 8px;
+        font-size: 20px;
+        line-height: 1;
+        font-weight: 500;
+        color: #b34771;
+        background: #fff;
+        border-radius: 8px;
+        box-sizing: border-box;
       }
-      .m2-hero__cta .m2-btn__arrow { width: 24px; height: 24px; }  /* Figma 368:9248: arrow 24px */
-      .m2-hero .m2-stats { grid-area: stats; align-self: start; margin-top: 128px; }
-
-      /* Stats: stacked, 40 between; number 80px Thin light, label 20px Light tan (Figma 354:4821) */
-      .m2-hero .m2-stats .m2-rail { grid-template-columns: 1fr; gap: 40px; }
+      .m2-hero__cta .m2-btn__arrow { width: 20px; height: 20px; }
+      .m2-hero .m2-stats { width: 100%; margin-top: 88px; padding-top: 0; }
+      .m2-hero .m2-stats .m2-rail {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 32px;
+        width: 100%;
+        overflow: visible;
+        scroll-snap-type: none;
+      }
       .m2-hero .m2-stat {
-        min-height: 129px; gap: 30px; align-items: center;
-        padding: 38px 26px 36px 33px;
-        background: rgba(26, 25, 31, 0.3);          /* Figma 368:9251 card fill */
-        border: 1px solid var(--brand-core-1);
-        border-radius: 10px;
+        flex: none;
+        min-height: 160px;
+        height: 160px;
+        padding: 24px 32px;
+        gap: 24px;
+        align-items: center;
+        border-radius: 16px;
       }
       .m2-hero .m2-stat__value {
-        font-family: var(--font-family-sans); font-weight: 100;
-        font-size: clamp(64px, 5.56vw, 80px); line-height: 0.35; color: var(--lello);  /* Figma 368:9261: Roboto Thin 80px @1440 */
+        font-size: clamp(72px, 6.5vw, 96px);
+        line-height: 1;
+        color: #efe8e5;
       }
       .m2-hero .m2-stat__label {
-        font-weight: 300; font-size: clamp(17px, 1.39vw, 20px); line-height: 1.38;       /* Figma 368:9262: Roboto Light 20/27.6 */
-        color: var(--brand-tan); max-width: 274px;                                       /* fits the sentence to 2 lines (never 3) */
+        font-size: clamp(18px, 1.55vw, 22.783px);
+        line-height: 1.38;
+        color: var(--brand-light-2);
+        max-width: none;
       }
+      .m2-stat--third .m2-stat__label-br { display: inline; }
+      .m2-hero__wave { margin-top: 56px; flex-shrink: 0; }
 
       /* Case-study cards -> editorial typography (Figma: title 74/84, desc 24/32) */
       .m2-wcard__eyebrow { font-weight: 700; font-size: 14px; letter-spacing: 0.04em; line-height: 30px; color: #c5c1b8; }
@@ -1019,25 +1232,26 @@
 
       <!-- Hero -->
       <section class="m2-hero" id="m2-hero" aria-labelledby="m2-hero-title">
+        <div class="m2-hero__bg" aria-hidden="true"></div>
         <div class="m2-wrap">
-          <a class="m2-eyebrow" href="#m2-work" aria-label="Currently leading AI transformation at Realtor.com — see the case study"><span class="m2-eyebrow__dot" aria-hidden="true"></span><span class="m2-eyebrow__text">Currently leading AI transformation at Realtor.com</span><svg class="m2-eyebrow__down" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="m2-eyebrow__cta" aria-hidden="true">See the Case Study <svg class="m2-eyebrow__arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
-          <h1 class="m2-hero__title" id="m2-hero-title"><em>Curious</em><br>by nature.</h1>
-          <p class="m2-hero__subtitle">I'm a maker who leads. I build design teams, drive their transformation, and ship products people love.</p>
+          <a class="m2-eyebrow m2-glass" href="#m2-work" aria-label="Currently leading Design and AI transformation at Realtor.com — see the case study"><span class="m2-eyebrow__dot" aria-hidden="true"></span><span class="m2-eyebrow__text m2-only-mobile">Currently leading AI transformation at Realtor.com</span><span class="m2-eyebrow__text m2-only-desktop">Currently leading Design and AI transformation at Realtor.com</span><svg class="m2-eyebrow__down" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="m2-eyebrow__cta" aria-hidden="true">See the Case Study <svg class="m2-eyebrow__arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+          <h1 class="m2-hero__title" id="m2-hero-title"><span class="m2-hero__title-line">Building the conditions</span><span class="m2-hero__title-line">for teams to thrive.</span></h1>
+          <p class="m2-hero__subtitle"><span class="m2-only-mobile">I'm a maker who leads. I build design teams, drive their transformation, and ship products people love.</span><span class="m2-only-desktop">I'm a maker who leads. I build high-performing Design teams, drive AI<br>transformation and ship products people love.</span></p>
+
+          <a class="m2-hero__cta" href="#m2-work">
+            See what i've built
+            <svg class="m2-btn__arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
 
           <!-- Stats carousel -->
           <div class="m2-stats" data-carousel>
             <div class="m2-rail" role="group" aria-roledescription="carousel" aria-label="Career highlights">
-              <div class="m2-stat" role="group" aria-roledescription="slide" aria-label="1 of 3"><span class="m2-stat__value">20</span><span class="m2-stat__label">years designing products people love and use</span></div>
-              <div class="m2-stat" role="group" aria-roledescription="slide" aria-label="2 of 3"><span class="m2-stat__value">10</span><span class="m2-stat__label">years in leadership, building high performing teams</span></div>
-              <div class="m2-stat" role="group" aria-roledescription="slide" aria-label="3 of 3"><span class="m2-stat__value">190</span><span class="m2-stat__label">million people using products i've shipped</span></div>
+              <div class="m2-stat m2-glass" role="group" aria-roledescription="slide" aria-label="1 of 3"><span class="m2-stat__value">20</span><span class="m2-stat__label">years designing products people love and use.</span></div>
+              <div class="m2-stat m2-glass" role="group" aria-roledescription="slide" aria-label="2 of 3"><span class="m2-stat__value">10</span><span class="m2-stat__label"><span class="m2-only-mobile">years in leadership, building high performing teams</span><span class="m2-only-desktop">years in leadership, building and growing high performing teams</span></span></div>
+              <div class="m2-stat m2-stat--third m2-glass" role="group" aria-roledescription="slide" aria-label="3 of 3"><span class="m2-stat__value">190</span><span class="m2-stat__label">million people<br class="m2-stat__label-br">using products<br class="m2-stat__label-br">i've shipped,</span></div>
             </div>
             <div class="m2-dots" data-dots aria-hidden="true"></div>
           </div>
-
-          <a class="m2-btn m2-hero__cta" href="#m2-work">
-            See what i've built
-            <svg class="m2-btn__arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
         </div>
         <div class="m2-hero__wave" aria-hidden="true">
                   </div>
