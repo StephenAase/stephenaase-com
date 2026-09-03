@@ -256,8 +256,8 @@
     /* Hero wave: seamless scallop tile, full-bleed, repeated across the full viewport width */
     .m2-hero__wave { display: block; width: 100vw; margin-inline: calc(50% - 50vw); height: 23px; margin-top: 0;
       background-color: transparent;
-      background-image: url("assets/wave-tile.svg"); background-repeat: repeat-x; background-position: left bottom; background-size: auto 100%;
-      box-shadow: 0 1px 0 0 #efe8e5; }   /* close the fractional-pixel seam to the cream (.m2-light) section below */
+      background-image: url("assets/wave-tile.svg?v=2"); background-repeat: repeat-x; background-position: left bottom; background-size: auto 100%;
+      box-shadow: 0 1px 0 0 #fff; }   /* close the fractional-pixel seam to the white testimonials section below */
 
     /* ---- Stats carousel ---- */
     .m2-hero .m2-stats { margin-top: clamp(40px, 8vw, 56px); }
@@ -441,6 +441,21 @@
       #m2-ai .m2-wrap { display: flex; flex-direction: column; align-items: flex-start; }
       #m2-ai .m2-ai__sub { order: -1; font-size: 16px; line-height: 20px; margin: 0 0 24px; }
       #m2-ai .m2-ai__head { margin-top: 0; }
+
+      /* Swipe rail clips the card shadow (overflow-x:auto forces overflow-y:auto);
+         pad vertically to reveal it, cancel with negative margins so layout/dots spacing is unchanged */
+      #m2-testimonials .m2-rail { padding-block: 8px 16px; margin-block: -8px -16px; }
+      /* Testimonials pagination dots — pill for active (Figma 612:145792) */
+      #m2-testimonials [data-dots] {
+        display: flex; justify-content: flex-start; align-items: center;
+        gap: 4px; margin-top: 16px; padding-left: var(--gutter);
+      }
+      #m2-testimonials .m2-dot {
+        width: 6px; height: 6px; border-radius: 999px; background: #d6b2d7; transform: none;
+        transition: width var(--duration-normal) var(--easing-default),
+                    background-color var(--duration-normal) var(--easing-default);
+      }
+      #m2-testimonials .m2-dot[aria-current="true"] { width: 12px; background: #a063a2; transform: none; }
     }
 
     /* Pagination dots (shared by all carousels) */
@@ -454,26 +469,34 @@
     .m2-section__label { font-family: var(--font-family-serif); font-weight: 500; font-size: 14px; letter-spacing: 0.04em; color: #524e47; margin-bottom: 18px; }
 
     /* ---- Testimonials carousel ---- */
+    /* Section sits on white per Figma (not the .m2-light cream wrapper) */
+    #m2-testimonials { background: #fff; }
+    /* Section label is a plum Geist heading (Figma 612:145742 / 598:143383), fluid 24 -> 40 */
+    #m2-testimonials .m2-section__label {
+      font-family: var(--font-family-geist); font-weight: 600;
+      font-size: clamp(24px, 1.2rem + 1.4vw, 40px); line-height: 1.15; letter-spacing: 0;
+      color: #8d6273; text-transform: none; margin-bottom: 24px;
+    }
     /* Testimonials: manual swipe carousel (same pattern as AI leadership) */
     .m2-tcard {
       scroll-snap-align: start;
-      flex: 0 0 84%;
+      flex: 0 0 calc(100vw - 64px);   /* Figma mobile card 327 @390 w/ 24px gutter + peek */
       max-width: 340px;
       display: flex; flex-direction: column;
       background: #fff;
-      border: 1px solid rgba(0,0,0,0.06);
-      border-radius: 4px;
-      padding: 30px 21px 28px 26px;
-      box-shadow: var(--elevation-1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 8px;
+      padding: 30px 21px 26px 26px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
-    .m2-tcard__mark { width: 40px; height: 41px; }
-    .m2-tcard__quote { font-family: var(--font-family-sans); font-style: italic; font-size: 17px; line-height: 1.5; color: #524e47; margin-top: 12px; }
-    .m2-tcard__foot { margin-top: auto; padding-top: 22px; }
-    .m2-tcard__rule { height: 1px; background: rgba(0,0,0,0.12); margin-bottom: 18px; }
+    .m2-tcard__mark { width: 40.375px; height: 41px; }
+    .m2-tcard__quote { font-family: var(--font-family-geist); font-style: normal; font-weight: 400; font-size: 18px; line-height: 26px; color: #8d6273; margin-top: 8px; }
+    .m2-tcard__foot { margin-top: auto; padding-top: 24px; }
+    .m2-tcard__rule { width: 100%; height: 1px; background: #c5c1b8; margin-bottom: 16px; }
     .m2-tcard__person { display: flex; align-items: center; gap: 12px; }
     .m2-tcard__avatar { width: 47px; height: 47px; border-radius: 50%; object-fit: cover; flex: none; }
-    .m2-tcard__name { font-family: var(--font-family-serif); font-weight: 600; font-size: 18px; color: #524e47; line-height: 1.2; }
-    .m2-tcard__role { font-family: var(--font-family-serif); font-size: 12.5px; color: #8a857b; margin-top: 2px; }
+    .m2-tcard__name { font-family: var(--font-family-geist); font-weight: 600; font-size: 18.8px; color: #8d6273; line-height: 1.2; }
+    .m2-tcard__role { font-family: var(--font-family-geist); font-weight: 400; font-size: 12.5px; color: #9a828b; margin-top: 2px; }
 
     /* ---- Work / case-study cards ---- */
     .m2-work-list { display: flex; flex-direction: column; gap: 28px; }
@@ -979,26 +1002,26 @@
       #m2-testimonials { padding-inline: 0; }
       #m2-testimonials .m2-wrap { width: min(var(--page-max), calc(100% - 2 * var(--page-margin-min))); margin-inline: auto; padding-inline: 0; }
       #m2-testimonials .m2-rail { width: min(var(--page-max), calc(100% - 2 * var(--page-margin-min))); margin-inline: auto; padding-inline: 0 !important;
-        grid-template-columns: repeat(3, 1fr); gap: 26px; }
-      #m2-testimonials .m2-section__label { font-size: 24px; line-height: 40px; letter-spacing: 0; color: #524e47; margin-bottom: 24px;
+        grid-template-columns: repeat(3, 1fr); gap: 30px; }
+      #m2-testimonials .m2-section__label { font-size: 40px; line-height: 1.15; letter-spacing: 0; color: #8d6273; margin-bottom: 24px;
         max-width: none; padding-inline: 0; margin-inline: 0; }   /* flush-left with the cards (VQA) */
       #m2-testimonials .m2-tcard {
         display: flex; flex-direction: column;
-        background: #fff; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px;
+        background: #fff; border: 1px solid rgba(255,255,255,0.2); border-radius: 16px;
         min-height: 530px; padding: 40px;
-        box-shadow: 0 2px 10px rgba(20,16,10,0.07);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
       }
       #m2-testimonials .m2-tcard__mark { width: 40.375px; height: 41px; }
       #m2-testimonials .m2-tcard__quote {
-        font-family: var(--font-family-sans); font-style: italic; font-weight: 400;
-        font-size: 20px; line-height: 30px; color: #524e47; margin-top: 8px;
+        font-family: var(--font-family-geist); font-style: normal; font-weight: 400;
+        font-size: 20px; line-height: 30px; color: #8d6273; margin-top: 8px;
       }
       #m2-testimonials .m2-tcard__foot { margin-top: auto; padding-top: 0; }
-      #m2-testimonials .m2-tcard__rule { width: 280px; height: 1px; background: #c5c1b8; margin-bottom: 24px; }
+      #m2-testimonials .m2-tcard__rule { width: 100%; height: 1px; background: #c5c1b8; margin-bottom: 24px; }
       #m2-testimonials .m2-tcard__person { align-items: flex-end; gap: 12px; }
       #m2-testimonials .m2-tcard__avatar { width: 47px; height: 47px; }
-      #m2-testimonials .m2-tcard__name { font-size: 18.8px; line-height: 26.6px; color: #524e47; margin-bottom: -8px; }
-      #m2-testimonials .m2-tcard__role { font-size: 12.5px; line-height: 26.6px; color: #8a857b; margin-top: 0; }
+      #m2-testimonials .m2-tcard__name { font-size: 18.8px; line-height: 26.6px; color: #8d6273; margin-bottom: -8px; }
+      #m2-testimonials .m2-tcard__role { font-size: 12.533px; line-height: 26.6px; color: #97828a; margin-top: 0; }
 
       /* ---- Case Studies label sizing (cards keep their real branded design) ---- */
       #m2-work .m2-section__label { font-size: 24px; line-height: 40px; letter-spacing: 0; color: #524e47; margin-bottom: 24px; }
@@ -1261,12 +1284,12 @@
         <!-- Testimonials -->
         <section id="m2-testimonials" class="m2-section" aria-label="Testimonials">
           <div class="m2-wrap">
-            <p class="m2-section__label">TESTIMONIALS</p>
+            <p class="m2-section__label">Testimonials</p>
           </div>
           <div data-carousel>
             <div class="m2-rail" role="group" aria-roledescription="carousel" aria-label="Testimonials" style="padding-inline: var(--gutter); scroll-padding-inline: var(--gutter);">
               <figure class="m2-tcard">
-                <img class="m2-tcard__mark" src="assets/quote-mark.svg" alt="" aria-hidden="true" />
+                <img class="m2-tcard__mark" src="assets/quote-mark.svg?v=2" alt="" aria-hidden="true" />
                 <blockquote class="m2-tcard__quote">Stephen drove teams to deliver industry-leading experiences that changed how customers perceived the world's largest company. And he did it with a kindness and clarity that inspired me (and many others) to be better, try harder, reach further. Should you ever have the chance to work with Stephen, take it. Immediately. While you can.</blockquote>
                 <figcaption class="m2-tcard__foot">
                   <div class="m2-tcard__rule"></div>
@@ -1277,24 +1300,24 @@
                 </figcaption>
               </figure>
               <figure class="m2-tcard">
-                <img class="m2-tcard__mark" src="assets/quote-mark.svg" alt="" aria-hidden="true" />
-                <blockquote class="m2-tcard__quote">Stephen is that unicorn that invariably makes everyone feel like they may actually accomplish the Herculean task set in front of them. More than once in my time at Walmart, I've given an assignment to someone and watched them look a little nervous at the task. Then I tell them that Stephen is going to help and all is well again. He's that guy. You want him on your team, always.</blockquote>
-                <figcaption class="m2-tcard__foot">
-                  <div class="m2-tcard__rule"></div>
-                  <div class="m2-tcard__person">
-                    <img class="m2-tcard__avatar" src="assets/avatar-nick.png" alt="Nick Nguyen" />
-                    <div><div class="m2-tcard__name">Nick Nguyen</div><div class="m2-tcard__role">Director, Rivian</div></div>
-                  </div>
-                </figcaption>
-              </figure>
-              <figure class="m2-tcard">
-                <img class="m2-tcard__mark" src="assets/quote-mark.svg" alt="" aria-hidden="true" />
+                <img class="m2-tcard__mark" src="assets/quote-mark.svg?v=2" alt="" aria-hidden="true" />
                 <blockquote class="m2-tcard__quote">Stephen was a joy to work with. He was an amazing blend of "think" and "do." I always knew that I'd get amazingly thoughtful design work from him that was both beautiful and innovative. He self-manages and leads well beyond his years, and I can't wait to see what he's up to in 10 years.</blockquote>
                 <figcaption class="m2-tcard__foot">
                   <div class="m2-tcard__rule"></div>
                   <div class="m2-tcard__person">
                     <img class="m2-tcard__avatar" src="assets/avatar-todd.png" alt="Todd Greco" />
                     <div><div class="m2-tcard__name">Todd Greco</div><div class="m2-tcard__role">Director, AI Outcomes, Slalom</div></div>
+                  </div>
+                </figcaption>
+              </figure>
+              <figure class="m2-tcard">
+                <img class="m2-tcard__mark" src="assets/quote-mark.svg?v=2" alt="" aria-hidden="true" />
+                <blockquote class="m2-tcard__quote">Stephen is that unicorn that invariably makes everyone feel like they may actually accomplish the Herculean task set in front of them. More than once in my time at Walmart, I've given an assignment to someone and watched them look a little nervous at the task. Then I tell them that Stephen is going to help and all is well again. He's that guy. You want him on your team, always.</blockquote>
+                <figcaption class="m2-tcard__foot">
+                  <div class="m2-tcard__rule"></div>
+                  <div class="m2-tcard__person">
+                    <img class="m2-tcard__avatar" src="assets/avatar-nick.png" alt="Nick Nguyen" />
+                    <div><div class="m2-tcard__name">Nick Nguyen</div><div class="m2-tcard__role">Director, Rivian</div></div>
                   </div>
                 </figcaption>
               </figure>
