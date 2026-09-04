@@ -2429,6 +2429,18 @@
       #m2-ai .m2-ai__head { max-width: none; }
     }
 
+    /* Ultrawide: grow photo with viewport so cover doesn't crop faces at the bottom.
+       Source is 1800×789; past that width a fixed 789px + center-top chops the family. */
+    @media (min-width: 1800px) {
+      .m2-about__photo {
+        height: min(calc(100vw * 789 / 1800), 1200px);
+        background-position: center 68%;
+      }
+      .m2-about__photo::before {
+        height: min(calc(100vw * 335 / 1800), calc(1200px * 335 / 789));
+      }
+    }
+
     /* =============================================================
        PASSWORD GATES — DESKTOP (Figma 613:147219)
     ============================================================= */
