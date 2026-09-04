@@ -2491,6 +2491,7 @@
             <!-- type=text + CSS disc mask: avoids Safari/iCloud Passwords (shared gate code, not a login) -->
             <input class="m2-gate__input" id="m2CsInput" name="sa-case-code" type="text" inputmode="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" readonly aria-labelledby="m2CsLabel" data-1p-ignore data-lpignore="true" data-bwignore data-form-type="other" placeholder="Enter password" />
           </div>
+          <p class="m2-gate__error" id="m2CsError" role="alert">That password isn't quite right — try again.</p>
           <p class="m2-gate__note">These case studies are coming soon. Reach out and I'll happily walk you through the work.</p>
           <button type="submit" class="m2-btn m2-gate__submit">
             Unlock the case study
@@ -2626,7 +2627,7 @@
                 </span>
               </button>
 
-              <button type="button" class="m2-wcard m2-wcard--walmart" data-casestudy aria-label="Walmart — Membership that matters case study">
+              <button type="button" class="m2-wcard m2-wcard--walmart" data-casestudy data-casestudy-href="/walmart-plus.html" aria-label="Walmart — Membership that matters case study">
                 <span class="m2-wcard__media" aria-hidden="true">
                   <img class="m2-wcard__photo" src="assets/case-walmart-porch-mobile.png" alt="" width="2048" height="2048" loading="lazy" decoding="async" />
                   <span class="m2-wcard__collage-grid">
@@ -2985,11 +2986,28 @@
           slides.forEach(function (s) { io.observe(s); });
         });
 
-        // --- Case-study modal (closeable; "coming soon" on submit) ---
+        // --- Case-study modal (closeable; unlockable studies navigate, others show "coming soon") ---
         var cs = document.getElementById('m2CsModal');
-        function openCs() {
+        var CS_UNLOCK_KEY = 'walmartPlusUnlocked';
+        var CS_PASSWORDS = { '/walmart-plus.html': 'B00ne', '/walmart-plus': 'B00ne' };
+        var csPendingHref = null;
+        function csUnlocked(href) {
+          if (href !== '/walmart-plus.html' && href !== '/walmart-plus') return false;
+          try { return sessionStorage.getItem(CS_UNLOCK_KEY) === '1'; } catch (e) { return false; }
+        }
+        function setCsUnlocked(href) {
+          if (href !== '/walmart-plus.html' && href !== '/walmart-plus') return;
+          try { sessionStorage.setItem(CS_UNLOCK_KEY, '1'); } catch (e) {}
+        }
+        function openCs(href) {
+          csPendingHref = href || null;
           var inp = cs.querySelector('#m2CsInput');
+          var err = cs.querySelector('#m2CsError');
+          var note = cs.querySelector('.m2-gate__note');
+          if (err) err.classList.remove('is-visible');
+          if (note) note.classList.remove('is-visible');
           if (inp) {
+            inp.value = '';
             inp.classList.remove('is-revealed');
             inp.classList.remove('is-error');
             inp.setAttribute('readonly', '');
@@ -2999,13 +3017,15 @@
           cs.hidden = false; lockScroll();
           cs.offsetHeight; cs.classList.add('is-open');
           focusInput(inp);   // desktop: focus the field on open
-          track('case_study_modal_open');
+          track('case_study_modal_open', href ? { href: href } : undefined);
         }
         function closeCs() {
           cs.classList.remove('is-open'); unlockScroll();
           setTimeout(function () {
             cs.hidden = true;
+            csPendingHref = null;
             var note = cs.querySelector('.m2-gate__note'); if (note) note.classList.remove('is-visible');
+            var err = cs.querySelector('#m2CsError'); if (err) err.classList.remove('is-visible');
             var form = cs.querySelector('.m2-cs__form'); if (form) form.reset();
             var inp = cs.querySelector('.m2-gate__input');
             if (inp) {
@@ -3018,14 +3038,45 @@
           }, 350);
         }
         if (cs) {
-          root.querySelectorAll('[data-casestudy]').forEach(function (card) { card.addEventListener('click', openCs); });
+          root.querySelectorAll('[data-casestudy]').forEach(function (card) {
+            card.addEventListener('click', function () {
+              var href = card.getAttribute('data-casestudy-href');
+              if (href && csUnlocked(href)) {
+                track('case_study_open', { href: href, via: 'session' });
+                window.location.href = href;
+                return;
+              }
+              openCs(href);
+            });
+          });
           cs.querySelectorAll('[data-cs-close]').forEach(function (el) { el.addEventListener('click', closeCs); });
           cs.addEventListener('click', function (e) { if (e.target === cs) closeCs(); });
           cs.addEventListener('keydown', function (e) { if (e.key === 'Escape') { closeCs(); return; } trapTab(cs, e); });
           var csForm = cs.querySelector('.m2-cs__form');
           if (csForm) csForm.addEventListener('submit', function (e) {
             e.preventDefault();
-            cs.querySelector('.m2-gate__note').classList.add('is-visible');
+            var inp = cs.querySelector('#m2CsInput');
+            var err = cs.querySelector('#m2CsError');
+            var note = cs.querySelector('.m2-gate__note');
+            var value = (inp && inp.value || '').trim();
+            var expected = csPendingHref && CS_PASSWORDS[csPendingHref];
+            if (expected) {
+              if (value === expected) {
+                track('case_study_unlock', { study: 'walmart-plus', result: 'success', via: 'home' });
+                setCsUnlocked(csPendingHref);
+                if (err) err.classList.remove('is-visible');
+                if (inp) inp.classList.remove('is-error');
+                window.location.href = csPendingHref;
+                return;
+              }
+              track('case_study_unlock', { study: 'walmart-plus', result: 'error', via: 'home' });
+              if (note) note.classList.remove('is-visible');
+              if (inp) { inp.classList.add('is-error'); inp.focus(); inp.select(); }
+              if (err) err.classList.add('is-visible');
+              return;
+            }
+            if (err) err.classList.remove('is-visible');
+            if (note) note.classList.add('is-visible');
             track('case_study_submit');
           });
         }

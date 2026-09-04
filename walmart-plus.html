@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Walmart+ Case Study — Stephen Aase</title>
+  <meta name="description" content="Walmart+ case study by Stephen Aase — designing membership that makes everyday essentials more accessible and affordable." />
+  <link rel="canonical" href="https://stephenaase.com/walmart-plus" />
+  <meta name="robots" content="noindex, nofollow" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Stephen Aase" />
+  <meta property="og:url" content="https://stephenaase.com/walmart-plus" />
+  <meta property="og:title" content="Walmart+ Case Study — Stephen Aase" />
+  <meta property="og:description" content="Designing Walmart+ to make everyday essentials more accessible and affordable for millions of families." />
+  <meta property="og:image" content="https://stephenaase.com/assets/og-walmart.png" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Walmart+ Case Study — Stephen Aase" />
+  <meta name="twitter:description" content="Designing Walmart+ to make everyday essentials more accessible and affordable for millions of families." />
+  <meta name="twitter:image" content="https://stephenaase.com/assets/og-walmart.png" />
+
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
+  <link rel="preload" href="fonts/Geist-Medium.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="fonts/Geist-variable.woff2" as="font" type="font/woff2" crossorigin />
+  <script defer data-domain="stephenaase.com" src="https://plausible.io/js/script.js"></script>
+  <link rel="stylesheet" href="colors_and_type.css?v=20260901d">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --page-max: 1440px;
+      --page-margin-min: 24px;
+      --page-gutter: max(var(--page-margin-min), calc((100% - var(--page-max)) / 2));
+    }
+    html, body {
+      background: #fff;
+      color: #000;
+      font-family: var(--font-family-nav);
+      -webkit-font-smoothing: antialiased;
+    }
+    body { min-height: 100dvh; overflow-x: clip; }
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+    /* ---- Case study nav (Figma 596:124108 desktop · 596:124148 mobile) ---- */
+    .cs-only-mobile { display: none; }
+    .cs-only-desktop { display: inline; }
+    .cs-nav {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      min-height: 64px;
+      padding-inline: 24px;
+      background: #fff;
+      font-family: var(--font-family-nav);
+      font-weight: 500;
+      font-size: 16px;
+      line-height: normal;
+    }
+    .cs-nav__back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #000;
+      white-space: nowrap;
+    }
+    .cs-nav__back:hover { opacity: 0.72; }
+    .cs-nav__back:focus-visible {
+      outline: 2px solid var(--brand-logo-stroke);
+      outline-offset: 4px;
+      border-radius: 2px;
+    }
+    .cs-nav__arrow {
+      width: 22px;
+      height: 22px;
+      flex: none;
+      display: block;
+    }
+    .cs-nav__name { display: none; } /* mobile: arrow only (Figma 596:124148) */
+    .cs-nav__meta {
+      color: #004bcc;
+      white-space: nowrap;
+      text-align: right;
+    }
+    .cs-nav__slash { color: #ffc220; }
+
+    .cs-body {
+      min-height: calc(100dvh - 64px);
+      background: #fff;
+    }
+
+    @media (min-width: 1024px) {
+      .cs-only-mobile { display: none; }
+      .cs-only-desktop { display: inline; }
+      .cs-nav { padding-inline: var(--page-gutter); }
+      .cs-nav__name { display: inline; }
+    }
+    @media (max-width: 1023.98px) {
+      .cs-only-mobile { display: inline; }
+      .cs-only-desktop { display: none; }
+    }
+
+    /* Gate chrome — matches homepage case-study modal */
+    .m2-gate {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: rgba(49, 47, 60, 0.55);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.28s ease, visibility 0.28s ease;
+    }
+    .m2-gate.is-open { opacity: 1; visibility: visible; }
+    .m2-gate__card {
+      position: relative;
+      width: min(100%, 420px);
+      padding: 40px 32px 32px;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 24px 64px rgba(49, 47, 60, 0.28);
+      text-align: center;
+      transform: translateY(12px);
+      transition: transform 0.28s ease;
+    }
+    .m2-gate.is-open .m2-gate__card { transform: none; }
+    .m2-gate__lock {
+      display: block;
+      width: 40px;
+      height: 40px;
+      margin: 0 auto 16px;
+    }
+    .m2-gate__title {
+      font-family: var(--font-family-geist);
+      font-size: 28px;
+      font-weight: 600;
+      color: #312f3c;
+      margin: 0 0 12px;
+    }
+    .m2-gate__sub {
+      font-family: var(--font-family-geist);
+      font-size: 15px;
+      line-height: 1.5;
+      color: #6b5a63;
+      margin: 0 0 24px;
+    }
+    .m2-gate__label {
+      display: block;
+      font-family: var(--font-family-geist);
+      font-size: 13px;
+      font-weight: 500;
+      color: #8c4964;
+      text-align: left;
+      margin-bottom: 8px;
+    }
+    .m2-gate__input {
+      width: 100%;
+      height: 44px;
+      border: none;
+      border-bottom: 1.5px solid #d8b8c4;
+      background: transparent;
+      font-family: var(--font-family-geist);
+      font-size: 16px;
+      color: #312f3c;
+      outline: none;
+      -webkit-text-security: disc;
+    }
+    .m2-gate__input::placeholder { color: #a17e8c; opacity: 1; }
+    .m2-gate__input:focus { border-bottom-color: #ae3c86; }
+    .m2-gate__input.is-error { border-bottom-color: #c0392b; }
+    .m2-gate__error {
+      font-family: var(--font-family-geist);
+      font-size: 13px;
+      color: #c0392b;
+      margin-top: 8px;
+      text-align: left;
+      height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transition: opacity 0.2s ease;
+    }
+    .m2-gate__error.is-visible { height: auto; opacity: 1; }
+    .m2-gate__submit {
+      margin-top: 24px;
+      width: 100%;
+      min-height: 50px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border-radius: 999px;
+      background: #ae3c86;
+      color: #fff;
+      font-family: var(--font-family-geist);
+      font-size: 16px;
+      font-weight: 500;
+    }
+    .m2-gate__submit:hover { background: #9a3476; }
+    .m2-gate__submit:active { transform: scale(0.985); background: #8a2e69; }
+    .m2-gate__submit-icon { display: block; width: 24px; height: 24px; }
+    a.m2-gate__reach {
+      display: block;
+      margin-top: 20px;
+      font-family: var(--font-family-geist);
+      font-size: 14px;
+      color: #8c4964;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    a.m2-gate__reach:hover { color: #ae3c86; }
+  </style>
+</head>
+<body>
+  <!-- Case study access gate -->
+  <div class="m2-gate" id="csGate" role="dialog" aria-modal="true" aria-labelledby="csGateTitle" hidden>
+    <div class="m2-gate__card" role="document">
+      <img class="m2-gate__lock" src="assets/gate/icon-lock.svg" alt="" width="40" height="40" aria-hidden="true" />
+      <h2 class="m2-gate__title" id="csGateTitle">Case study access</h2>
+      <p class="m2-gate__sub">This case study is password-protected. If I sent you a password, you’re in the right place; drop it below.</p>
+      <form class="m2-gate__form" id="csGateForm" autocomplete="off" novalidate>
+        <p class="m2-gate__label" id="csGateLabel">Password</p>
+        <div class="m2-gate__field">
+          <input class="m2-gate__input" id="csGateInput" name="sa-case-code" type="text" inputmode="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" readonly aria-labelledby="csGateLabel" data-1p-ignore data-lpignore="true" data-bwignore data-form-type="other" placeholder="Enter password" />
+        </div>
+        <p class="m2-gate__error" id="csGateError" role="alert">That password isn't quite right — try again.</p>
+        <button type="submit" class="m2-gate__submit">
+          Unlock the case study
+          <img class="m2-gate__submit-icon" src="assets/gate/icon-lock-filled.svg" alt="" width="24" height="24" aria-hidden="true" />
+        </button>
+      </form>
+      <a class="m2-gate__reach" href="https://www.linkedin.com/in/stephenaase/" target="_blank" rel="noopener noreferrer">No password? Reach out to connect.</a>
+    </div>
+  </div>
+
+  <header class="cs-nav" aria-label="Case study navigation">
+    <a class="cs-nav__back" href="/" aria-label="Back to Stephen Aase homepage">
+      <img class="cs-nav__arrow" src="assets/case/icon-back-arrow.svg" alt="" width="22" height="22" aria-hidden="true" />
+      <span class="cs-nav__name">Stephen Aase</span>
+    </a>
+    <p class="cs-nav__meta">
+      <span class="cs-only-desktop">Walmart+ Case Study</span><span class="cs-only-mobile">W+ Case Study</span>
+      <span class="cs-nav__slash">  //  </span>
+      <span>2026</span>
+    </p>
+  </header>
+
+  <main class="cs-body" id="csMain" aria-label="Walmart+ case study" hidden>
+    <!-- Case study body content will go here -->
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var CS_KEY = 'walmartPlusUnlocked';
+      var CS_PW = 'B00ne';
+      var gate = document.getElementById('csGate');
+      var main = document.getElementById('csMain');
+      var input = document.getElementById('csGateInput');
+      var form = document.getElementById('csGateForm');
+      var error = document.getElementById('csGateError');
+
+      function unlocked() {
+        try { return sessionStorage.getItem(CS_KEY) === '1'; } catch (e) { return false; }
+      }
+      function setUnlocked() {
+        try { sessionStorage.setItem(CS_KEY, '1'); } catch (e) {}
+      }
+      function track(eventName, props) {
+        if (typeof window.plausible === 'function') {
+          window.plausible(eventName, props ? { props: props } : undefined);
+        }
+      }
+      function revealPage() {
+        if (gate) {
+          gate.classList.remove('is-open');
+          gate.hidden = true;
+        }
+        if (main) main.hidden = false;
+        document.body.style.overflow = '';
+      }
+      function openGate() {
+        if (!gate) return;
+        gate.hidden = false;
+        document.body.style.overflow = 'hidden';
+        gate.offsetHeight;
+        gate.classList.add('is-open');
+        if (input) {
+          input.removeAttribute('readonly');
+          setTimeout(function () { input.focus({ preventScroll: true }); }, 80);
+        }
+      }
+
+      if (input) {
+        input.type = 'text';
+        input.setAttribute('autocomplete', 'off');
+        function unlockField() {
+          if (input.hasAttribute('readonly')) input.removeAttribute('readonly');
+        }
+        input.addEventListener('focus', unlockField);
+        input.addEventListener('pointerdown', unlockField);
+      }
+
+      if (unlocked()) {
+        revealPage();
+      } else {
+        openGate();
+      }
+
+      if (form) {
+        form.addEventListener('submit', function (e) {
+          e.preventDefault();
+          var value = (input && input.value || '').trim();
+          if (value === CS_PW) {
+            track('case_study_unlock', { study: 'walmart-plus', result: 'success' });
+            setUnlocked();
+            if (error) error.classList.remove('is-visible');
+            if (input) input.classList.remove('is-error');
+            revealPage();
+          } else {
+            track('case_study_unlock', { study: 'walmart-plus', result: 'error' });
+            if (input) {
+              input.classList.add('is-error');
+              input.focus();
+              input.select();
+            }
+            if (error) error.classList.add('is-visible');
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>
