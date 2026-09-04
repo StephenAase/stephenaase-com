@@ -1325,7 +1325,8 @@
       background: transparent;
       font-family: var(--font-family-geist);
       font-weight: 400;
-      font-size: 14px;
+      /* ≥16px prevents iOS Safari from zooming the page on focus */
+      font-size: 16px;
       line-height: 22px;
       color: #8c4964;
       box-shadow: none;
@@ -3020,6 +3021,11 @@
           track('case_study_modal_open', href ? { href: href } : undefined);
         }
         function closeCs() {
+          var inp = cs.querySelector('#m2CsInput');
+          if (inp) inp.blur();
+          if (document.activeElement && typeof document.activeElement.blur === 'function') {
+            document.activeElement.blur();
+          }
           cs.classList.remove('is-open'); unlockScroll();
           setTimeout(function () {
             cs.hidden = true;
@@ -3027,7 +3033,6 @@
             var note = cs.querySelector('.m2-gate__note'); if (note) note.classList.remove('is-visible');
             var err = cs.querySelector('#m2CsError'); if (err) err.classList.remove('is-visible');
             var form = cs.querySelector('.m2-cs__form'); if (form) form.reset();
-            var inp = cs.querySelector('.m2-gate__input');
             if (inp) {
               inp.classList.remove('is-revealed');
               inp.classList.remove('is-error');
