@@ -577,18 +577,19 @@
     .m2-wcard--realtor .m2-wcard__desc {
       margin-top: 14px; font-size: 14px; line-height: normal; max-width: 295px; color: #fff;
     }
+    /* Mobile metrics — fill content width (24px L/R via .m2-wcard__content), 10px gutters */
     .m2-wcard--realtor .m2-wcard__metrics {
-      margin-top: 24px; gap: 0; justify-content: space-between;
+      margin-top: 24px; gap: 10px; width: 100%; justify-content: stretch;
     }
     .m2-wcard--realtor .m2-wcard__metric {
-      flex: 0 0 100px; width: 100px; height: 88px; padding: 12px; gap: 8px;
+      flex: 1 1 0; width: auto; min-width: 0; height: 88px; padding: 12px; gap: 0;
       border-radius: 7px; background: rgba(217, 217, 217, 0.2);
       justify-content: flex-start;
     }
     .m2-wcard--realtor .m2-wcard__metric:nth-child(2) { padding-right: 6px; }
     .m2-wcard--realtor .m2-wcard__metric-icon { width: 18px; height: 18px; }
     .m2-wcard--realtor .m2-wcard__metric-glyph { font-size: 12.44px; font-weight: 800; width: 18px; height: 18px; }
-    .m2-wcard--realtor .m2-wcard__metric-label { font-size: 10px; line-height: normal; color: #fff; }
+    .m2-wcard--realtor .m2-wcard__metric-label { font-size: 10px; line-height: normal; color: #fff; word-break: break-word; }
     .m2-wcard--realtor .m2-wcard__cta {
       margin-top: 24px; font-size: 20px; line-height: 34px; font-weight: 700; gap: 8px;
     }
@@ -621,19 +622,18 @@
     .m2-wcard--walmart .m2-wcard__desc {
       margin-top: 14px; font-size: 14px; line-height: normal; max-width: 295px; color: #fff;
     }
+    /* Mobile metrics — Figma 601:145209; row fills content (24px L/R via .m2-wcard__content) */
     .m2-wcard--walmart .m2-wcard__metrics {
-      margin-top: 24px; gap: 10px; justify-content: flex-start;
+      margin-top: 24px; gap: 10px; width: 100%; justify-content: stretch;
     }
-    /* Mobile metrics — Figma 601:145209 (100/99/100 × 88, pad 12, icon→text flush) */
     .m2-wcard--walmart .m2-wcard__metric {
-      flex: 0 0 100px; width: 100px; height: 88px; padding: 12px; gap: 0;
+      flex: 1 1 0; width: auto; min-width: 0; height: 88px; padding: 12px; gap: 0;
       border-radius: 7px; background: rgba(217, 217, 217, 0.2);
       justify-content: flex-start;
     }
-    .m2-wcard--walmart .m2-wcard__metric:nth-child(2) { flex-basis: 99px; width: 99px; padding-right: 6px; }
+    .m2-wcard--walmart .m2-wcard__metric:nth-child(2) { padding-right: 6px; }
     .m2-wcard--walmart .m2-wcard__metric-icon { width: 18px; height: 18px; }
     .m2-wcard--walmart .m2-wcard__metric-label { font-size: 10px; line-height: normal; color: #fff; word-break: break-word; }
-    .m2-wcard--walmart .m2-wcard__metric:first-child .m2-wcard__metric-label { max-width: 63px; }
     .m2-wcard--walmart .m2-wcard__cta {
       margin-top: 24px; font-size: 20px; line-height: 34px; font-weight: 700; gap: 8px;
       color: #ffc220;
@@ -1790,7 +1790,6 @@
       .m2-wcard--walmart .m2-wcard__metric:nth-child(2) { flex-basis: auto; width: auto; padding-right: clamp(20px, 2.2vw, 32px); }
       .m2-wcard--walmart .m2-wcard__metric-icon { width: 40px; height: 40px; }
       .m2-wcard--walmart .m2-wcard__metric-label { font-size: clamp(13px, 1.1vw, 16px); }
-      .m2-wcard--walmart .m2-wcard__metric:first-child .m2-wcard__metric-label { max-width: none; }
       .m2-wcard--walmart .m2-wcard__cta {
         margin-top: 40px; font-size: 24px; line-height: 1.4;
       }
@@ -2011,7 +2010,6 @@
       .m2-wcard--walmart .m2-wcard__metric:nth-child(2) { flex: 0 0 205.333px; width: 205.333px; padding-right: 32px; }
       .m2-wcard--walmart .m2-wcard__metric-icon { width: 40px; height: 40px; }
       .m2-wcard--walmart .m2-wcard__metric-label { font-size: 16px; line-height: normal; color: #fff; }
-      .m2-wcard--walmart .m2-wcard__metric:first-child .m2-wcard__metric-label { max-width: none; }
       .m2-wcard--walmart .m2-wcard__cta {
         margin-top: 40px; font-size: 24px; line-height: 34px; font-weight: 700; gap: 8px;
         color: #ffc220;
