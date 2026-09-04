@@ -624,14 +624,16 @@
     .m2-wcard--walmart .m2-wcard__metrics {
       margin-top: 24px; gap: 10px; justify-content: flex-start;
     }
+    /* Mobile metrics — Figma 601:145209 (100/99/100 × 88, pad 12, icon→text flush) */
     .m2-wcard--walmart .m2-wcard__metric {
-      flex: 0 0 100px; width: 100px; height: 88px; padding: 12px; gap: 8px;
+      flex: 0 0 100px; width: 100px; height: 88px; padding: 12px; gap: 0;
       border-radius: 7px; background: rgba(217, 217, 217, 0.2);
       justify-content: flex-start;
     }
     .m2-wcard--walmart .m2-wcard__metric:nth-child(2) { flex-basis: 99px; width: 99px; padding-right: 6px; }
     .m2-wcard--walmart .m2-wcard__metric-icon { width: 18px; height: 18px; }
-    .m2-wcard--walmart .m2-wcard__metric-label { font-size: 10px; line-height: normal; color: #fff; }
+    .m2-wcard--walmart .m2-wcard__metric-label { font-size: 10px; line-height: normal; color: #fff; word-break: break-word; }
+    .m2-wcard--walmart .m2-wcard__metric:first-child .m2-wcard__metric-label { max-width: 63px; }
     .m2-wcard--walmart .m2-wcard__cta {
       margin-top: 24px; font-size: 20px; line-height: 34px; font-weight: 700; gap: 8px;
       color: #ffc220;
@@ -800,7 +802,8 @@
       gap: 8px;
       background: rgba(255, 255, 255, 0.8);
       border-radius: 8px;
-      padding: 14px 10px;
+      /* Figma 602:145391 — 119× flex cards, 16px padding, 8px icon/text gap */
+      padding: 16px;
       height: 119px;
       min-height: 119px;
       box-sizing: border-box;
@@ -1071,7 +1074,7 @@
       font-family: var(--font-family-geist);
       font-weight: 400;
       font-size: 40px;
-      line-height: normal;
+      line-height: 46px; /* 2px tighter than ~48px normal */
       letter-spacing: 0;
       color: #ae3c86;
       margin: 0;
@@ -1787,6 +1790,7 @@
       .m2-wcard--walmart .m2-wcard__metric:nth-child(2) { flex-basis: auto; width: auto; padding-right: clamp(20px, 2.2vw, 32px); }
       .m2-wcard--walmart .m2-wcard__metric-icon { width: 40px; height: 40px; }
       .m2-wcard--walmart .m2-wcard__metric-label { font-size: clamp(13px, 1.1vw, 16px); }
+      .m2-wcard--walmart .m2-wcard__metric:first-child .m2-wcard__metric-label { max-width: none; }
       .m2-wcard--walmart .m2-wcard__cta {
         margin-top: 40px; font-size: 24px; line-height: 1.4;
       }
@@ -2007,6 +2011,7 @@
       .m2-wcard--walmart .m2-wcard__metric:nth-child(2) { flex: 0 0 205.333px; width: 205.333px; padding-right: 32px; }
       .m2-wcard--walmart .m2-wcard__metric-icon { width: 40px; height: 40px; }
       .m2-wcard--walmart .m2-wcard__metric-label { font-size: 16px; line-height: normal; color: #fff; }
+      .m2-wcard--walmart .m2-wcard__metric:first-child .m2-wcard__metric-label { max-width: none; }
       .m2-wcard--walmart .m2-wcard__cta {
         margin-top: 40px; font-size: 24px; line-height: 34px; font-weight: 700; gap: 8px;
         color: #ffc220;
@@ -2648,7 +2653,7 @@
                     </span>
                     <span class="m2-wcard__metric">
                       <span class="m2-wcard__metric-icon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-                      <span class="m2-wcard__metric-label">engagement for new benefits among members.</span>
+                      <span class="m2-wcard__metric-label">Increase use of new benefits among members.</span>
                     </span>
                     <span class="m2-wcard__metric">
                       <span class="m2-wcard__metric-icon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
