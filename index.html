@@ -779,7 +779,8 @@
       line-height: normal;
       color: #fff;
       margin: 0;
-      max-width: 354px;
+      max-width: none;
+      width: 100%;
     }
     .m2-about__plabel {
       font-family: var(--font-family-geist);
@@ -837,7 +838,12 @@
       flex-direction: column;
       align-items: flex-start;
       gap: 8px;
+      /* Full-bleed + 24px gutter (don't stack on .m2-wrap's page-margin inset) */
+      width: 100%;
+      max-width: none;
+      margin-inline: 0;
       padding-inline: 24px;
+      box-sizing: border-box;
     }
     .m2-ai__label {
       font-family: var(--font-family-geist);
@@ -856,7 +862,8 @@
       line-height: normal;
       color: #8d6273;
       margin: 0;
-      max-width: 354px;
+      max-width: none;
+      width: 100%;
     }
     .m2-ai__head strong {
       font-weight: 700;
@@ -1049,9 +1056,11 @@
       flex-direction: column;
       align-items: flex-start;
       gap: 31px;
-      width: min(354px, calc(100% - 48px));
-      margin-inline: auto;
-      padding-inline: 0;
+      width: 100%;
+      max-width: none;
+      margin-inline: 0;
+      padding-inline: 24px;
+      box-sizing: border-box;
     }
     .m2-footer__text {
       display: flex;
@@ -1522,6 +1531,11 @@
         gap: clamp(16px, 2.2vw, 32px);
         overflow: visible;
         scroll-snap-type: none;
+        width: min(var(--page-max), calc(100% - 2 * var(--page-margin-min)));
+        margin-inline: auto;
+        padding-inline: 0;
+      }
+      .m2-ai .m2-wrap {
         width: min(var(--page-max), calc(100% - 2 * var(--page-margin-min)));
         margin-inline: auto;
         padding-inline: 0;
@@ -2141,6 +2155,7 @@
         width: 594px;
         max-width: none;
         margin-inline: 0;
+        padding-inline: 0;
         gap: 35px;
         flex: 0 0 594px;
       }
