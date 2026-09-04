@@ -62,12 +62,12 @@
       --gutter: var(--page-margin-min);
     }
     html, body {
-      background: #1a191f;   /* dark so iOS over-scroll / bottom chrome sits over the footer's dark, not white */
+      background: #fff;   /* page ends on white Get-in-touch; avoid dark overscroll flash */
       color: var(--color-text-primary);
       font-family: var(--font-family-serif);
       -webkit-font-smoothing: antialiased;
     }
-    body { overflow-x: clip; background: #1a191f; }   /* clip (not hidden) so it doesn't break position:sticky */
+    body { overflow-x: clip; background: #fff; }   /* clip (not hidden) so it doesn't break position:sticky */
     html { scroll-behavior: smooth; }
     a { color: inherit; text-decoration: none; }
     button { font-family: inherit; cursor: pointer; border: none; background: none; }
@@ -77,7 +77,7 @@
       display: block;
       font-family: var(--font-family-sans);
       color: var(--brand-light);
-      background: var(--hero-bg);
+      background: #fff;   /* page is light from hero wave downward; hero paints its own bg */
       -webkit-tap-highlight-color: transparent;
     }
     .m2 *, .m2 *::before, .m2 *::after { box-sizing: border-box; }
@@ -444,25 +444,23 @@
 
       .m2-hero__wave { margin-top: 54px; flex-shrink: 0; }
 
-      /* AI: eyebrow "AI LEADERSHIP" sits ABOVE the heading on mobile (Figma) */
-      #m2-ai .m2-wrap { display: flex; flex-direction: column; align-items: flex-start; }
-      #m2-ai .m2-ai__sub { order: -1; font-size: 16px; line-height: 20px; margin: 0 0 24px; }
-      #m2-ai .m2-ai__head { margin-top: 0; }
-
       /* Swipe rail clips the card shadow (overflow-x:auto forces overflow-y:auto);
          pad vertically to reveal it, cancel with negative margins so layout/dots spacing is unchanged */
       #m2-testimonials .m2-rail { padding-block: 8px 16px; margin-block: -8px -16px; }
-      /* Testimonials pagination dots — pill for active (Figma 612:145792) */
-      #m2-testimonials [data-dots] {
+      /* Testimonials + AI pagination dots — pill for active (Figma 612:145792 / 612:145793) */
+      #m2-testimonials [data-dots],
+      #m2-ai [data-dots] {
         display: flex; justify-content: flex-start; align-items: center;
         gap: 4px; margin-top: 16px; padding-left: var(--gutter);
       }
-      #m2-testimonials .m2-dot {
+      #m2-testimonials .m2-dot,
+      #m2-ai .m2-dot {
         width: 6px; height: 6px; border-radius: 999px; background: #d6b2d7; transform: none;
         transition: width var(--duration-normal) var(--easing-default),
                     background-color var(--duration-normal) var(--easing-default);
       }
-      #m2-testimonials .m2-dot[aria-current="true"] { width: 12px; background: #a063a2; transform: none; }
+      #m2-testimonials .m2-dot[aria-current="true"],
+      #m2-ai .m2-dot[aria-current="true"] { width: 12px; background: #a063a2; transform: none; }
     }
 
     /* Pagination dots (shared by all carousels) */
@@ -711,135 +709,722 @@
     .m2-wcard__cta svg { width: 22px; height: 22px; flex: none; }
     .m2-sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 
-    /* ---- About / guiding principles ---- */
-    .m2-about { position: relative; background: #312f3c; color: var(--brand-light-2); overflow: hidden; padding-bottom: var(--section-gap); }
-    .m2-about__photo { position: relative; height: clamp(240px, calc(92vw - 100px), 320px);   /* wave raised 100px over the photo (Figma 368:4298 crop) */
-      background-image: url("assets/about-photo.png"); background-repeat: no-repeat; background-position: center 34%; background-size: 175%; }
-    .m2-about__photo::before { display: none; }   /* top-fade gradient removed per request */
-    /* Photo -> body scallop: same seamless tile as the hero wave, filled brand-purple */
-    .m2-about__wave { position: relative; z-index: 2; width: 100%; height: 23px; margin-top: -22px; pointer-events: none;
-      background-color: transparent;
-      background-image: url("assets/wave-tile-purple.svg"); background-repeat: repeat-x; background-position: left bottom; background-size: auto 100%;
-      box-shadow: 0 1px 0 0 #312f3c; }   /* close the fractional-pixel seam to the body below */
-    .m2-about__body { position: relative; z-index: 1; margin-top: 0; padding: clamp(20px, 6vw, 32px) var(--page-gutter) 0; }
-    .m2-about__intro { font-family: var(--font-family-serif); font-weight: 400; font-size: clamp(20px, 5.33vw, 40px); line-height: 1.4; color: var(--brand-light-2); }   /* matches .m2-ai__head — About + AI headlines share one size */
-    .m2-about__intro em { font-style: normal; color: var(--lello); }
-    .m2-about__intro-lg { display: none; }   /* longer bio shows on desktop only; mobile/tablet show -sm */
-    .m2-about__plabel { font-family: var(--font-family-serif); font-weight: 500; font-size: 14px; color: var(--brand-light-2); margin-top: 28px; margin-bottom: 12px; }
-    /* Mobile (Figma): 2×2 grid of small column cards; 4 shown (--deskonly hidden) */
-    .m2-principles { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
-    .m2-principle { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; background: var(--brand-core-1); border-radius: 8px; padding: 16px; min-height: 119px; }
-    .m2-principle__icon { width: 32px; height: 32px; flex: none; }
-    .m2-principle__text { font-family: var(--font-family-sans); font-weight: 400; font-size: 14px; line-height: 1.43; color: var(--brand-light-2); }
-    .m2-principle__text b { font-weight: 700; }
-    .m2-principle--deskonly { display: none; }
-
-    /* Wavy line divider between About and AI (Figma 376:3044) — tone-on-tone on the dark sections */
-    .m2-divider-wave { width: 100%; height: 13px;
-      background: url("assets/wave-line-divider.svg") left center / auto 100% repeat-x, #312f3c;
-      box-shadow: 0 1px 0 0 #312f3c, 0 -1px 0 0 #312f3c; }   /* close fractional-pixel seams top + bottom */
-
-    /* ---- AI leadership ---- */
-    .m2-ai { position: relative; background: #312f3c; color: var(--brand-light-2); padding-block: var(--section-gap); }
-    .m2-ai__head { font-family: var(--font-family-serif); font-weight: 400; font-size: clamp(20px, 5.33vw, 40px); line-height: 1.4; margin-top: 16px; }   /* Figma mobile 20px @375 */
-    .m2-ai__head em { font-style: normal; color: var(--lello); }
-    .m2-ai__sub { font-family: var(--font-family-serif); font-weight: 500; font-size: 14px; letter-spacing: 0.04em; color: var(--brand-light-2); margin-top: 14px; }
-    .m2-ai [data-carousel] { margin-top: clamp(36px, 9vw, 52px); }   /* breathing room: heading -> cards */
-    .m2-aicard {
-      position: relative; scroll-snap-align: start;
-      flex: 0 0 84%; max-width: 295px; height: 415px;
-      background: var(--brand-core-1); border-radius: var(--radius-md);
-      overflow: hidden; padding: 24px; display: flex; flex-direction: column;
+    /* ---- About / guiding principles (Figma 598:143389 / 598:143391 / 632:148048 mobile bg) ---- */
+    .m2-about {
+      position: relative;
+      background: #fbf7ff;
+      color: #fff;
+      overflow: hidden;
+      padding-bottom: 0;
     }
-    .m2-aicard::before { content: ""; position: absolute; inset: 0; background: url("assets/hero-texture.png") center bottom / cover no-repeat; opacity: 0.33; mix-blend-mode: overlay; pointer-events: none; z-index: 0; }   /* Figma layer is overlay@10%, but renders ~0.33 in-browser to match the comp */
-    .m2-aicard__illus { position: absolute; inset: 0; z-index: 0; background-repeat: no-repeat; background-position: 50% 73%; background-size: 166%; }   /* transparent art floats over texture (Figma 548px on 330 card) */
-    .m2-aicard__label { position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; font-family: var(--font-family-serif); font-weight: 500; font-size: 14px; color: var(--brand-light-2); }
-    .m2-aicard__label svg { width: 18px; height: 18px; }
-    .m2-aicard__desc { position: relative; z-index: 1; margin-top: auto; font-family: var(--font-family-serif); font-weight: 400; font-size: 12px; line-height: 1.55; color: var(--brand-light-2); }
-    .m2-ai__cta { margin-top: 28px; background: var(--action-primary); color: var(--on-action-primary); }
+    .m2-about__stage {
+      position: relative;
+    }
+    /* Mobile photo frame 402×337 (Figma 632:148048) */
+    .m2-about__photo {
+      position: relative;
+      z-index: 0;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 402 / 337;
+      background-image: url("assets/about-photo-mobile.jpg?v=21");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+    }
+    /* Soft fade into the lavender band above */
+    .m2-about__photo::before {
+      content: "";
+      position: absolute; inset: 0 0 auto 0; height: 112px;
+      background: linear-gradient(to bottom, #fbf7ff 0%, rgba(239,232,229,0) 100%);
+      pointer-events: none; z-index: 1;
+    }
+    /* Atmospheric body with soft scalloped top (Figma 632:148048) */
+    .m2-about__body {
+      position: relative;
+      z-index: 1;
+      margin-top: -10px; /* photo 337 / body @ 327 */
+      min-height: 558px;
+      padding: 44px 24px 80px;
+      background: transparent;
+      isolation: isolate;
+    }
+    .m2-about__body::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background-color: #7a3a6e;
+      background-image: url("assets/about-atmospheric-mobile.jpg?v=21");
+      background-size: cover;
+      background-position: 28% top;
+      background-repeat: no-repeat;
+      /* Figma mask 1800×1024 — crop to ~2.5 soft scallops on phone width */
+      -webkit-mask-image: url("assets/about-wave-mask-mobile.svg");
+      mask-image: url("assets/about-wave-mask-mobile.svg");
+      -webkit-mask-size: 1800px 100%;
+      mask-size: 1800px 100%;
+      -webkit-mask-position: left top;
+      mask-position: left top;
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+    }
+    .m2-about__intro {
+      font-family: var(--font-family-geist);
+      font-weight: 400;
+      font-size: 28px;
+      line-height: normal;
+      color: #fff;
+      margin: 0;
+      max-width: 354px;
+    }
+    .m2-about__plabel {
+      font-family: var(--font-family-geist);
+      font-weight: 600;
+      font-size: 20px;
+      line-height: normal;
+      color: #fff;
+      margin: 40px 0 16px;
+    }
+    /* Mobile: 2×2 glass cards (Figma 597:138992) */
+    .m2-principles {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+    .m2-principle {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 8px;
+      padding: 14px 10px;
+      height: 119px;
+      min-height: 119px;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+    .m2-principle__icon { width: 32px; height: 32px; flex: none; display: block; }
+    .m2-principle__icon--desk { display: none; }
+    .m2-principle__icon--mob { display: block; width: 32px; height: 32px; }
+    .m2-principle__text {
+      font-family: var(--font-family-geist);
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 20px;
+      color: #8d6273;
+      margin: 0;
+    }
+    .m2-principle__text--sm { font-size: 14px; }
 
-    /* ---- Footer / closing CTA ---- */
-    .m2-footer { position: relative; overflow: hidden; background: #272531; color: var(--brand-light-2); padding: clamp(120px, 48vw, 180px) var(--page-gutter) 0; }   /* Figma 368:5158 — GET IN TOUCH opened up: ~180px top @375 */
-    .m2-footer::before { content: ""; position: absolute; inset: 0; background: url("assets/contact-bg.png") center / cover no-repeat; opacity: 1; mix-blend-mode: normal; pointer-events: none; z-index: 0; }   /* Figma 376:2981 — #272531 + topographic texture baked in */
-    .m2-footer > * { position: relative; z-index: 1; }
-    .m2-footer__label { font-family: var(--font-family-serif); font-weight: 500; font-size: 14px; letter-spacing: 0.04em; color: var(--brand-light-2); }
-    .m2-footer__head { font-family: var(--font-family-serif); font-weight: 500; font-size: clamp(34px, 10.67vw, 42px); line-height: 1.3; letter-spacing: -0.023em; margin-top: 18px; }   /* Figma mobile 40px @375 */
-    .m2-footer__head span { display: block; color: var(--brand-light-2); }
-    .m2-footer__head em { display: block; font-style: normal; color: var(--lello); }
-    .m2-footer__body { font-family: var(--font-family-serif); font-weight: 400; font-size: 14px; line-height: 1.57; color: var(--brand-light-2); opacity: 0.9; margin-top: clamp(28px, 7vw, 44px); max-width: 300px; }
-    .m2-footer__cta { margin-top: clamp(36px, 9vw, 52px); border-radius: var(--radius-sm); }
-    .m2-footer__foot { position: relative; margin-top: clamp(120px, 48vw, 180px); margin-inline: calc(-1 * var(--page-gutter)); }   /* Figma 368:5158 — ~180px below the CTA @375 */
-    .m2-footer__wave { display: block; width: 100%; height: clamp(20px, 4.5vw, 26px);
-      background-color: transparent;
-      background-image: url("assets/wave-tile-darkest.svg"); background-repeat: repeat-x; background-position: left bottom; background-size: auto 100%;
-      box-shadow: 0 1px 0 0 #1a191f; }   /* close the fractional-pixel seam to the footer bar below */
-    /* Scalloped top edge: panel scallops up into the AI section (#312f3c) above. Figma 368:9680, mirrors the bottom wave. */
-    .m2-footer__wave--top { position: absolute; top: 0; left: 0; width: 100%; height: clamp(20px, 4.5vw, 26px); z-index: 1; pointer-events: none;
-      background-color: transparent;
-      background-image: url("assets/wave-tile-purple.svg"); background-repeat: repeat-x; background-position: left top; background-size: auto 100%;
-      transform: scaleY(-1);
-      box-shadow: 0 1px 0 0 #312f3c; }   /* #312F3C tile = AI-section color; flipped so it scallops down into the panel (mirrors the bottom wave). Shadow closes the seam to the AI section above (flipped -> renders visually up). */
-    .m2-footer__bar { position: relative; overflow: hidden; background: #1a191f; display: flex; align-items: flex-start; gap: 28px; padding: 26px var(--page-gutter) calc(clamp(96px, 22vh, 168px) + env(safe-area-inset-bottom, 0px)); font-family: var(--font-family-serif); font-size: 14px; }
-    /* Wildflower visual growing from the bottom of the darkest footer bar (Figma 380:4298) */
-    .m2-footer__flowers { position: absolute; left: 0; right: 0; bottom: 0; height: 209px; z-index: 0; pointer-events: none;
-      background: url("assets/footer-flowers.png") bottom center / auto 100% no-repeat; }
-    .m2-footer__bar a { text-decoration: underline; text-underline-offset: 3px; }
-    .m2-footer__copy { position: relative; z-index: 1; margin-left: auto; opacity: 0.3; text-decoration: none; }
+    /* About → AI: both sit on #fbf7ff; no dark divider */
+    .m2-divider-wave { display: none; }
+
+    /* ---- AI leadership (Figma 597:138373 desktop · 630:148031 mobile) ---- */
+    .m2-ai {
+      position: relative;
+      background: #fbf7ff;
+      color: #8d6273;
+      padding: 72px 0 64px;
+    }
+    .m2-ai .m2-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+      padding-inline: 24px;
+    }
+    .m2-ai__label {
+      font-family: var(--font-family-geist);
+      font-weight: 600;
+      font-size: 20px;
+      line-height: normal;
+      letter-spacing: 0;
+      text-transform: none;
+      color: #8d6273;
+      margin: 0;
+    }
+    .m2-ai__head {
+      font-family: var(--font-family-geist);
+      font-weight: 400;
+      font-size: 28px;
+      line-height: normal;
+      color: #8d6273;
+      margin: 0;
+      max-width: 354px;
+    }
+    .m2-ai__head strong {
+      font-weight: 700;
+      color: inherit;
+    }
+    .m2-ai [data-carousel] { margin-top: 40px; width: 100%; }
+    .m2-ai .m2-rail {
+      gap: 16px;
+      padding-inline: 24px;
+      scroll-padding-inline: 24px;
+    }
+    .m2-aicard {
+      position: relative;
+      scroll-snap-align: start;
+      flex: 0 0 336px;
+      width: 336px;
+      max-width: none;
+      height: auto;
+      box-sizing: border-box;
+      background: #f3eafc;
+      border-radius: 11px;
+      overflow: hidden;
+      padding: 32px 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 24px;
+    }
+    .m2-aicard__title {
+      font-family: var(--font-family-geist);
+      font-weight: 600;
+      font-size: 24px;
+      line-height: normal;
+      color: #ae3c86;
+      margin: 0;
+      width: 100%;
+    }
+    .m2-aicard__body {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      width: 100%;
+    }
+    .m2-aicard__illus {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 256 / 249;
+      background: #e9dcf6;
+      border-radius: 8px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .m2-aicard__desc {
+      font-family: var(--font-family-geist);
+      font-weight: 400;
+      font-size: 20px;
+      line-height: normal;
+      color: #8d6273;
+      margin: 0;
+    }
+    .m2-aicard__desc strong { font-weight: 700; }
+
+    /* Infrastructure: dimension line + overlapping rings */
+    .m2-aicard__infra-line { width: 181px; height: 25px; display: block; flex: none; }
+    .m2-aicard__venn {
+      position: relative;
+      width: 180px;
+      height: 120px;
+      flex: none;
+    }
+    .m2-aicard__venn img {
+      position: absolute;
+      top: 0;
+      width: 120px;
+      height: 120px;
+      display: block;
+      mix-blend-mode: multiply;
+    }
+    .m2-aicard__venn img:first-child { left: 0; }
+    .m2-aicard__venn img:last-child { left: 60px; }
+
+    /* Human in the loop: donut */
+    .m2-aicard__donut {
+      position: relative;
+      width: 152px;
+      height: 152px;
+      flex: none;
+    }
+    .m2-aicard__donut-ring,
+    .m2-aicard__donut-arc {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      transform: rotate(90deg);
+      transform-origin: center;
+    }
+    .m2-aicard__donut-ring {
+      width: 120px;
+      height: 120px;
+      inset: 16px;
+      mix-blend-mode: multiply;
+    }
+
+    /* Velocity: bar chart */
+    .m2-aicard__bars {
+      position: relative;
+      width: 136px;
+      height: 138px;
+      flex: none;
+    }
+    .m2-aicard__bars-y,
+    .m2-aicard__bars-x {
+      position: absolute;
+      background: rgba(222, 115, 110, 0.2);
+    }
+    .m2-aicard__bars-y { left: 0; top: 0; width: 4px; height: 138px; }
+    .m2-aicard__bars-x { left: 4px; bottom: 0; width: 132px; height: 4px; }
+    .m2-aicard__bar {
+      position: absolute;
+      bottom: 4px;
+      width: 20px;
+      border-radius: 4px;
+    }
+    .m2-aicard__bar--1 { left: 12px; height: 40px; background: #c04a94; }
+    .m2-aicard__bar--2 { left: 38px; height: 60px; background: #de736e; }
+    .m2-aicard__bar--3 { left: 64px; height: 80px; background: #c04a94; }
+    .m2-aicard__bar--4 { left: 90px; height: 100px; background: #de736e; }
+    .m2-aicard__bar--5 { left: 116px; height: 120px; background: #c04a94; }
+
+    /* Craft is king: equalizer bars */
+    .m2-aicard__craft {
+      position: relative;
+      width: 136px;
+      height: 116px;
+      flex: none;
+    }
+    .m2-aicard__craft-cols {
+      position: absolute;
+      left: 6px;
+      top: 0;
+      display: flex;
+      gap: 6px;
+      width: 123px;
+      height: 116px;
+      align-items: stretch;
+      justify-content: center;
+    }
+    .m2-aicard__craft-col {
+      width: 30px;
+      border-radius: 4px;
+      background: linear-gradient(to bottom, #de736e, #c04a94);
+    }
+    .m2-aicard__craft-line {
+      position: absolute;
+      left: 0;
+      width: 136px;
+      height: 4px;
+    }
+    .m2-aicard__craft-line--hi { top: 14px; background: #c04a94; }
+    .m2-aicard__craft-line--mid { top: 36px; background: rgba(192, 74, 148, 0.3); }
+    .m2-aicard__craft-line--lo { top: 58px; background: rgba(192, 74, 148, 0.3); }
+
+    .m2-ai__cta,
+    .m2-ai__sub { display: none; }
+
+    /* ---- Get in touch / closing (Figma 631:148044 mobile · 631:148038 desktop) ---- */
+    .m2-footer {
+      position: relative;
+      overflow: hidden;
+      background: #fff;
+      color: #8d6273;
+      /* Photo moves into sitefoot on mobile (635:148073); keep modest space before it */
+      padding: 76px 0 40px;
+    }
+    .m2-footer__inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 32px;
+      width: 100%;
+    }
+    .m2-footer__copyblock {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 31px;
+      width: min(354px, calc(100% - 48px));
+      margin-inline: auto;
+      padding-inline: 0;
+    }
+    .m2-footer__text {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+      width: 100%;
+    }
+    .m2-footer__label {
+      font-family: var(--font-family-geist);
+      font-weight: 600;
+      font-size: 20px;
+      line-height: normal;
+      letter-spacing: 0;
+      text-transform: none;
+      color: #8d6273;
+      margin: 0;
+    }
+    .m2-footer__head {
+      font-family: var(--font-family-geist);
+      font-weight: 400;
+      font-size: 40px;
+      line-height: normal;
+      letter-spacing: 0;
+      color: #ae3c86;
+      margin: 0;
+    }
+    .m2-footer__body {
+      font-family: var(--font-family-geist);
+      font-weight: 400;
+      font-size: 24px;
+      line-height: normal;
+      color: #8d6273;
+      margin: 0;
+      max-width: none;
+      opacity: 1;
+    }
+    .m2-footer__cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 11px;
+      width: 100%;
+      min-height: 60px;
+      margin-top: 0;
+      padding: 0 24px;
+      border-radius: 8px;
+      background: #ae3c86;
+      color: #fff !important;
+      font-family: var(--font-family-geist);
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 38px;
+    }
+    .m2 a.m2-footer__cta { color: #fff; }
+    .m2-footer__cta:hover { background: #9a3476; color: #fff !important; }
+    .m2 a.m2-footer__cta:hover { color: #fff; }
+    .m2-footer__cta .m2-btn__arrow { width: 22px; height: 22px; color: #fff; }
+    /* Mobile: portrait lives in site footer (Figma 635:148073) */
+    .m2-footer__photo { display: none; }
+    /* Legacy dark-footer hooks (kept inert so older overrides don't resurrect them) */
+    .m2-footer__wave,
+    .m2-footer__wave--top,
+    .m2-footer__foot,
+    .m2-footer__bar,
+    .m2-footer__flowers,
+    .m2-footer::before { display: none !important; }
+
+    /* ---- Site footer (Figma 635:148073 mobile · 599:144807 desktop) ---- */
+    .m2-sitefoot {
+      position: relative;
+      width: 100%;
+      height: auto;
+      overflow: hidden;
+      color: #fff;
+      background: transparent;
+      margin: 0;
+      padding: 0;
+    }
+    .m2-sitefoot__portrait {
+      position: relative;
+      display: block;
+      width: 100%;
+      aspect-ratio: 402 / 305;
+      overflow: hidden;
+      background: #e8e4ea;
+    }
+    .m2-sitefoot__portrait img {
+      position: absolute;
+      display: block;
+      pointer-events: none;
+      width: 101.37%;
+      height: 178.17%;
+      max-width: none;
+      left: -1%;
+      top: -44.06%;
+      object-fit: cover;
+      object-position: center top;
+    }
+    .m2-sitefoot__bar {
+      position: relative;
+      z-index: 1;
+      height: 134px;
+      margin-top: -34px; /* photo 305 → bar @ 271 */
+      overflow: hidden;
+    }
+    .m2-sitefoot__atmos {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      -webkit-mask-image: url("assets/footer/wave-mask-mobile.svg");
+      mask-image: url("assets/footer/wave-mask-mobile.svg");
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      -webkit-mask-size: 1800px 134px;
+      mask-size: 1800px 134px;
+      -webkit-mask-position: left top;
+      mask-position: left top;
+    }
+    .m2-sitefoot__atmos img {
+      position: absolute;
+      left: calc(100% * -1203 / 402);
+      top: calc(100% * -544 / 134);
+      width: calc(100% * 2401 / 402);
+      height: calc(100% * 1024 / 134);
+      max-width: none;
+      object-fit: cover;
+      display: block;
+    }
+    .m2-sitefoot__row {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      height: 100%;
+      width: 100%;
+      padding: 0 24px;
+      box-sizing: border-box;
+    }
+    .m2-sitefoot__socials {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    .m2-sitefoot__social {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 5px;
+      background: #fff;
+      flex-shrink: 0;
+      transition: transform 180ms var(--easing-default), opacity 180ms var(--easing-default);
+    }
+    .m2 a.m2-sitefoot__social { color: inherit; text-decoration: none; }
+    .m2-sitefoot__social:hover { opacity: 0.92; transform: translateY(-1px); }
+    .m2-sitefoot__social:focus-visible {
+      outline: 2px solid #fff;
+      outline-offset: 3px;
+    }
+    .m2-sitefoot__social img {
+      display: block;
+      width: 25px;
+      height: 25px;
+    }
+    .m2-sitefoot__legal {
+      font-family: var(--font-family-geist);
+      font-weight: 300;
+      font-size: 16px;
+      line-height: 48px;
+      color: #fff;
+      margin: 0;
+      text-align: right;
+      white-space: nowrap;
+    }
 
     /* =============================================================
-       PORTFOLIO GATE (mobile) — "Portfolio access"
+       CASE STUDY / PORTFOLIO GATE — centered modal
+       Figma 614:147247 mobile · 613:147219 desktop
     ============================================================= */
-    /* iOS-style bottom sheet (Figma "Global / Case Study Access") */
     .m2-gate {
-      position: fixed; inset: 0; z-index: 100;
-      display: flex; align-items: flex-end; justify-content: center;
-      background: color-mix(in srgb, #201e1a 56%, transparent);
-      opacity: 0; visibility: hidden;
-      transition: opacity 360ms var(--easing-default), visibility 360ms;
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      box-sizing: border-box;
+      /* Figma 612:146650 — dark scrim */
+      background: rgba(0, 0, 0, 0.82);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 320ms var(--easing-default), visibility 320ms;
     }
     .m2-gate.is-open { opacity: 1; visibility: visible; }
     .m2-gate__card {
       position: relative;
-      width: 100%; max-width: 440px;
-      background: var(--brand-light);
-      color: var(--brand-ink);
-      border-radius: 33px 33px 0 0;
-      padding: 44px 24px 40px;
-      box-shadow: 0 -8px 39px rgba(0,0,0,0.12);
-      max-height: 92dvh; overflow-y: auto;
-      transform: translateY(100%);
-      transition: transform 520ms cubic-bezier(0.16, 1, 0.3, 1);
+      width: 100%;
+      max-width: 354px;
+      box-sizing: border-box;
+      margin: 0;
+      padding: 64px 32px 48px;
+      border-radius: 16px;
+      color: #8c4964;
+      background: linear-gradient(139deg, #f8f0ff 0%, #ffe5e1 100%);
+      box-shadow: 0 20px 56px rgba(20, 16, 10, 0.18);
+      max-height: min(92dvh, 640px);
+      overflow-y: auto;
+      transform: translateY(12px) scale(0.98);
+      transition: transform 380ms cubic-bezier(0.16, 1, 0.3, 1), opacity 280ms var(--easing-default);
     }
     .m2-gate.is-open .m2-gate__card { transform: none; }
-    .m2-gate__card::before {            /* grabber handle */
-      content: ""; position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
-      width: 35px; height: 4px; border-radius: 2px; background: rgba(32,30,26,0.16);
+    .m2-gate__lock {
+      display: none; /* desktop-only in Figma case-study modal */
+      width: 40px;
+      height: 40px;
+      margin: 0 0 8px;
     }
-    .m2-gate__lock { width: 28px; height: 28px; color: var(--brand-accent-purple); }
-    .m2-gate__title { font-family: "Roboto Slab", var(--font-family-serif); font-weight: 500; font-size: 56px; line-height: 1.0; margin-top: 12px; letter-spacing: -0.01em; color: var(--brand-core-1); }
-    .m2-gate__sub { font-family: var(--font-family-sans); font-size: 14px; line-height: 22px; margin-top: 12px; color: var(--brand-core-1); max-width: 290px; }
-    .m2-gate__label { display: block; font-family: "Roboto Slab", var(--font-family-serif); font-weight: 500; font-size: 14px; line-height: 40px; letter-spacing: 0; text-transform: uppercase; margin-top: 24px; color: #524e47; }
+    .m2-gate__title {
+      font-family: var(--font-family-geist);
+      font-weight: 500;
+      font-size: 28px;
+      line-height: normal;
+      letter-spacing: 0;
+      color: #8c4964;
+      margin: 0;
+    }
+    .m2-gate__sub {
+      font-family: var(--font-family-geist);
+      font-weight: 400;
+      font-size: 14px;
+      line-height: normal;
+      color: #8c4964;
+      margin: 8px 0 0;
+      max-width: none;
+    }
+    .m2-gate__form,
+    .m2-cs__form {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      margin-top: 24px;
+      width: 100%;
+    }
+    .m2-gate__label {
+      display: block;
+      font-family: var(--font-family-geist);
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 40px;
+      letter-spacing: 0;
+      text-transform: uppercase;
+      color: #8c4964;
+      margin: 0;
+    }
+    .m2-gate__field {
+      position: relative;
+      margin-top: 0;
+      width: 100%;
+    }
     .m2-gate__input {
-      width: 100%; margin-top: 0; padding: 6px 0;
-      border: none; border-bottom: 1px solid #c5c1b8;
-      background: transparent; font-family: var(--font-family-sans); font-size: 16px; color: var(--brand-core-1);
+      width: 100%;
+      margin: 0;
+      padding: 0 0 8px;
+      border: none;
+      border-bottom: 1px solid #d4c4cb;
+      border-radius: 0;
+      background: transparent;
+      font-family: var(--font-family-geist);
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 22px;
+      color: #8c4964;
+      box-shadow: none;
       transition: border-color var(--duration-normal) var(--easing-default);
+      /* Mask via CSS so the field isn't a native password input — Safari/iCloud and
+         password managers only offer AutoFill on type=password. JS upgrades the input
+         to a masked text field where text-security is supported (else keeps password). */
+      -webkit-text-security: disc;
     }
-    .m2-gate__input::placeholder { color: #c5c1b8; }
-    .m2-gate__input:focus { outline: none; border-bottom-color: var(--brand-accent-purple); }
+    .m2-gate__input::placeholder { color: #a17e8c; opacity: 1; }
+    .m2-gate__input:focus {
+      outline: none;
+      border-bottom-color: #ae3c86;
+      box-shadow: none;
+    }
     .m2-gate__input.is-error { border-bottom-color: #c0392b; }
-    /* Mask via CSS so the field isn't a native password input — Safari/iCloud and
-       password managers only offer AutoFill on type=password. JS upgrades the input
-       to a masked text field where text-security is supported (else keeps password). */
-    .m2-gate__input { -webkit-text-security: disc; }
     .m2-gate__input.is-revealed { -webkit-text-security: none; }
-    .m2-gate__error { font-size: 13px; color: #c0392b; margin-top: 8px; height: 0; opacity: 0; overflow: hidden; transition: opacity var(--duration-normal); }
+    .m2-gate__reveal { display: none; } /* not in Figma modal; keep markup for a11y toggles unused */
+    .m2-gate__error {
+      font-family: var(--font-family-geist);
+      font-size: 13px;
+      color: #c0392b;
+      margin-top: 8px;
+      height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transition: opacity var(--duration-normal);
+    }
     .m2-gate__error.is-visible { height: auto; opacity: 1; }
-    .m2-gate__submit { margin-top: 28px; border-radius: 8px; }
-    .m2-gate__close { position: absolute; top: 20px; right: 24px; width: 32px; height: 32px; color: var(--brand-core-1); z-index: 1; }
-    .m2-gate__note { font-size: 14px; line-height: 1.5; color: var(--brand-accent-purple); margin-top: 16px; height: 0; opacity: 0; overflow: hidden; transition: opacity var(--duration-normal); }
+    .m2-gate__note {
+      font-family: var(--font-family-geist);
+      font-size: 14px;
+      line-height: 1.5;
+      color: #8c4964;
+      margin-top: 16px;
+      height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transition: opacity var(--duration-normal);
+    }
     .m2-gate__note.is-visible { height: auto; opacity: 1; }
-    a.m2-gate__reach { display: block; text-align: center; margin-top: 24px; font-family: "Roboto Slab", var(--font-family-serif); font-weight: 400; font-size: 14px; line-height: 28px; color: var(--brand-accent-purple); text-decoration: underline; text-underline-offset: 3px; }
+    .m2-gate__submit {
+      margin-top: 24px;
+      width: 100%;
+      min-height: 50px;
+      height: 50px;
+      padding: 0 24px;
+      gap: 11px;
+      border: none;
+      border-radius: 8px;
+      background: #ae3c86;
+      color: #fff;
+      font-family: var(--font-family-geist);
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 38px;
+      letter-spacing: 0;
+      box-shadow: none;
+    }
+    .m2-gate__submit:hover { background: #9a3476; color: #fff; }
+    .m2-gate__submit:active { transform: scale(0.985); background: #8a2e69; }
+    .m2-gate__submit-icon {
+      display: block;
+      width: 24px;
+      height: 24px;
+      flex: none;
+    }
+    .m2-gate__close {
+      position: absolute;
+      top: 24px;
+      right: 17px;
+      width: 32px;
+      height: 32px;
+      padding: 0;
+      border: none;
+      background: transparent;
+      color: #1e1e1e;
+      cursor: pointer;
+      z-index: 1;
+    }
+    .m2-gate__close img,
+    .m2-gate__close svg {
+      display: block;
+      width: 32px;
+      height: 32px;
+    }
+    a.m2-gate__reach {
+      display: block;
+      text-align: center;
+      margin-top: 24px;
+      font-family: var(--font-family-geist);
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 22px;
+      color: #8c4964;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    a.m2-gate__reach:hover { color: #ae3c86; }
 
     /* =============================================================
        SCROLL REVEAL (progressive enhancement; off by default)
@@ -871,18 +1456,15 @@
         --section-gap: clamp(88px, 11vw, 116px);
         --m-content-max: var(--page-max);
       }
-      /* Carousels become static grids on tablet+ */
-      #m2-testimonials .m2-rail,
-      #m2-ai .m2-rail {
+      /* Carousels become static grids on tablet+ — AI stays a swipe carousel until desktop */
+      #m2-testimonials .m2-rail {
         display: grid; gap: 24px; overflow: visible;
         scroll-snap-type: none; max-width: var(--m-content-max); margin-inline: auto;
         padding-inline: var(--gutter);
       }
       #m2-testimonials .m2-rail { grid-template-columns: repeat(2, 1fr); }
-      #m2-ai .m2-rail { grid-template-columns: repeat(2, 1fr); }
-      #m2-testimonials [data-dots], #m2-ai [data-dots], .m2-stats [data-dots] { display: none; }
-      .m2-tcard, .m2-aicard { flex: none; max-width: none; width: auto; margin-right: 0; }
-      .m2-aicard { height: clamp(380px, 46vw, 440px); }
+      #m2-testimonials [data-dots], .m2-stats [data-dots] { display: none; }
+      .m2-tcard { flex: none; max-width: none; width: auto; margin-right: 0; }
       .m2-section__label { max-width: var(--m-content-max); margin-inline: auto; padding-inline: var(--gutter); }
 
       /* Hero stats -> 3-up row (overridden at 1024) */
@@ -892,7 +1474,7 @@
       .m2-work-list { display: flex; flex-direction: column; gap: 32px; }
 
       /* Buttons that were full-width become content-width where it reads better */
-      .m2-hero__cta, .m2-ai__cta, .m2-footer__cta { width: 100%; max-width: 360px; min-width: 0; }
+      .m2-hero__cta { width: 100%; max-width: 360px; min-width: 0; }
       .m2-hero__cta { width: auto; max-width: none; }
     }
 
@@ -928,37 +1510,124 @@
       /* Hero -> editorial, generous — detailed specs in Figma desktop block below */
       .m2-hero { padding-top: clamp(48px, 7vw, 104px); }
 
-      /* Testimonials + AI -> 3-up / 4-up */
+      /* Testimonials -> 3-up; AI -> 4-up static grid (Figma 597:138373) */
       #m2-testimonials .m2-rail { grid-template-columns: repeat(3, 1fr); gap: 28px; }
-      #m2-ai .m2-rail { grid-template-columns: repeat(4, 1fr); gap: 20px; }
-      .m2-aicard { height: clamp(400px, 30vw, 460px); }
+      #m2-ai .m2-rail {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: clamp(16px, 2.2vw, 32px);
+        overflow: visible;
+        scroll-snap-type: none;
+        width: min(var(--page-max), calc(100% - 2 * var(--page-margin-min)));
+        margin-inline: auto;
+        padding-inline: 0;
+      }
+      #m2-ai [data-dots] { display: none; }
+      #m2-ai .m2-aicard {
+        flex: none;
+        width: auto;
+        max-width: none;
+        height: auto;
+      }
 
       /* Leadership case studies: hover lift handled in the pointer block below */
       .m2-wcard:hover { transform: translateY(-4px); }
 
-      /* About -> 2-column editorial (photo + content) */
-      .m2-about { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: clamp(48px, 5vw, 96px);
-        align-items: center;
-        width: min(var(--page-max), calc(100% - 2 * var(--page-margin-min)));
-        margin-inline: auto;
-        padding: var(--section-gap) 0; overflow: visible; }
-      .m2-about__photo { height: auto; aspect-ratio: 4 / 5; border-radius: var(--radius-2xl); overflow: hidden; background-size: cover; background-position: center 30%; }
-      .m2-about__photo::before, .m2-about__photo::after { display: none; }
-      .m2-about__wave { display: none; }              /* scallop is a mobile vertical-transition device */
-      .m2-about__body { margin: 0; padding: 0; }
-      .m2-about__intro { font-size: clamp(1.5rem, 1.1rem + 1.1vw, 2rem); line-height: 1.35; }
-      .m2-about__plabel { margin-top: 36px; }
-      .m2-principle { padding: 16px 20px; }
+      /* About / principles: stay stacked (photo → scallop → content) through tablet */
+      .m2-about {
+        display: block;
+        width: 100%;
+        max-width: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+      .m2-about__photo {
+        position: relative;
+        z-index: 0;
+        height: clamp(420px, 52vw, 620px);
+        aspect-ratio: auto;
+        border-radius: 0;
+        background-image: url("assets/about-photo.jpg?v=22");
+        background-size: cover;
+        background-position: center top;
+      }
+      .m2-about__photo::before {
+        content: "";
+        position: absolute; inset: 0 0 auto 0;
+        display: block;
+        height: clamp(112px, 14vw, 200px);
+        background: linear-gradient(to bottom, #fbf7ff 0%, rgba(239,232,229,0) 100%);
+        pointer-events: none; z-index: 1;
+      }
+      .m2-about__body {
+        position: relative;
+        z-index: 1;
+        margin-top: -10px;
+        padding: clamp(100px, 12vw, 130px) clamp(32px, 5vw, 80px) clamp(80px, 10vw, 120px);
+        background: transparent;
+        isolation: isolate;
+        -webkit-mask-image: none;
+        mask-image: none;
+      }
+      .m2-about__body::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+        background-color: #5a2a6e;
+        background-image: url("assets/about-atmospheric.jpg?v=22");
+        background-size: calc(100% * 2401 / 1800) 100%;
+        background-position: 100% top;
+        background-repeat: no-repeat;
+        -webkit-mask-image: url("assets/about-wave-mask-desktop.svg");
+        mask-image: url("assets/about-wave-mask-desktop.svg");
+        -webkit-mask-size: 100% 100%;
+        mask-size: 100% 100%;
+        -webkit-mask-position: center top;
+        mask-position: center top;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+      }
+      .m2-about__intro {
+        font-weight: 300;
+        font-size: clamp(36px, 5vw, 56px);
+        line-height: 1.15;
+        max-width: 28ch;
+      }
+      .m2-about__plabel {
+        font-size: clamp(24px, 2.8vw, 32px);
+        margin: clamp(48px, 6vw, 80px) 0 24px;
+      }
+      .m2-principles {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+      }
+      .m2-principle {
+        height: auto;
+        min-height: 200px;
+        padding: 28px;
+        gap: 16px;
+        border-radius: 11px;
+        overflow: visible;
+      }
+      .m2-principle__icon--desk { display: block; width: 48px; height: 48px; }
+      .m2-principle__icon--mob { display: none; }
+      .m2-principle__text {
+        font-weight: 300;
+        font-size: clamp(22px, 2.4vw, 28px);
+        line-height: 1.25;
+      }
+      .m2-principle__text--sm { font-size: inherit; }
 
       /* AI heading width */
-      .m2-ai__head { max-width: 18ch; }
-      .m2-ai__cta { min-width: 320px; }
+      .m2-ai__head { max-width: none; }
 
       /* Footer -> large closing statement, constrained measure */
-      .m2-footer__head { font-size: clamp(3rem, 3vw + 1.5rem, 4.5rem); max-width: 16ch; }
-      .m2-footer__body { font-size: 18px; max-width: 46ch; }
-      .m2-footer__cta { min-width: 340px; }
-      .m2-footer__bar { padding-inline: var(--page-gutter); }
+      /* Footer -> large closing statement */
+      .m2-footer__head { max-width: none; }
 
       /* Richer hover affordances on pointer devices */
       .m2-btn:hover { transform: translateY(-1px); }
@@ -978,15 +1647,9 @@
       .m2-wcard { transition: transform 420ms var(--easing-out), box-shadow 420ms var(--easing-out); }
       .m2-wcard:hover { transform: translateY(-6px); box-shadow: 0 18px 44px rgba(20,16,10,0.20); }
 
-      /* AI cards: subtle lift + art zoom */
+      /* AI cards: subtle lift */
       .m2-aicard { transition: transform 420ms var(--easing-out), box-shadow 420ms var(--easing-out); }
-      .m2-aicard:hover { transform: translateY(-6px); box-shadow: 0 18px 44px rgba(0,0,0,0.28); }
-      .m2-aicard__illus { transition: transform 700ms var(--easing-out); }
-      .m2-aicard:hover .m2-aicard__illus { transform: scale(1.05); }
-
-      /* Principle cards: lift + soft shadow (no color change; matches the AI cards) */
-      .m2-about .m2-principle { transition: transform 320ms var(--easing-out), box-shadow 320ms var(--easing-out); }
-      .m2-about .m2-principle:hover { transform: translateY(-6px); box-shadow: 0 18px 44px rgba(0,0,0,0.28); }
+      .m2-aicard:hover { transform: translateY(-4px); box-shadow: 0 14px 32px rgba(140, 73, 100, 0.14); }
 
       /* Buttons: lift + shadow */
       .m2-btn { transition: background-color var(--duration-normal) var(--easing-default), transform 240ms var(--easing-out), box-shadow 240ms var(--easing-out); }
@@ -1069,7 +1732,7 @@
       .m2-wcard--realtor .m2-wcard__metric-label { font-size: clamp(13px, 1.1vw, 16px); }
       .m2-wcard--realtor .m2-wcard__cta { margin-top: 40px; font-size: 24px; line-height: 1.4; }
 
-      /* Walmart desktop collage — three photos (Figma 599:144488) */
+      /* Walmart desktop collage — three photos over blue (Figma 599:144488) */
       .m2-wcard--walmart {
         --card-bg: linear-gradient(168deg, #0153e1 0%, #003ba0 100%);
         min-height: clamp(440px, 47vw, 675px);
@@ -1078,11 +1741,14 @@
       .m2-wcard--walmart .m2-wcard__media {
         padding: 0; height: auto !important; align-self: stretch;
         flex: 0 0 52.9%; position: relative; overflow: hidden;
+        background: transparent;
       }
       .m2-wcard--walmart .m2-wcard__photo { display: none; }
       .m2-wcard--walmart .m2-wcard__collage-grid {
         display: block;
         position: absolute; inset: 0;
+        background: transparent;
+        pointer-events: none;
       }
       .m2-wcard--walmart .m2-wcard__shot {
         display: block; position: absolute;
@@ -1348,11 +2014,14 @@
       .m2-wcard--walmart .m2-wcard__media {
         flex: 1 1 0; min-width: 0; height: auto !important;
         position: relative; overflow: hidden;
+        background: transparent;
       }
+      .m2-wcard--walmart .m2-wcard__photo { display: none; }
       .m2-wcard--walmart .m2-wcard__collage-grid {
         display: block; position: absolute; inset: 0; pointer-events: none;
+        background: transparent;
       }
-      /* Absolute collage within media — Figma 599:144488 proportions */
+      /* Absolute collage within media — Figma 599:144488; gaps show card blue */
       .m2-wcard--walmart .m2-wcard__shot {
         position: absolute; display: block; object-fit: cover; border-radius: 16px;
       }
@@ -1448,156 +2117,335 @@
       /* ---- Case Studies label sizing (cards keep their real branded design) ---- */
       #m2-work .m2-section__label { font-size: 40px; line-height: 1.15; letter-spacing: 0; color: #8d6273; margin-bottom: 40px; }
 
-      /* ---- Closing CTA (365:5344): two-tone 80px statement ---- */
-      /* Center a 1280 content band via the footer padding, then left-align every child within it
-         so label/head/body/cta share ONE left edge (matches the About grid). Figma 368:9689. */
-      .m2-footer { padding-top: clamp(104px, 12.5vw, 180px); padding-inline: var(--page-gutter); }
-      .m2-footer__label,
-      .m2-footer__head,
-      .m2-footer__body,
-      .m2-footer__cta { margin-inline: 0; max-width: 100%; }
-      .m2-footer__label { font-size: 24px; line-height: 40px; letter-spacing: 0; }
-      .m2-footer__head { font-size: clamp(48px, 6.6vw, 80px); line-height: 1.25; letter-spacing: -0.01em; margin-top: 32px; max-width: 815px; }
-      .m2-footer__head em { color: var(--lello); }
+      /* ---- Get in touch (Figma 631:148038) ---- */
+      .m2-footer {
+        padding: 124px max(0px, calc((100% - 1440px) / 2)) 120px;
+        background: #fff;
+      }
+      .m2-footer__inner {
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 75px;
+        width: 100%;
+        max-width: 1440px;
+        margin-inline: 0;
+        padding-inline: 0;
+        box-sizing: border-box;
+      }
+      .m2-footer__copyblock {
+        width: 594px;
+        max-width: none;
+        margin-inline: 0;
+        gap: 35px;
+        flex: 0 0 594px;
+      }
+      .m2-footer__text { gap: 10px; }
+      .m2-footer__label {
+        font-size: 40px;
+        line-height: normal;
+        letter-spacing: 0;
+        color: #8c4964;
+        margin: 0;
+        max-width: none;
+      }
+      .m2-footer__head {
+        font-weight: 300;
+        font-size: 72px;
+        line-height: 82px;
+        letter-spacing: 0;
+        color: #ae3c86;
+        margin: 0;
+        max-width: none;
+      }
       .m2-footer__body {
-        font-family: var(--font-family-sans); font-weight: 400;
-        font-size: 24px; line-height: 41px; opacity: 1; color: var(--brand-light-2);
-        margin-top: 32px; max-width: 532px;
+        font-family: var(--font-family-geist);
+        font-weight: 300;
+        font-size: 32px;
+        line-height: 48px;
+        color: #8c4964;
+        max-width: 489px;
+        margin: 0;
+        opacity: 1;
       }
-      .m2-footer__cta { width: 327px; min-width: 0; margin-top: 56px; margin-bottom: 200px; border-radius: 8px; }
-
-      /* ---- Footer bar (365:5366): full-bleed #1a191f, links left, © right @30% ---- */
-      .m2-footer__foot { width: 100vw; margin-inline: calc(50% - 50vw); margin-top: 0; }   /* full-bleed; CTA owns the gap below it (200px) */
-      .m2-footer__bar {
-        padding: 36px var(--page-gutter);
-        gap: 32px; font-size: 14px; min-height: 100px; align-items: center;
+      .m2-footer__cta {
+        width: 350px;
+        min-width: 0;
+        max-width: 100%;
+        margin: 0;
       }
-      .m2-footer__bar a { color: var(--brand-light-2); }
-      .m2-footer__copy { font-size: 14px; opacity: 0.3; }
-      .m2-footer__flowers { display: none; }   /* flowers are the mobile footer treatment; desktop bar is a thin links/© strip */
+      .m2-footer__photo {
+        position: relative;
+        display: block;
+        flex: 0 0 662px;
+        width: 662px;
+        max-width: none;
+        height: 700px;
+        aspect-ratio: auto;
+        border-radius: 40px;
+        overflow: hidden;
+        margin-left: auto;
+        background: #e8e4ea;
+      }
+      .m2-footer__photo picture,
+      .m2-footer__photo img {
+        display: block;
+        position: absolute;
+        pointer-events: none;
+      }
+      .m2-footer__photo picture { inset: 0; overflow: hidden; }
+      /* Hi-res profile in 662×700 frame */
+      .m2-footer__photo img {
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        max-width: none;
+        left: 0;
+        top: 0;
+        object-fit: cover;
+        object-position: center 18%;
+      }
 
-      /* ---- About (365:5094): photo band + heading + 6-principle grid ---- */
+      /* ---- Site footer bar desktop (Figma 599:144807) ---- */
+      .m2-sitefoot {
+        height: auto;
+      }
+      .m2-sitefoot__portrait { display: none; }
+      .m2-sitefoot__bar {
+        height: 134px;
+        margin-top: 0;
+      }
+      .m2-sitefoot__atmos {
+        -webkit-mask-image: url("assets/footer/wave-mask-desktop.svg");
+        mask-image: url("assets/footer/wave-mask-desktop.svg");
+        -webkit-mask-size: 100% 100%;
+        mask-size: 100% 100%;
+        -webkit-mask-position: center top;
+        mask-position: center top;
+      }
+      .m2-sitefoot__atmos img {
+        /* Figma desktop placement: 2401×1024 at (-513, -544) in 1800×134 */
+        left: calc(100% * -513 / 1800);
+        top: calc(100% * -544 / 134);
+        width: calc(100% * 2401 / 1800);
+        height: calc(100% * 1024 / 134);
+      }
+      .m2-sitefoot__row {
+        padding: 0 clamp(48px, 10vw, 180px);
+      }
+      .m2-sitefoot__socials { gap: 24px; }
+      .m2-sitefoot__social {
+        width: 64px;
+        height: 64px;
+        border-radius: 8px;
+      }
+      .m2-sitefoot__social img {
+        width: 40px;
+        height: 40px;
+      }
+      .m2-sitefoot__legal {
+        font-size: 24px;
+        line-height: 48px;
+      }
+    }
+
+    /* Narrower desktops: keep two-column, allow proportional shrink */
+    @media (min-width: 1024px) and (max-width: 1439.98px) {
+      .m2-footer { padding-inline: var(--page-margin-min); }
+      .m2-footer__inner { gap: clamp(28px, 4vw, 60px); }
+      .m2-footer__copyblock { flex: 1 1 420px; width: auto; min-width: 0; }
+      .m2-footer__photo { flex: 0 1 480px; width: auto; min-width: 280px; height: auto; aspect-ratio: 662 / 700; }
+      .m2-footer__head { font-size: clamp(48px, 5.2vw, 64px); line-height: 1.14; }
+      .m2-footer__body { font-size: clamp(22px, 2.4vw, 28px); line-height: 1.45; }
+    }
+
+    @media (min-width: 1024px) {
+      /* ---- About / guiding principles desktop (Figma 632:148049) ---- */
       .m2-about { display: block; max-width: none; margin: 0; padding: 0; overflow: hidden; }
-      .m2-about__photo { display: block; width: 100%; height: clamp(280px, calc(40vw - 100px), 460px); aspect-ratio: auto; border-radius: 0; background-size: cover; background-position: center 32%; }   /* wave raised 100px over the photo (Figma 368:4298 crop) */
-      .m2-about__photo::before { display: none; }   /* top-fade gradient removed per request */
-      .m2-about__photo::after { display: none; }
-      .m2-about__wave { display: block; height: 23px; margin-top: -22px; }
+      .m2-about__photo {
+        position: relative; z-index: 0;
+        display: block; width: 100%; height: 789px;
+        aspect-ratio: auto; border-radius: 0;
+        background-image: url("assets/about-photo.jpg?v=22");
+        background-size: cover; background-position: center top;
+      }
+      .m2-about__photo::before {
+        content: "";
+        position: absolute; inset: 0 0 auto 0;
+        display: block; height: 335px;
+        background: linear-gradient(to bottom, #fbf7ff 0%, rgba(239,232,229,0) 100%);
+        pointer-events: none; z-index: 1;
+      }
       .m2-about__body {
+        position: relative; z-index: 1;
+        width: 100%;
+        margin: -10px 0 0; /* photo 789 / atmos @ 779 */
+        min-height: 1024px;
+        padding: clamp(110px, 9vw, 140px) var(--page-gutter) 120px;
+        box-sizing: border-box;
+        background: transparent;
+        isolation: isolate;
+        -webkit-mask-image: none;
+        mask-image: none;
+      }
+      .m2-about__body::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+        background-color: #5a2a6e;
+        background-image: url("assets/about-atmospheric.jpg?v=22");
+        /* Figma: 2401×1024 image at x=-601 in 1800 frame.
+           With size 2401/1800, background-position 100% places left at -601/1800. */
+        background-size: calc(100% * 2401 / 1800) 100%;
+        background-position: 100% top;
+        background-repeat: no-repeat;
+        -webkit-mask-image: url("assets/about-wave-mask-desktop.svg");
+        mask-image: url("assets/about-wave-mask-desktop.svg");
+        -webkit-mask-size: 100% 100%;
+        mask-size: 100% 100%;
+        -webkit-mask-position: center top;
+        mask-position: center top;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+      }
+      .m2-about__intro {
+        font-family: var(--font-family-geist);
+        font-weight: 300;
+        font-size: 72px;
+        line-height: 82px;
+        max-width: none;
+        color: #fff;
+      }
+      .m2-about__plabel {
+        font-family: var(--font-family-geist);
+        font-weight: 600;
+        font-size: 40px;
+        line-height: normal;
+        margin: 80px 0 40px;
+        color: #fff;
+      }
+      .m2-about .m2-principles {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        gap: 32px;
+        height: 374px;
+      }
+      .m2-about .m2-principle {
+        flex: 1 1 0;
+        min-width: 0;
+        height: 100%;
+        min-height: 0;
+        padding: 40px;
+        gap: 24px;
+        border-radius: 11.391px;
+        background: rgba(255, 255, 255, 0.8);
+      }
+      .m2-about .m2-principle__icon--desk { display: block; width: 60px; height: 60px; }
+      .m2-about .m2-principle__icon--mob { display: none; }
+      .m2-about .m2-principle__text {
+        font-family: var(--font-family-geist);
+        font-weight: 300;
+        font-size: 40px;
+        line-height: 48px;
+        color: #8d6273;
+        max-width: 234px;
+      }
+      .m2-about .m2-principle__text--sm {
+        font-size: 40px;
+        line-height: 48px;
+      }
+
+      /* ---- AI Leadership (Figma 597:138373) ---- */
+      #m2-ai { padding: 120px 0 160px; }
+      #m2-ai .m2-wrap {
         width: min(var(--page-max), calc(100% - 2 * var(--page-margin-min)));
         margin-inline: auto;
         padding-inline: 0;
-        padding-block: clamp(48px, 6vw, 96px) var(--section-gap);
+        gap: 24px;
       }
-      .m2-about__intro { font-family: var(--font-family-serif); font-weight: 400; font-size: 48px; line-height: 60px; max-width: 1100px; }
-      .m2-about__intro em { color: var(--lello); }
-      .m2-about__intro-sm { display: none; }   /* desktop swaps to the longer bio */
-      .m2-about__intro-lg { display: inline; }
-      .m2-about__plabel { font-size: 24px; line-height: 40px; margin-top: 40px; margin-bottom: 24px; }
-      .m2-about .m2-principles { display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; }
-      .m2-about .m2-principle { flex: 0 1 calc((100% - 80px) / 3); flex-direction: column; align-items: flex-start; gap: 32px; min-height: 280px; padding: 60px 40px 48px; border-radius: 8px; background: var(--brand-core-1); }
-      .m2-about .m2-principle--deskonly { display: flex; }   /* 5th card shows on desktop (3+2 centered) */
-      .m2-about .m2-principle__icon { width: 60px; height: 60px; }
-      .m2-about .m2-principle__text { font-family: var(--font-family-sans); font-weight: 300; font-size: 36px; line-height: 40px; color: var(--brand-light-2); }
-
-      /* ---- AI Leadership (368:9629): heading + sub + 4 cards 330×415, 1440 band ---- */
-      #m2-ai { padding-inline: 0; }
-      #m2-ai .m2-wrap { width: min(var(--page-max), calc(100% - 2 * var(--page-margin-min))); margin-inline: auto; padding-inline: 0; }
-      #m2-ai .m2-ai__head { font-family: var(--font-family-serif); font-weight: 400; font-size: 48px; line-height: 60px; margin-top: 0; max-width: 1100px; }   /* line-height 60px matches .m2-about__intro + Figma 368:9633 */
-      #m2-ai .m2-ai__head em { color: var(--lello); }
-      #m2-ai .m2-ai__sub { font-size: 24px; line-height: 40px; letter-spacing: 0; margin-top: 40px; }
-      #m2-ai [data-carousel] { margin-top: 40px; }
-      #m2-ai .m2-rail { width: min(var(--page-max), calc(100% - 2 * var(--page-margin-min))); margin-inline: auto; padding-inline: 0 !important; grid-template-columns: repeat(4, 1fr); gap: 40px; }
+      #m2-ai .m2-ai__label {
+        font-size: 40px;
+        line-height: normal;
+        font-weight: 600;
+        color: #8c4964;
+      }
+      #m2-ai .m2-ai__head {
+        font-family: var(--font-family-geist);
+        font-weight: 300;
+        font-size: 52px;
+        line-height: 62px;
+        color: #ae3c86;
+        max-width: none;
+      }
+      #m2-ai .m2-ai__head strong { font-weight: 300; }
+      #m2-ai [data-carousel] { margin-top: 80px; }
+      #m2-ai .m2-rail {
+        width: min(var(--page-max), calc(100% - 2 * var(--page-margin-min)));
+        margin-inline: auto;
+        padding-inline: 0 !important;
+        gap: 32px;
+      }
       #m2-ai .m2-aicard {
-        height: 415px; border-radius: 8px; background: var(--brand-core-1); overflow: hidden;
-        padding: 24px 25px 36px 24px;
+        flex: 1 1 0;
+        width: auto;
+        min-width: 0;
+        max-width: 336px;
+        padding: 32px 40px;
+        border-radius: 11px;
+        background: #f3eafc;
+        height: auto;
       }
-      /* illustration framing comes from base .m2-aicard__illus (transparent art over texture) */
-      #m2-ai .m2-aicard__label { font-size: 14px; line-height: 28px; font-weight: 500; }
-      #m2-ai .m2-aicard__desc { font-size: 20px; line-height: 28px; font-weight: 400; }
-      /* CTA: card-width (330), aligned to the right under card 4 (Figma 368:9672) */
-      #m2-ai .m2-ai__cta { display: flex; width: 330px; min-width: 0; max-width: none; margin: 40px 0 0 auto; }
+      #m2-ai .m2-aicard__title { font-size: 24px; color: #ae3c86; }
+      #m2-ai .m2-aicard__desc { font-size: 20px; color: #8c4964; }
     }
 
-    /* About at the Figma reference scale (1440 content frame, 452px cards) */
+    /* About at the Figma reference scale (1800 photo / 1440 content) */
     @media (min-width: 1440px) {
-      .m2-about__photo { height: 486px; }
-      .m2-about__intro { max-width: none; }
+      .m2-about__photo { height: 789px; }
+      .m2-about__photo::before { height: 335px; }
+      .m2-about__body { padding-inline: max(var(--page-gutter), calc((100% - var(--page-max)) / 2)); }
       #m2-ai .m2-ai__head { max-width: none; }
     }
 
     /* =============================================================
-       PASSWORD GATES — DESKTOP MODAL (>= 1024)
-       Mobile keeps the iOS bottom sheet above. On desktop both the
-       portfolio gate and the case-study gate become centered modals
-       with desktop-grade password fields: a boxed input with a focus
-       ring and a show/hide reveal toggle (pointer + keyboard).
+       PASSWORD GATES — DESKTOP (Figma 613:147219)
     ============================================================= */
-    .m2-gate__field { position: relative; }
-    .m2-gate__reveal { display: none; }   /* reveal toggle is a desktop affordance */
-
     @media (min-width: 1024px) {
-      /* Bottom sheet -> centered modal, over a blurred scrim */
       .m2-gate {
-        align-items: center;
         padding: 40px;
-        background: color-mix(in srgb, #201e1a 62%, transparent);
-        backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+        background: rgba(0, 0, 0, 0.82);
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
       }
       .m2-gate__card {
-        width: 100%; max-width: 468px;
-        border-radius: 20px;
-        padding: 48px 48px 44px;
-        max-height: min(88dvh, 760px);
-        box-shadow: 0 24px 64px rgba(20,16,10,0.28), 0 2px 8px rgba(20,16,10,0.12);
-        transform: translateY(10px) scale(0.97);
-        transition: transform 380ms var(--easing-out), opacity 280ms var(--easing-out);
+        max-width: 420px;
+        padding: 80px 32px 48px;
+        max-height: min(88dvh, 560px);
       }
-      .m2-gate.is-open .m2-gate__card { transform: none; }
-      .m2-gate__card::before { display: none; }      /* no grabber handle on desktop */
-
-      /* Tighter typographic scale for a centered dialog */
-      .m2-gate__title { font-size: 34px; margin-top: 16px; }
-      .m2-gate__sub { font-size: 15px; line-height: 24px; max-width: none; }
-      .m2-gate__label { line-height: 1; margin-top: 28px; margin-bottom: 10px; }
-
-      /* Desktop password field: boxed input + focus ring + reveal toggle */
-      .m2-gate__input {
-        padding: 13px 48px 13px 16px;       /* right padding clears the toggle */
-        border: 1px solid #c5c1b8; border-radius: 10px;
-        background: #fff; font-size: 15px;
-        transition: border-color var(--duration-normal) var(--easing-default),
-                    box-shadow var(--duration-normal) var(--easing-default);
+      .m2-gate__lock { display: block; }
+      .m2-gate__title {
+        font-weight: 400;
+        font-size: 36px;
       }
-      .m2-gate__input:hover { border-color: #a8a399; }
-      .m2-gate__input:focus {
-        border-bottom-color: var(--brand-accent-purple); border-color: var(--brand-accent-purple);
-        box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand-accent-purple) 22%, transparent);
+      .m2-gate__sub {
+        line-height: 22px;
       }
-      .m2-gate__input.is-error {
-        border-color: #c0392b;
-        box-shadow: 0 0 0 3px color-mix(in srgb, #c0392b 16%, transparent);
+      .m2-gate__form,
+      .m2-cs__form { margin-top: 24px; }
+      .m2-gate__submit {
+        margin-top: 32px;
+        min-height: 60px;
+        height: 60px;
+        font-size: 20px;
       }
-      .m2-gate__reveal {
-        display: flex; align-items: center; justify-content: center;
-        position: absolute; top: 50%; right: 8px; transform: translateY(-50%);
-        width: 34px; height: 34px; padding: 0;
-        border: none; border-radius: 8px; background: transparent;
-        color: #8a857b; cursor: pointer;
-        transition: color var(--duration-fast) var(--easing-default),
-                    background-color var(--duration-fast) var(--easing-default);
+      .m2-gate__close {
+        top: 24px;
+        right: 24px;
       }
-      .m2-gate__reveal:hover { color: var(--brand-core-1); background: rgba(32,30,26,0.06); }
-      .m2-gate__reveal:focus-visible {
-        outline: none; color: var(--brand-accent-purple);
-        box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand-accent-purple) 22%, transparent);
-      }
-      .m2-gate__reveal svg { width: 20px; height: 20px; }
-      .m2-gate__reveal .m2-gate__eye-off { display: none; }
-      .m2-gate__reveal[aria-pressed="true"] .m2-gate__eye-on { display: none; }
-      .m2-gate__reveal[aria-pressed="true"] .m2-gate__eye-off { display: block; }
-
-      .m2-gate__submit { margin-top: 32px; }
-      .m2-gate__close { top: 18px; right: 18px; }    /* inset on the rounded modal corner */
+      a.m2-gate__reach { margin-top: 29px; }
     }
   </style>
 </head>
@@ -1607,54 +2455,49 @@
   ============================================================= -->
   <div class="m2">
 
-    <!-- Portfolio access gate -->
+    <!-- Portfolio access gate (suppressed in JS; shares modal chrome) -->
     <div class="m2-gate" id="m2Gate" role="dialog" aria-modal="true" aria-labelledby="m2GateTitle" hidden>
       <div class="m2-gate__card" role="document">
-        <svg class="m2-gate__lock" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2"/></svg>
+        <img class="m2-gate__lock" src="assets/gate/icon-lock.svg" alt="" width="40" height="40" aria-hidden="true" />
         <h2 class="m2-gate__title" id="m2GateTitle">Portfolio access</h2>
         <p class="m2-gate__sub">Thanks for stopping by. My portfolio is currently private while I finish updates. Enter the password to continue.</p>
-        <form class="m2-gate__form" novalidate>
-          <label class="m2-gate__label" for="m2GateInput">Password</label>
+        <form class="m2-gate__form" autocomplete="off" novalidate>
+          <p class="m2-gate__label" id="m2GateLabel">Password</p>
           <div class="m2-gate__field">
-            <input class="m2-gate__input" id="m2GateInput" type="password" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" data-1p-ignore data-lpignore="true" data-bwignore data-form-type="other" placeholder="Enter password" />
-            <button type="button" class="m2-gate__reveal" data-pw-toggle aria-label="Show password" aria-pressed="false">
-              <svg class="m2-gate__eye-on" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/></svg>
-              <svg class="m2-gate__eye-off" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 3l18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M10.6 5.1A10.8 10.8 0 0 1 12 5c6.5 0 10 7 10 7a18.5 18.5 0 0 1-3.16 4.04M6.46 6.46A18.4 18.4 0 0 0 2 12s3.5 7 10 7a10.7 10.7 0 0 0 4.18-.84" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-            </button>
+            <!-- type=text + CSS disc mask: avoids Safari/iCloud Passwords (shared gate code, not a login) -->
+            <input class="m2-gate__input" id="m2GateInput" name="sa-site-code" type="text" inputmode="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" readonly aria-labelledby="m2GateLabel" data-1p-ignore data-lpignore="true" data-bwignore data-form-type="other" placeholder="Enter password" />
           </div>
           <p class="m2-gate__error" role="alert">That password isn't quite right — try again.</p>
           <button type="submit" class="m2-btn m2-gate__submit">
             Enter portfolio
-            <svg class="m2-btn__arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2"/></svg>
+            <img class="m2-gate__submit-icon" src="assets/gate/icon-lock-filled.svg" alt="" width="24" height="24" aria-hidden="true" />
           </button>
         </form>
       </div>
     </div>
 
-    <!-- Case study access modal (closeable; no live pages yet) -->
+    <!-- Case study access modal (Figma 614:147247 mobile · 613:147219 desktop) -->
     <div class="m2-gate" id="m2CsModal" role="dialog" aria-modal="true" aria-labelledby="m2CsTitle" hidden>
       <div class="m2-gate__card" role="document">
         <button class="m2-gate__close" type="button" aria-label="Close" data-cs-close>
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          <img src="assets/gate/icon-close.svg" alt="" width="32" height="32" />
         </button>
-        <svg class="m2-gate__lock" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2"/></svg>
+        <img class="m2-gate__lock" src="assets/gate/icon-lock.svg" alt="" width="40" height="40" aria-hidden="true" />
         <h2 class="m2-gate__title" id="m2CsTitle">Case study access</h2>
-        <p class="m2-gate__sub">This one's password-protected — If I sent you a password, you're in the right place; drop it below.</p>
-        <form class="m2-cs__form" novalidate>
-          <label class="m2-gate__label" for="m2CsInput">Password</label>
+        <p class="m2-gate__sub"><span class="m2-only-desktop">This case study is password-protected. If I sent you a password, you’re in the right place; drop it below.</span><span class="m2-only-mobile">This case study is password-protected.<br />If I sent you a password, you’re in the right place; drop it below.</span></p>
+        <form class="m2-cs__form" autocomplete="off" novalidate>
+          <p class="m2-gate__label" id="m2CsLabel">Password</p>
           <div class="m2-gate__field">
-            <input class="m2-gate__input" id="m2CsInput" type="password" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" data-1p-ignore data-lpignore="true" data-bwignore data-form-type="other" placeholder="Enter password" />
-            <button type="button" class="m2-gate__reveal" data-pw-toggle aria-label="Show password" aria-pressed="false">
-              <svg class="m2-gate__eye-on" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/></svg>
-              <svg class="m2-gate__eye-off" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 3l18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M10.6 5.1A10.8 10.8 0 0 1 12 5c6.5 0 10 7 10 7a18.5 18.5 0 0 1-3.16 4.04M6.46 6.46A18.4 18.4 0 0 0 2 12s3.5 7 10 7a10.7 10.7 0 0 0 4.18-.84" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-            </button>
+            <!-- type=text + CSS disc mask: avoids Safari/iCloud Passwords (shared gate code, not a login) -->
+            <input class="m2-gate__input" id="m2CsInput" name="sa-case-code" type="text" inputmode="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" readonly aria-labelledby="m2CsLabel" data-1p-ignore data-lpignore="true" data-bwignore data-form-type="other" placeholder="Enter password" />
           </div>
           <p class="m2-gate__note">These case studies are coming soon. Reach out and I'll happily walk you through the work.</p>
-          <button type="submit" class="m2-btn m2-gate__submit">Unlock the case study
-            <svg class="m2-btn__arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2"/></svg>
+          <button type="submit" class="m2-btn m2-gate__submit">
+            Unlock the case study
+            <img class="m2-gate__submit-icon" src="assets/gate/icon-lock-filled.svg" alt="" width="24" height="24" aria-hidden="true" />
           </button>
         </form>
-        <a class="m2-gate__reach" href="https://www.linkedin.com/in/stephenaase/" target="_blank" rel="noopener noreferrer">No password? Reach out to connect</a>
+        <a class="m2-gate__reach" href="https://www.linkedin.com/in/stephenaase/" target="_blank" rel="noopener noreferrer">No password? Reach out to connect.</a>
       </div>
     </div>
 
@@ -1785,11 +2628,11 @@
 
               <button type="button" class="m2-wcard m2-wcard--walmart" data-casestudy aria-label="Walmart — Membership that matters case study">
                 <span class="m2-wcard__media" aria-hidden="true">
-                  <img class="m2-wcard__photo" src="assets/case-walmart-porch-mobile.png" alt="" />
+                  <img class="m2-wcard__photo" src="assets/case-walmart-porch-mobile.png" alt="" width="2048" height="2048" loading="lazy" decoding="async" />
                   <span class="m2-wcard__collage-grid">
-                    <img class="m2-wcard__shot m2-wcard__shot--porch" src="assets/case-walmart-porch.png" alt="" />
-                    <img class="m2-wcard__shot m2-wcard__shot--kids" src="assets/case-walmart-kids.png" alt="" />
-                    <img class="m2-wcard__shot m2-wcard__shot--kitchen" src="assets/case-walmart-kitchen.png" alt="" />
+                    <img class="m2-wcard__shot m2-wcard__shot--porch" src="assets/case-walmart-porch.png" alt="" width="4096" height="2732" loading="lazy" decoding="async" />
+                    <img class="m2-wcard__shot m2-wcard__shot--kids" src="assets/case-walmart-kids.png" alt="" width="4096" height="2732" loading="lazy" decoding="async" />
+                    <img class="m2-wcard__shot m2-wcard__shot--kitchen" src="assets/case-walmart-kitchen.png" alt="" width="2048" height="1366" loading="lazy" decoding="async" />
                   </span>
                 </span>
                 <span class="m2-wcard__content">
@@ -1814,35 +2657,6 @@
                 </span>
               </button>
 
-              <button type="button" class="m2-wcard m2-wcard--ds" data-casestudy aria-label="Design systems — Design Systems at scale case study">
-                <span class="m2-wcard__media" aria-hidden="true">
-                  <span class="m2-wcard__aa">
-                    <span class="m2-wcard__aa-badge">Light +</span>
-                    <span class="m2-wcard__aa-glyph">Aa</span>
-                  </span>
-                </span>
-                <span class="m2-wcard__content">
-                  <span class="m2-wcard__eyebrow">Design systems</span>
-                  <span class="m2-wcard__title">Design Systems<br />at scale</span>
-                  <span class="m2-wcard__desc">Deep dive inside a Design System built to power multi-brand experiences.</span>
-                  <span class="m2-wcard__metrics">
-                    <span class="m2-wcard__metric">
-                      <span class="m2-wcard__metric-icon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-                      <span class="m2-wcard__metric-label">Reduction in Design to Eng handoff time.</span>
-                    </span>
-                    <span class="m2-wcard__metric">
-                      <span class="m2-wcard__metric-icon m2-wcard__metric-glyph">$B</span>
-                      <span class="m2-wcard__metric-label">Annual savings from brand theming at scale.</span>
-                    </span>
-                    <span class="m2-wcard__metric">
-                      <span class="m2-wcard__metric-icon"><img src="assets/case-ds-layers.svg" alt="" aria-hidden="true" /></span>
-                      <span class="m2-wcard__metric-label"><span class="m2-only-desktop">Implementation of Walmart&rsquo;s new brand with speed.</span><span class="m2-only-mobile">Launched new Walmart brand with speed.</span></span>
-                    </span>
-                  </span>
-                  <span class="m2-wcard__cta">Read this case study <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-                </span>
-              </button>
-
             </div>
           </div>
         </section>
@@ -1850,78 +2664,154 @@
 
       <!-- About / guiding principles -->
       <section id="m2-about" class="m2-about" aria-label="About Stephen">
+        <div class="m2-about__stage">
         <div class="m2-about__photo" role="img" aria-label="Stephen with his family outdoors"></div>
-        <div class="m2-about__wave" aria-hidden="true">
-                  </div>
         <div class="m2-about__body">
-          <p class="m2-about__intro"><span class="m2-about__intro-sm">Inspired by adventure, fueled by family, and driven to make an impact.</span><span class="m2-about__intro-lg"><em>Hi, I'm Stephen,</em> Inspired by a sense of adventure, fueled by the people I love, and driven to make a meaningful impact wherever I go.</span></p>
-          <p class="m2-about__plabel">MY GUIDING PRINCIPLES</p>
+          <p class="m2-about__intro"><span class="m2-only-desktop">Inspired by adventure, fueled by family,<br />and driven to make an impact.</span><span class="m2-only-mobile">Inspired by adventure, fueled by family, and driven to make an impact.</span></p>
+          <p class="m2-about__plabel">My guiding principles</p>
           <div class="m2-principles">
-            <div class="m2-principle"><img class="m2-principle__icon" src="assets/principle-curiosity.svg" alt="" aria-hidden="true" /><p class="m2-principle__text">Embrace curiosity, explore, evolve</p></div>
-            <div class="m2-principle"><img class="m2-principle__icon" src="assets/principle-excellence.svg" alt="" aria-hidden="true" /><p class="m2-principle__text">Strive for excellence, not perfection</p></div>
-            <div class="m2-principle"><img class="m2-principle__icon" src="assets/principle-bold.svg" alt="" aria-hidden="true" /><p class="m2-principle__text">Be bold, courage creates impact</p></div>
-            <div class="m2-principle m2-principle--deskonly"><img class="m2-principle__icon" src="assets/principle-love.svg" alt="" aria-hidden="true" /><p class="m2-principle__text">Love the problem, not the solution</p></div>
-            <div class="m2-principle"><img class="m2-principle__icon" src="assets/principle-inspire.svg" alt="" aria-hidden="true" /><p class="m2-principle__text">Inspire by example, player coach</p></div>
+            <div class="m2-principle">
+              <img class="m2-principle__icon m2-principle__icon--desk" src="assets/principle-land.svg" alt="" aria-hidden="true" width="60" height="60" />
+              <img class="m2-principle__icon m2-principle__icon--mob" src="assets/principle-land-mobile.svg?v=3" alt="" aria-hidden="true" width="32" height="32" />
+              <p class="m2-principle__text">Embrace curiosity, explore, evolve</p>
+            </div>
+            <div class="m2-principle">
+              <img class="m2-principle__icon m2-principle__icon--desk" src="assets/principle-star.svg" alt="" aria-hidden="true" width="60" height="60" />
+              <img class="m2-principle__icon m2-principle__icon--mob" src="assets/principle-star-mobile.svg?v=3" alt="" aria-hidden="true" width="32" height="32" />
+              <p class="m2-principle__text"><span class="m2-only-desktop">Strive for excellence,<br />not perfection</span><span class="m2-only-mobile">Excellence, not perfection</span></p>
+            </div>
+            <div class="m2-principle">
+              <img class="m2-principle__icon m2-principle__icon--desk" src="assets/principle-zap.svg" alt="" aria-hidden="true" width="60" height="60" />
+              <img class="m2-principle__icon m2-principle__icon--mob" src="assets/principle-zap-mobile.svg?v=3" alt="" aria-hidden="true" width="32" height="32" />
+              <p class="m2-principle__text">Be bold, courage creates impact</p>
+            </div>
+            <div class="m2-principle">
+              <img class="m2-principle__icon m2-principle__icon--desk" src="assets/principle-waterfront.svg" alt="" aria-hidden="true" width="60" height="60" />
+              <img class="m2-principle__icon m2-principle__icon--mob" src="assets/principle-waterfront-mobile.svg?v=3" alt="" aria-hidden="true" width="32" height="32" />
+              <p class="m2-principle__text"><span class="m2-only-desktop">Inspire by example,<br />be a player coach</span><span class="m2-only-mobile">Inspire by example, player coach</span></p>
+            </div>
           </div>
+        </div>
         </div>
       </section>
 
       <!-- Wavy line divider: About -> AI -->
       <div class="m2-divider-wave" aria-hidden="true"></div>
 
-      <!-- AI leadership -->
+      <!-- AI leadership (Figma 597:138373 desktop · 630:148031 mobile) -->
       <section id="m2-ai" class="m2-ai" aria-label="AI leadership">
         <div class="m2-wrap">
-          <h2 class="m2-ai__head">I design how AI and teams work together, so people spend their time on <em>vision, judgment, and insight.</em></h2>
-          <p class="m2-ai__sub">AI LEADERSHIP</p>
+          <p class="m2-ai__label">AI leadership</p>
+          <h2 class="m2-ai__head">I build the systems that let AI and teams work together well, so human judgment and insight stay front and center.</h2>
         </div>
         <div data-carousel>
-          <div class="m2-rail" role="group" aria-roledescription="carousel" aria-label="How I lead with AI" style="padding-inline: var(--gutter); scroll-padding-inline: var(--gutter);">
+          <div class="m2-rail" role="group" aria-roledescription="carousel" aria-label="How I lead with AI">
             <article class="m2-aicard">
-              <div class="m2-aicard__illus" style="background-image:url('assets/ai-infrastructure-art.png')"></div>
-              <div class="m2-aicard__label">INFRASTRUCTURE <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-              <p class="m2-aicard__desc">Build an AI-augmented process that compresses discovery and define.</p>
+              <h3 class="m2-aicard__title">Infrastructure</h3>
+              <div class="m2-aicard__body">
+                <div class="m2-aicard__illus" aria-hidden="true">
+                  <img class="m2-aicard__infra-line" src="assets/ai/infra-line.svg" alt="" />
+                  <div class="m2-aicard__venn">
+                    <img src="assets/ai/infra-ellipse-b.svg" alt="" />
+                    <img src="assets/ai/infra-ellipse-a.svg" alt="" />
+                  </div>
+                </div>
+                <p class="m2-aicard__desc">Build an AI-augmented process that compresses discovery.</p>
+              </div>
             </article>
             <article class="m2-aicard">
-              <div class="m2-aicard__illus" style="background-image:url('assets/ai-human-art.png')"></div>
-              <div class="m2-aicard__label">HUMAN IN THE LOOP <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-              <p class="m2-aicard__desc">Design consumer advocacy agents to work alongside designers.</p>
+              <h3 class="m2-aicard__title">Human in the loop</h3>
+              <div class="m2-aicard__body">
+                <div class="m2-aicard__illus" aria-hidden="true">
+                  <div class="m2-aicard__donut">
+                    <img class="m2-aicard__donut-ring" src="assets/ai/human-ring.svg" alt="" />
+                    <img class="m2-aicard__donut-arc" src="assets/ai/human-donut.svg" alt="" />
+                  </div>
+                </div>
+                <p class="m2-aicard__desc">Design consumer focused agents to work alongside designers.</p>
+              </div>
             </article>
             <article class="m2-aicard">
-              <div class="m2-aicard__illus" style="background-image:url('assets/ai-metrics-art.png')"></div>
-              <div class="m2-aicard__label">BEHAVIORAL METRICS <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-              <p class="m2-aicard__desc">Track high-velocity squads to improve ways of working.</p>
+              <h3 class="m2-aicard__title">Velocity</h3>
+              <div class="m2-aicard__body">
+                <div class="m2-aicard__illus" aria-hidden="true">
+                  <div class="m2-aicard__bars">
+                    <span class="m2-aicard__bar m2-aicard__bar--1"></span>
+                    <span class="m2-aicard__bar m2-aicard__bar--2"></span>
+                    <span class="m2-aicard__bar m2-aicard__bar--3"></span>
+                    <span class="m2-aicard__bar m2-aicard__bar--4"></span>
+                    <span class="m2-aicard__bar m2-aicard__bar--5"></span>
+                    <span class="m2-aicard__bars-y"></span>
+                    <span class="m2-aicard__bars-x"></span>
+                  </div>
+                </div>
+                <p class="m2-aicard__desc">Build high-velocity squads to improve cross-functional ways of working.</p>
+              </div>
             </article>
             <article class="m2-aicard">
-              <div class="m2-aicard__illus" style="background-image:url('assets/ai-craft-art.png')"></div>
-              <div class="m2-aicard__label">CRAFT + VELOCITY <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-              <p class="m2-aicard__desc">Push highly crafted intent to production. Never lower the bar.</p>
+              <h3 class="m2-aicard__title">Craft is king</h3>
+              <div class="m2-aicard__body">
+                <div class="m2-aicard__illus" aria-hidden="true">
+                  <div class="m2-aicard__craft">
+                    <div class="m2-aicard__craft-cols">
+                      <span class="m2-aicard__craft-col"></span>
+                      <span class="m2-aicard__craft-col"></span>
+                      <span class="m2-aicard__craft-col"></span>
+                    </div>
+                    <span class="m2-aicard__craft-line m2-aicard__craft-line--hi"></span>
+                    <span class="m2-aicard__craft-line m2-aicard__craft-line--mid"></span>
+                    <span class="m2-aicard__craft-line m2-aicard__craft-line--lo"></span>
+                  </div>
+                </div>
+                <p class="m2-aicard__desc">Push highly crafted experiences to production.<br /><strong>Never lower the bar.</strong></p>
+              </div>
             </article>
           </div>
           <div class="m2-dots" data-dots aria-hidden="true"></div>
         </div>
-        <div class="m2-wrap">
-          <button type="button" class="m2-btn m2-ai__cta" data-casestudy>Case study coming soon
-            <svg class="m2-btn__arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
+      </section>
+
+      <!-- Get in touch / closing (Figma 631:148038 desktop · 631:148044 mobile) -->
+      <section id="m2-contact" class="m2-footer" aria-label="Get in touch">
+        <div class="m2-footer__inner">
+          <div class="m2-footer__copyblock">
+            <div class="m2-footer__text">
+              <p class="m2-footer__label">Get in touch</p>
+              <h2 class="m2-footer__head">Still learning.<br />Always building.</h2>
+              <p class="m2-footer__body">I'm at my best leading orgs toward experiences worthy of the people they serve. If that's your work too, let's talk.</p>
+            </div>
+            <a class="m2-btn m2-footer__cta" href="https://www.linkedin.com/in/stephenaase/" target="_blank" rel="noopener noreferrer">Find me on LinkedIn
+              <svg class="m2-btn__arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </div>
+          <div class="m2-footer__photo" role="img" aria-label="Portrait of Stephen Aase">
+            <picture>
+              <source media="(min-width: 1024px)" srcset="assets/about-me-photo-desktop.jpg" />
+              <img src="assets/about-me-photo-desktop.jpg" alt="Stephen Aase smiling outdoors by the water" width="968" height="1024" loading="lazy" decoding="async" />
+            </picture>
+          </div>
         </div>
       </section>
 
-      <!-- Footer / closing CTA -->
-      <footer id="m2-contact" class="m2-footer" aria-label="Get in touch">
-        <div class="m2-footer__wave--top" aria-hidden="true"></div>
-        <p class="m2-footer__label">GET IN TOUCH</p>
-        <h2 class="m2-footer__head"><span>Still learning. </span><em>Always building.</em></h2>
-        <p class="m2-footer__body">I'm at my best leading orgs toward experiences worthy of the people they serve. If that's your work too, let's talk.</p>
-        <a class="m2-btn m2-footer__cta" href="https://www.linkedin.com/in/stephenaase/" target="_blank" rel="noopener noreferrer">Find me on LinkedIn
-          <svg class="m2-btn__arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-        <div class="m2-footer__foot">
-          <div class="m2-footer__wave" aria-hidden="true">
-                      </div>
-          <div class="m2-footer__bar">
-            <div class="m2-footer__flowers" aria-hidden="true"></div>
-            <span class="m2-footer__copy">© 2026 Stephen Aase</span>
+      <!-- Site footer (Figma 635:148073 mobile · 599:144807 desktop) -->
+      <footer class="m2-sitefoot" aria-label="Site footer">
+        <div class="m2-sitefoot__portrait">
+          <img src="assets/footer/portrait-mobile.jpg" alt="Stephen Aase smiling outdoors by the water" width="843" height="1124" loading="lazy" decoding="async" />
+        </div>
+        <div class="m2-sitefoot__bar">
+          <div class="m2-sitefoot__atmos" aria-hidden="true">
+            <img src="assets/footer/atmos.jpg" alt="" width="2401" height="1024" decoding="async" />
+          </div>
+          <div class="m2-sitefoot__row">
+            <div class="m2-sitefoot__socials">
+              <a class="m2-sitefoot__social" href="https://www.linkedin.com/in/stephenaase/" target="_blank" rel="noopener noreferrer" aria-label="Stephen Aase on LinkedIn">
+                <img src="assets/footer/icon-linkedin.svg" alt="" width="40" height="40" />
+              </a>
+              <a class="m2-sitefoot__social" href="https://www.instagram.com/stephenaase/" target="_blank" rel="noopener noreferrer" aria-label="Stephen Aase on Instagram">
+                <img src="assets/footer/icon-instagram.svg" alt="" width="40" height="40" />
+              </a>
+            </div>
+            <p class="m2-sitefoot__legal">© 2026 Stephen Aase</p>
           </div>
         </div>
       </footer>
@@ -1995,29 +2885,28 @@
         }
 
         // --- Keep gate passcodes out of browser/iCloud + password-manager autofill ---
-        // These are shared gate passwords, not personal credentials. Safari/iCloud only
-        // offer "AutoFill" on native type=password fields, so where CSS text-security is
-        // supported we render a masked TEXT input instead. Falls back to type=password
-        // (still masked) on the rare browser without text-security.
-        var maskWithCss = !!(window.CSS && CSS.supports &&
-          (CSS.supports('-webkit-text-security', 'disc') || CSS.supports('text-security', 'disc')));
-        if (maskWithCss) {
-          root.querySelectorAll('.m2-gate__input').forEach(function (input) {
-            input.type = 'text';
-            input.dataset.maskMode = 'css';   // masked by the .m2-gate__input text-security rule
-          });
-        }
+        // Shared access codes, not personal credentials. Never use type=password —
+        // Safari/macOS iCloud Passwords keys off that. Mask with -webkit-text-security.
+        // readonly-until-focus further suppresses the iCloud Passwords sheet on focus.
+        root.querySelectorAll('.m2-gate__input').forEach(function (input) {
+          input.type = 'text';
+          input.setAttribute('autocomplete', 'off');
+          input.dataset.maskMode = 'css';
+          function unlockField() {
+            if (input.hasAttribute('readonly')) input.removeAttribute('readonly');
+          }
+          input.addEventListener('focus', unlockField);
+          input.addEventListener('pointerdown', unlockField);
+        });
 
-        // --- Show/hide password toggles (desktop reveal affordance) ---
+        // --- Show/hide password toggles (legacy markup; currently unused) ---
         root.querySelectorAll('[data-pw-toggle]').forEach(function (btn) {
           var field = btn.closest('.m2-gate__field');
           var input = field && field.querySelector('.m2-gate__input');
           if (!input) return;
           btn.addEventListener('click', function () {
-            var cssMode = input.dataset.maskMode === 'css';
-            var reveal = cssMode ? !input.classList.contains('is-revealed') : input.type === 'password';
-            if (cssMode) input.classList.toggle('is-revealed', reveal);
-            else input.type = reveal ? 'text' : 'password';
+            var reveal = !input.classList.contains('is-revealed');
+            input.classList.toggle('is-revealed', reveal);
             btn.setAttribute('aria-pressed', String(reveal));
             btn.setAttribute('aria-label', reveal ? 'Hide password' : 'Show password');
             input.focus({ preventScroll: true });
@@ -2099,9 +2988,17 @@
         // --- Case-study modal (closeable; "coming soon" on submit) ---
         var cs = document.getElementById('m2CsModal');
         function openCs() {
+          var inp = cs.querySelector('#m2CsInput');
+          if (inp) {
+            inp.classList.remove('is-revealed');
+            inp.classList.remove('is-error');
+            inp.setAttribute('readonly', '');
+            inp.type = 'text';
+            inp.setAttribute('autocomplete', 'off');
+          }
           cs.hidden = false; lockScroll();
           cs.offsetHeight; cs.classList.add('is-open');
-          focusInput(cs.querySelector('#m2CsInput'));   // desktop: focus the field on open
+          focusInput(inp);   // desktop: focus the field on open
           track('case_study_modal_open');
         }
         function closeCs() {
@@ -2110,8 +3007,14 @@
             cs.hidden = true;
             var note = cs.querySelector('.m2-gate__note'); if (note) note.classList.remove('is-visible');
             var form = cs.querySelector('.m2-cs__form'); if (form) form.reset();
-            var inp = cs.querySelector('.m2-gate__input'); if (inp) inp.classList.remove('is-revealed');
-            var tg = cs.querySelector('[data-pw-toggle]'); if (tg) { tg.setAttribute('aria-pressed', 'false'); tg.setAttribute('aria-label', 'Show password'); }
+            var inp = cs.querySelector('.m2-gate__input');
+            if (inp) {
+              inp.classList.remove('is-revealed');
+              inp.classList.remove('is-error');
+              inp.type = 'text';
+              inp.setAttribute('readonly', '');
+              inp.setAttribute('autocomplete', 'off');
+            }
           }, 350);
         }
         if (cs) {
@@ -2170,7 +3073,7 @@
         // --- Scroll reveal (below-the-fold only; respects reduced motion) ---
         if (!prefersReducedMotion && 'IntersectionObserver' in window) {
           root.classList.add('reveal-on');
-          var revealEls = root.querySelectorAll('.m2-section__label, .m2-wcard, .m2-about__intro, .m2-about__plabel, .m2-principle, .m2-ai__head, .m2-ai__cta, .m2-footer__head, .m2-footer__body, .m2-footer__cta');
+          var revealEls = root.querySelectorAll('.m2-section__label, .m2-wcard, .m2-about__intro, .m2-about__plabel, .m2-principle, .m2-ai__label, .m2-ai__head, .m2-ai__cta, .m2-footer__head, .m2-footer__body, .m2-footer__cta');
           revealEls.forEach(function (el) { el.setAttribute('data-reveal', ''); });
           var ro = new IntersectionObserver(function (entries) {
             entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('is-in'); ro.unobserve(en.target); } });
