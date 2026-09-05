@@ -26,25 +26,40 @@
   <script defer data-domain="stephenaase.com" src="https://plausible.io/js/script.js"></script>
   <link rel="stylesheet" href="colors_and_type.css?v=20260901d">
   <style>
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
       --page-max: 1440px;
       --page-margin-min: 24px;
       --page-gutter: max(var(--page-margin-min), calc((100% - var(--page-max)) / 2));
+      --cs-blue: #0052e2;
+      --cs-blue-deep: #004bcc;
+      --cs-blue-dark: #002566;
+      --cs-navy: #002d58;
+      --cs-yellow: #ffc220;
+      --cs-impact: #ffb900;
+      --cs-card: #f2f6fe;
+      --cs-tag: #478bff;
+      --cs-duration: 0.7s;
+      --cs-ease: cubic-bezier(0.22, 1, 0.36, 1);
     }
     html, body {
       background: #fff;
-      color: #000;
-      font-family: var(--font-family-nav);
+      color: var(--cs-navy);
+      font-family: var(--font-family-geist);
       -webkit-font-smoothing: antialiased;
     }
     body { min-height: 100dvh; overflow-x: clip; }
     a { color: inherit; text-decoration: none; }
     button { font-family: inherit; cursor: pointer; border: none; background: none; }
+    img { display: block; max-width: 100%; height: auto; }
 
-    /* ---- Case study nav (Figma 596:124108 desktop · 596:124148 mobile) ---- */
     .cs-only-mobile { display: none; }
     .cs-only-desktop { display: inline; }
+    .cs-block-mobile { display: none; }
+    .cs-block-desktop { display: flex; flex-direction: column; }
+
+    /* ---- Header — match homepage .m2-header (64px / page-gutter / Geist Medium 16) ---- */
     .cs-nav {
       position: sticky;
       top: 0;
@@ -54,8 +69,9 @@
       justify-content: space-between;
       gap: 16px;
       min-height: 64px;
-      padding-inline: 24px;
+      padding-inline: var(--page-gutter);
       background: #fff;
+      color: #000;
       font-family: var(--font-family-nav);
       font-weight: 500;
       font-size: 16px;
@@ -65,7 +81,11 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      color: #000;
+      font-family: inherit;
+      font-weight: inherit;
+      font-size: inherit;
+      line-height: inherit;
+      color: #000 !important;
       white-space: nowrap;
     }
     .cs-nav__back:hover { opacity: 0.72; }
@@ -74,150 +94,678 @@
       outline-offset: 4px;
       border-radius: 2px;
     }
-    .cs-nav__arrow {
-      width: 22px;
-      height: 22px;
-      flex: none;
-      display: block;
-    }
-    .cs-nav__name { display: none; } /* mobile: arrow only (Figma 596:124148) */
+    .cs-nav__arrow { width: 22.51px; height: 21.84px; flex: none; display: block; }
+    .cs-nav__name { display: none; }
     .cs-nav__meta {
-      color: #004bcc;
+      color: var(--cs-blue-deep);
       white-space: nowrap;
       text-align: right;
+      font-family: inherit;
+      font-weight: inherit;
+      font-size: inherit;
+      line-height: inherit;
     }
-    .cs-nav__slash { color: #ffc220; }
+    .cs-nav__slash { color: var(--cs-yellow); }
 
-    .cs-body {
-      min-height: calc(100dvh - 64px);
-      background: #fff;
-    }
-
-    @media (min-width: 1024px) {
-      .cs-only-mobile { display: none; }
-      .cs-only-desktop { display: inline; }
-      .cs-nav { padding-inline: var(--page-gutter); }
-      .cs-nav__name { display: inline; }
-    }
-    @media (max-width: 1023.98px) {
-      .cs-only-mobile { display: inline; }
-      .cs-only-desktop { display: none; }
+    .cs-body { background: #fff; }
+    .cs-wrap {
+      width: min(var(--page-max), calc(100% - 2 * var(--page-margin-min)));
+      margin-inline: auto;
     }
 
-    /* Gate chrome — matches homepage case-study modal */
-    .m2-gate {
-      position: fixed;
-      inset: 0;
-      z-index: 100;
-      display: flex;
+    /* ---- Reveal ---- */
+    .cs-body.reveal-on [data-reveal] {
+      opacity: 0; transform: translateY(22px);
+      transition: opacity var(--cs-duration) var(--cs-ease), transform var(--cs-duration) var(--cs-ease);
+    }
+    .cs-body.reveal-on [data-reveal].is-in { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) {
+      .cs-body.reveal-on [data-reveal] { opacity: 1; transform: none; transition: none; }
+    }
+
+    /* ---- Type primitives (Figma desktop specs) ---- */
+    .cs-label {
+      font-family: var(--font-family-geist);
+      font-weight: 600;
+      font-size: 16px;
+      line-height: normal;
+      color: var(--cs-blue);
+      margin: 0;
+    }
+    .cs-label--yellow { color: var(--cs-yellow); }
+    .cs-label--ink { color: #000; }
+    .cs-heading {
+      font-family: var(--font-family-geist);
+      font-weight: 300;
+      font-size: 28px;
+      line-height: 1.25;
+      color: var(--cs-navy);
+      margin: 8px 0 0;
+    }
+    .cs-heading--white { color: #fff; }
+    .cs-body-copy {
+      font-family: var(--font-family-geist);
+      font-weight: 300;
+      font-size: 16px;
+      line-height: 1.5;
+      color: var(--cs-navy);
+      margin: 16px 0 0;
+    }
+    .cs-body-copy--white { color: #fff; }
+    .cs-body-copy--yellow { color: var(--cs-yellow); }
+    .cs-section { padding: 64px 0; scroll-margin-top: 80px; }
+    #role { padding-bottom: 180px; }
+    #acquisition, #engagement, #retention, #loyalty { padding-top: 180px; }
+    .cs-impact, .cs-journey, .cs-achieved, .cs-close { scroll-margin-top: 80px; }
+    .cs-section--tight { padding: 48px 0; }
+
+    /* ---- Waves — homepage tile technique (full-bleed repeat-x, 23px) ---- */
+    .cs-wave {
+      display: block;
+      width: 100vw;
+      height: 23px;
+      margin: 0;
+      margin-inline: calc(50% - 50vw);
+      background-repeat: repeat-x;
+      background-position: left bottom;
+      background-size: auto 100%;
+      border: 0;
+      pointer-events: none;
+      flex-shrink: 0;
+    }
+    .cs-wave--white { background-image: url("assets/wave-tile.svg?v=2"); }
+    .cs-wave--dark { background-image: url("assets/case/wave-tile-dark.svg"); }
+    .cs-wave--yellow { background-image: url("assets/case/wave-tile-yellow.svg"); }
+    .cs-wave--impact { background-image: url("assets/case/wave-tile-impact.svg"); }
+    .cs-wave--deep { background-image: url("assets/case/wave-tile-deep.svg"); }
+
+    .cs-slide {
+      width: 100%;
+      margin: 24px 0 0;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #f2f6fe;
+    }
+    .cs-body-copy + .cs-slide {
+      margin-top: 56px;
+    }
+    .cs-slide + .cs-slide {
+      margin-top: 40px;
+    }
+    .cs-slide img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .cs-caption {
+      font-family: var(--font-family-geist);
+      font-weight: 300;
+      font-size: 16px;
+      line-height: 1.5;
+      color: var(--cs-navy);
+      margin: 16px 0 0;
+    }
+    .cs-caption__num { font-weight: 600; color: var(--cs-blue); }
+
+    .cs-cta {
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 24px;
-      background: rgba(49, 47, 60, 0.55);
-      opacity: 0;
-      visibility: hidden;
+      gap: 10px;
+      min-height: 48px;
+      padding: 10px 24px;
+      margin-top: 24px;
+      background: var(--cs-yellow);
+      color: #000;
+      border-radius: 8px;
+      font-family: var(--font-family-geist);
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 1.2;
+    }
+    .cs-cta:hover { filter: brightness(0.96); }
+    .cs-cta:active { transform: scale(0.985); }
+    .cs-cta img { width: 18px; height: 18px; transform: rotate(90deg); }
+
+    /* ---- Hero (Figma 596:65902 — 1728×1024, wave flush at bottom) ---- */
+    .cs-hero {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      background: linear-gradient(120.65deg, #0053e2 0%, #004bcc 100%);
+      color: #fff;
+      padding: 48px 0 0;
+    }
+    .cs-hero__stage {
+      position: relative;
+      width: 100%;
+      max-width: 1728px;
+      margin-inline: auto;
+      min-height: 640px;
+      padding: 0 var(--page-margin-min) 72px;
+    }
+    .cs-hero__copy { position: relative; z-index: 2; max-width: 36rem; }
+    .cs-hero__title {
+      font-family: var(--font-family-geist);
+      font-weight: 300;
+      font-size: clamp(40px, 10vw, 64px);
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      color: #fff;
+      margin: 0;
+    }
+    .cs-hero__sub {
+      font-family: var(--font-family-geist);
+      font-weight: 300;
+      font-size: clamp(18px, 3.5vw, 28px);
+      line-height: 1.35;
+      color: var(--cs-yellow);
+      margin: 20px 0 0;
+      max-width: 36ch;
+    }
+    .cs-hero__meta {
+      list-style: none;
+      margin: 32px 0 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      font-size: 15px;
+      line-height: 1.4;
+    }
+    .cs-hero__meta strong {
+      color: var(--cs-yellow);
+      font-weight: 700;
+    }
+    .cs-hero__meta span { color: #fff; font-weight: 300; }
+    .cs-hero__collage {
+      margin-top: 32px;
+      width: 100%;
+      max-width: 520px;
+      margin-inline: auto;
+    }
+    .cs-hero__collage img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .cs-hero__wave {
+      position: relative;
+      z-index: 3;
+      margin-top: 0;
+    }
+
+    /* ---- Challenge / problem-opportunity (desktop asset; mobile cards) ---- */
+    .cs-problem-opp {
+      display: none;
+      margin: 40px 0 0;
+      width: 100%;
+      max-width: none;
+    }
+    .cs-problem-opp img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .cs-col {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 40px;
+    }
+    .cs-col-label {
+      font-family: var(--font-family-geist);
+      font-weight: 600;
+      font-size: 20px;
+      line-height: normal;
+      color: #001c55;
+      margin: 0;
+    }
+    .cs-cards {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .cs-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      min-height: 96px;
+      padding: 16px 20px 16px 20px;
+      background: var(--cs-card);
+      border-radius: 16px;
+    }
+    .cs-card__icon {
+      width: 48px;
+      height: 48px;
+      flex: none;
+    }
+    .cs-card__icon img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .cs-card__text {
+      font-family: var(--font-family-geist);
+      font-weight: 400;
+      font-size: 15px;
+      line-height: 1.35;
+      color: #000;
+      margin: 0;
+    }
+    /* legacy list (mobile opportunity intro still uses bullets sparingly) */
+    .cs-list {
+      list-style: none;
+      margin: 12px 0 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .cs-list li {
+      position: relative;
+      padding-left: 18px;
+      font-weight: 300;
+      font-size: 15px;
+      line-height: 1.45;
+      color: var(--cs-navy);
+    }
+    .cs-list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.55em;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--cs-blue);
+    }
+    .cs-list--opp li::before { background: var(--cs-yellow); }
+
+    /* ---- Principles ---- */
+    .cs-principles { display: grid; gap: 16px; margin-top: 56px; }
+    .cs-pcard {
+      background: var(--cs-card);
+      border-radius: 20px;
+      padding: 32px 20px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+    .cs-pcard__icon { width: 96px; height: 96px; }
+    .cs-pcard__icon img { width: 100%; height: 100%; }
+    .cs-pcard__title {
+      font-weight: 700;
+      font-size: 24px;
+      line-height: 1.2;
+      color: var(--cs-blue);
+      margin: 0;
+    }
+    .cs-pcard__body {
+      font-weight: 300;
+      font-size: 16px;
+      line-height: 1.4;
+      color: var(--cs-navy);
+      margin: 8px 0 0;
+    }
+
+    /* ---- Journey ---- */
+    .cs-journey {
+      background: var(--cs-blue-dark);
+      color: #fff;
+      padding: 72px 0 0;
+      overflow: hidden;
+      position: relative;
+    }
+    .cs-journey .cs-wrap { padding-bottom: 80px; }
+    .cs-journey .cs-heading { margin-top: 12px; font-size: clamp(28px, 5vw, 56px); line-height: 1.15; }
+    .cs-chevrons {
+      margin: 40px 0 0;
+      width: 100%;
+    }
+    .cs-chevrons img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* ---- Impact ---- */
+    .cs-impact {
+      background: var(--cs-yellow);
+      padding: 56px 0 0;
+      overflow: hidden;
+    }
+    .cs-impact .cs-wrap { padding-bottom: 64px; }
+    .cs-impact__grid { display: grid; gap: 16px; margin-top: 28px; }
+    .cs-metric {
+      background: var(--cs-impact);
+      border-radius: 20px;
+      padding: 40px 24px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      min-height: 220px;
+    }
+    .cs-metric__value {
+      font-weight: 700;
+      font-size: clamp(64px, 14vw, 120px);
+      line-height: 0.9;
+      color: #000;
+      margin: 0 0 24px;
+    }
+    .cs-metric--stack .cs-metric__value { margin-bottom: 0; }
+    .cs-metric__icon { width: 96px; height: 96px; margin-bottom: 24px; }
+    .cs-metric__icon img { width: 100%; height: 100%; }
+    .cs-metric__desc {
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 1.3;
+      color: #000;
+      margin: 0;
+      max-width: 28ch;
+    }
+    .cs-metric--stack .cs-metric__desc { order: -1; max-width: 34ch; margin-bottom: 24px; }
+
+    /* ---- Outcomes ---- */
+    .cs-achieved {
+      background: #005dff;
+      color: #fff;
+      padding: 72px 0 80px;
+    }
+    .cs-outcome-grid { display: grid; gap: 16px; margin-top: 36px; }
+    .cs-ocard {
+      background: #004bcc;
+      border-radius: 20px;
+      padding: 24px 20px 32px;
+      text-align: center;
+      min-height: 280px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .cs-ocard__tag {
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 1.4;
+      color: var(--cs-tag);
+      margin: 0;
+    }
+    .cs-ocard__value {
+      font-weight: 700;
+      font-size: clamp(48px, 12vw, 72px);
+      line-height: 1;
+      color: var(--cs-yellow);
+      margin: 40px 0 24px;
+    }
+    .cs-ocard__desc {
+      font-weight: 300;
+      font-size: 18px;
+      line-height: 1.3;
+      color: #fff;
+      margin: 0;
+      max-width: 22ch;
+    }
+    .cs-disclaimer {
+      margin-top: 40px;
+      font-size: 12px;
+      line-height: 1.45;
+      color: rgba(255,255,255,0.65);
+      max-width: 950px;
+    }
+
+    /* ---- Closing ---- */
+    .cs-close {
+      background: var(--cs-blue-dark);
+      color: #fff;
+      padding: 72px 0 80px;
+    }
+    .cs-close__grid { display: flex; flex-direction: column; gap: 36px; }
+    .cs-close__photo {
+      border-radius: 28px;
+      overflow: hidden;
+      aspect-ratio: 662 / 700;
+      background: #d9d9d9;
+    }
+    .cs-close__photo img { width: 100%; height: 100%; object-fit: cover; max-width: none; }
+    .cs-close .cs-heading { font-size: clamp(36px, 8vw, 56px); line-height: 1.15; }
+    .cs-close .cs-cta { margin-top: 28px; width: min(100%, 350px); min-height: 60px; font-size: 18px; }
+
+    /* Gate */
+    .m2-gate {
+      position: fixed; inset: 0; z-index: 100; display: flex; align-items: center; justify-content: center;
+      padding: 24px; background: rgba(49, 47, 60, 0.55); opacity: 0; visibility: hidden;
       transition: opacity 0.28s ease, visibility 0.28s ease;
     }
     .m2-gate.is-open { opacity: 1; visibility: visible; }
     .m2-gate__card {
-      position: relative;
-      width: min(100%, 420px);
-      padding: 40px 32px 32px;
-      background: #fff;
-      border-radius: 16px;
-      box-shadow: 0 24px 64px rgba(49, 47, 60, 0.28);
-      text-align: center;
-      transform: translateY(12px);
-      transition: transform 0.28s ease;
+      position: relative; width: min(100%, 420px); padding: 40px 32px 32px; background: #fff;
+      border-radius: 16px; box-shadow: 0 24px 64px rgba(49, 47, 60, 0.28); text-align: center;
+      transform: translateY(12px); transition: transform 0.28s ease;
     }
     .m2-gate.is-open .m2-gate__card { transform: none; }
-    .m2-gate__lock {
-      display: block;
-      width: 40px;
-      height: 40px;
-      margin: 0 auto 16px;
-    }
-    .m2-gate__title {
-      font-family: var(--font-family-geist);
-      font-size: 28px;
-      font-weight: 600;
-      color: #312f3c;
-      margin: 0 0 12px;
-    }
-    .m2-gate__sub {
-      font-family: var(--font-family-geist);
-      font-size: 15px;
-      line-height: 1.5;
-      color: #6b5a63;
-      margin: 0 0 24px;
-    }
-    .m2-gate__label {
-      display: block;
-      font-family: var(--font-family-geist);
-      font-size: 13px;
-      font-weight: 500;
-      color: #8c4964;
-      text-align: left;
-      margin-bottom: 8px;
-    }
+    .m2-gate__lock { display: block; width: 40px; height: 40px; margin: 0 auto 16px; }
+    .m2-gate__title { font-family: var(--font-family-geist); font-size: 28px; font-weight: 600; color: #312f3c; margin: 0 0 12px; }
+    .m2-gate__sub { font-family: var(--font-family-geist); font-size: 15px; line-height: 1.5; color: #6b5a63; margin: 0 0 24px; }
+    .m2-gate__label { display: block; font-family: var(--font-family-geist); font-size: 13px; font-weight: 500; color: #8c4964; text-align: left; margin-bottom: 8px; }
     .m2-gate__input {
-      width: 100%;
-      height: 44px;
-      border: none;
-      border-bottom: 1.5px solid #d8b8c4;
-      background: transparent;
-      font-family: var(--font-family-geist);
-      font-size: 16px;
-      color: #312f3c;
-      outline: none;
-      -webkit-text-security: disc;
+      width: 100%; height: 44px; border: none; border-bottom: 1.5px solid #d8b8c4; background: transparent;
+      font-family: var(--font-family-geist); font-size: 16px; color: #312f3c; outline: none; -webkit-text-security: disc;
     }
     .m2-gate__input::placeholder { color: #a17e8c; opacity: 1; }
     .m2-gate__input:focus { border-bottom-color: #ae3c86; }
     .m2-gate__input.is-error { border-bottom-color: #c0392b; }
-    .m2-gate__error {
-      font-family: var(--font-family-geist);
-      font-size: 13px;
-      color: #c0392b;
-      margin-top: 8px;
-      text-align: left;
-      height: 0;
-      opacity: 0;
-      overflow: hidden;
-      transition: opacity 0.2s ease;
-    }
+    .m2-gate__error { font-family: var(--font-family-geist); font-size: 13px; color: #c0392b; margin-top: 8px; text-align: left; height: 0; opacity: 0; overflow: hidden; transition: opacity 0.2s ease; }
     .m2-gate__error.is-visible { height: auto; opacity: 1; }
     .m2-gate__submit {
-      margin-top: 24px;
-      width: 100%;
-      min-height: 50px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      border-radius: 999px;
-      background: #ae3c86;
-      color: #fff;
-      font-family: var(--font-family-geist);
-      font-size: 16px;
-      font-weight: 500;
+      margin-top: 24px; width: 100%; min-height: 50px; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      border-radius: 999px; background: #ae3c86; color: #fff; font-family: var(--font-family-geist); font-size: 16px; font-weight: 500;
     }
     .m2-gate__submit:hover { background: #9a3476; }
     .m2-gate__submit:active { transform: scale(0.985); background: #8a2e69; }
     .m2-gate__submit-icon { display: block; width: 24px; height: 24px; }
-    a.m2-gate__reach {
-      display: block;
-      margin-top: 20px;
-      font-family: var(--font-family-geist);
-      font-size: 14px;
-      color: #8c4964;
-      text-decoration: underline;
-      text-underline-offset: 3px;
-    }
+    a.m2-gate__reach { display: block; margin-top: 20px; font-family: var(--font-family-geist); font-size: 14px; color: #8c4964; text-decoration: underline; text-underline-offset: 3px; }
     a.m2-gate__reach:hover { color: #ae3c86; }
+
+    @media (min-width: 1024px) {
+      .cs-only-mobile { display: none !important; }
+      .cs-only-desktop { display: inline !important; }
+      .cs-block-mobile { display: none !important; }
+      .cs-block-desktop { display: flex !important; flex-direction: column; }
+      .cs-nav__name { display: inline; }
+      .cs-label { font-size: 32px; }
+      .cs-heading { font-size: 56px; line-height: 1.2; margin-top: 8px; }
+      .cs-body-copy { font-size: 24px; line-height: 1.4; margin-top: 20px; }
+      .cs-section { padding: 100px 0; }
+      .cs-caption { font-size: 24px; line-height: 1.4; margin-top: 24px; }
+      .cs-cta { font-size: 20px; min-height: 60px; padding: 12px 28px; }
+      .cs-slide { margin-top: 32px; border-radius: 16px; }
+      .cs-body-copy + .cs-slide { margin-top: 56px; }
+      .cs-slide + .cs-slide { margin-top: 40px; }
+
+      /* Hero: scale Figma 1728 artboard with vw (capped at 1×) */
+      .cs-hero {
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        height: 860px;
+        min-height: 860px;
+        max-height: 860px;
+        overflow: hidden;
+        position: relative;
+      }
+      .cs-hero__stage {
+        position: relative;
+        width: 100%;
+        max-width: 1728px;
+        margin-inline: auto;
+        flex: 1 1 auto;
+        height: 100%;
+        min-height: 0;
+        padding: 0;
+      }
+      .cs-hero__copy {
+        position: absolute;
+        left: max(var(--page-gutter), min(144px, calc(144 / 1728 * 100vw)));
+        top: min(131px, calc(131 / 1728 * 100vw));
+        width: min(1102px, calc(1102 / 1728 * 100vw));
+        max-width: calc(100% - 2 * var(--page-gutter));
+        z-index: 2;
+      }
+      .cs-hero__title {
+        font-size: min(96px, calc(96 / 1728 * 100vw));
+        line-height: min(90px, calc(90 / 1728 * 100vw));
+        letter-spacing: max(-2px, calc(-2 / 1728 * 100vw));
+        font-weight: 300;
+        max-width: none;
+      }
+      .cs-hero__title-line { display: block; white-space: nowrap; }
+      .cs-hero__sub {
+        font-size: min(36px, calc(36 / 1728 * 100vw));
+        line-height: min(50px, calc(50 / 1728 * 100vw));
+        margin-top: min(32px, calc(32 / 1728 * 100vw));
+        max-width: min(717px, calc(717 / 1728 * 100vw));
+        width: 100%;
+      }
+      .cs-hero__meta {
+        position: static;
+        left: auto;
+        top: auto;
+        width: min(899px, calc(899 / 1728 * 100vw), 100%);
+        font-size: min(24px, calc(24 / 1728 * 100vw));
+        line-height: min(32px, calc(32 / 1728 * 100vw));
+        gap: min(8px, calc(8 / 1728 * 100vw));
+        margin: 32px 0 0;
+        z-index: auto;
+      }
+      .cs-hero__collage {
+        display: block;
+        position: absolute;
+        left: calc(982 / 1728 * 100%);
+        right: max(0px, calc(var(--page-gutter) - 24px));
+        top: max(-50px, calc(-50 / 1728 * 100vw));
+        bottom: min(40px, calc(40 / 1728 * 100vw));
+        width: auto;
+        max-width: none;
+        margin: 0;
+        pointer-events: none;
+        z-index: 1;
+      }
+      .cs-hero__collage img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        object-position: right center;
+        max-width: none;
+      }
+      .cs-hero__wave {
+        margin-top: 0;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 5;
+      }
+
+      .cs-problem-opp { display: block !important; margin-top: 40px; }
+      .cs-col-label { font-size: 26px; }
+      .cs-cards { gap: 19px; }
+      .cs-card {
+        min-height: 100px;
+        padding: 0 19px;
+        border-radius: 16px;
+      }
+      .cs-card__icon { width: 51px; height: 51px; }
+      .cs-card__text { font-size: 19px; line-height: normal; }
+      .cs-list li { font-size: 20px; line-height: 1.45; padding-left: 22px; }
+      .cs-list li::before { width: 9px; height: 9px; }
+
+      .cs-principles { grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 56px; }
+      .cs-pcard {
+        min-height: 495px;
+        padding: 40px 26px;
+        gap: 24px;
+        align-items: center;
+      }
+      .cs-pcard__icon { width: 200px; height: 200px; flex: none; }
+      .cs-pcard__title { font-size: 40px; line-height: 59px; }
+      .cs-pcard__body { font-size: 24px; line-height: 35px; }
+
+      .cs-chevrons { margin-top: 120px; }
+
+      .cs-impact { padding: 80px 0 0; }
+      .cs-impact .cs-wrap { padding-bottom: 120px; }
+      .cs-journey {
+        min-height: 1024px;
+        height: 1024px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 0;
+      }
+      .cs-journey .cs-wrap {
+        padding-top: 72px;
+        padding-bottom: 96px;
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .cs-journey .cs-body-copy { font-size: 32px; line-height: 48px; }
+      .cs-journey > .cs-wave {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: 0;
+        margin-inline: calc(50% - 50vw);
+        width: 100vw;
+      }
+      .cs-impact__grid { grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 40px; }
+      .cs-metric { min-height: 650px; height: 650px; padding: 80px 40px; gap: 40px; }
+      .cs-metric__value { font-size: clamp(140px, 12.5vw, 180px); line-height: 82px; margin-bottom: 24px; }
+      .cs-metric--stack .cs-metric__value { margin-bottom: 0; }
+      .cs-metric__desc { font-size: clamp(28px, 2.7vw, 40px); line-height: 1.25; max-width: 580px; }
+      .cs-metric--full { grid-column: 1 / -1; }
+      .cs-metric--full .cs-metric__desc { max-width: 28ch; }
+
+      .cs-achieved { padding: 180px 0 120px; }
+      .cs-outcome-grid { grid-template-columns: repeat(3, 1fr); gap: 24px; }
+      .cs-ocard { min-height: 464px; padding: 24px 26px 40px; }
+      .cs-ocard__tag { font-size: 24px; line-height: 35px; }
+      .cs-ocard__value { font-size: 96px; line-height: 59px; margin: 90px 0 40px; }
+      .cs-ocard__desc { font-size: 32px; line-height: 40px; }
+      .cs-disclaimer { width: 100%; max-width: 950px; font-size: 14px; line-height: 22px; }
+
+      .cs-close__grid {
+        display: grid;
+        grid-template-columns: minmax(0, 594fr) minmax(0, 662fr);
+        gap: clamp(48px, 10vw, 180px);
+        align-items: center;
+      }
+      .cs-close .cs-heading { font-size: 72px; line-height: 82px; }
+      .cs-close .cs-body-copy { font-size: 32px; line-height: 42px; max-width: 489px; }
+    }
+
+    @media (max-width: 1023.98px) {
+      .cs-only-mobile { display: inline !important; }
+      .cs-only-desktop { display: none !important; }
+      .cs-block-mobile { display: block !important; }
+      .cs-block-desktop { display: none !important; }
+      .cs-nav__name { display: none; }
+    }
+
   </style>
 </head>
 <body>
+
   <!-- Case study access gate -->
   <div class="m2-gate" id="csGate" role="dialog" aria-modal="true" aria-labelledby="csGateTitle" hidden>
     <div class="m2-gate__card" role="document">
@@ -241,7 +789,7 @@
 
   <header class="cs-nav" aria-label="Case study navigation">
     <a class="cs-nav__back" href="/" aria-label="Back to Stephen Aase homepage">
-      <img class="cs-nav__arrow" src="assets/case/icon-back-arrow.svg" alt="" width="22" height="22" aria-hidden="true" />
+      <img class="cs-nav__arrow" src="assets/case/icon-back-arrow.svg" alt="" width="23" height="22" aria-hidden="true" />
       <span class="cs-nav__name">Stephen Aase</span>
     </a>
     <p class="cs-nav__meta">
@@ -252,7 +800,290 @@
   </header>
 
   <main class="cs-body" id="csMain" aria-label="Walmart+ case study" hidden>
-    <!-- Case study body content will go here -->
+
+    <!-- HERO -->
+    <section class="cs-hero" aria-label="Membership that matters">
+      <div class="cs-hero__stage">
+        <div class="cs-hero__copy" data-reveal>
+          <h1 class="cs-hero__title"><span class="cs-hero__title-line">Membership</span><span class="cs-hero__title-line">that matters</span></h1>
+          <p class="cs-hero__sub">Designing Walmart+ to make everyday essentials more accessible and affordable for millions of families.</p>
+          <ul class="cs-hero__meta">
+            <li><strong>My role:</strong> <span>Product Design Director</span></li>
+            <li><strong>Team:</strong> <span>20-25 designers, 3 Sr. Managers + cross functional partners</span></li>
+            <li><strong>Key Result:</strong> <span>Increased member LTV and their basket size by 25%</span></li>
+          </ul>
+        </div>
+        <div class="cs-hero__collage" aria-hidden="true" data-reveal>
+          <img src="assets/case/hero-collage.webp?v=4" alt="" width="1600" height="1574" decoding="async" />
+        </div>
+      </div>
+      <div class="cs-wave cs-wave--white cs-hero__wave" aria-hidden="true"></div>
+    </section>
+
+    <!-- CHALLENGE -->
+    <section class="cs-section" id="challenge">
+      <div class="cs-wrap">
+        <p class="cs-label" data-reveal>The challenge</p>
+        <h2 class="cs-heading" data-reveal>Four things were pushing customers away.<br />Our goal was to pull them back.</h2>
+        <figure class="cs-problem-opp" data-reveal>
+          <img src="assets/case/problem-opportunity.webp?v=2" alt="Problem and Opportunity: four customer problems mapped to membership opportunities with arrows between each pair" width="2880" height="970" decoding="async" />
+        </figure>
+        <div class="cs-col cs-block-mobile" data-reveal>
+          <p class="cs-col-label">Problem</p>
+          <ul class="cs-cards">
+            <li class="cs-card">
+              <span class="cs-card__icon" aria-hidden="true"><img src="assets/case/icon-face-frown.svg" alt="" width="64" height="64" /></span>
+              <p class="cs-card__text">Everyday shopping had gotten slow, costly, and complicated.</p>
+            </li>
+            <li class="cs-card">
+              <span class="cs-card__icon" aria-hidden="true"><img src="assets/case/icon-face-frown.svg" alt="" width="64" height="64" /></span>
+              <p class="cs-card__text">Delivery fees were confusing on every single grocery order.</p>
+            </li>
+            <li class="cs-card">
+              <span class="cs-card__icon" aria-hidden="true"><img src="assets/case/icon-face-frown.svg" alt="" width="64" height="64" /></span>
+              <p class="cs-card__text">Members were shopping and spending with Walmart less often.</p>
+            </li>
+            <li class="cs-card">
+              <span class="cs-card__icon" aria-hidden="true"><img src="assets/case/icon-face-frown.svg" alt="" width="64" height="64" /></span>
+              <p class="cs-card__text">Benefits were scattered across a dozen different services.</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- OPPORTUNITY (mobile) -->
+    <section class="cs-section cs-section--tight cs-block-mobile" id="opportunity">
+      <div class="cs-wrap">
+        <p class="cs-label" data-reveal>The opportunity</p>
+        <p class="cs-body-copy" data-reveal>To pull them back we built a membership program based around saving time and money on everyday essentials.</p>
+        <ul class="cs-cards" data-reveal>
+          <li class="cs-card">
+            <span class="cs-card__icon" aria-hidden="true"><img src="assets/case/icon-rocket.svg" alt="" width="64" height="64" /></span>
+            <p class="cs-card__text">One membership built to make everyday essentials affordable.</p>
+          </li>
+          <li class="cs-card">
+            <span class="cs-card__icon" aria-hidden="true"><img src="assets/case/icon-rocket.svg" alt="" width="64" height="64" /></span>
+            <p class="cs-card__text">One consistent membership fee, with free delivery built in.</p>
+          </li>
+          <li class="cs-card">
+            <span class="cs-card__icon" aria-hidden="true"><img src="assets/case/icon-rocket.svg" alt="" width="64" height="64" /></span>
+            <p class="cs-card__text">A subscription built to turn shoppers into engaged members.</p>
+          </li>
+          <li class="cs-card">
+            <span class="cs-card__icon" aria-hidden="true"><img src="assets/case/icon-rocket.svg" alt="" width="64" height="64" /></span>
+            <p class="cs-card__text">One membership built to compete head-on with Amazon Prime.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- MY ROLE -->
+    <section class="cs-section" id="role">
+      <div class="cs-wrap">
+        <p class="cs-label" data-reveal>My role</p>
+        <h2 class="cs-heading" data-reveal>I launched and scaled Walmart’s first membership program, Walmart+.</h2>
+        <p class="cs-body-copy" data-reveal>As Walmart+’ founding design leader I was responsible for taking the program from 0-1 in 4 months which required strong shared principles, defining the cross-functional strategy and growing the team around real customer needs to build a program that could scale for years to come.</p>
+
+        <div class="cs-principles" role="list">
+          <article class="cs-pcard" role="listitem" data-reveal>
+            <div class="cs-pcard__icon"><img src="assets/case/icon-sparkles.svg" alt="" width="200" height="200" /></div>
+            <div>
+              <h3 class="cs-pcard__title">Shared Principles</h3>
+              <p class="cs-pcard__body">Create a set of core principles to always keep members at the center of our experiences.</p>
+            </div>
+          </article>
+          <article class="cs-pcard" role="listitem" data-reveal>
+            <div class="cs-pcard__icon"><img src="assets/case/icon-user-group.svg" alt="" width="200" height="200" /></div>
+            <div>
+              <h3 class="cs-pcard__title">XF Strategy</h3>
+              <p class="cs-pcard__body">Align XF partners to a simple framework to amplify strategic decision making.</p>
+            </div>
+          </article>
+          <article class="cs-pcard" role="listitem" data-reveal>
+            <div class="cs-pcard__icon"><img src="assets/case/icon-puzzle.svg" alt="" width="200" height="200" /></div>
+            <div>
+              <h3 class="cs-pcard__title">Scale the journey</h3>
+              <p class="cs-pcard__body">Build a high functioning design team with clear goals that mapped to the membership journey.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <div class="cs-wave cs-wave--dark" aria-hidden="true"></div>
+    <!-- JOURNEY -->
+    <section class="cs-journey" id="journey">
+      <div class="cs-wrap">
+        <p class="cs-label cs-label--yellow" data-reveal>Where business goals met real needs</p>
+        <h2 class="cs-heading cs-heading--white" data-reveal>Designing the Membership Journey</h2>
+        <p class="cs-body-copy cs-body-copy--white" data-reveal>Every stage of the journey was paired with a metric Walmart wanted to move. We had to show customer value at every stage to grow and maintain a strong membership offering.</p>
+        <figure class="cs-chevrons" data-reveal>
+          <img src="assets/case/journey-chevrons.webp?v=3" alt="Membership journey stages: Customer (Non-member), Acquisition (Trial &amp; paid membership), Engagement (Benefit usage), Retention (Benefit frequency), Loyalty (Repeat shopping)" width="2880" height="541" decoding="async" />
+        </figure>
+      </div>
+      <div class="cs-wave cs-wave--white" aria-hidden="true"></div>
+    </section>
+
+    <!-- ACQUISITION -->
+    <section class="cs-section" id="acquisition">
+      <div class="cs-wrap">
+        <p class="cs-label" data-reveal>Acquisition</p>
+        <h2 class="cs-heading" data-reveal>How might we showcase the value of becoming a Walmart+ member?</h2>
+        <p class="cs-body-copy" data-reveal>Our focus was three-fold: a marketing page that led with customer value complete with every benefit’s impact on everyday needs, a sign-up flow that simplified choice, and a checkout flow that put the exact savings directly on the page to the customer can see that value in the moment.</p>
+        <figure class="cs-slide" data-reveal>
+          <img src="assets/case/slides/slide-01-landing.png?v=2" alt="Walmart+ marketing landing page with free trial and member benefits" width="2880" height="1620" decoding="async" />
+        </figure>
+        <figure class="cs-slide" data-reveal>
+          <img src="assets/case/slides/slide-02-signup.png?v=2" alt="Walmart+ plan selection and welcome celebration screens" width="2880" height="1620" decoding="async" />
+        </figure>
+        <figure class="cs-slide" data-reveal>
+          <img src="assets/case/slides/slide-03-checkout.png?v=2" alt="Walmart+ sign-up integrated into checkout with savings callout" width="2880" height="1620" decoding="async" />
+        </figure>
+      </div>
+    </section>
+
+    <div class="cs-wave cs-wave--yellow" aria-hidden="true"></div>
+    <section class="cs-impact" aria-label="Acquisition impact">
+      <div class="cs-wrap">
+        <p class="cs-label cs-label--ink" data-reveal>Impact to acquisition</p>
+        <div class="cs-impact__grid">
+          <div class="cs-metric" data-reveal>
+            <p class="cs-metric__value">12%</p>
+            <p class="cs-metric__desc">Peak conversion on the integrated sign-up flow</p>
+          </div>
+          <div class="cs-metric" data-reveal>
+            <p class="cs-metric__value">200%</p>
+            <p class="cs-metric__desc">Increase in membership<br class="cs-only-desktop" />in the first year</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ENGAGEMENT -->
+    <section class="cs-section" id="engagement">
+      <div class="cs-wrap">
+        <p class="cs-label" data-reveal>Engagement</p>
+        <h2 class="cs-heading" data-reveal>How might we get members to use benefits<br />more than once?</h2>
+        <p class="cs-body-copy" data-reveal>Members who tried one benefit tended to stop there, so we treated the second use as the real goal, worth rewarding immediately, and worth designing the whole hub around as each member's habits changed.</p>
+        <figure class="cs-slide" data-reveal>
+          <img src="assets/case/slides/slide-05-benefits.png?v=2" alt="Walmart+ Benefits Hub showing member benefits and personalization" width="2880" height="3554" decoding="async" />
+        </figure>
+      </div>
+    </section>
+
+    <div class="cs-wave cs-wave--yellow" aria-hidden="true"></div>
+    <section class="cs-impact" aria-label="Engagement impact">
+      <div class="cs-wrap">
+        <p class="cs-label cs-label--ink" data-reveal>Impact to engagement</p>
+        <div class="cs-impact__grid">
+          <div class="cs-metric cs-metric--full cs-metric--stack" data-reveal>
+            <p class="cs-metric__desc">Increased the use of the Free Delivery benefit for members to</p>
+            <p class="cs-metric__value">80%</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RETENTION -->
+    <section class="cs-section" id="retention">
+      <div class="cs-wrap">
+        <p class="cs-label" data-reveal>Retention</p>
+        <h2 class="cs-heading" data-reveal>How might we continue to add benefits to increase the value of membership?</h2>
+        <p class="cs-body-copy" data-reveal>Retention wasn't going to be solved by stacking on more perks. The real question was how to make members feel the value of their membership again and again, so we built a recurring cadence of visible, unmissable moments that reminded people what they were already getting, rather than leaving that value to be discovered once and forgotten.</p>
+        <figure class="cs-slide" data-reveal>
+          <img src="assets/case/slides/slide-06-week.png?v=2" alt="Walmart+ Week member event screens with countdown and offers" width="2880" height="3948" decoding="async" />
+        </figure>
+        <figure class="cs-slide" data-reveal>
+          <img src="assets/case/slides/slide-07-incontext.png?v=2" alt="In-context Walmart+ value propositions across the shopping journey" width="2880" height="1620" decoding="async" />
+        </figure>
+      </div>
+    </section>
+
+    <div class="cs-wave cs-wave--yellow" aria-hidden="true"></div>
+    <section class="cs-impact" aria-label="Retention impact">
+      <div class="cs-wrap">
+        <p class="cs-label cs-label--ink" data-reveal>Impact to retention</p>
+        <div class="cs-impact__grid">
+          <div class="cs-metric" data-reveal>
+            <p class="cs-metric__value">75%</p>
+            <p class="cs-metric__desc">Retention for members who used 2+ benefits or offers</p>
+          </div>
+          <div class="cs-metric" data-reveal>
+            <p class="cs-metric__value">60%</p>
+            <p class="cs-metric__desc">Of holiday GMV came from Walmart+ Week</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LOYALTY -->
+    <section class="cs-section" id="loyalty">
+      <div class="cs-wrap">
+        <p class="cs-label" data-reveal>Loyalty</p>
+        <h2 class="cs-heading" data-reveal>How might we celebrate a member to keep them<br />coming back for more?</h2>
+        <p class="cs-body-copy" data-reveal>Savings that happen quietly in the background don't register as savings at all. The strategy was to catch the exact moment a member's value crossed a threshold worth noticing, celebrate it plainly in the moment, and then give that value a permanent home a member could return to any time they needed a reminder of why they'd joined.</p>
+        <figure class="cs-slide" data-reveal>
+          <img src="assets/case/slides/slide-08-savings.png?v=2" alt="Membership paid for itself celebration moment" width="2880" height="1620" decoding="async" />
+        </figure>
+        <figure class="cs-slide" data-reveal>
+          <img src="assets/case/slides/slide-09-dashboard.png?v=2" alt="Walmart+ savings dashboard with monthly, yearly, and lifetime totals" width="2880" height="2328" decoding="async" />
+        </figure>
+      </div>
+    </section>
+
+    <div class="cs-wave cs-wave--yellow" aria-hidden="true"></div>
+    <section class="cs-impact" aria-label="Loyalty impact">
+      <div class="cs-wrap">
+        <p class="cs-label cs-label--ink" data-reveal>Impact to loyalty</p>
+        <div class="cs-impact__grid">
+          <div class="cs-metric" data-reveal>
+            <p class="cs-metric__value">25%</p>
+            <p class="cs-metric__desc">Basket size increase for Walmart+ members</p>
+          </div>
+          <div class="cs-metric" data-reveal>
+            <div class="cs-metric__icon"><img src="assets/case/icon-trend-up.svg" alt="" width="72" height="72" /></div>
+            <p class="cs-metric__desc">Annual spend increased for Walmart+ members</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHAT WE ACHIEVED -->
+    <section class="cs-achieved" id="achieved">
+      <div class="cs-wrap">
+        <p class="cs-label cs-label--yellow" data-reveal>What we achieved</p>
+        <h2 class="cs-heading cs-heading--white" data-reveal>The impact of building a scalable, engaging<br />membership was enormous.</h2>
+        <p class="cs-body-copy cs-body-copy--white" data-reveal>Business metrics moved. A new revenue stream was born. A four-person team became twenty-five. I am incredibly proud to have built the conditions for a membership team to thrive, and the results speak for themselves. From the first vision workshop we ran to the experiences that are still being shipped today, I could not be more honored to have shared this case study with you.</p>
+        <div class="cs-outcome-grid">
+          <article class="cs-ocard" data-reveal><p class="cs-ocard__tag">Acquisition</p><p class="cs-ocard__value">200%</p><p class="cs-ocard__desc">Membership growth in a single year</p></article>
+          <article class="cs-ocard" data-reveal><p class="cs-ocard__tag">Acquisition</p><p class="cs-ocard__value">12%</p><p class="cs-ocard__desc">Peak integrated sign-up conversion</p></article>
+          <article class="cs-ocard" data-reveal><p class="cs-ocard__tag">Engagement</p><p class="cs-ocard__value">80%</p><p class="cs-ocard__desc">engagement for the Free Delivery benefit among trial and paid members</p></article>
+          <article class="cs-ocard" data-reveal><p class="cs-ocard__tag">Retention</p><p class="cs-ocard__value">75%</p><p class="cs-ocard__desc">Retention rate for members who used 2+ benefits or offers</p></article>
+          <article class="cs-ocard" data-reveal><p class="cs-ocard__tag">Retention</p><p class="cs-ocard__value">60%</p><p class="cs-ocard__desc">of holiday GMV attributed to Walmart+ members</p></article>
+          <article class="cs-ocard" data-reveal><p class="cs-ocard__tag">Loyalty</p><p class="cs-ocard__value">25%</p><p class="cs-ocard__desc">Increase to basket size for Walmart+ members.</p></article>
+        </div>
+        <p class="cs-disclaimer" data-reveal>This case study is independent portfolio work, not an official publication of Walmart Inc. Screens, flows, and figures shown here are recreated from memory for illustrative purposes. Walmart and Walmart+ are trademarks of Walmart Inc., referenced here for identification only.</p>
+      </div>
+    </section>
+
+    <!-- CLOSING -->
+    <section class="cs-close" id="contact">
+      <div class="cs-wrap">
+        <div class="cs-close__grid">
+          <div data-reveal>
+            <p class="cs-label cs-label--yellow">Get in touch</p>
+            <h2 class="cs-heading cs-heading--white">Still learning.<br />Always building.</h2>
+            <p class="cs-body-copy cs-body-copy--yellow">I’m at my best leading orgs toward experiences worthy of the people they serve. If that’s your work too, let’s talk.</p>
+            <a class="cs-cta" href="https://www.linkedin.com/in/stephenaase/" target="_blank" rel="noopener noreferrer">Find me on LinkedIn <img src="assets/case/icon-cta-arrow.svg" alt="" width="18" height="18" aria-hidden="true" /></a>
+          </div>
+          <div class="cs-close__photo" data-reveal>
+            <img src="assets/case/closing-portrait.jpg" alt="Stephen Aase with family in a field of flowers" width="1400" height="1400" loading="lazy" decoding="async" />
+          </div>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <script>
@@ -264,6 +1095,7 @@
       var input = document.getElementById('csGateInput');
       var form = document.getElementById('csGateForm');
       var error = document.getElementById('csGateError');
+      var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
       function unlocked() {
         try { return sessionStorage.getItem(CS_KEY) === '1'; } catch (e) { return false; }
@@ -276,13 +1108,22 @@
           window.plausible(eventName, props ? { props: props } : undefined);
         }
       }
+      function initReveal() {
+        if (!main || prefersReducedMotion || !('IntersectionObserver' in window)) return;
+        main.classList.add('reveal-on');
+        var els = main.querySelectorAll('[data-reveal]');
+        var ro = new IntersectionObserver(function (entries) {
+          entries.forEach(function (en) {
+            if (en.isIntersecting) { en.target.classList.add('is-in'); ro.unobserve(en.target); }
+          });
+        }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+        els.forEach(function (el) { ro.observe(el); });
+      }
       function revealPage() {
-        if (gate) {
-          gate.classList.remove('is-open');
-          gate.hidden = true;
-        }
+        if (gate) { gate.classList.remove('is-open'); gate.hidden = true; }
         if (main) main.hidden = false;
         document.body.style.overflow = '';
+        initReveal();
       }
       function openGate() {
         if (!gate) return;
@@ -306,11 +1147,8 @@
         input.addEventListener('pointerdown', unlockField);
       }
 
-      if (unlocked()) {
-        revealPage();
-      } else {
-        openGate();
-      }
+      if (unlocked()) revealPage();
+      else openGate();
 
       if (form) {
         form.addEventListener('submit', function (e) {
@@ -324,16 +1162,25 @@
             revealPage();
           } else {
             track('case_study_unlock', { study: 'walmart-plus', result: 'error' });
-            if (input) {
-              input.classList.add('is-error');
-              input.focus();
-              input.select();
-            }
+            if (input) { input.classList.add('is-error'); input.focus(); input.select(); }
             if (error) error.classList.add('is-visible');
           }
         });
       }
+
+      // Smooth in-page anchors
+      document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+        link.addEventListener('click', function (e) {
+          var id = link.getAttribute('href');
+          if (!id || id.length < 2) return;
+          var target = document.querySelector(id);
+          if (!target) return;
+          e.preventDefault();
+          target.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'start' });
+        });
+      });
     });
   </script>
+
 </body>
 </html>

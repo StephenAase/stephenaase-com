@@ -3,3 +3,14 @@
 .env
 .env.*
 node_modules/
+
+# Local design scratch files
+assets/_*
+assets/about-*
+assets/case-*
+assets/case/hero-photo-*
+assets/case/hero-collage-figma.png
+assets/case/chevron-*.svg
+assets/case/hero-wave.svg
+assets/case/icon-arrow-*.svg
+assets/wave-tile-lavender.svg
