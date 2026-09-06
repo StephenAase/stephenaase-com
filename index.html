@@ -1150,15 +1150,14 @@
     }
     .m2-sitefoot__portrait img {
       position: absolute;
+      left: 0;
+      top: 0;
       display: block;
       pointer-events: none;
-      width: 101.37%;
-      height: 178.17%;
-      max-width: none;
-      left: -1%;
-      top: -44.06%;
+      width: 100%;
+      height: 100%;
       object-fit: cover;
-      object-position: center top;
+      object-position: center;
     }
     .m2-sitefoot__bar {
       position: relative;
@@ -2222,7 +2221,7 @@
         left: 0;
         top: 0;
         object-fit: cover;
-        object-position: center 18%;
+        object-position: center;
       }
 
       /* ---- Site footer bar desktop (Figma 599:144807) ---- */
@@ -2629,7 +2628,7 @@
             <p class="m2-section__label">Leadership case studies</p>
             <div class="m2-work-list">
 
-              <button type="button" class="m2-wcard m2-wcard--realtor" data-casestudy aria-label="Realtor.com — AI leadership, by design case study">
+              <button type="button" class="m2-wcard m2-wcard--realtor" data-casestudy data-casestudy-href="/realtor.html" aria-label="Realtor.com — AI leadership, by design case study">
                 <span class="m2-wcard__media" aria-hidden="true">
                   <img class="m2-wcard__sparkles" src="assets/case-realtor-sparkles.svg" alt="" />
                   <img class="m2-wcard__phone m2-wcard__phone--desk" src="assets/case-realtor-phone.png?v=3" alt="" />
@@ -2818,8 +2817,8 @@
           </div>
           <div class="m2-footer__photo" role="img" aria-label="Portrait of Stephen Aase">
             <picture>
-              <source media="(min-width: 1024px)" srcset="assets/about-me-photo-desktop.jpg" />
-              <img src="assets/about-me-photo-desktop.jpg" alt="Stephen Aase smiling outdoors by the water" width="968" height="1024" loading="lazy" decoding="async" />
+              <source media="(min-width: 1024px)" srcset="assets/footer/portrait-desktop.png" />
+              <img src="assets/footer/portrait-desktop.png" alt="Stephen Aase smiling outdoors by the water" width="662" height="700" loading="lazy" decoding="async" />
             </picture>
           </div>
         </div>
@@ -2828,7 +2827,7 @@
       <!-- Site footer (Figma 635:148073 mobile · 599:144807 desktop) -->
       <footer class="m2-sitefoot" aria-label="Site footer">
         <div class="m2-sitefoot__portrait">
-          <img src="assets/footer/portrait-mobile.jpg" alt="Stephen Aase smiling outdoors by the water" width="843" height="1124" loading="lazy" decoding="async" />
+          <img src="assets/footer/portrait-mobile.png" alt="Stephen Aase smiling outdoors by the water" width="1206" height="915" loading="lazy" decoding="async" />
         </div>
         <div class="m2-sitefoot__bar">
           <div class="m2-sitefoot__atmos" aria-hidden="true">
@@ -3019,16 +3018,28 @@
 
         // --- Case-study modal (closeable; unlockable studies navigate, others show "coming soon") ---
         var cs = document.getElementById('m2CsModal');
-        var CS_UNLOCK_KEY = 'walmartPlusUnlocked';
-        var CS_PASSWORDS = { '/walmart-plus.html': 'B00ne', '/walmart-plus': 'B00ne' };
+        var CS_UNLOCK_KEYS = {
+          '/walmart-plus.html': 'walmartPlusUnlocked',
+          '/walmart-plus': 'walmartPlusUnlocked',
+          '/realtor.html': 'realtorUnlocked',
+          '/realtor': 'realtorUnlocked'
+        };
+        var CS_PASSWORDS = {
+          '/walmart-plus.html': 'B00ne',
+          '/walmart-plus': 'B00ne',
+          '/realtor.html': 'Tater',
+          '/realtor': 'Tater'
+        };
         var csPendingHref = null;
         function csUnlocked(href) {
-          if (href !== '/walmart-plus.html' && href !== '/walmart-plus') return false;
-          try { return sessionStorage.getItem(CS_UNLOCK_KEY) === '1'; } catch (e) { return false; }
+          var key = CS_UNLOCK_KEYS[href];
+          if (!key) return false;
+          try { return sessionStorage.getItem(key) === '1'; } catch (e) { return false; }
         }
         function setCsUnlocked(href) {
-          if (href !== '/walmart-plus.html' && href !== '/walmart-plus') return;
-          try { sessionStorage.setItem(CS_UNLOCK_KEY, '1'); } catch (e) {}
+          var key = CS_UNLOCK_KEYS[href];
+          if (!key) return;
+          try { sessionStorage.setItem(key, '1'); } catch (e) {}
         }
         function openCs(href) {
           csPendingHref = href || null;
@@ -3096,15 +3107,16 @@
             var value = (inp && inp.value || '').trim();
             var expected = csPendingHref && CS_PASSWORDS[csPendingHref];
             if (expected) {
+              var studyName = csPendingHref.indexOf('realtor') !== -1 ? 'realtor' : 'walmart-plus';
               if (value === expected) {
-                track('case_study_unlock', { study: 'walmart-plus', result: 'success', via: 'home' });
+                track('case_study_unlock', { study: studyName, result: 'success', via: 'home' });
                 setCsUnlocked(csPendingHref);
                 if (err) err.classList.remove('is-visible');
                 if (inp) inp.classList.remove('is-error');
                 window.location.href = csPendingHref;
                 return;
               }
-              track('case_study_unlock', { study: 'walmart-plus', result: 'error', via: 'home' });
+              track('case_study_unlock', { study: studyName, result: 'error', via: 'home' });
               if (note) note.classList.remove('is-visible');
               if (inp) { inp.classList.add('is-error'); inp.focus(); inp.select(); }
               if (err) err.classList.add('is-visible');
