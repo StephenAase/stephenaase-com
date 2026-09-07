@@ -1,0 +1,2137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Realtor.com Case Study — Stephen Aase</title>
+  <meta name="description" content="AI Leadership, by Design — Scaling craft in the agentic age, in service of helping people find their way home. A case study by Stephen Aase." />
+  <link rel="canonical" href="https://stephenaase.com/realtor" />
+  <meta name="robots" content="noindex, nofollow" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Stephen Aase" />
+  <meta property="og:url" content="https://stephenaase.com/realtor" />
+  <meta property="og:title" content="Realtor.com Case Study — Stephen Aase" />
+  <meta property="og:description" content="AI leadership, by design. Scaling craft in the agentic age, in service of helping people find their way home." />
+  <meta property="og:image" content="https://stephenaase.com/assets/og-walmart.png" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Realtor.com Case Study — Stephen Aase" />
+  <meta name="twitter:description" content="AI leadership, by design. Scaling craft in the agentic age, in service of helping people find their way home." />
+  <meta name="twitter:image" content="https://stephenaase.com/assets/og-walmart.png" />
+
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
+  <link rel="preload" href="fonts/Geist-Medium.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="fonts/Geist-variable.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap" rel="stylesheet">
+  <script defer data-domain="stephenaase.com" src="https://plausible.io/js/script.js"></script>
+  <link rel="stylesheet" href="colors_and_type.css?v=20260901d">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --page-max: 1300px;
+      --page-margin-min: 24px;
+      --page-gutter: max(var(--page-margin-min), calc((100% - var(--page-max)) / 2));
+      --rc-red: #d92228;
+      --rc-dark-red: #b81d22;
+      --rc-black: #2d292b;
+      --rc-warm-white: #efe8e5;
+      --rc-light-grey: #f2f0ef;
+      --rc-mid-grey: #d3cfca;
+      --rc-dark-grey: #aaa197;
+      --rc-gray-muted: #555555;
+      --rc-handwritten: "Figma Hand", "Caveat", cursive, sans-serif;
+      --cs-duration: 0.7s;
+      --cs-ease: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    html, body {
+      background: #fff;
+      color: var(--rc-black);
+      font-family: var(--font-family-geist);
+      -webkit-font-smoothing: antialiased;
+    }
+    body { min-height: 100dvh; overflow-x: clip; }
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+    img { display: block; max-width: 100%; height: auto; }
+
+    .cs-only-mobile { display: none !important; }
+    .cs-only-desktop { display: block; }
+    span.cs-only-desktop { display: inline; }
+    .cs-block-mobile { display: none !important; }
+    .cs-block-desktop { display: flex; flex-direction: column; }
+
+    /* ---- Navigation (Figma 756:36068 Desktop / 761:40576 Mobile) ---- */
+    .cs-nav {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      height: 64px;
+      min-height: 64px;
+      padding-inline: var(--page-gutter);
+      background: #fff;
+      color: var(--rc-black);
+      font-family: var(--font-family-nav, var(--font-family-geist));
+      font-weight: 500;
+      font-size: 16px;
+      line-height: normal;
+    }
+    .cs-nav__back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #000;
+      white-space: nowrap;
+      transition: opacity 0.2s ease;
+    }
+    .cs-nav__back:hover { opacity: 0.72; }
+    .cs-nav__arrow { width: 22px; height: 22px; flex: none; display: block; }
+    .cs-nav__name {
+      font-weight: 500;
+      color: #000;
+    }
+    .cs-nav__meta {
+      white-space: nowrap;
+      text-align: right;
+      font-weight: 500;
+      font-size: 16px;
+      color: var(--rc-black);
+    }
+    .cs-nav__slash {
+      color: var(--rc-red);
+      margin: 0 4px;
+      font-weight: 600;
+    }
+
+    /* ---- Main container wrapping ---- */
+    .cs-wrap {
+      width: min(var(--page-max), calc(100% - 2 * var(--page-margin-min)));
+      margin-inline: auto;
+      position: relative;
+    }
+
+    /* ---- Typography primitives ---- */
+    .cs-label {
+      display: block;
+      font-family: var(--font-family-geist);
+      font-weight: 600;
+      font-size: 32px;
+      line-height: normal;
+      color: var(--rc-red);
+      margin: 0;
+    }
+    .cs-label--white { color: #f2f0ef; }
+
+    .cs-heading {
+      display: block;
+      font-family: var(--font-family-geist);
+      font-weight: 300;
+      font-size: 56px;
+      line-height: 1.2;
+      color: var(--rc-black);
+      margin: 8px 0 0;
+    }
+    .cs-heading--white { color: #f2f0ef; }
+
+    .cs-body-copy {
+      display: block;
+      font-family: var(--font-family-geist);
+      font-weight: 300;
+      font-size: 24px;
+      line-height: 1.4;
+      color: var(--rc-black);
+      margin: 20px 0 0;
+    }
+    .cs-body-copy--white { color: #f2f0ef; }
+
+    .cs-section {
+      padding: 100px 0;
+      scroll-margin-top: 64px;
+    }
+
+    /* ==========================================
+       HERO (Desktop: 761:40349 / Mobile: 761:41202)
+       ========================================== */
+    .cs-hero {
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      height: 860px;
+      min-height: 860px;
+      max-height: 860px;
+      overflow: hidden;
+      position: relative;
+      background: linear-gradient(119.24deg, rgb(210, 29, 34) 9.8%, rgb(232, 65, 49) 76%, rgb(196, 30, 118) 101.3%);
+      color: #f2f0ef;
+    }
+    .cs-hero__stage {
+      position: relative;
+      width: 100%;
+      max-width: 1728px;
+      margin-inline: auto;
+      flex: 1 1 auto;
+      height: 100%;
+      min-height: 0;
+      padding: 0;
+      display: block;
+    }
+    .cs-hero__copy {
+      position: absolute;
+      left: max(var(--page-gutter), min(144px, calc(144 / 1728 * 100vw)));
+      top: min(131px, calc(131 / 1728 * 100vw));
+      width: min(1102px, calc(1102 / 1728 * 100vw));
+      max-width: calc(100% - 2 * var(--page-gutter));
+      padding: 0;
+      z-index: 2;
+      order: unset;
+      display: block;
+    }
+    .cs-hero__title {
+      font-family: var(--font-family-geist);
+      font-size: min(96px, calc(96 / 1728 * 100vw));
+      line-height: min(90px, calc(90 / 1728 * 100vw));
+      letter-spacing: max(-2px, calc(-2 / 1728 * 100vw));
+      font-weight: 300;
+      color: #ffffff;
+      margin: 0;
+      max-width: none;
+    }
+    .cs-hero__title-line { display: block; white-space: nowrap; }
+    .cs-hero__sub {
+      font-family: var(--font-family-geist);
+      font-size: min(36px, calc(36 / 1728 * 100vw));
+      line-height: min(50px, calc(50 / 1728 * 100vw));
+      margin-top: min(32px, calc(32 / 1728 * 100vw));
+      max-width: min(717px, calc(717 / 1728 * 100vw));
+      font-weight: 300;
+      width: 100%;
+      color: #f2f0ef;
+    }
+    .cs-hero__meta {
+      list-style: none;
+      position: static;
+      left: auto;
+      top: auto;
+      width: min(899px, calc(899 / 1728 * 100vw), 100%);
+      font-size: min(24px, calc(24 / 1728 * 100vw));
+      line-height: min(32px, calc(32 / 1728 * 100vw));
+      gap: min(8px, calc(8 / 1728 * 100vw));
+      margin: 32px 0 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      z-index: auto;
+      font-family: var(--font-family-geist);
+    }
+    .cs-hero__meta li {
+      display: block;
+      min-height: 0;
+      padding: 0;
+      background: transparent;
+      border-radius: 0;
+      white-space: normal;
+    }
+    .cs-hero__meta strong {
+      font-size: inherit;
+      line-height: inherit;
+      font-weight: 700;
+      color: #ffffff;
+    }
+    .cs-hero__meta span {
+      font-size: inherit;
+      line-height: inherit;
+      font-weight: 300;
+      color: #f2f0ef;
+    }
+    .cs-hero__collage {
+      display: block;
+      position: absolute;
+      left: calc(960 / 1728 * 100%);
+      right: max(0px, calc(var(--page-gutter) - 24px));
+      top: max(-30px, calc(-30 / 1728 * 100vw));
+      bottom: min(30px, calc(30 / 1728 * 100vw));
+      width: auto;
+      max-width: none;
+      margin: 0;
+      line-height: normal;
+      pointer-events: none;
+      z-index: 1;
+      order: unset;
+    }
+    .cs-hero__collage picture {
+      display: contents;
+    }
+    .cs-hero__collage img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: right center;
+      max-width: none;
+      aspect-ratio: auto;
+    }
+    .cs-hero__wave {
+      display: block;
+      margin-top: 0;
+      margin-bottom: 0;
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      margin-inline: 0;
+      z-index: 5;
+      line-height: 0;
+    }
+    .cs-hero__wave picture {
+      display: block;
+      width: 100%;
+      line-height: 0;
+    }
+    .cs-hero__wave img {
+      width: 100%;
+      min-width: 1300px;
+      height: 23px;
+      display: block;
+      object-fit: fill;
+    }
+
+    /* ==========================================
+       SECTION 3: THE CHALLENGE (753:193467)
+       ========================================== */
+    .cs-challenge {
+      background: #fff;
+    }
+    .cs-problem-opp {
+      display: block;
+      margin: 40px 0 0;
+      width: 100%;
+      max-width: none;
+    }
+    .cs-problem-opp img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 20px;
+    }
+
+    /* Carousels for Mobile */
+    .cs-challenge-carousels {
+      display: none;
+    }
+    .cs-carousel {
+      width: 100%;
+      position: relative;
+    }
+    .cs-rail {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding-bottom: 12px;
+      padding-inline: calc((100% - 336px) / 2);
+    }
+    .cs-rail::-webkit-scrollbar { display: none; }
+    .cs-card-slide {
+      flex: 0 0 336px;
+      width: 336px;
+      max-width: 336px;
+      background: #fff;
+      border-radius: 11.4px;
+      padding: 32px 40px;
+      scroll-snap-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      box-sizing: border-box;
+    }
+    .cs-card-slide__title {
+      font-family: var(--font-family-geist);
+      font-weight: 600;
+      font-size: 24px;
+      line-height: 24px;
+      color: var(--rc-black);
+      margin: 0;
+    }
+    .cs-card-slide__media {
+      background: var(--rc-light-grey);
+      border-radius: 8px;
+      height: 249px;
+      width: 256px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+    .cs-card-slide__icon {
+      width: 256px;
+      height: 249px;
+      object-fit: fill;
+      display: block;
+      border-radius: 8px;
+    }
+    .cs-card-slide__icon--rocket {
+      width: 256px;
+      height: 249px;
+      object-fit: fill;
+      display: block;
+      border-radius: 8px;
+    }
+    .cs-card-slide__desc {
+      font-family: var(--font-family-geist);
+      font-size: 20px;
+      line-height: 26px;
+      color: var(--rc-black);
+      margin: 0;
+    }
+    .cs-card-slide__desc strong {
+      font-weight: 600;
+    }
+    .cs-dots {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+      justify-content: center;
+      margin-top: 16px;
+    }
+    .cs-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 100px;
+      background: var(--rc-dark-grey);
+      border: 0;
+      padding: 0;
+      transition: width 0.2s ease, background 0.2s ease;
+    }
+    .cs-dot[aria-current="true"] {
+      width: 12px;
+      background: var(--rc-black);
+    }
+
+    /* ==========================================
+       SECTION 4: MY ROLE (759:36094)
+       ========================================== */
+    .cs-role {
+      background: var(--rc-light-grey);
+    }
+    .cs-pillars-grid-desktop {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 48px;
+    }
+    .cs-pillar-card-desktop {
+      background: #fff;
+      border-radius: 20px;
+      min-height: 480px;
+      padding: 40px 26px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+    }
+    .cs-pillar-card-desktop__top {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+    .cs-pillar-card-desktop__icon {
+      height: 200px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .cs-pillar-card-desktop__icon img {
+      max-height: 200px;
+      max-width: 200px;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+    }
+    .cs-pillar-card-desktop__title {
+      font-family: var(--font-family-geist);
+      font-weight: 700;
+      font-size: 40px;
+      line-height: 1.2;
+      color: var(--rc-red);
+      margin: 20px 0 0;
+      text-align: center;
+    }
+    .cs-pillar-card-desktop__desc {
+      font-family: var(--font-family-geist);
+      font-weight: 300;
+      font-size: 24px;
+      line-height: 1.45;
+      color: var(--rc-black);
+      margin: 12px 0 0;
+      max-width: 400px;
+      text-align: center;
+    }
+    .cs-pillar-card-desktop__link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-family: var(--font-family-geist);
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 1.4;
+      color: var(--rc-black);
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      transition: opacity 0.2s ease;
+      margin-top: 24px;
+    }
+    .cs-pillar-card-desktop__link:hover { opacity: 0.7; }
+    .cs-pillar-card-desktop__link img { width: 18px; height: 18px; }
+
+    .cs-pillars-mobile { display: none; }
+
+    /* ==========================================
+       DEEP DIVE SECTIONS (Slides matching Walmart+)
+       ========================================== */
+    .cs-deepdive {
+      background: #fff;
+    }
+    .cs-slide {
+      width: 100%;
+      margin: 24px 0 0;
+      border-radius: 16px;
+      overflow: hidden;
+      background: transparent;
+    }
+    .cs-body-copy + .cs-slide {
+      margin-top: 40px;
+    }
+    .cs-slide + .cs-slide {
+      margin-top: 24px;
+    }
+    .cs-slide picture {
+      display: block;
+      width: 100%;
+    }
+    .cs-slide img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 16px;
+    }
+    @media (min-width: 1024px) {
+      .cs-slide {
+        margin-top: 40px;
+        border-radius: 24px;
+      }
+      .cs-body-copy + .cs-slide {
+        margin-top: 40px;
+      }
+      .cs-slide + .cs-slide {
+        margin-top: 40px;
+      }
+      .cs-slide img {
+        border-radius: 24px;
+      }
+    }
+
+    /* ==========================================
+       METRIC IMPACT SECTIONS (753:193422 / 760:39826 / 760:39852)
+       ========================================== */
+    .cs-metric-section {
+      background: var(--rc-red);
+      color: #fff;
+      position: relative;
+    }
+    .cs-metric-section__wave-top {
+      position: absolute;
+      top: -23px;
+      left: 0;
+      width: 100%;
+      height: 24px;
+      line-height: 0;
+      overflow: hidden;
+      display: block;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .cs-metric-section__wave-top img {
+      width: 100%;
+      min-width: 1440px;
+      height: 24px;
+      display: block;
+      object-fit: fill;
+    }
+    .cs-metric-section__inner {
+      padding: 96px 0 120px;
+    }
+    .cs-metric-section__title {
+      font-family: var(--font-family-geist);
+      font-weight: 600;
+      font-size: 40px;
+      line-height: normal;
+      color: var(--rc-light-grey);
+      margin-bottom: 16px;
+    }
+    .cs-metric-grid-desktop {
+      display: grid !important;
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 24px !important;
+      width: 100%;
+    }
+    .cs-metric-card-desktop {
+      background: var(--rc-dark-red);
+      border-radius: 20px;
+      height: 650px;
+      box-sizing: border-box;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .cs-metric-card-desktop__num {
+      font-family: var(--font-family-geist);
+      font-weight: 700;
+      font-size: 180px;
+      line-height: 180px;
+      color: #ffffff;
+      margin: 0;
+      letter-spacing: 0;
+    }
+    .cs-metric-card-desktop__desc {
+      font-family: var(--font-family-geist);
+      font-weight: 400;
+      font-size: 40px;
+      line-height: 50px;
+      color: var(--rc-light-grey);
+      margin: 24px auto 0;
+      max-width: 606px;
+      text-align: center;
+      letter-spacing: 0;
+    }
+    .cs-metric-stack-mobile { display: none; }
+
+    /* ==========================================
+       SECTION 11: WHAT WE ACHIEVED (760:39780)
+       ========================================== */
+    .cs-achieved {
+      background: var(--rc-black);
+      color: #fff;
+    }
+    .cs-achieved-grid-desktop {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 40px;
+    }
+    .cs-achieved-card-desktop {
+      background: #3f3d3a;
+      border-radius: 20px;
+      height: 464px;
+      padding: 32px 26px 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      text-align: center;
+    }
+    .cs-achieved-card-desktop__cat {
+      font-family: var(--font-family-geist);
+      font-weight: 500;
+      font-size: 24px;
+      line-height: 35px;
+      color: var(--rc-mid-grey);
+      margin: 0;
+    }
+    .cs-achieved-card-desktop__num {
+      font-family: var(--font-family-geist);
+      font-weight: 700;
+      font-size: 96px;
+      line-height: 59px;
+      color: var(--rc-light-grey);
+      margin: 0;
+      letter-spacing: -2px;
+    }
+    .cs-achieved-card-desktop__desc {
+      font-family: var(--font-family-geist);
+      font-weight: 300;
+      font-size: 32px;
+      line-height: 40px;
+      color: var(--rc-light-grey);
+      margin: 0;
+      max-width: 350px;
+    }
+    .cs-achieved-grid-mobile { display: none; }
+
+    /* ==========================================
+       SECTION 12: GET IN TOUCH & FOOTER (760:39792)
+       ========================================== */
+    .cs-closing {
+      background: var(--rc-black);
+      color: #fff;
+      position: relative;
+    }
+    .cs-closing-desktop {
+      padding: 160px 0;
+    }
+    .cs-closing-desktop__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 180px;
+    }
+    .cs-closing-desktop__col-left {
+      max-width: 594px;
+      display: flex;
+      flex-direction: column;
+      gap: 35px;
+    }
+    .cs-closing-desktop__heading {
+      font-family: var(--font-family-geist);
+      font-weight: 300;
+      font-size: 72px;
+      line-height: 82px;
+      color: #ffffff;
+      margin: 10px 0 0;
+    }
+    .cs-closing-desktop__body {
+      font-family: var(--font-family-geist);
+      font-weight: 300;
+      font-size: 32px;
+      line-height: 42px;
+      color: var(--rc-light-grey);
+      margin-top: 10px;
+      max-width: 489px;
+    }
+    .cs-btn-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 11px;
+      background: var(--rc-red);
+      color: #ffffff;
+      border-radius: 8px;
+      height: 60px;
+      width: 350px;
+      font-family: var(--font-family-geist);
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 38px;
+      text-align: center;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+    .cs-btn-cta:hover { opacity: 0.9; transform: translateY(-2px); }
+    .cs-btn-cta svg { width: 18px; height: 18px; }
+
+    .cs-closing-desktop__col-right {
+      width: 662px;
+      height: 700px;
+      border-radius: 40px;
+      overflow: hidden;
+      flex: none;
+    }
+    .cs-closing-desktop__col-right img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .cs-closing-mobile { display: none; }
+
+    /* ==========================================
+       MOBILE BREAKPOINT OVERRIDES (≤ 1023.98px)
+       ========================================== */
+    @media (max-width: 1023.98px) {
+      .cs-only-desktop,
+      h1.cs-only-desktop,
+      h2.cs-only-desktop,
+      h3.cs-only-desktop,
+      p.cs-only-desktop,
+      div.cs-only-desktop,
+      section.cs-only-desktop,
+      figure.cs-only-desktop,
+      span.cs-only-desktop {
+        display: none !important;
+      }
+      .cs-only-mobile { display: block !important; }
+      span.cs-only-mobile { display: inline !important; }
+      .cs-block-mobile { display: block !important; }
+      .cs-block-desktop { display: none !important; }
+      .cs-nav__name { display: none; }
+
+      .cs-label { font-size: 20px; }
+      .cs-heading {
+        font-weight: 400;
+        font-size: 28px;
+        line-height: 1.25;
+        letter-spacing: -0.01em;
+        margin-top: 12px;
+      }
+      .cs-body-copy {
+        font-size: 20px;
+        line-height: 26px;
+        margin-top: 20px;
+      }
+      .cs-section {
+        padding: 80px 0 40px;
+      }
+
+      /* Mobile Hero */
+      .cs-hero {
+        position: relative;
+        isolation: isolate;
+        overflow: hidden;
+        height: auto;
+        min-height: 0;
+        max-height: none;
+        background: linear-gradient(103.25deg, rgb(210, 29, 34) 9.8%, rgb(232, 65, 49) 76%, rgb(196, 30, 118) 101.3%);
+        color: #fff;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+      }
+      .cs-hero__stage {
+        position: relative;
+        width: 100%;
+        max-width: none;
+        margin: 0;
+        padding: 0;
+        height: auto;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+      }
+      .cs-hero__collage {
+        order: 1;
+        position: relative;
+        left: auto;
+        right: auto;
+        top: auto;
+        bottom: auto;
+        width: 100%;
+        max-width: none;
+        margin: 0;
+        padding: 0;
+        display: block;
+        line-height: 0;
+        pointer-events: auto;
+        z-index: 1;
+        border-bottom: none;
+      }
+      .cs-hero__collage picture {
+        display: block;
+        width: 100%;
+        line-height: 0;
+      }
+      .cs-hero__collage img {
+        width: 100%;
+        height: auto;
+        display: block;
+        vertical-align: bottom;
+        aspect-ratio: 1206 / 666;
+        object-fit: contain;
+        object-position: center;
+      }
+      .cs-hero__copy {
+        order: 2;
+        position: relative;
+        left: auto;
+        top: auto;
+        z-index: 2;
+        padding: 40px 24px 48px;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        display: block;
+      }
+      .cs-hero__title {
+        font-family: var(--font-family-geist);
+        font-weight: 300;
+        font-size: clamp(38px, 13.9vw, 56px);
+        line-height: 1.0;
+        letter-spacing: -0.86px;
+        color: #f2f0ef;
+        margin: 0;
+      }
+      .cs-hero__title-line { display: block; white-space: normal; }
+      .cs-hero__sub {
+        font-weight: 400;
+        font-size: 20px;
+        line-height: 24px;
+        color: #f2f0ef;
+        margin: 16px 0 0;
+        max-width: none;
+      }
+      .cs-hero__meta {
+        list-style: none;
+        margin: 24px 0 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        font-size: clamp(12.5px, 3.4vw, 14px);
+        line-height: 18px;
+        width: 100%;
+      }
+      .cs-hero__meta li {
+        display: flex;
+        align-items: center;
+        min-height: 44px;
+        padding: 0 18px;
+        background: var(--rc-dark-red, #98191c);
+        border-radius: 8px;
+        box-sizing: border-box;
+        gap: 6px;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+      .cs-hero__meta strong {
+        color: #f2f0ef;
+        font-weight: 700;
+        font-size: inherit;
+        line-height: 18px;
+        flex-shrink: 0;
+        margin-right: 4px;
+      }
+      .cs-hero__meta span {
+        color: #f2f0ef;
+        font-weight: 400;
+        font-size: inherit;
+        line-height: 18px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .cs-hero__meta li:last-child span {
+        white-space: normal;
+        overflow: visible;
+        text-overflow: unset;
+        line-height: 16px;
+      }
+      .cs-hero__meta li:last-child {
+        min-height: 44px;
+        height: auto;
+        padding-top: 6px;
+        padding-bottom: 6px;
+      }
+      .cs-hero__wave {
+        position: relative;
+        left: auto;
+        right: auto;
+        bottom: auto;
+        z-index: 3;
+        margin-top: 0;
+        margin-bottom: -1px;
+        width: 100%;
+        margin-inline: 0;
+        line-height: 0;
+      }
+      .cs-hero__wave picture {
+        display: block;
+        width: 100%;
+        line-height: 0;
+      }
+      .cs-hero__wave img {
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+        height: 23px;
+        display: block;
+        object-fit: fill;
+      }
+
+      /* Mobile Challenge */
+      .cs-challenge {
+        background: var(--rc-light-grey);
+        padding-top: 80px;
+        padding-bottom: 80px;
+      }
+      .cs-po-box { display: none !important; }
+      .cs-problem-opp { display: none !important; }
+      .cs-challenge-carousels {
+        display: block !important;
+        margin-top: 32px;
+        width: 100vw;
+        position: relative;
+        left: 50%;
+        right: 50%;
+        margin-left: -50vw;
+        margin-right: -50vw;
+      }
+      .cs-challenge-carousels .cs-carousel + .cs-carousel {
+        margin-top: 32px;
+      }
+
+      /* Mobile Pillars */
+      .cs-role {
+        background: #fff;
+        padding-bottom: 80px;
+      }
+      .cs-pillars-grid-desktop { display: none !important; }
+      .cs-pillars-mobile {
+        display: flex !important;
+        margin-top: 24px;
+        flex-direction: column;
+        gap: 16px;
+      }
+      .cs-pillar-card-mobile {
+        background: var(--rc-light-grey);
+        border-radius: 8px;
+        min-height: 231px;
+        box-sizing: border-box;
+        padding: 90px 24px 32px 24px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        position: relative;
+      }
+      .cs-pillar-card-mobile__icon {
+        position: absolute;
+        top: 32px;
+        right: 24px;
+        width: 58px;
+        height: 58px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .cs-pillar-card-mobile__icon img {
+        width: 58px;
+        height: 58px;
+        object-fit: contain;
+        display: block;
+      }
+      .cs-pillar-card-mobile__content {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        margin: 0;
+        padding: 0;
+      }
+      .cs-pillar-card-mobile__title {
+        font-family: var(--font-family-geist);
+        font-weight: 600;
+        font-size: 24px;
+        line-height: 18px;
+        color: var(--rc-red);
+        margin: 0;
+      }
+      .cs-pillar-card-mobile__desc {
+        font-family: var(--font-family-geist);
+        font-weight: 400;
+        font-size: 20px;
+        line-height: 24px;
+        color: var(--rc-black);
+        margin: 0;
+      }
+
+      /* Mobile Deep Dives */
+      .cs-slide {
+        margin-top: 24px;
+        border-radius: 12px;
+      }
+      .cs-slide img {
+        border-radius: 12px;
+      }
+      .cs-body-copy + .cs-slide {
+        margin-top: 24px;
+      }
+      /* Mobile Deep Dives */
+      .cs-deepdive {
+        padding-top: 80px;
+        padding-bottom: 80px;
+      }
+      .cs-slide {
+        border-radius: 12px;
+        overflow: hidden;
+        margin-top: 24px;
+        background: transparent;
+        box-shadow: none;
+      }
+      .cs-slide picture,
+      .cs-slide img {
+        display: block;
+        width: 100%;
+        border-radius: 12px;
+      }
+      .cs-slide + .cs-slide {
+        margin-top: 24px;
+      }
+
+      /* Mobile Metric Impact */
+      .cs-metric-section__inner { padding: 40px 0 60px; }
+      .cs-metric-section__title {
+        font-size: 16px;
+        color: #ffffff;
+        margin-bottom: 24px;
+      }
+      .cs-metric-grid-desktop { display: none !important; }
+      .cs-metric-stack-mobile {
+        display: flex !important;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .cs-metric-card-mobile {
+        background: var(--rc-dark-red);
+        border-radius: 8px;
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 8px;
+      }
+      .cs-metric-card-mobile__num {
+        font-family: var(--font-family-geist);
+        font-weight: 700;
+        font-size: 64px;
+        line-height: 64px;
+        color: #ffffff;
+        margin: 0;
+      }
+      .cs-metric-card-mobile__desc {
+        font-family: var(--font-family-geist);
+        font-weight: 300;
+        font-size: 20px;
+        line-height: 24px;
+        color: #ffffff;
+        margin: 0;
+        max-width: 266px;
+      }
+
+      /* Mobile Achieved */
+      .cs-achieved {
+        padding: 80px 0;
+        background: #2D292B;
+      }
+      .cs-achieved-grid-desktop { display: none !important; }
+      .cs-achieved-grid-mobile {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        margin-top: 32px;
+      }
+      .cs-achieved-card-mobile {
+        background: #3f3d3a;
+        border-radius: 7.4px;
+        height: 172px;
+        padding: 12px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        text-align: center;
+      }
+      .cs-achieved-card-mobile__cat {
+        font-family: var(--font-family-geist);
+        font-weight: 500;
+        font-size: 10px;
+        line-height: 13px;
+        color: var(--rc-dark-grey);
+        margin: 0;
+      }
+      .cs-achieved-card-mobile__num {
+        font-family: var(--font-family-geist);
+        font-weight: 700;
+        font-size: 40px;
+        line-height: 22px;
+        color: #ffffff;
+        margin: 0;
+      }
+      .cs-achieved-card-mobile__desc {
+        font-family: var(--font-family-geist);
+        font-weight: 300;
+        font-size: 12px;
+        line-height: 15px;
+        color: #ffffff;
+        margin: 0;
+        max-width: 130px;
+      }
+
+      /* Mobile Closing & Footer */
+      .cs-closing-desktop { display: none !important; }
+      .cs-closing-mobile {
+        display: block !important;
+        padding-top: 80px;
+        background: #2D292B;
+        overflow: hidden;
+      }
+      .cs-closing-mobile__copy {
+        padding: 0 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+      .cs-closing-mobile__copy .cs-label {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 8px;
+      }
+      .cs-closing-mobile__heading {
+        font-family: var(--font-family-geist);
+        font-weight: 500;
+        font-size: 40px;
+        line-height: 48px;
+        letter-spacing: -0.86px;
+        color: #ffffff;
+        margin: 0 0 16px;
+      }
+      .cs-closing-mobile__body {
+        font-family: var(--font-family-geist);
+        font-weight: 400;
+        font-size: 20px;
+        line-height: 24px;
+        color: #ffffff;
+        margin: 0 0 32px;
+        max-width: 354px;
+      }
+      .cs-closing-mobile__btn-wrap {
+        padding: 0 24px 49px;
+      }
+      .cs-closing-mobile__btn-wrap .cs-btn-cta {
+        width: min(100%, 350px);
+        height: 60px;
+      }
+      .cs-closing-mobile__wave-top {
+        width: 100%;
+        height: 23px;
+        line-height: 0;
+        overflow: hidden;
+        display: block;
+        position: relative;
+        margin-bottom: -1px;
+        z-index: 2;
+      }
+      .cs-closing-mobile__wave-top img {
+        width: 100%;
+        height: 23px;
+        display: block;
+        object-fit: fill;
+      }
+      .cs-closing-mobile__photo-wrap {
+        width: 100%;
+        height: 305px;
+        overflow: hidden;
+        position: relative;
+      }
+      .cs-closing-mobile__photo-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      .cs-closing-mobile__footer-bar {
+        background: var(--rc-black);
+        position: relative;
+        padding: 0 24px 48px;
+      }
+      .cs-closing-mobile__wave-divider {
+        width: 100vw;
+        height: 36px;
+        overflow: hidden;
+        margin-top: -36px;
+        margin-left: -24px;
+        position: relative;
+        z-index: 2;
+      }
+      .cs-closing-mobile__wave-divider img {
+        width: 100%;
+        min-width: 402px;
+        height: 36px;
+        display: block;
+        object-fit: cover;
+      }
+      .cs-closing-mobile__footer-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-top: 24px;
+      }
+      .cs-closing-mobile__socials {
+        display: flex;
+        gap: 15px;
+      }
+      .cs-social-icon-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 5px;
+        background: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: opacity 0.2s ease;
+      }
+      .cs-social-icon-btn:hover { opacity: 0.85; }
+      .cs-social-icon-btn img {
+        width: 25px;
+        height: 25px;
+      }
+      .cs-closing-mobile__copyright {
+        font-family: var(--font-family-geist);
+        font-weight: 300;
+        font-size: 16px;
+        line-height: 48px;
+        color: #ffffff;
+        text-align: right;
+      }
+    }
+
+    /* ---- Case study access gate ---- */
+    .m2-gate {
+      position: fixed; inset: 0; z-index: 100;
+      background: rgba(248, 240, 255, 0.94);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      display: flex; align-items: center; justify-content: center;
+      padding: 24px; opacity: 0; visibility: hidden;
+      transition: opacity 0.35s ease, visibility 0.35s ease;
+    }
+    .m2-gate.is-open { opacity: 1; visibility: visible; }
+    .m2-gate__card {
+      background: #fff; border-radius: 24px;
+      padding: clamp(32px, 5vw, 56px);
+      max-width: 480px; width: 100%;
+      box-shadow: 0 24px 64px rgba(45, 41, 43, 0.14);
+      text-align: center;
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .m2-gate__lock { margin-bottom: 20px; }
+    .m2-gate__title {
+      font-family: var(--font-family-geist);
+      font-weight: 500; font-size: 28px; line-height: 1.2;
+      color: var(--rc-black); margin-bottom: 12px;
+    }
+    .m2-gate__sub {
+      font-size: 16px; line-height: 1.5;
+      color: #666; margin-bottom: 28px;
+    }
+    .m2-gate__form { width: 100%; display: flex; flex-direction: column; gap: 12px; }
+    .m2-gate__label { font-size: 14px; font-weight: 500; color: #444; text-align: left; }
+    .m2-gate__field { width: 100%; }
+    .m2-gate__input {
+      width: 100%; height: 52px; border-radius: 12px;
+      border: 1.5px solid #ddd; padding: 0 16px;
+      font-size: 18px; font-family: inherit; color: var(--rc-black);
+      background: #fafafa; transition: border-color 0.2s, background 0.2s;
+    }
+    .m2-gate__input:focus {
+      outline: none; border-color: var(--rc-red); background: #fff;
+    }
+    .m2-gate__input.is-error {
+      border-color: #e02020; background: #fff5f5;
+    }
+    .m2-gate__error {
+      font-size: 14px; color: #e02020; text-align: left;
+      display: none; margin: -4px 0 4px;
+    }
+    .m2-gate__error.is-visible { display: block; }
+    .m2-gate__submit {
+      width: 100%; height: 52px; border-radius: 12px;
+      background: var(--rc-red); color: #fff;
+      font-size: 16px; font-weight: 500;
+      display: flex; align-items: center; justify-content: center;
+      gap: 8px; transition: opacity 0.2s;
+    }
+    .m2-gate__submit:hover { opacity: 0.9; }
+    .m2-gate__reach {
+      margin-top: 24px; font-size: 14px; color: #777;
+      text-decoration: underline; transition: color 0.2s;
+    }
+    .m2-gate__reach:hover { color: var(--rc-black); }
+
+    /* ---- Smooth Scroll Reveal Animations ---- */
+    .reveal-on [data-reveal] {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity var(--cs-duration) var(--cs-ease), transform var(--cs-duration) var(--cs-ease);
+      will-change: opacity, transform;
+    }
+    .reveal-on [data-reveal].is-in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Case study access gate -->
+  <div class="m2-gate" id="csGate" role="dialog" aria-modal="true" aria-labelledby="csGateTitle" hidden>
+    <div class="m2-gate__card" role="document">
+      <img class="m2-gate__lock" src="assets/gate/icon-lock.svg" alt="" width="40" height="40" aria-hidden="true" />
+      <h2 class="m2-gate__title" id="csGateTitle">Case study access</h2>
+      <p class="m2-gate__sub">This case study is password-protected. If I sent you a password, you’re in the right place; drop it below.</p>
+      <form class="m2-gate__form" id="csGateForm" autocomplete="off" novalidate>
+        <p class="m2-gate__label" id="csGateLabel">Password</p>
+        <div class="m2-gate__field">
+          <input class="m2-gate__input" id="csGateInput" name="sa-case-code" type="text" inputmode="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" readonly aria-labelledby="csGateLabel" data-1p-ignore data-lpignore="true" data-bwignore data-form-type="other" placeholder="Enter password" />
+        </div>
+        <p class="m2-gate__error" id="csGateError" role="alert">That password isn't quite right — try again.</p>
+        <button type="submit" class="m2-gate__submit">
+          <span>Unlock case study</span>
+          <img class="m2-gate__submit-icon" src="assets/gate/icon-lock-filled.svg" alt="" width="24" height="24" aria-hidden="true" />
+        </button>
+      </form>
+      <a class="m2-gate__reach" href="https://www.linkedin.com/in/stephenaase/" target="_blank" rel="noopener noreferrer">No password? Reach out to connect.</a>
+    </div>
+  </div>
+
+  <!-- STICKY TOP NAV (Figma 756:36068 / 761:40576) -->
+  <header class="cs-nav" aria-label="Case study navigation">
+    <a class="cs-nav__back" href="/" aria-label="Back to Stephen Aase homepage">
+      <img class="cs-nav__arrow" src="assets/case/realtor-nav-back.svg" alt="" width="22" height="22" aria-hidden="true" />
+      <span class="cs-nav__name">Stephen Aase</span>
+    </a>
+    <p class="cs-nav__meta" aria-label="Current case study: AI Leadership, by Design">
+      <span class="cs-only-desktop">AI Leadership, by Design</span>
+      <span class="cs-only-mobile">AI Leadership</span>
+      <span class="cs-nav__slash">//</span>
+      <span>2026</span>
+    </p>
+  </header>
+
+  <main class="cs-body" id="csMain" aria-label="Realtor.com case study" hidden>
+
+    <!-- ==========================================
+         SECTION 1 & 2: HERO
+         ========================================== -->
+    <section class="cs-hero" aria-label="AI leadership, by design">
+      <div class="cs-hero__stage">
+        <div class="cs-hero__copy" data-reveal>
+          <h1 class="cs-hero__title"><span class="cs-hero__title-line">AI leadership,</span> <span class="cs-hero__title-line">by design</span></h1>
+          <p class="cs-hero__sub">Scaling craft in the agentic age, in service of helping people find their way home.</p>
+          <ul class="cs-hero__meta">
+            <li><strong>My role:</strong> <span>Senior Director, Product Design</span></li>
+            <li><strong>Team:</strong> <span><span class="cs-only-desktop">25 people: 3 Sr. Leaders, 17 designers, and ~5 contractors</span><span class="cs-only-mobile">20–25 designers, 3 Sr. Managers</span></span></li>
+            <li><strong>Key <span class="cs-only-desktop">Result:</span><span class="cs-only-mobile">result:</span></strong> <span><span class="cs-only-desktop">~45 prototypes built monthly. From May to June it was up 1000%.</span><span class="cs-only-mobile">~45 prototypes built monthly.</span></span></li>
+          </ul>
+        </div>
+        <div class="cs-hero__collage" aria-hidden="true" data-reveal>
+          <picture>
+            <source media="(min-width: 1024px)" srcset="assets/case/realtor-hero-desktop.png" width="2466" height="2439" />
+            <img src="assets/case/realtor-hero-mobile.png" alt="" width="1206" height="666" decoding="async" />
+          </picture>
+        </div>
+      </div>
+      <div class="cs-hero__wave" aria-hidden="true">
+        <picture>
+          <source media="(max-width: 1023.98px)" srcset="assets/case/realtor-wave-hero-mobile.svg" width="402" height="23" />
+          <img src="assets/case/realtor-wave-hero.svg" alt="" width="1800" height="23" />
+        </picture>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SECTION 3: THE CHALLENGE
+         ========================================== -->
+    <section class="cs-section cs-challenge" id="challenge">
+      <div class="cs-wrap">
+        <p class="cs-label" data-reveal>The challenge</p>
+        <h2 class="cs-heading cs-only-desktop" data-reveal>Realtor needed strong Design leadership to define an org-wide, AI transformation.</h2>
+        <h2 class="cs-heading cs-only-mobile" data-reveal>Realtor needed strong Design leadership to define their AI transformation.</h2>
+        <p class="cs-body-copy cs-only-desktop" data-reveal>In 2025, weekly AI use among designers jumped from 53% to 91% in a single year, and the average designer went from using three AI tools to seven. Almost every team in the field hit this same inflection point at once. At Realtor, the talent was already in the room. The conditions weren't. No shared way of working, no infrastructure worth building on, no confidence to explore, no rituals that made the team better, and no mandate to look past the next quarter. My goal was to change this.</p>
+
+        <!-- Desktop Comparison (Figma 753:193467 / Problem & Opportunity) -->
+        <figure class="cs-problem-opp cs-only-desktop" data-reveal>
+          <img src="assets/case/realtor-problem-opportunity.png" alt="Problem and Opportunity: four team problems mapped to leadership opportunities" width="4321" height="1456" decoding="async" />
+        </figure>
+
+        <!-- Mobile Dual Carousels (Figma 761:40497) -->
+        <div class="cs-challenge-carousels cs-only-mobile" data-reveal>
+          <!-- Problem Carousel -->
+          <div class="cs-carousel" data-carousel>
+            <div class="cs-rail" role="group" aria-roledescription="carousel" aria-label="Problems">
+              <article class="cs-card-slide">
+                <h3 class="cs-card-slide__title">Problem</h3>
+                <div class="cs-card-slide__media" aria-hidden="true">
+                  <img class="cs-card-slide__icon" src="assets/case/realtor-problem-1.svg" alt="" width="256" height="249" />
+                </div>
+                <p class="cs-card-slide__desc"><strong>Dejected. </strong>Morale was at an all time low due to leadership gap.</p>
+              </article>
+              <article class="cs-card-slide">
+                <h3 class="cs-card-slide__title">Problem</h3>
+                <div class="cs-card-slide__media" aria-hidden="true">
+                  <img class="cs-card-slide__icon" src="assets/case/realtor-problem-2.svg" alt="" width="256" height="249" />
+                </div>
+                <p class="cs-card-slide__desc"><strong>Tactical. </strong>The team was seen as executional, never strategic.</p>
+              </article>
+              <article class="cs-card-slide">
+                <h3 class="cs-card-slide__title">Problem</h3>
+                <div class="cs-card-slide__media" aria-hidden="true">
+                  <img class="cs-card-slide__icon" src="assets/case/realtor-problem-3.svg" alt="" width="256" height="249" />
+                </div>
+                <p class="cs-card-slide__desc"><strong>Order takers. </strong>Requests arrived with no kickoff or xf collaboration.</p>
+              </article>
+              <article class="cs-card-slide">
+                <h3 class="cs-card-slide__title">Problem</h3>
+                <div class="cs-card-slide__media" aria-hidden="true">
+                  <img class="cs-card-slide__icon" src="assets/case/realtor-problem-4.svg" alt="" width="256" height="249" />
+                </div>
+                <p class="cs-card-slide__desc"><strong>Excluded. </strong>Strategic planning happened without Design.</p>
+              </article>
+            </div>
+            <div class="cs-dots" data-dots aria-hidden="true"></div>
+          </div>
+
+          <!-- Opportunity Carousel -->
+          <div class="cs-carousel" data-carousel>
+            <div class="cs-rail" role="group" aria-roledescription="carousel" aria-label="Opportunities">
+              <article class="cs-card-slide">
+                <h3 class="cs-card-slide__title">Opportunity</h3>
+                <div class="cs-card-slide__media" aria-hidden="true">
+                  <img class="cs-card-slide__icon cs-card-slide__icon--rocket" src="assets/case/realtor-opportunity-1.svg" alt="" width="256" height="249" />
+                </div>
+                <p class="cs-card-slide__desc"><strong>Confidence. </strong>Design had the opportunity to define what excellence looks like.</p>
+              </article>
+              <article class="cs-card-slide">
+                <h3 class="cs-card-slide__title">Opportunity</h3>
+                <div class="cs-card-slide__media" aria-hidden="true">
+                  <img class="cs-card-slide__icon cs-card-slide__icon--rocket" src="assets/case/realtor-opportunity-2.svg" alt="" width="256" height="249" />
+                </div>
+                <p class="cs-card-slide__desc"><strong>Strategic. </strong>Design leans into strategic influence at every surface.</p>
+              </article>
+              <article class="cs-card-slide">
+                <h3 class="cs-card-slide__title">Opportunity</h3>
+                <div class="cs-card-slide__media" aria-hidden="true">
+                  <img class="cs-card-slide__icon cs-card-slide__icon--rocket" src="assets/case/realtor-opportunity-3.svg" alt="" width="256" height="249" />
+                </div>
+                <p class="cs-card-slide__desc"><strong>Vision. </strong>Experience sprints build customer centric roadmaps.</p>
+              </article>
+              <article class="cs-card-slide">
+                <h3 class="cs-card-slide__title">Opportunity</h3>
+                <div class="cs-card-slide__media" aria-hidden="true">
+                  <img class="cs-card-slide__icon cs-card-slide__icon--rocket" src="assets/case/realtor-opportunity-4.svg" alt="" width="256" height="249" />
+                </div>
+                <p class="cs-card-slide__desc"><strong>Pioneering. </strong>Set the pace of innovation around AI tooling and use.</p>
+              </article>
+            </div>
+            <div class="cs-dots" data-dots aria-hidden="true"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SECTION 4: MY ROLE (Pillars)
+         ========================================== -->
+    <section class="cs-section cs-role" id="role">
+      <div class="cs-wrap">
+        <p class="cs-label" data-reveal>My role</p>
+        <h2 class="cs-heading" data-reveal>Set the right conditions, and the team's best work stops being an accident.</h2>
+        <p class="cs-body-copy cs-only-desktop" data-reveal>People do their best work when they can see where the team is going and move without waiting for permission. Systems take the repetitive work off the table so judgment has room to operate. Anyone can generate an option now, so the real job is knowing which one deserves to survive.</p>
+        <p class="cs-body-copy cs-only-mobile" data-reveal>People do their best work when they can see where the team is going and move without waiting for permission. Anyone can generate an option now, so the real job is knowing which one deserves to survive.</p>
+
+        <!-- Desktop 3-Card Grid (Figma 759:36094) -->
+        <div class="cs-pillars-grid-desktop cs-only-desktop" data-reveal>
+          <article class="cs-pillar-card-desktop">
+            <div class="cs-pillar-card-desktop__top">
+              <div class="cs-pillar-card-desktop__icon" aria-hidden="true">
+                <img src="assets/case/realtor-pillar-1.png" alt="" width="200" height="200" />
+              </div>
+              <h3 class="cs-pillar-card-desktop__title">The foundation</h3>
+              <p class="cs-pillar-card-desktop__desc">Build an AI-ready design system and orchestration layer.</p>
+            </div>
+            <a class="cs-pillar-card-desktop__link" href="#foundation">
+              <span>Jump to this section</span>
+              <img src="assets/case/realtor-arrow-down.svg" alt="" width="18" height="18" />
+            </a>
+          </article>
+
+          <article class="cs-pillar-card-desktop">
+            <div class="cs-pillar-card-desktop__top">
+              <div class="cs-pillar-card-desktop__icon" aria-hidden="true">
+                <img src="assets/case/realtor-pillar-2.png" alt="" width="200" height="200" />
+              </div>
+              <h3 class="cs-pillar-card-desktop__title">XF Expectations</h3>
+              <p class="cs-pillar-card-desktop__desc">When everyone can prototype, Design holds the bar on excellence.</p>
+            </div>
+            <a class="cs-pillar-card-desktop__link" href="#expectations">
+              <span>Jump to this section</span>
+              <img src="assets/case/realtor-arrow-down.svg" alt="" width="18" height="18" />
+            </a>
+          </article>
+
+          <article class="cs-pillar-card-desktop">
+            <div class="cs-pillar-card-desktop__top">
+              <div class="cs-pillar-card-desktop__icon" aria-hidden="true">
+                <img src="assets/case/realtor-pillar-3.png" alt="" width="200" height="200" />
+              </div>
+              <h3 class="cs-pillar-card-desktop__title">Strategic Influence</h3>
+              <p class="cs-pillar-card-desktop__desc">Experience visions that influence the strategic roadmap.</p>
+            </div>
+            <a class="cs-pillar-card-desktop__link" href="#influence">
+              <span>Jump to this section</span>
+              <img src="assets/case/realtor-arrow-down.svg" alt="" width="18" height="18" />
+            </a>
+          </article>
+        </div>
+
+        <!-- Mobile 3-Card Stack (Figma 761:40586) -->
+        <div class="cs-pillars-mobile cs-only-mobile" data-reveal>
+          <article class="cs-pillar-card-mobile">
+            <div class="cs-pillar-card-mobile__icon" aria-hidden="true">
+              <img src="assets/case/realtor-pillar-1.png" alt="" width="58" height="58" />
+            </div>
+            <div class="cs-pillar-card-mobile__content">
+              <h3 class="cs-pillar-card-mobile__title">The foundation</h3>
+              <p class="cs-pillar-card-mobile__desc">Build an AI-ready design system and a comprehensive orchestration layer.</p>
+            </div>
+          </article>
+
+          <article class="cs-pillar-card-mobile">
+            <div class="cs-pillar-card-mobile__icon" aria-hidden="true">
+              <img src="assets/case/realtor-pillar-2.png" alt="" width="58" height="58" />
+            </div>
+            <div class="cs-pillar-card-mobile__content">
+              <h3 class="cs-pillar-card-mobile__title">XF Expectations</h3>
+              <p class="cs-pillar-card-mobile__desc">When everyone can prototype, Design holds the bar on defining excellence.</p>
+            </div>
+          </article>
+
+          <article class="cs-pillar-card-mobile">
+            <div class="cs-pillar-card-mobile__icon" aria-hidden="true">
+              <img src="assets/case/realtor-pillar-3.png" alt="" width="58" height="58" />
+            </div>
+            <div class="cs-pillar-card-mobile__content">
+              <h3 class="cs-pillar-card-mobile__title">Strategic Influence</h3>
+              <p class="cs-pillar-card-mobile__desc">Experience visions that influence the strategic roadmap, short and long term.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SECTION 5: BUILDING THE FOUNDATION
+         ========================================== -->
+    <section class="cs-section cs-deepdive" id="foundation">
+      <div class="cs-wrap">
+        <p class="cs-label" data-reveal>Building the foundation</p>
+        <h2 class="cs-heading" data-reveal>One source of truth, orchestrated so every team could build from it.</h2>
+        <p class="cs-body-copy cs-only-desktop" data-reveal>Figma, GitHub, Style Dictionary, and Zeroheight each held a piece of the truth, and none of them talked to each other. I set the direction to orchestrate them into one system with brand and content guidelines at the base, so the same truth reaches design, engineering, and marketing without anyone stopping to reconcile three versions of it. That orchestration is what turned a component library into infrastructure the whole company runs on, and what gave AI something coherent to build against.</p>
+        <p class="cs-body-copy cs-only-mobile" data-reveal>Figma, GitHub, Style Dictionary, and the Zeroheight each held a piece of the truth, and none of them talked. I orchestrated them into one system with brand at the base, so design, engineering, and marketing build from the same source, and AI finally had something coherent to read.</p>
+
+        <!-- Deep Dive Slides (Figma 760:36224 / 761:41025) -->
+        <figure class="cs-slide" data-reveal>
+          <picture>
+            <source media="(min-width: 1024px)" srcset="assets/case/realtor-desktop-s1p1.png" width="4320" height="2430" />
+            <img src="assets/case/realtor-mobile-s1p1.png" alt="AI Orchestration Layer architecture" width="1062" height="1911" loading="lazy" decoding="async" />
+          </picture>
+        </figure>
+        <figure class="cs-slide" data-reveal>
+          <picture>
+            <source media="(min-width: 1024px)" srcset="assets/case/realtor-desktop-s1p2.png" width="4320" height="2430" />
+            <img src="assets/case/realtor-mobile-s1p2.png" alt="Realtor Design System AI Agent" width="1062" height="1044" loading="lazy" decoding="async" />
+          </picture>
+        </figure>
+        <figure class="cs-slide" data-reveal>
+          <picture>
+            <source media="(min-width: 1024px)" srcset="assets/case/realtor-desktop-s1p3.png" width="4320" height="2430" />
+            <img src="assets/case/realtor-mobile-s1p3.png" alt="RDC Profile Vision prototype" width="1062" height="1104" loading="lazy" decoding="async" />
+          </picture>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SECTION 6: METRIC IMPACT 1 (Foundation)
+         ========================================== -->
+    <section class="cs-metric-section" id="impact-foundation">
+      <div class="cs-metric-section__wave-top cs-only-desktop" aria-hidden="true">
+        <img src="assets/case/realtor-wave-top.svg" alt="" width="1800" height="24" />
+      </div>
+      <div class="cs-metric-section__wave-top cs-only-mobile" aria-hidden="true">
+        <img src="assets/case/realtor-wave-mobile.svg" alt="" width="814" height="23" />
+      </div>
+      <div class="cs-wrap cs-metric-section__inner">
+        <p class="cs-metric-section__title" data-reveal>Impact from building the right foundation</p>
+
+        <!-- Desktop 2 Cards (Figma 753:193422) -->
+        <div class="cs-metric-grid-desktop cs-only-desktop" data-reveal>
+          <div class="cs-metric-card-desktop">
+            <p class="cs-metric-card-desktop__num">90%</p>
+            <p class="cs-metric-card-desktop__desc">Adoption across design and tech teams, with accessibility built into every component</p>
+          </div>
+          <div class="cs-metric-card-desktop">
+            <p class="cs-metric-card-desktop__num">~45</p>
+            <p class="cs-metric-card-desktop__desc">Prototypes a month built on the system, up from four. 1000% from May to June.</p>
+          </div>
+        </div>
+
+        <!-- Mobile 2 Cards Stack (Figma 764:43658) -->
+        <div class="cs-metric-stack-mobile cs-only-mobile" data-reveal>
+          <div class="cs-metric-card-mobile">
+            <p class="cs-metric-card-mobile__num">90%</p>
+            <p class="cs-metric-card-mobile__desc">Adoption across design and tech teams, with accessibility built into every component</p>
+          </div>
+          <div class="cs-metric-card-mobile">
+            <p class="cs-metric-card-mobile__num">~45</p>
+            <p class="cs-metric-card-mobile__desc">Prototypes a month built on the system, up from four. 1000% from May to June.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SECTION 7: LEANING INTO CROSS-DISCIPLINE EXPECTATIONS
+         ========================================== -->
+    <section class="cs-section cs-deepdive" id="expectations">
+      <div class="cs-wrap">
+        <p class="cs-label cs-only-desktop" data-reveal>Leaning into cross-discipline expectations</p>
+        <p class="cs-label cs-only-mobile" data-reveal>Cross-discipline expectations</p>
+        <h2 class="cs-heading cs-only-desktop" data-reveal>When everyone can build, design's job becomes knowing what's worth building.</h2>
+        <h2 class="cs-heading cs-only-mobile" data-reveal>When everyone can build, the job is knowing what's worth building.</h2>
+        <p class="cs-body-copy" data-reveal>AI handed everyone a credible first draft, so the scarce thing stopped being production and started being judgment. Rather than defend the boundary, I pushed the team through it: designers writing briefs, shipping code, and holding the quality bar on work that didn't originate with them. Then we made that judgment teachable, so a designer on any squad has access to the same standard, and a customer gets the same quality regardless of which team happened to build the screen.</p>
+
+        <!-- Deep Dive Slides (Figma 760:36270 / 762:43632) -->
+        <figure class="cs-slide" data-reveal>
+          <picture>
+            <source media="(min-width: 1024px)" srcset="assets/case/realtor-desktop-s2p1.png" width="4320" height="2430" />
+            <img src="assets/case/realtor-mobile-s2p1.png" alt="The Spicy Scale framework" width="1062" height="1158" loading="lazy" decoding="async" />
+          </picture>
+        </figure>
+        <figure class="cs-slide" data-reveal>
+          <picture>
+            <source media="(min-width: 1024px)" srcset="assets/case/realtor-desktop-s2p2.png" width="4320" height="2430" />
+            <img src="assets/case/realtor-mobile-s2p2.png" alt="AI Skills profile and critique" width="1062" height="1311" loading="lazy" decoding="async" />
+          </picture>
+        </figure>
+        <figure class="cs-slide" data-reveal>
+          <picture>
+            <source media="(min-width: 1024px)" srcset="assets/case/realtor-desktop-s2p3.png" width="4320" height="2430" />
+            <img src="assets/case/realtor-mobile-s2p3.png" alt="AI Summit design lifecycle workflow map" width="1062" height="1044" loading="lazy" decoding="async" />
+          </picture>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SECTION 8: METRIC IMPACT 2 (Process)
+         ========================================== -->
+    <section class="cs-metric-section" id="impact-process">
+      <div class="cs-metric-section__wave-top cs-only-desktop" aria-hidden="true">
+        <img src="assets/case/realtor-wave-top.svg" alt="" width="1800" height="24" />
+      </div>
+      <div class="cs-metric-section__wave-top cs-only-mobile" aria-hidden="true">
+        <img src="assets/case/realtor-wave-mobile.svg" alt="" width="814" height="23" />
+      </div>
+      <div class="cs-wrap cs-metric-section__inner">
+        <p class="cs-metric-section__title" data-reveal>Impact to owning the process</p>
+
+        <!-- Desktop 2 Cards (Figma 760:39826) -->
+        <div class="cs-metric-grid-desktop cs-only-desktop" data-reveal>
+          <div class="cs-metric-card-desktop">
+            <p class="cs-metric-card-desktop__num">45</p>
+            <p class="cs-metric-card-desktop__desc">Designers shaping the org's AI workflow together, every quarter</p>
+          </div>
+          <div class="cs-metric-card-desktop">
+            <p class="cs-metric-card-desktop__num">10</p>
+            <p class="cs-metric-card-desktop__desc">AI agents, six rated high value and given owners</p>
+          </div>
+        </div>
+
+        <!-- Mobile 2 Cards Stack (Figma 766:43691) -->
+        <div class="cs-metric-stack-mobile cs-only-mobile" data-reveal>
+          <div class="cs-metric-card-mobile">
+            <p class="cs-metric-card-mobile__num">45</p>
+            <p class="cs-metric-card-mobile__desc">Designers shaping the org's AI workflow together, every quarter</p>
+          </div>
+          <div class="cs-metric-card-mobile">
+            <p class="cs-metric-card-mobile__num">10</p>
+            <p class="cs-metric-card-mobile__desc">AI agents, six rated high value and given owners</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SECTION 9: STRATEGIC INFLUENCE AND TACTICAL EXECUTION
+         ========================================== -->
+    <section class="cs-section cs-deepdive" id="influence">
+      <div class="cs-wrap">
+        <p class="cs-label cs-only-desktop" data-reveal>Strategic influence and tactical execution</p>
+        <p class="cs-label cs-only-mobile" data-reveal>Strategic influence</p>
+        <h2 class="cs-heading" data-reveal>Experience visions became how Design earned a say in the strategic roadmap.</h2>
+        <p class="cs-body-copy" data-reveal>My mission was to get Design out of the receiving end of the roadmap and into the room where it gets written, and AI helped us establish and scale the playbook with confidence. It compressed sprints, prototypes, and the presentations around them from weeks to days, so a vision became something we could stand up on demand.<br /><br />We knew we’d hit the mark when executive leadership started asking for vision sprints by name. Now, customers were getting experiences shaped by design intent instead of by whatever survived the planning cycle.</p>
+
+        <!-- Deep Dive Slides (Figma 760:39675 / 764:43676) -->
+        <figure class="cs-slide" data-reveal>
+          <picture>
+            <source media="(min-width: 1024px)" srcset="assets/case/realtor-desktop-s3p1.png" width="4320" height="2430" />
+            <img src="assets/case/realtor-mobile-s3p1.png" alt="Profile Hub strategic positioning diagram" width="1062" height="1467" loading="lazy" decoding="async" />
+          </picture>
+        </figure>
+        <figure class="cs-slide" data-reveal>
+          <picture>
+            <source media="(min-width: 1024px)" srcset="assets/case/realtor-desktop-s3p2.png" width="4320" height="2430" />
+            <img src="assets/case/realtor-mobile-s3p2.png" alt="RealAssist conversational search flow" width="1062" height="1044" loading="lazy" decoding="async" />
+          </picture>
+        </figure>
+        <figure class="cs-slide" data-reveal>
+          <picture>
+            <source media="(min-width: 1024px)" srcset="assets/case/realtor-desktop-s3p3.png" width="4320" height="2430" />
+            <img src="assets/case/realtor-mobile-s3p3.png" alt="Sizzle reel coming soon" width="1062" height="687" loading="lazy" decoding="async" />
+          </picture>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SECTION 10: METRIC IMPACT 3 (Strategic)
+         ========================================== -->
+    <section class="cs-metric-section" id="impact-influence">
+      <div class="cs-metric-section__wave-top cs-only-desktop" aria-hidden="true">
+        <img src="assets/case/realtor-wave-top.svg" alt="" width="1800" height="24" />
+      </div>
+      <div class="cs-metric-section__wave-top cs-only-mobile" aria-hidden="true">
+        <img src="assets/case/realtor-wave-mobile.svg" alt="" width="814" height="23" />
+      </div>
+      <div class="cs-wrap cs-metric-section__inner">
+        <p class="cs-metric-section__title" data-reveal>Impact to strategic influencing</p>
+
+        <!-- Desktop 2 Cards (Figma 760:39852) -->
+        <div class="cs-metric-grid-desktop cs-only-desktop" data-reveal>
+          <div class="cs-metric-card-desktop">
+            <p class="cs-metric-card-desktop__num">100%</p>
+            <p class="cs-metric-card-desktop__desc">Of top FY27 priorities had a working prototype behind them</p>
+          </div>
+          <div class="cs-metric-card-desktop">
+            <p class="cs-metric-card-desktop__num">2</p>
+            <p class="cs-metric-card-desktop__desc">High fidelity vision prototypes were prioritized quarterly</p>
+          </div>
+        </div>
+
+        <!-- Mobile 2 Cards Stack (Figma 766:43691) -->
+        <div class="cs-metric-stack-mobile cs-only-mobile" data-reveal>
+          <div class="cs-metric-card-mobile">
+            <p class="cs-metric-card-mobile__num">100%</p>
+            <p class="cs-metric-card-mobile__desc">Of top FY27 priorities had a working prototype behind them</p>
+          </div>
+          <div class="cs-metric-card-mobile">
+            <p class="cs-metric-card-mobile__num">2</p>
+            <p class="cs-metric-card-mobile__desc">High fidelity vision prototypes were prioritized quarterly</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SECTION 11: WHAT WE ACHIEVED
+         ========================================== -->
+    <section class="cs-section cs-achieved" id="achieved">
+      <div class="cs-wrap">
+        <p class="cs-label" data-reveal>What we achieved</p>
+        <h2 class="cs-heading cs-heading--white cs-only-desktop" data-reveal>The conditions held, and Design came out the other side leading the transformation.</h2>
+        <h2 class="cs-heading cs-heading--white cs-only-mobile" data-reveal>The conditions held, Design came out leading the transformation.</h2>
+        <p class="cs-body-copy cs-body-copy--white cs-only-desktop" data-reveal>The conditions are built. AI was this transformation and the next one will be something else, and either way this team is ready: a foundation worth building on, a quality bar they hold on their own, and the standing to tell the company where the work should go. What I am proudest of is watching them defend that bar when the easier answer is right there on the table. That is the moment a customer gets a better experience and the business gets a product worth building.</p>
+        <p class="cs-body-copy cs-body-copy--white cs-only-mobile" data-reveal>The conditions are built. AI was this transformation and the next one will be something else, and either way this team is ready: a foundation worth building on, a quality bar they hold on their own, and the standing to tell the company where the work should go. What I am proudest of is watching them defend that bar when the easier answer is right there on the table. That is the moment a customer gets a better experience and the business gets a product worth building.</p>
+
+        <!-- Desktop 3x2 Grid (Figma 760:39780) -->
+        <div class="cs-achieved-grid-desktop cs-only-desktop" data-reveal>
+          <article class="cs-achieved-card-desktop">
+            <p class="cs-achieved-card-desktop__cat">Foundations</p>
+            <p class="cs-achieved-card-desktop__num">90%</p>
+            <p class="cs-achieved-card-desktop__desc">Adoption across design and tech teams, with accessibility built in</p>
+          </article>
+          <article class="cs-achieved-card-desktop">
+            <p class="cs-achieved-card-desktop__cat">Foundations</p>
+            <p class="cs-achieved-card-desktop__num">~45</p>
+            <p class="cs-achieved-card-desktop__desc">Prototypes a month built, up from 4. 1000% from May to June</p>
+          </article>
+          <article class="cs-achieved-card-desktop">
+            <p class="cs-achieved-card-desktop__cat">Process</p>
+            <p class="cs-achieved-card-desktop__num">45</p>
+            <p class="cs-achieved-card-desktop__desc">Designers shaping the org's AI workflow together, every quarter</p>
+          </article>
+          <article class="cs-achieved-card-desktop">
+            <p class="cs-achieved-card-desktop__cat">Process</p>
+            <p class="cs-achieved-card-desktop__num">10</p>
+            <p class="cs-achieved-card-desktop__desc">AI agents, six rated high value and given owners</p>
+          </article>
+          <article class="cs-achieved-card-desktop">
+            <p class="cs-achieved-card-desktop__cat">Strategic impact</p>
+            <p class="cs-achieved-card-desktop__num">100%</p>
+            <p class="cs-achieved-card-desktop__desc">Of top FY27 priorities had a working prototype behind them</p>
+          </article>
+          <article class="cs-achieved-card-desktop">
+            <p class="cs-achieved-card-desktop__cat">Strategic impact</p>
+            <p class="cs-achieved-card-desktop__num">2</p>
+            <p class="cs-achieved-card-desktop__desc">High fidelity vision prototypes were prioritized quarterly</p>
+          </article>
+        </div>
+
+        <!-- Mobile 2x3 Grid (Figma 766:43691) -->
+        <div class="cs-achieved-grid-mobile cs-only-mobile" data-reveal>
+          <article class="cs-achieved-card-mobile">
+            <p class="cs-achieved-card-mobile__cat">Foundations</p>
+            <p class="cs-achieved-card-mobile__num">90%</p>
+            <p class="cs-achieved-card-mobile__desc">Adoption across design and tech teams, with accessibility built in</p>
+          </article>
+          <article class="cs-achieved-card-mobile">
+            <p class="cs-achieved-card-mobile__cat">Foundations</p>
+            <p class="cs-achieved-card-mobile__num">~45</p>
+            <p class="cs-achieved-card-mobile__desc">Prototypes a month built, up from 4. 1000% from May to June</p>
+          </article>
+          <article class="cs-achieved-card-mobile">
+            <p class="cs-achieved-card-mobile__cat">Process</p>
+            <p class="cs-achieved-card-mobile__num">45</p>
+            <p class="cs-achieved-card-mobile__desc">Designers shaping the org's AI workflow together, every quarter</p>
+          </article>
+          <article class="cs-achieved-card-mobile">
+            <p class="cs-achieved-card-mobile__cat">Process</p>
+            <p class="cs-achieved-card-mobile__num">10</p>
+            <p class="cs-achieved-card-mobile__desc">AI agents, six rated high value and given owners</p>
+          </article>
+          <article class="cs-achieved-card-mobile">
+            <p class="cs-achieved-card-mobile__cat">Strategic impact</p>
+            <p class="cs-achieved-card-mobile__num">100%</p>
+            <p class="cs-achieved-card-mobile__desc">Of top FY27 priorities had a working prototype behind them</p>
+          </article>
+          <article class="cs-achieved-card-mobile">
+            <p class="cs-achieved-card-mobile__cat">Strategic impact</p>
+            <p class="cs-achieved-card-mobile__num">2</p>
+            <p class="cs-achieved-card-mobile__desc">High fidelity vision prototypes were prioritized quarterly</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SECTION 12: GET IN TOUCH & FOOTER
+         ========================================== -->
+    <!-- Desktop Closing (Figma 760:39792) -->
+    <section class="cs-closing cs-closing-desktop cs-only-desktop" id="contact-desktop">
+      <div class="cs-wrap">
+        <div class="cs-closing-desktop__inner">
+          <div class="cs-closing-desktop__col-left" data-reveal>
+            <div>
+              <p class="cs-label">Get in touch</p>
+              <h2 class="cs-closing-desktop__heading">Still learning.<br />Always building.</h2>
+              <p class="cs-closing-desktop__body">I'm at my best leading orgs toward experiences worthy of the people they serve. If that's your work too, let's talk.</p>
+            </div>
+            <div>
+              <a class="cs-btn-cta" href="https://www.linkedin.com/in/stephenaase/" target="_blank" rel="noopener noreferrer">
+                <span>Find me on LinkedIn</span>
+                <svg viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4.58301 11.0003L17.4163 11.0003M11.0003 4.58366L17.417 11.0003L11.0003 17.417" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div class="cs-closing-desktop__col-right" data-reveal>
+            <img src="assets/case/realtor-family-portrait-opt.png" alt="Stephen Aase and family" width="662" height="700" loading="lazy" decoding="async" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    /* Mobile Closing & Footer (Figma 761:41160 / 761:41174) */
+    <section class="cs-closing cs-closing-mobile cs-only-mobile" id="contact-mobile">
+      <div class="cs-closing-mobile__copy" data-reveal>
+        <p class="cs-label">Get in touch</p>
+        <h2 class="cs-closing-mobile__heading">Still learning.<br />Always building.</h2>
+        <p class="cs-closing-mobile__body">I'm at my best leading orgs toward experiences worthy of the people they serve. If that's your work too, let's talk.</p>
+      </div>
+
+      <div class="cs-closing-mobile__btn-wrap" data-reveal>
+        <a class="cs-btn-cta" href="https://www.linkedin.com/in/stephenaase/" target="_blank" rel="noopener noreferrer">
+          <span>Find me on LinkedIn</span>
+          <svg viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4.58301 11.0003L17.4163 11.0003M11.0003 4.58366L17.417 11.0003L11.0003 17.417" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+
+      <!-- Wave divider above photo -->
+      <div class="cs-closing-mobile__wave-top" aria-hidden="true">
+        <picture>
+          <source srcset="assets/case/realtor-wave-dark.svg" />
+          <img src="assets/case/realtor-wave-dark.svg" alt="" width="402" height="23" />
+        </picture>
+      </div>
+
+      <!-- Family Photo -->
+      <div class="cs-closing-mobile__photo-wrap" data-reveal>
+        <img src="assets/case/realtor-family-portrait-opt.png" alt="Stephen Aase and family" width="402" height="305" loading="lazy" decoding="async" />
+      </div>
+
+      <!-- Footer Bar with wavy divider and social buttons -->
+      <footer class="cs-closing-mobile__footer-bar" aria-label="Site footer">
+        <div class="cs-closing-mobile__wave-divider" aria-hidden="true">
+          <img src="assets/case/realtor-footer-wave.svg" alt="" width="600" height="36" />
+        </div>
+        <div class="cs-closing-mobile__footer-row">
+          <div class="cs-closing-mobile__socials">
+            <a class="cs-social-icon-btn" href="https://www.linkedin.com/in/stephenaase/" target="_blank" rel="noopener noreferrer" aria-label="Stephen Aase on LinkedIn">
+              <img src="assets/case/realtor-icon-linkedin.svg" alt="" width="25" height="25" />
+            </a>
+            <a class="cs-social-icon-btn" href="https://www.instagram.com/stephenaase/" target="_blank" rel="noopener noreferrer" aria-label="Stephen Aase on Instagram">
+              <img src="assets/case/realtor-icon-insta.svg" alt="" width="25" height="25" />
+            </a>
+          </div>
+          <p class="cs-closing-mobile__copyright">© 2026 Stephen Aase</p>
+        </div>
+      </footer>
+    </section>
+
+  </main>
+
+  <script>
+    (function () {
+      'use strict';
+      var CS_KEY = 'realtorUnlocked';
+      var CS_PW = 'Tater';
+      var gate = document.getElementById('csGate');
+      var main = document.getElementById('csMain');
+      var input = document.getElementById('csGateInput');
+      var form = document.getElementById('csGateForm');
+      var error = document.getElementById('csGateError');
+      var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      function unlocked() {
+        try {
+          if (sessionStorage.getItem(CS_KEY) === '1') return true;
+        } catch (e) {}
+        return false;
+      }
+      function setUnlocked() {
+        try { sessionStorage.setItem(CS_KEY, '1'); } catch (e) {}
+      }
+      function track(eventName, props) {
+        if (typeof window.plausible === 'function') {
+          window.plausible(eventName, props ? { props: props } : undefined);
+        }
+      }
+      function initReveal() {
+        if (!main || prefersReducedMotion || !('IntersectionObserver' in window)) return;
+        main.classList.add('reveal-on');
+        var els = main.querySelectorAll('[data-reveal]');
+        var ro = new IntersectionObserver(function (entries) {
+          entries.forEach(function (en) {
+            if (en.isIntersecting) { en.target.classList.add('is-in'); ro.unobserve(en.target); }
+          });
+        }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+        els.forEach(function (el) { ro.observe(el); });
+      }
+
+      function initCarousels() {
+        document.querySelectorAll('[data-carousel]').forEach(function (carousel) {
+          var rail = carousel.querySelector('.cs-rail');
+          var dotsWrap = carousel.querySelector('[data-dots]');
+          if (!rail || !dotsWrap) return;
+          if (dotsWrap.children.length > 0) return;
+          var slides = Array.prototype.slice.call(rail.children);
+          slides.forEach(function (_, i) {
+            var dot = document.createElement('button');
+            dot.className = 'cs-dot';
+            dot.type = 'button';
+            dot.setAttribute('aria-label', 'Go to item ' + (i + 1));
+            if (i === 0) dot.setAttribute('aria-current', 'true');
+            dot.addEventListener('click', function () {
+              slides[i].scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'nearest', inline: 'center' });
+            });
+            dotsWrap.appendChild(dot);
+          });
+          var dots = Array.prototype.slice.call(dotsWrap.children);
+          var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                var idx = slides.indexOf(entry.target);
+                dots.forEach(function (d, di) {
+                  if (di === idx) d.setAttribute('aria-current', 'true');
+                  else d.removeAttribute('aria-current');
+                });
+              }
+            });
+          }, { root: rail, threshold: 0.5 });
+          slides.forEach(function (s) { io.observe(s); });
+        });
+      }
+
+      function revealPage() {
+        if (gate) { gate.classList.remove('is-open'); gate.hidden = true; }
+        if (main) main.hidden = false;
+        document.body.style.overflow = '';
+        initReveal();
+        initCarousels();
+      }
+
+      function openGate() {
+        if (!gate) return;
+        gate.hidden = false;
+        document.body.style.overflow = 'hidden';
+        gate.offsetHeight;
+        gate.classList.add('is-open');
+        track('case_study_gate_shown', { study: 'realtor' });
+        if (input) {
+          input.removeAttribute('readonly');
+          setTimeout(function () { input.focus({ preventScroll: true }); }, 80);
+        }
+      }
+
+      if (input) {
+        input.type = 'text';
+        input.setAttribute('autocomplete', 'off');
+        function unlockField() {
+          if (input.hasAttribute('readonly')) input.removeAttribute('readonly');
+        }
+        input.addEventListener('focus', unlockField);
+        input.addEventListener('pointerdown', unlockField);
+      }
+
+      if (unlocked()) {
+        revealPage();
+      } else {
+        openGate();
+      }
+
+      if (form) {
+        form.addEventListener('submit', function (e) {
+          e.preventDefault();
+          var val = (input && input.value || '').trim();
+          if (val === CS_PW) {
+            track('case_study_unlock', { study: 'realtor', result: 'success', via: 'direct' });
+            setUnlocked();
+            if (error) error.classList.remove('is-visible');
+            if (input) input.classList.remove('is-error');
+            revealPage();
+          } else {
+            track('case_study_unlock', { study: 'realtor', result: 'error', via: 'direct' });
+            if (input) {
+              input.classList.add('is-error');
+              input.focus();
+              input.select();
+            }
+            if (error) error.classList.add('is-visible');
+          }
+        });
+      }
+
+      // Smooth in-page anchor scroll
+      document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
+        anchor.addEventListener('click', function (e) {
+          var targetId = this.getAttribute('href');
+          if (targetId === '#') return;
+          var target = document.querySelector(targetId);
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'start' });
+          }
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
