@@ -148,6 +148,9 @@
       color: var(--rc-black);
       margin: 20px 0 0;
     }
+    .cs-body-copy strong {
+      font-weight: 700;
+    }
     .cs-body-copy--white { color: #f2f0ef; }
 
     .cs-section {
@@ -1689,27 +1692,30 @@
     <section class="cs-section cs-deepdive" id="foundation">
       <div class="cs-wrap">
         <p class="cs-label" data-reveal>Building the foundation</p>
-        <h2 class="cs-heading cs-only-desktop" data-reveal>One source of truth, orchestrated so every<br />team can build from it.</h2>
-        <h2 class="cs-heading cs-only-mobile" data-reveal>One source of truth, orchestrated so every team can build from it.</h2>
-        <p class="cs-body-copy cs-only-desktop" data-reveal>Figma, GitHub, Style Dictionary, and Zeroheight each held a piece of the truth, and none of them talked to each other. I set the direction to orchestrate them into one system with brand and content guidelines at the base, so the same truth reaches design, engineering, and marketing without anyone stopping to reconcile three versions of it. That orchestration is what turned a component library into infrastructure the whole company runs on, and what gave AI something coherent to build against.</p>
-        <p class="cs-body-copy cs-only-mobile" data-reveal>Figma, GitHub, Style Dictionary, and Zeroheight each held a piece of the truth, and none of them talked. I orchestrated them into one system with brand at the base, so design, engineering, and marketing build from the same source, and AI finally had something coherent to read.</p>
+        <h2 class="cs-heading cs-only-desktop" data-reveal>A system of parts the whole organization could use with confidence.</h2>
+        <h2 class="cs-heading cs-only-mobile" data-reveal>A system of parts the whole organization could use with confidence.</h2>
+        <p class="cs-body-copy" data-reveal><strong>The problem we faced:</strong> Figma, GitHub, Style Dictionary, and Zeroheight each held a piece of the Realtor brand, but none of them talked to each other. A component could look one way in Figma, ship differently in code, and read a third way in Marketing collateral nobody had time to update. Worst of all, none of it was built to support AI workflows that were becoming an industry standard.</p>
+        <p class="cs-body-copy" data-reveal><strong>The opportunity I saw:</strong> Create a connected system of parts, orchestrated clearly enough for AI to build against. Anyone across the org could prototype faster and with confidence. Marketing and Engineering could work from the same system, so the brand's styles and voice stayed consistent and strong everywhere they showed up.</p>
 
         <!-- Deep Dive Slides (Figma 760:36224 / 761:41025) -->
         <figure class="cs-slide" data-reveal>
           <picture>
             <source media="(min-width: 1024px)" srcset="assets/case/realtor-desktop-s1p1.png" width="4320" height="2430" />
+            <source media="(max-width: 1023.98px)" srcset="assets/case/realtor-mobile-s1p1.png" width="1062" height="1911" />
             <img src="assets/case/realtor-mobile-s1p1.png" alt="AI Orchestration Layer architecture" width="1062" height="1911" loading="lazy" decoding="async" />
           </picture>
         </figure>
         <figure class="cs-slide" data-reveal>
           <picture>
             <source media="(min-width: 1024px)" srcset="assets/case/realtor-desktop-s1p2.png" width="4320" height="2430" />
+            <source media="(max-width: 1023.98px)" srcset="assets/case/realtor-mobile-s1p2.png" width="1062" height="1044" />
             <img src="assets/case/realtor-mobile-s1p2.png" alt="Realtor Design System AI Agent" width="1062" height="1044" loading="lazy" decoding="async" />
           </picture>
         </figure>
         <figure class="cs-slide" data-reveal>
           <picture>
             <source media="(min-width: 1024px)" srcset="assets/case/realtor-desktop-s1p3.png" width="4320" height="2430" />
+            <source media="(max-width: 1023.98px)" srcset="assets/case/realtor-mobile-s1p3.png" width="1062" height="1104" />
             <img src="assets/case/realtor-mobile-s1p3.png" alt="RDC Profile Vision prototype" width="1062" height="1104" loading="lazy" decoding="async" />
           </picture>
         </figure>
